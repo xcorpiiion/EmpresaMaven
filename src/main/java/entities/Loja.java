@@ -15,8 +15,7 @@ public class Loja {
 	private List<Funcionario> funcionario = new ArrayList<Funcionario>();
 	private List<Cliente> cliente = new ArrayList<Cliente>();
 
-	public Loja(String nome, String email, List<Produtos> produto, List<Funcionario> funcionario,
-			List<Cliente> cliente) {
+	public Loja(String nome, String email, List<Produtos> produto) {
 		this.nome = nome;
 		this.email = email;
 		this.produto = produto;
