@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import entities.Produtos;
@@ -14,7 +13,6 @@ public class ClienteTest {
 	private Double dinheiroCarteira;
 	private List<Produtos> carrinhoProduto = new ArrayList<Produtos>();
 	private List<Produtos> produtosComprados = new ArrayList<Produtos>();
-	private Integer carrinho;
 	private List<Produtos> produto = new ArrayList<Produtos>();
 
 	@Before

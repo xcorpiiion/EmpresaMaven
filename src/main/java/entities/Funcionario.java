@@ -23,12 +23,12 @@ public class Funcionario extends Pessoa {
 		return salario;
 	}
 	
-	public void aumentaSalario() {
-		
+	public void aumentaSalario(Double salario) {
+		this.salario += salario;
 	}
 	
-	public void descontoSalario() {
-		
+	public void descontoSalario(Double descontoSalario) {
+		this.salario += descontoSalario;
 	}
 
 
