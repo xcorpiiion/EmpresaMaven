@@ -25,4 +25,7 @@ public class Cliente extends Pessoa {
 		this.dinheiroCarteira += dinheiro;
 	}
 	
+	public void comprarProduto(Loja loja) {
+		
+	}
 }

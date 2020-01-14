@@ -62,11 +62,6 @@ public class Loja {
 	public void cadastrarCliente() {
 		
 	}
-	
-	public void cadastrarProduto() {
 		
-	}
-	
-	
 	
 }

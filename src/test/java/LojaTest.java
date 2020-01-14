@@ -33,7 +33,7 @@ public class LojaTest {
 		funcionario.add(new Funcionario("Weevil", "weevil@gmail.com", 1500.00, Cargo.Repositor));
 		funcionario.add(new Funcionario("Dante", "dante@gmail.com", 1200.00, Cargo.Atendente));
 	}
-	
+
 	@Before
 	public void addDadosCliente() {
 		cliente.add(new Cliente("Matheus", "matheus@gmail.com", 2500.00));
@@ -41,7 +41,7 @@ public class LojaTest {
 		cliente.add(new Cliente("Dante", "dante@gmail.com", 900.00));
 		cliente.add(new Cliente("Harry", "harry@gmail.com", 1300.00));
 	}
-	
+
 	@Before
 	public void addDadosProduto() {
 		produto.add(new Produtos("Tablet", 2500.00, 50));
@@ -55,15 +55,15 @@ public class LojaTest {
 		if (funcionario == null) {
 			assertEquals("O funcionario está nullo", funcionario);
 		}
-		
-		String nome = "lalau";
-		String email = "lalau@gmail.com";
-		
+
+		String nome = "Lucas";
+		String email = "lucas@gmail.com";
+		System.out.println(this.funcionario.stream()
+				.anyMatch(func -> func.getNome().equalsIgnoreCase(nome) && func.getEmail().equalsIgnoreCase(email)));
 		// Verifica se o funcionario já existe
-		boolean wasContratado = this.funcionario.stream().anyMatch(func -> func.getNome().equalsIgnoreCase(nome) && 
-				func.getEmail().equalsIgnoreCase(email));
-		assertTrue("O funcionario já foi contratado", !wasContratado);
-		
+		assertFalse("O funcionario já foi contratado", this.funcionario.stream()
+				.anyMatch(func -> func.getNome().equalsIgnoreCase(nome) && func.getEmail().equalsIgnoreCase(email)));
+
 		// Caso o tenha passado na verificação, o funcionario será contratado
 		funcionario.add(new Funcionario(nome, email, 2500.00, Cargo.Vendedor));
 		System.out.println("O funcionario foi contratado");
@@ -77,19 +77,20 @@ public class LojaTest {
 
 		String nome = "Lucas";
 		String email = "lucas@gmail.com";
-		
+
 		// Verifica se o funcionario existe
-		boolean wasDemitido = this.funcionario.stream().anyMatch(func -> func.getNome().equalsIgnoreCase(nome) && 
-				func.getEmail().equalsIgnoreCase(email));;
-		assertTrue("Não existe o funcionario com os dados informados", wasDemitido);
-		
+		assertTrue("Não existe o funcionario com os dados informados", this.funcionario.stream()
+				.anyMatch(func -> func.getNome().equalsIgnoreCase(nome) && func.getEmail().equalsIgnoreCase(email)));
+
 		this.motivoDemissao = MotivoDemissao.Justa_Causa;
-		switch(this.motivoDemissao) {
+		switch (this.motivoDemissao) {
 		case Justa_Causa:
-			wasDemitido = this.funcionario.removeIf((func1 -> func1.getEmail().equalsIgnoreCase(email) && func1.getNome().equalsIgnoreCase(nome)));
+			this.funcionario.removeIf(
+					(func1 -> func1.getEmail().equalsIgnoreCase(email) && func1.getNome().equalsIgnoreCase(nome)));
 			break;
 		case Pediu_As_Contas:
-			wasDemitido = this.funcionario.removeIf((func1 -> func1.getEmail().equalsIgnoreCase(email) && func1.getNome().equalsIgnoreCase(nome)));
+			this.funcionario.removeIf(
+					(func1 -> func1.getEmail().equalsIgnoreCase(email) && func1.getNome().equalsIgnoreCase(nome)));
 			break;
 		}
 
@@ -103,13 +104,13 @@ public class LojaTest {
 		if (this.cliente == null) {
 			assertEquals("O cliente está nullo", this.cliente);
 		}
-		
+
 		String nome = "lalau";
 		String email = "lalau@gmail.com";
-		
+
 		// Verifica se o cliente já existe
-		boolean wasCadastrado = this.cliente.stream().anyMatch(c -> c.getNome().equalsIgnoreCase(nome) && 
-				c.getEmail().equalsIgnoreCase(email));
+		boolean wasCadastrado = this.cliente.stream()
+				.anyMatch(c -> c.getNome().equalsIgnoreCase(nome) && c.getEmail().equalsIgnoreCase(email));
 		assertTrue("O cliente já está cadastrado", !wasCadastrado);
 
 		// Caso o tenha passado na verificação, o funcionario será contratado
@@ -122,17 +123,26 @@ public class LojaTest {
 		if (this.produto == null) {
 			assertEquals("O produto está nullo", this.produto);
 		}
-		
-		String nome = "lalau";
-		String email = "lalau@gmail.com";
-		
-		
-		// Verifica se o funcionario é um repositor
-		boolean isRepositor = this.funcionario.get(2).getCargo() == Cargo.Repositor;
-		assertTrue("Apenas repositores podem cadastra os produtos", isRepositor);
 
-		// Caso o tenha passado na verificação, o funcionario será contratado
-//		this.produto.add(new Produtos(nome, preco, estoque));
-		System.out.println("O produto foi cadastrado");
+		String nome = "Tablet";
+		Double preco = 2500.00;
+		int estoque = 30;
+
+		// Verifica se o funcionario é um repositor
+		assertTrue("Apenas repositores podem cadastra os produtos", this.funcionario.get(2).getCargo() == Cargo.Repositor);
+
+		// Verifica se o produto está no estoque
+		boolean hasEstoque = this.produto.stream()
+				.anyMatch(prod -> prod.getNome().equalsIgnoreCase(nome) && prod.getPreco().equals(preco));
+
+		if (hasEstoque) {
+			this.produto.stream().filter(prod -> prod.getNome().equalsIgnoreCase(nome) && prod.getPreco().equals(preco))
+					.forEach(prod -> prod.setEstoque(prod.getEstoque() + estoque));
+			System.out.println("Produto foi add ao estoque");
+		} else {
+			produto.add(new Produtos(nome, preco, estoque));
+			System.out.println("Produto foi cadastrado");
+		}
 	}
+
 }
