@@ -4,10 +4,9 @@ public class Cliente extends Pessoa {
 	private Double dinheiroCarteira;
 	private Integer carrinho;
 	
-	public Cliente(String nome, String email, Double dinheiro, Integer carrinho) {
+	public Cliente(String nome, String email, Double dinheiro) {
 		super(nome, email);
 		this.dinheiroCarteira = dinheiro;
-		this.carrinho = carrinho;
 	}
 
 	public Double getDinheiroCarteira() {
