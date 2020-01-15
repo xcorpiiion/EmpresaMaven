@@ -16,7 +16,7 @@ public class MainClass {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		String nome = "", email = "";
-		int typeLogin = 0; // determina qual é o seu tipo de Login
+		int typeLogin = 0, isLogin = 0; // determina qual é o seu tipo de Login
 		boolean isFinish = false;
 		SimpleDateFormat dataNascimento = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -24,7 +24,8 @@ public class MainClass {
 		Scanner scanner = new Scanner(System.in);
 
 		List<Produtos> produtos = new ArrayList<Produtos>();
-		produtos.add(new Produtos("Jogos de ps4 God of war", 150.00, 30));
+		produtos.add(new Produtos("God of war", 150.00, 30));
+		produtos.add(new Produtos("The last of us", 120.00, 10));
 
 		// cadastra um funcionario do RH para poder contratar novos funcionarios
 		try {
@@ -59,22 +60,36 @@ public class MainClass {
 		System.out.println("-------------------------------------------------------------------------------");
 		// faz o looping da loja
 		while (!isFinish) {
-			typeLogin = verificarValidade("Você é funcionario ou cliente?", "1 - para cliente / 2 - para funcionario: ",
-					scanner, typeLogin);
+			System.out.println("Teste");
+			if (isLogin == 1) {
+				System.out.println("Entrou");
+				isLogin = verificarValidade("Deseja continuar loggado", "1 - para sim / qualquer número para não: ",
+						scanner, isLogin);
+			}
+			if (isLogin != 1) {
+				typeLogin = 0;
+				typeLogin = verificarValidade("Você é funcionario ou cliente?",
+						"1 - para cliente / 2 - para funcionario: ", scanner, typeLogin);
+			}
 			// Verifica o número digitado
 			switch (typeLogin) {
 			case 1:
 				int cadastro = 0;
-				cadastro = verificarValidade("Você possui cadastro?", "1 - para sim / 2 - para não: ", scanner,
-						cadastro);
+				if (isLogin != 1) {
+					cadastro = verificarValidade("Você possui cadastro?", "1 - para sim / 2 - para não: ", scanner,
+							cadastro);
+				} else {
+					cadastro = 1;
+				}
 				if (cadastro == 1) {
-					if (fazerLogin(nome, email, scanner, loja, typeLogin)) {
+					if (fazerLogin(nome, email, scanner, loja, typeLogin, isLogin)) {
+						isLogin = 1;
 						loja.mostrarProdutos();
 						System.out.println(
 								"-------------------------------------------------------------------------------");
 						cadastro = 0;
-						switch(opcoesCliente(scanner, cadastro)) {
-							case 1:	
+						switch (opcoesCliente(scanner, cadastro)) {
+						case 1:
 							System.out.print("Informe o valor que deseja colocar na carteira: ");
 							try {
 								cliente.addDinheiroCarteira(scanner.nextDouble());
@@ -82,31 +97,43 @@ public class MainClass {
 								System.out.println("Informe um valor valido: " + e.getMessage());
 							}
 							break;
-							case 2:
-								
-								break;
-							case 3:
-								
-								break;
-							case 4:
-								System.out.println(cliente);
+						case 2:
+							try {
+								// Mostra os produtos da loja
+								loja.mostrarProdutos();
+								System.out.println(
+										"-------------------------------------------------------------------------------");
+
+								System.out.print("Informe o nome do produto que você deseja adicionar no carrinho: ");
+								scanner.nextLine();
+								nome = scanner.nextLine();
+								cliente.addItensCarrinho(cliente, loja, scanner, nome);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+							cadastro = 0;
+							break;
+						case 3:
+							try {
+								cliente.comprarProduto(loja, cliente);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+							break;
+						case 4:
+							System.out.println(cliente);
+							break;
 						}
+						
 					} else {
 						System.out.println("Você não possui cadastro!");
 					}
 				}
-
-				break;
-			case 2:
-
-				break;
-			default:
-
-				break;
 			}
-
+			System.out.println("-------------------------------------------------------------------------------");
+			isLogin = 0;
+			isLogin = verificarValidade("Deseja continuar loggado", "1 - para sim / 2 - para não: ", scanner, isLogin);
 		}
-
 		scanner.close();
 	}
 
@@ -130,7 +157,11 @@ public class MainClass {
 		return numeroVerificador;
 	}
 
-	private static boolean fazerLogin(String nome, String email, Scanner scanner, Loja loja, int clienteOuFunc) {
+	private static boolean fazerLogin(String nome, String email, Scanner scanner, Loja loja, int clienteOuFunc,
+			int isLogin) {
+		if (isLogin == 1) {
+			return true;
+		}
 		System.out.println("Informe os seus dados para fazer o Login");
 		int tentarLoginNovamente = 0;
 		while (tentarLoginNovamente == 0) {
@@ -142,6 +173,7 @@ public class MainClass {
 			if (loja.verificarLogin(nome, email, clienteOuFunc)) {
 				System.out.println("-------------------------------------------------------------------------------");
 				System.out.println("Login feito com sucesso!");
+
 				System.out.println("-------------------------------------------------------------------------------");
 				return true;
 			} else {

@@ -20,24 +20,44 @@ public class Cliente extends Pessoa {
 	public Double getDinheiroCarteira() {
 		return dinheiroCarteira;
 	}
+	
+	
 
-	public void addItensCarrinho(List<Produtos> produtos, int qtdProdutoAddCarrinho) throws Exception {
-		if (produtos == null) {
+	public List<Produtos> getCarrinhoProduto() {
+		return carrinhoProduto;
+	}
+
+	public List<Produtos> getProdutosComprados() {
+		return produtosComprados;
+	}
+
+	public void addItensCarrinho(Cliente cliente, Loja loja, Scanner scanner, String nomeProduto) throws Exception {
+		if (loja.getProduto() == null) {
 			throw new Exception("O produto esta null");
 		}
 
+		loja.mostrarProdutos();
+		System.out.println("-------------------------------------------------------------------------------");
+
 		// Verifica se existe o produto
-		String nome = "Tablet";
-		if (produtos.stream().anyMatch(prod -> prod.getNome().equalsIgnoreCase(nome))) {
+		if (loja.getProduto().stream().anyMatch(prod -> prod.getNome().equalsIgnoreCase(nomeProduto))) {
+			// Se passou no teste, pergunta a quantidade de itens que quer adicionar no
+			// carrinho.
+			System.out.print("Informe a quantidade de produtos que você deseja adicionar no carrinho: ");
+			int qtdProdutoAddCarrinho = 0;
+			qtdProdutoAddCarrinho = scanner.nextInt();
+			// Add o item no carrinho
 			for (int i = 0; i < qtdProdutoAddCarrinho; i++) {
-				this.carrinhoProduto.addAll(produtos.stream().filter(prod -> prod.getNome().equalsIgnoreCase(nome))
-						.collect(Collectors.toList()));
+				cliente.carrinhoProduto.addAll(loja.getProduto().stream()
+						.filter(prod -> prod.getNome().equalsIgnoreCase(nomeProduto)).collect(Collectors.toList()));
 			}
 		} else {
 			throw new Exception("O produto não existe");
 		}
 
 		System.out.println("Produtos add no carrinho");
+		System.out.println("-------------------------------------------------------------------------------");
+
 	}
 
 	public void addDinheiroCarteira(Double dinheiro) {
@@ -46,12 +66,12 @@ public class Cliente extends Pessoa {
 		System.out.println("O valor da sua carteira é R$: " + this.getDinheiroCarteira());
 	}
 
-	public void comprarProduto(Loja loja) throws Exception {
+	public void comprarProduto(Loja loja, Cliente cliente) throws Exception {
 		if (this.carrinhoProduto == null) {
 			throw new Exception("O produto esta null");
 		}
 
-		this.carrinhoProduto.forEach(System.out::println);
+		cliente.carrinhoProduto.forEach(System.out::println);
 		System.out.println("----------------------------------------------------------");
 
 		// interação com o usuario
@@ -62,9 +82,9 @@ public class Cliente extends Pessoa {
 		try {
 			while (auxScanner == 0) {
 				System.out.println("Deseja comprar todos os itens ou prefere comprar um por ver?");
-				System.out.print("1 - comprar todos\n2 - comprar um por vez");
+				System.out.print("1 - comprar todos\n2 - comprar um por vez: ");
 				auxScanner = scanner.nextInt();
-				if (auxScanner != 1 || auxScanner != 2) {
+				if (auxScanner < 1 || auxScanner > 2) {
 					System.out.println("Informe um valor valido");
 					auxScanner = 0;
 				}
@@ -81,7 +101,7 @@ public class Cliente extends Pessoa {
 			switch (auxScanner) {
 			case 1:
 				totalPreco = 0.0;
-				for (Produtos prod : this.carrinhoProduto) {
+				for (Produtos prod : cliente.carrinhoProduto) {
 					totalPreco += prod.getPreco();
 				}
 				// Pergunta se tem certeza se deseja comprar tudo
@@ -99,8 +119,12 @@ public class Cliente extends Pessoa {
 					System.out.println("Você digitou algo invalido");
 				}
 				if (auxScanner == 1) {
-					if (this.dinheiroCarteira >= totalPreco) {
-						this.produtosComprados.addAll(loja.getProduto());
+					if (cliente.dinheiroCarteira >= totalPreco) {
+
+						for(Produtos prod : cliente.getCarrinhoProduto()) {
+							cliente.produtosComprados.add(prod);
+						}
+						cliente.carrinhoProduto.clear();
 						System.out.println("Itens comprado com sucesso");
 						comprou = true;
 					}
@@ -183,15 +207,15 @@ public class Cliente extends Pessoa {
 //		this.produtosComprados.forEach(System.out::println);
 //		System.out.println("Produto comprado com sucesso.");
 //		System.out.println("Dinheiro na carteira R$: " + this.dinheiroCarteira);
-		scanner.close();
+
 	}
 
-	
 	@Override
 	public String toString() {
-		return "Nome: " + this.getNome() + " Email: " + this.getEmail() + ", Valor na carteira: " + this.getDinheiroCarteira()
-				+ ", Produtos no carrinho: " + this.carrinhoProduto + ", Produtos comprados: " + this.produtosComprados;
+		return "Nome: " + this.getNome() + " Email: " + this.getEmail() + ", Valor na carteira: "
+				+ this.getDinheiroCarteira() + ", Produtos no carrinho: "
+				+ this.carrinhoProduto.stream().map(p1 -> p1.getNome()).collect(Collectors.toList())
+				+ ", Produtos comprados: "
+				+ this.produtosComprados.stream().map(p1 -> p1.getNome()).collect(Collectors.toList());
 	}
 }
-
-
