@@ -3,5 +3,6 @@ package enums;
 public enum Cargo {
 	Vendedor,
 	Repositor,
-	Atendente;
+	Atendente,
+	RH;
 }

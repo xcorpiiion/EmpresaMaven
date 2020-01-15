@@ -1,5 +1,6 @@
 package entities;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +50,8 @@ public class Loja {
 		return cliente;
 	}
 
-	public void contratarFuncionario(String nome, String email, Cargo cargo, Double salario) throws Exception {
+	public void contratarFuncionario(String nome, String email, Cargo cargo, Double salario,
+			SimpleDateFormat dataNascimento) throws Exception {
 		if (funcionario == null) {
 			throw new Exception("O funcionario está nullo");
 		}
@@ -61,7 +63,7 @@ public class Loja {
 		}
 
 		// Caso o tenha passado na verificação, o funcionario será contratado
-		funcionario.add(new Funcionario(nome, email, salario, Cargo.Vendedor));
+		funcionario.add(new Funcionario(nome, email, salario, Cargo.Vendedor, dataNascimento));
 		System.out.println("O funcionario foi contratado");
 	}
 
@@ -92,7 +94,7 @@ public class Loja {
 		System.out.println("O funcionario foi demitido");
 	}
 
-	public void cadastrarCliente(String nome, String email, Double dinheiro) throws Exception {
+	public void cadastrarCliente(String nome, String email, Double dinheiro, SimpleDateFormat dataNascimento) throws Exception {
 		if (this.cliente == null) {
 			throw new Exception("O cliente está nullo");
 		}
@@ -104,7 +106,7 @@ public class Loja {
 		}
 
 		// Caso o tenha passado na verificação, o funcionario será contratado
-		cliente.add(new Cliente(nome, email, dinheiro));
+		cliente.add(new Cliente(nome, email, dinheiro, dataNascimento));
 		System.out.println("O cliente foi cadastrado");
 	}
 	

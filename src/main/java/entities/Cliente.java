@@ -1,6 +1,8 @@
 package entities;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -10,8 +12,8 @@ public class Cliente extends Pessoa {
 	private List<Produtos> carrinhoProduto = new ArrayList<Produtos>();
 	private List<Produtos> produtosComprados = new ArrayList<Produtos>();
 
-	public Cliente(String nome, String email, Double dinheiro) {
-		super(nome, email);
+	public Cliente(String nome, String email, Double dinheiro, SimpleDateFormat dataNascimento) {
+		super(nome, email, dataNascimento);
 		this.dinheiroCarteira = dinheiro;
 	}
 

@@ -1,12 +1,15 @@
 package entities;
 
+import java.text.SimpleDateFormat;
+
 public abstract class Pessoa {
 	private String nome, email;
+	private SimpleDateFormat dataNascimento = new SimpleDateFormat("dd/MM/yyyy");
 
-	public Pessoa(String nome, String email) {
-		super();
+	public Pessoa(String nome, String email, SimpleDateFormat dataNascimento) {
 		this.nome = nome;
 		this.email = email;
+		this.dataNascimento = dataNascimento;
 	}
 
 	public String getNome() {
@@ -23,6 +26,10 @@ public abstract class Pessoa {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public SimpleDateFormat getDataNascimento() {
+		return dataNascimento;
 	}
 
 	@Override
@@ -55,6 +62,5 @@ public abstract class Pessoa {
 			return false;
 		return true;
 	}
-	
-	
+
 }

@@ -1,12 +1,14 @@
 package entities;
 
+import java.text.SimpleDateFormat;
+
 import enums.Cargo;
 
 public class Funcionario extends Pessoa {
 	private Cargo cargo;
 	private Double salario;
-	public Funcionario(String nome, String email, Double salario, Cargo cargo) {
-		super(nome, email);
+	public Funcionario(String nome, String email, Double salario, Cargo cargo, SimpleDateFormat dataNascimento) {
+		super(nome, email, dataNascimento);
 		this.salario = salario;
 		this.cargo = cargo;
 	}
