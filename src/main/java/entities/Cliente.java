@@ -20,8 +20,6 @@ public class Cliente extends Pessoa {
 	public Double getDinheiroCarteira() {
 		return dinheiroCarteira;
 	}
-	
-	
 
 	public List<Produtos> getCarrinhoProduto() {
 		return carrinhoProduto;
@@ -121,7 +119,7 @@ public class Cliente extends Pessoa {
 				if (auxScanner == 1) {
 					if (cliente.dinheiroCarteira >= totalPreco) {
 
-						for(Produtos prod : cliente.getCarrinhoProduto()) {
+						for (Produtos prod : cliente.getCarrinhoProduto()) {
 							cliente.produtosComprados.add(prod);
 						}
 						cliente.carrinhoProduto.clear();
@@ -132,12 +130,14 @@ public class Cliente extends Pessoa {
 				break;
 			case 2:
 				// Pergunta o nome do produto que eu quero compra
-				String nome = "Tablet";
+				System.out.println("Qual produto que está no carrinho você quer compra (informe o nome): ");
+				scanner.nextLine();
+				String nomeProduto = scanner.nextLine();
 				int qtdItemCarrinho = 0;
 				totalPreco = 0.0;
-				if (this.carrinhoProduto.stream().anyMatch(prod -> prod.getNome().equalsIgnoreCase(nome))) {
+				if (this.carrinhoProduto.stream().anyMatch(prod -> prod.getNome().equalsIgnoreCase(nomeProduto))) {
 					for (Produtos prod : this.carrinhoProduto) {
-						if (prod.getNome().equalsIgnoreCase(nome)) {
+						if (prod.getNome().equalsIgnoreCase(nomeProduto)) {
 							qtdItemCarrinho++;
 							totalPreco += prod.getPreco();
 							// add o produto na lista, caso eu não tenha dinheiro para comprar, ele remove
@@ -152,45 +152,63 @@ public class Cliente extends Pessoa {
 					System.out.println();
 					// Pergunta se tem certeza se deseja comprar tudo
 					try {
-						System.out.println("Quantos itens você deseja compra?");
+						System.out.print("Quantos itens você deseja compra? (informe a quantidade): ");
 						// auxScanner agr vai armazenar a quantidade de itens que eu quero compra
-						auxScanner = scanner.nextInt();
+						int aux = 0;
+						aux = scanner.nextInt();
+						auxScanner = aux;
 					} catch (NumberFormatException e) {
 						System.out.println("Você digitou algo invalido");
 					}
 					int qtdCompra = auxScanner;
 					if (qtdCompra <= qtdItemCarrinho) {
-						// pergunta se tem certeza que deseja compra
-						try {
-							while (auxScanner == 0) {
-								System.out.println("Tem certeza que gostaria de comprar todos os itens?");
-								System.out.print("1 - sim\n2 - não");
-								auxScanner = scanner.nextInt();
-								if (auxScanner != 1 || auxScanner != 2) {
-									System.out.println("Informe um valor valido");
-									auxScanner = 0;
+//						// pergunta se tem certeza que deseja compra
+//						try {
+//							auxScanner = 0;
+//							while (auxScanner == 0) {
+//								System.out.println("Tem certeza que gostaria de comprar todos os itens?");
+//								System.out.print("1 - sim / n2 - não: ");
+//								int teste = 0;
+//								teste = scanner.nextInt();
+//								if (teste < 1 || teste > 2) {
+//									System.out.println("Informe um valor valido");
+//									auxScanner = 0;
+//								} else {
+//									auxScanner = teste;
+//								}
+//							}
+//						} catch (NumberFormatException e) {
+//							System.out.println("Você digitou algo invalido");
+//						}
+						if (auxScanner == 1) {
+							if (this.dinheiroCarteira >= totalPreco) {
+
+								this.dinheiroCarteira -= totalPreco;
+								for(Produtos prod : cliente.getProdutosComprados()) {
+									cliente.produtosComprados.clear();
+									if(qtdCompra > 0) {
+										if(prod.getNome() == nomeProduto) {
+											cliente.produtosComprados.add(prod);
+										}
+									}
+									qtdCompra--;
 								}
-							}
-						} catch (NumberFormatException e) {
-							System.out.println("Você digitou algo invalido");
-						}
-						if (this.dinheiroCarteira >= totalPreco) {
-							this.dinheiroCarteira -= totalPreco;
-							this.produtosComprados.addAll(
-									loja.getProduto().stream().filter(prod -> prod.getNome().equalsIgnoreCase(nome))
-											.collect(Collectors.toList()));
-							System.out.println("Produto comprado com sucesso.");
-							comprou = true;
-						} else {
-							for (Produtos prod : this.carrinhoProduto) {
-								if (prod.getNome().equalsIgnoreCase(nome)) {
-									qtdItemCarrinho++;
-									totalPreco += prod.getPreco();
-									// remove da lista
-									this.produtosComprados.remove(prod);
+//								this.produtosComprados.addAll(loja.getProduto().stream()
+//										.filter(prod -> prod.getNome().equalsIgnoreCase(nomeProduto))
+//										.collect(Collectors.toList()));
+								System.out.println("Produto comprado com sucesso.");
+								comprou = true;
+							} else {
+								for (Produtos prod : this.carrinhoProduto) {
+									if (prod.getNome().equalsIgnoreCase(nomeProduto)) {
+										qtdItemCarrinho++;
+										totalPreco += prod.getPreco();
+										// remove da lista
+										this.produtosComprados.remove(prod);
+									}
 								}
+								throw new Exception("O dinheiro é insulficiente");
 							}
-							throw new Exception("O dinheiro é insulficiente");
 						}
 					}
 				} else {

@@ -60,9 +60,7 @@ public class MainClass {
 		System.out.println("-------------------------------------------------------------------------------");
 		// faz o looping da loja
 		while (!isFinish) {
-			System.out.println("Teste");
 			if (isLogin == 1) {
-				System.out.println("Entrou");
 				isLogin = verificarValidade("Deseja continuar loggado", "1 - para sim / qualquer número para não: ",
 						scanner, isLogin);
 			}
