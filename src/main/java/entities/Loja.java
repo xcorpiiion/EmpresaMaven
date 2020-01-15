@@ -50,10 +50,33 @@ public class Loja {
 		return cliente;
 	}
 
+	// Verifica se eu tenho cadastro na loja ou se eu sou um funcionario da loja
+	public boolean verificarLogin(String nome, String email, int verificaFuncOuCliente) {
+		// Verifica toda a lista e vai retorna true se existir um nome e email na lista
+		if (verificaFuncOuCliente == 2) {
+			if (this.funcionario.stream().anyMatch(
+					func -> func.getNome().equalsIgnoreCase(nome) && func.getEmail().equalsIgnoreCase(email))) {
+				return true;
+			}
+		} else {
+			if (this.cliente.stream().anyMatch(
+					clien -> clien.getNome().equalsIgnoreCase(nome) && clien.getEmail().equalsIgnoreCase(email))) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	// Apenas o Rh consegue contratar
 	public void contratarFuncionario(String nome, String email, Cargo cargo, Double salario,
-			SimpleDateFormat dataNascimento) throws Exception {
+			SimpleDateFormat dataNascimento, Funcionario funcionario) throws Exception {
 		if (funcionario == null) {
 			throw new Exception("O funcionario está nullo");
+		}
+
+		if (funcionario.getCargo() != Cargo.RH) {
+			throw new Exception("Apenas o RH pode contratar funcionarios");
 		}
 
 		// Verifica se o funcionario já existe
@@ -63,13 +86,19 @@ public class Loja {
 		}
 
 		// Caso o tenha passado na verificação, o funcionario será contratado
-		funcionario.add(new Funcionario(nome, email, salario, Cargo.Vendedor, dataNascimento));
+		this.funcionario.add(new Funcionario(nome, email, salario, Cargo.Vendedor, dataNascimento));
 		System.out.println("O funcionario foi contratado");
 	}
-
-	public void demitirFuncionario(String nome, String email, MotivoDemissao motivoDemissao) throws Exception {
-		if (this.funcionario == null) {
+	
+	// Apenas o Rh consegue demitir um funcionario
+	public void demitirFuncionario(String nome, String email, MotivoDemissao motivoDemissao, Funcionario funcionario)
+			throws Exception {
+		if (funcionario == null) {
 			throw new Exception("O funcionario está nullo");
+		}
+
+		if (funcionario.getCargo() != Cargo.RH) {
+			throw new Exception("Apenas o RH pode contratar funcionarios");
 		}
 
 		// Verifica se o funcionario existe
@@ -94,14 +123,16 @@ public class Loja {
 		System.out.println("O funcionario foi demitido");
 	}
 
-	public void cadastrarCliente(String nome, String email, Double dinheiro, SimpleDateFormat dataNascimento) throws Exception {
+	// Qualuqer pessoa consegue se cadastrar na loja
+	public void cadastrarCliente(String nome, String email, Double dinheiro, SimpleDateFormat dataNascimento)
+			throws Exception {
 		if (this.cliente == null) {
 			throw new Exception("O cliente está nullo");
 		}
 
 		// Verifica se o cliente já existe
-		if(this.cliente.stream()
-				.anyMatch(c -> c.getNome().equalsIgnoreCase(nome) && c.getEmail().equalsIgnoreCase(email))){
+		if (this.cliente.stream()
+				.anyMatch(c -> c.getNome().equalsIgnoreCase(nome) && c.getEmail().equalsIgnoreCase(email))) {
 			throw new Exception("O cliente já está cadastrado");
 		}
 
@@ -109,14 +140,15 @@ public class Loja {
 		cliente.add(new Cliente(nome, email, dinheiro, dataNascimento));
 		System.out.println("O cliente foi cadastrado");
 	}
-	
+
+	// Apenas o repositor consegue colocar novos produtos
 	public void cadastrarProduto(String nome, Double preco, int estoque, Funcionario funcionario) throws Exception {
 		if (this.produto == null) {
 			throw new Exception("O produto está nullo");
 		}
 
 		// Verifica se o funcionario é um repositor
-		if(funcionario.getCargo() == Cargo.Repositor) {
+		if (funcionario.getCargo() == Cargo.Repositor) {
 			throw new Exception("Apenas repositores podem cadastra os produtos");
 		}
 
@@ -133,5 +165,10 @@ public class Loja {
 			System.out.println("Produto foi cadastrado");
 		}
 	}
-
+	
+	public void mostrarProdutos() {
+		System.out.println("Lista de produtos da loja");
+		this.produto.sort((p1, p2) -> p1.getNome().compareTo(p2.getNome()));
+		this.produto.forEach(System.out::println);
+	}
 }

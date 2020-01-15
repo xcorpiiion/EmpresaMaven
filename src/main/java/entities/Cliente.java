@@ -42,6 +42,8 @@ public class Cliente extends Pessoa {
 
 	public void addDinheiroCarteira(Double dinheiro) {
 		this.dinheiroCarteira += dinheiro;
+		System.out.println("Você adicionou " + dinheiro + " a sua carteira");
+		System.out.println("O valor da sua carteira é R$: " + this.getDinheiroCarteira());
 	}
 
 	public void comprarProduto(Loja loja) throws Exception {
@@ -183,4 +185,13 @@ public class Cliente extends Pessoa {
 //		System.out.println("Dinheiro na carteira R$: " + this.dinheiroCarteira);
 		scanner.close();
 	}
+
+	
+	@Override
+	public String toString() {
+		return "Nome: " + this.getNome() + " Email: " + this.getEmail() + ", Valor na carteira: " + this.getDinheiroCarteira()
+				+ ", Produtos no carrinho: " + this.carrinhoProduto + ", Produtos comprados: " + this.produtosComprados;
+	}
 }
+
+

@@ -69,7 +69,7 @@ public class Produtos {
 
 	@Override
 	public String toString() {
-		return "Produtos [nome=" + nome + ", preco=" + preco + ", estoque=" + estoque + "]";
+		return "Nome: " + nome + ", R$: " + preco + ", Quantidade em estoque: " + estoque;
 	}
 	
 	
