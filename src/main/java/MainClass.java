@@ -57,14 +57,16 @@ public class MainClass {
 		System.out.println("Informe o cnpj da empresa (precisa ter 14 números): ");
 		String cnpj = scanner.next();
 		System.out.print("Informe o nome da rua da empresa: ");
-		String ruaEmpresa = scanner.next();
+		String ruaEmpresa = scanner.nextLine();
 		System.out.print("Informe o da bairro da empresa: ");
 		String bairroEmpresa = scanner.next();
 		System.out.print("Informe o cep da empresa (precisa ter 8 números): ");
 		String cepEmpresa = scanner.next();
 
+		System.out.println(cepEmpresa.length());
+		
 		try {
-			if (cnpj.length() == 14) {
+			if (cnpj.length() != 14) {
 				throw new Exception("O cnpj está errado");
 			}
 			if (cnpj.matches("^[a-zA-ZÁÂÃÀÇÉÊÍÓÔÕÚÜáâãàçéêíóôõúü]*$")) {
@@ -75,8 +77,8 @@ public class MainClass {
 				throw new Exception("O cnpj está errado");
 			}
 			
-			if (cepEmpresa.length() == 8) {
-				throw new Exception("O cnpj está errado");
+			if (cepEmpresa.length() != 8) {
+				throw new Exception("O cep está errado");
 			}
 			if (cepEmpresa.matches("^[a-zA-ZÁÂÃÀÇÉÊÍÓÔÕÚÜáâãàçéêíóôõúü]*$")) {
 				throw new Exception("O cnpj está errado");
@@ -132,6 +134,7 @@ public class MainClass {
 				if (cadastro == 1) {
 					if (fazerLogin(scanner, loja, typeLogin, isLogin)) {
 						isLogin = 1;
+						typeLogin = 1;
 						try {
 							System.out.println(nome);
 							cliente = loja.returnClienteQueFezLogin(nome, email);
@@ -151,6 +154,7 @@ public class MainClass {
 							} catch (NumberFormatException e) {
 								System.out.println("Informe um valor valido: " + e.getMessage());
 							}
+							cadastro = 0;
 							break;
 						case 2:
 							try {
@@ -174,9 +178,11 @@ public class MainClass {
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
+							cadastro = 0;
 							break;
 						case 4:
 							System.out.println(cliente.toString(cliente));
+							cadastro = 0;
 							break;
 						}
 
@@ -210,6 +216,7 @@ public class MainClass {
 						}
 					}
 				}
+				break;
 			case 2:
 				cadastro = 0;
 				// Verifica se o cliente ou funcionario quer continuar loggado
@@ -321,6 +328,10 @@ public class MainClass {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
+								break;
+							case 3:
+								System.out.println(loja.toString());
+								break;
 							}
 						} else {
 

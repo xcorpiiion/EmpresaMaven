@@ -39,8 +39,7 @@ public class Funcionario extends Pessoa {
 			System.out.println("Informe o que você quer fazer");
 			System.out.println("1 - contratar um novo funcionario");
 			System.out.println("2 - demitir um funcionario");
-			System.out.println("3 - da um aumento à um funcionario");
-			System.out.println("4 - descontar um valor de um funcionario");
+			System.out.println("3 - ver dados da empresa");
 			System.out.print("Informe uma opção: ");
 		} else {
 			System.out.println("Informe o que você quer fazer");
@@ -48,6 +47,12 @@ public class Funcionario extends Pessoa {
 			System.out.println("2 - cadastrar um novo produto");
 			System.out.print("Informe uma opção: ");
 		}
+	}
+
+	
+	@Override
+	public String toString() {
+		return "Funcionario [cargo=" + cargo + ", salario=" + salario + "]";
 	}
 
 }
