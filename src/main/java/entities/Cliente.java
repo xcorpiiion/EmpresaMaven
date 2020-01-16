@@ -29,7 +29,7 @@ public class Cliente extends Pessoa {
 		return produtosComprados;
 	}
 
-	public void addItensCarrinho(Cliente cliente, Loja loja, Scanner scanner, String nomeProduto) throws Exception {
+	public void addItensCarrinho(Cliente cliente, Empresa loja, Scanner scanner, String nomeProduto) throws Exception {
 		if (loja.getProduto() == null) {
 			throw new Exception("O produto esta null");
 		}
@@ -64,9 +64,9 @@ public class Cliente extends Pessoa {
 		System.out.println("O valor da sua carteira é R$: " + this.getDinheiroCarteira());
 	}
 
-	public void comprarProduto(Loja loja, Cliente cliente) throws Exception {
-		if (this.carrinhoProduto == null) {
-			throw new Exception("O produto esta null");
+	public void comprarProduto(Empresa loja, Cliente cliente) throws Exception {
+		if (this.carrinhoProduto.isEmpty()) {
+			throw new Exception("A lista esta vazia");
 		}
 
 		cliente.carrinhoProduto.forEach(System.out::println);
@@ -74,48 +74,33 @@ public class Cliente extends Pessoa {
 
 		// interação com o usuario
 		Scanner scanner = new Scanner(System.in);
+		// essa variavel vai ajudar a escolher as opcoes
 		int auxScanner = 0;
 
 		// Opção do cliente comprar todos os itens do carrinho
-		try {
-			while (auxScanner == 0) {
-				System.out.println("Deseja comprar todos os itens ou prefere comprar um por ver?");
-				System.out.print("1 - comprar todos\n2 - comprar um por vez: ");
-				auxScanner = scanner.nextInt();
-				if (auxScanner < 1 || auxScanner > 2) {
-					System.out.println("Informe um valor valido");
-					auxScanner = 0;
-				}
-			}
-		} catch (NumberFormatException e) {
-			System.out.println("Você digitou algo invalido");
-		}
+		auxScanner = verificarValidade("Deseja comprar todos os produtos ou prefere comprar um por vez?",
+				"1 - comprar todos / 2 - comprar um por vez: ", scanner, auxScanner);
+
 		// 1 é para compra todos os itens 2 é para escolher os itens que quer comprar
 		double totalPreco = 0.0;
 
-		// aux do switch
+		// essa variavel vai verificar se eu comprei, caso eu tenha comprado vai sair do
+		// looping
 		boolean comprou = false;
-		while (comprou == false) {
+		while (!comprou) {
 			switch (auxScanner) {
 			case 1:
 				totalPreco = 0.0;
 				for (Produtos prod : cliente.carrinhoProduto) {
 					totalPreco += prod.getPreco();
 				}
+				// retorna o valor da variavel para 0 para poder executar o metodo
+				// verificarValidade
+				auxScanner = 0;
 				// Pergunta se tem certeza se deseja comprar tudo
-				try {
-					while (auxScanner == 0) {
-						System.out.println("Tem certeza que gostaria de comprar todos os itens do carrinho?");
-						System.out.print("1 - sim\n2 - não");
-						auxScanner = scanner.nextInt();
-						if (auxScanner != 1 || auxScanner != 2) {
-							System.out.println("Informe um valor valido");
-							auxScanner = 0;
-						}
-					}
-				} catch (NumberFormatException e) {
-					System.out.println("Você digitou algo invalido");
-				}
+				auxScanner = verificarValidade("Tem certeza que gostaria de comprar todos os itens do carrinho?",
+						"1 - sim / 2 - não: ", scanner, auxScanner);
+
 				if (auxScanner == 1) {
 					if (cliente.dinheiroCarteira >= totalPreco) {
 
@@ -123,33 +108,50 @@ public class Cliente extends Pessoa {
 							cliente.produtosComprados.add(prod);
 						}
 						cliente.carrinhoProduto.clear();
-						System.out.println("Itens comprado com sucesso");
+						System.out.println("Produtos comprado com sucesso");
 						comprou = true;
 					}
+				} else {
+					// caso não tenha certeza, ele vai sair do looping e vai seguir o programa
+					// normalmente
+					comprou = true;
 				}
 				break;
 			case 2:
+				System.out.println("Produtos que estão no carrinho");
+				cliente.getCarrinhoProduto().forEach(System.out::println);
 				// Pergunta o nome do produto que eu quero compra
 				System.out.println("Qual produto que está no carrinho você quer compra (informe o nome): ");
 				scanner.nextLine();
 				String nomeProduto = scanner.nextLine();
+
+				// conta a quantidade de itens que tem no meu carrinho
 				int qtdItemCarrinho = 0;
+				// soma o preço dos produtos para poder dar o total na hora da compra
 				totalPreco = 0.0;
-				if (this.carrinhoProduto.stream().anyMatch(prod -> prod.getNome().equalsIgnoreCase(nomeProduto))) {
-					for (Produtos prod : this.carrinhoProduto) {
+
+				// Variavel que vai ser uma auxiliar para receber os produtos do carrinho e
+				// depois
+				// vai ajudar a remover os produtos do carrinho depois que a compra for
+				// realizada
+				List<Produtos> auxAddItemsCarrinho = new ArrayList<>();
+
+				// verifico se o produto existe no carrinho
+				if (cliente.carrinhoProduto.stream().anyMatch(prod -> prod.getNome().equalsIgnoreCase(nomeProduto))) {
+					for (Produtos prod : cliente.carrinhoProduto) {
 						if (prod.getNome().equalsIgnoreCase(nomeProduto)) {
 							qtdItemCarrinho++;
 							totalPreco += prod.getPreco();
-							// add o produto na lista, caso eu não tenha dinheiro para comprar, ele remove
-							// da lista
-							this.produtosComprados.add(prod);
+							// add o produto na lista
+							auxAddItemsCarrinho.add(prod);
 						}
 					}
 					// mostra na tela a quantidade de itens no carrinho e pergunta quantos dele eu
 					// quero compra
 					System.out.println("----------------------------------------------------");
-					this.produtosComprados.forEach(System.out::println);
-					System.out.println();
+					System.out.println("Produtos que você está querendo compra");
+					auxAddItemsCarrinho.forEach(System.out::println);
+					System.out.println("----------------------------------------------------");
 					// Pergunta se tem certeza se deseja comprar tudo
 					try {
 						System.out.print("Quantos itens você deseja compra? (informe a quantidade): ");
@@ -160,61 +162,48 @@ public class Cliente extends Pessoa {
 					} catch (NumberFormatException e) {
 						System.out.println("Você digitou algo invalido");
 					}
+
 					int qtdCompra = auxScanner;
 					if (qtdCompra <= qtdItemCarrinho) {
 //						// pergunta se tem certeza que deseja compra
-//						try {
-//							auxScanner = 0;
-//							while (auxScanner == 0) {
-//								System.out.println("Tem certeza que gostaria de comprar todos os itens?");
-//								System.out.print("1 - sim / n2 - não: ");
-//								int teste = 0;
-//								teste = scanner.nextInt();
-//								if (teste < 1 || teste > 2) {
-//									System.out.println("Informe um valor valido");
-//									auxScanner = 0;
-//								} else {
-//									auxScanner = teste;
-//								}
-//							}
-//						} catch (NumberFormatException e) {
-//							System.out.println("Você digitou algo invalido");
-//						}
-						if (auxScanner == 1) {
-							if (this.dinheiroCarteira >= totalPreco) {
-
-								this.dinheiroCarteira -= totalPreco;
-								for(Produtos prod : cliente.getProdutosComprados()) {
-									cliente.produtosComprados.clear();
-									if(qtdCompra > 0) {
-										if(prod.getNome() == nomeProduto) {
-											cliente.produtosComprados.add(prod);
-										}
-									}
-									qtdCompra--;
-								}
-//								this.produtosComprados.addAll(loja.getProduto().stream()
-//										.filter(prod -> prod.getNome().equalsIgnoreCase(nomeProduto))
-//										.collect(Collectors.toList()));
-								System.out.println("Produto comprado com sucesso.");
-								comprou = true;
-							} else {
-								for (Produtos prod : this.carrinhoProduto) {
-									if (prod.getNome().equalsIgnoreCase(nomeProduto)) {
-										qtdItemCarrinho++;
-										totalPreco += prod.getPreco();
-										// remove da lista
-										this.produtosComprados.remove(prod);
-									}
-								}
-								throw new Exception("O dinheiro é insulficiente");
-							}
+						auxScanner = 0;
+						auxScanner = verificarValidade(
+								"Tem certeza que gostaria de comprar todos os itens do carrinho?",
+								"1 - sim / 2 - qualquer outro número para não: ", scanner, auxScanner);
+						if (auxScanner != 1) {
+							comprou = true;
+							break;
 						}
+
+						if (this.dinheiroCarteira >= totalPreco) {
+
+							this.dinheiroCarteira -= totalPreco;
+							for (Produtos prod : auxAddItemsCarrinho) {
+								if (qtdCompra > 0) {
+									cliente.produtosComprados.add(prod);
+									cliente.getCarrinhoProduto().remove(prod);
+
+								}
+								qtdCompra--;
+							}
+
+							System.out.println("Produtos comprado com sucesso.");
+							comprou = true;
+							break;
+						} else {
+							throw new Exception("O dinheiro é insulficiente");
+						}
+					} else {
+						System.out.println("A quantidade de item que você quer comprar é maior do que a quantidade"
+								+ " que está no carrinho");
+						comprou = true;
+						break;
 					}
+
 				} else {
 					System.out.println("O item não existe no carrinho");
+					break;
 				}
-				break;
 			case 3:
 				comprou = true;
 			default:
@@ -228,12 +217,29 @@ public class Cliente extends Pessoa {
 
 	}
 
-	@Override
-	public String toString() {
-		return "Nome: " + this.getNome() + " Email: " + this.getEmail() + ", Valor na carteira: "
-				+ this.getDinheiroCarteira() + ", Produtos no carrinho: "
-				+ this.carrinhoProduto.stream().map(p1 -> p1.getNome()).collect(Collectors.toList())
+	private int verificarValidade(String msg, String msg2, Scanner scanner, int numeroVerificador) {
+		while (numeroVerificador == 0) {
+			try {
+				System.out.println(msg);
+				System.out.print(msg2);
+				numeroVerificador = scanner.nextInt();
+				if (numeroVerificador < 1 || numeroVerificador > 2) {
+					System.out.println("Informe um número valido");
+					numeroVerificador = 0;
+				}
+			} catch (NumberFormatException e) {
+				System.out.println("Você informou um digito invalido " + e.getMessage());
+			}
+		}
+		System.out.println("-------------------------------------------------------------------------------");
+		return numeroVerificador;
+	}
+
+	public String toString(Cliente cliente) {
+		return "Nome: " + cliente.getNome() + " Email: " + cliente.getEmail() + ", Valor na carteira: "
+				+ cliente.getDinheiroCarteira() + ", Produtos no carrinho: "
+				+ cliente.carrinhoProduto.stream().map(p1 -> p1.getNome()).collect(Collectors.toList())
 				+ ", Produtos comprados: "
-				+ this.produtosComprados.stream().map(p1 -> p1.getNome()).collect(Collectors.toList());
+				+ cliente.produtosComprados.stream().map(p1 -> p1.getNome()).collect(Collectors.toList());
 	}
 }

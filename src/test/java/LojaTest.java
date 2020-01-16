@@ -6,16 +6,18 @@ import static org.junit.Assert.fail;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import entities.Cliente;
 import entities.Funcionario;
+import entities.Empresa;
 import entities.Produtos;
 import enums.Cargo;
 import enums.MotivoDemissao;
@@ -30,17 +32,24 @@ public class LojaTest {
 	private List<Funcionario> funcionario = new ArrayList<Funcionario>();
 	private List<Cliente> cliente = new ArrayList<Cliente>();
 
+	@BeforeClass
+	public static void cadastrarEmpresa() {
+		List<Produtos> prod = new ArrayList<>();
+		prod.add(new Produtos("sla", 250.00, 5));
+		Empresa loja = new Empresa("teste", "teste@gmail.com", prod, "0123456789123", "", "", "");
+	}
+	
 	@Before
 	public void addDadosFuncionario() {
 		try {
 			nascimento.parse("03/07/1992");
-			funcionario.add(new Funcionario("Lucas", "lucas@gmail.com", 2500.00, Cargo.Vendedor, nascimento));
+			funcionario.add(new Funcionario("Lucas", "lucas@gmail.com", 2500.00, Cargo.RH, nascimento));
 			nascimento.parse("09/04/1990");
-			funcionario.add(new Funcionario("João", "joao@gmail.com", 2000.00, Cargo.Vendedor, nascimento));
+			funcionario.add(new Funcionario("João", "joao@gmail.com", 2000.00, Cargo.Repositor, nascimento));
 			nascimento.parse("03/02/1985");
 			funcionario.add(new Funcionario("Weevil", "weevil@gmail.com", 1500.00, Cargo.Repositor, nascimento));
 			nascimento.parse("26/01/1989");
-			funcionario.add(new Funcionario("Dante", "dante@gmail.com", 1200.00, Cargo.Atendente, nascimento));
+			funcionario.add(new Funcionario("Dante", "dante@gmail.com", 1200.00, Cargo.RH, nascimento));
 		} catch (Exception e) {
 			fail("Você informou uma data invalida");
 		}
@@ -91,7 +100,7 @@ public class LojaTest {
 			// TODO Auto-generated catch block
 			fail("Você informou uma data invalida");
 		}
-		funcionario.add(new Funcionario(nome, email, 2500.00, Cargo.Vendedor, nascimento));
+		funcionario.add(new Funcionario(nome, email, 2500.00, Cargo.RH, nascimento));
 		System.out.println("O funcionario foi contratado");
 	}
 
@@ -177,5 +186,12 @@ public class LojaTest {
 			System.out.println("Produto foi cadastrado");
 		}
 	}
+
+	@After
+	public void mostrarDadosNaTela() {
+		System.out.println(produto);
+	}
+
+
 
 }

@@ -8,22 +8,32 @@ import enums.Cargo;
 import enums.MotivoDemissao;
 import enums.TipoContrato;
 
-public class Loja {
-	private String nome, email;
+public class Empresa {
+	private String nome, email,cnpj;
+	private String rua, bairro, cep;
 	private MotivoDemissao motivoDemissao;
 	private TipoContrato tipoContrato;
 	private List<Produtos> produto = new ArrayList<Produtos>();
 	private List<Funcionario> funcionario = new ArrayList<Funcionario>();
 	private List<Cliente> cliente = new ArrayList<Cliente>();
 
-	public Loja(String nome, String email, List<Produtos> produto) {
+	public Empresa(String nome, String email, List<Produtos> produto, String cnjp, String rua, String bairro
+			, String cep) {
 		this.nome = nome;
 		this.email = email;
 		this.produto = produto;
+		this.cnpj = cnjp;
+		this.rua = rua;
+		this.bairro = bairro;
+		this.cep = cep;
 	}
 
 	public String getNome() {
 		return nome;
+	}
+
+	public String getCnpj() {
+		return cnpj;
 	}
 
 	public void setNome(String nome) {
@@ -50,6 +60,100 @@ public class Loja {
 		return cliente;
 	}
 
+	// Alterar dados do produto
+	public void alterarDadosProduto(Funcionario funcionario, int escolhaOpcoes, String nomeProduto) throws Exception {
+		if (funcionario == null) {
+			throw new Exception("funcionario está null");
+		}
+
+		if (funcionario.getCargo() != Cargo.Repositor) {
+			throw new Exception("Apenas repositores podem alterar os dados do produto");
+		}
+
+		if (escolhaOpcoes == 1) {
+			for (Produtos prod : this.produto) {
+				if (prod.getNome().equals(nomeProduto)) {
+					System.out.println("Entrou aqui");
+					prod.setNome(nomeProduto);
+				}
+			}
+		}
+		System.out.println("Produto alterado com sucesso");
+	}
+
+	// Alterar dados do produto
+	public void alterarDadosProduto(Funcionario funcionario, int escolhaOpcoes, String nomeProduto, Double preco)
+			throws Exception {
+		if (funcionario == null) {
+			throw new Exception("funcionario está null");
+		}
+
+		if (funcionario.getCargo() != Cargo.Repositor) {
+			throw new Exception("Apenas repositores podem alterar os dados do produto");
+		}
+
+		if (escolhaOpcoes == 2) {
+			for (Produtos prod : this.produto) {
+				if (prod.getNome().equals(nomeProduto)) {
+					prod.setPreco(preco);
+				}
+			}
+		}
+		System.out.println("Produto alterado com sucesso");
+	}
+
+	// Alterar dados do produto
+	public void alterarDadosProduto(Funcionario funcionario, int escolhaOpcoes, String nomeProduto, int estoque)
+			throws Exception {
+		if (funcionario == null) {
+			throw new Exception("funcionario está null");
+		}
+
+		if (funcionario.getCargo() != Cargo.Repositor) {
+			throw new Exception("Apenas repositores podem alterar os dados do produto");
+		}
+
+		if (escolhaOpcoes == 3) {
+			for (Produtos prod : this.produto) {
+				if (prod.getNome().equals(nomeProduto)) {
+					prod.setEstoque(estoque);
+				}
+			}
+		}
+		System.out.println("Produto alterado com sucesso");
+	}
+
+	// Alterar dados do produto
+	public void alterarDadosProduto(Funcionario funcionario, int escolhaOpcoes, String nomeProduto, double preco,
+			int estoque) throws Exception {
+		if (funcionario == null) {
+			throw new Exception("funcionario está null");
+		}
+
+		if (funcionario.getCargo() != Cargo.Repositor) {
+			throw new Exception("Apenas repositores podem alterar os dados do produto");
+		}
+
+		if (escolhaOpcoes == 4) {
+			for (Produtos prod : this.produto) {
+				if (prod.getNome().equals(nomeProduto)) {
+					prod.setNome(nomeProduto);
+					prod.setPreco(preco);
+					prod.setEstoque(estoque);
+				}
+			}
+		}
+		System.out.println("Produto alterado com sucesso");
+	}
+
+	// verifica se o produto existe e retorna true ou false
+	public boolean verificarProdutoExiste(String nome) {
+		// Verifica toda a lista e vai retorna true se existir um nome e email na lista
+
+		return this.produto.stream().anyMatch(prod -> prod.getNome().equalsIgnoreCase(nome));
+
+	}
+
 	// Verifica se eu tenho cadastro na loja ou se eu sou um funcionario da loja
 	public boolean verificarLogin(String nome, String email, int verificaFuncOuCliente) {
 		// Verifica toda a lista e vai retorna true se existir um nome e email na lista
@@ -66,6 +170,26 @@ public class Loja {
 		}
 
 		return false;
+	}
+
+	// retorna o cliente que fez o login
+	public Cliente returnClienteQueFezLogin(String nome, String email) throws Exception {
+		for (Cliente clien : this.cliente) {
+			if (clien.getNome().equalsIgnoreCase(nome) && clien.getEmail().equalsIgnoreCase(email)) {
+				return clien;
+			}
+		}
+		throw new Exception("O cliente que fez o login não existe");
+	}
+
+	// retorna o funcionario que fez o login
+	public Funcionario returnFuncionarioQueFezLogin(String nome, String email) throws Exception {
+		for (Funcionario func : this.funcionario) {
+			if (func.getNome().equalsIgnoreCase(nome) && func.getEmail().equalsIgnoreCase(email)) {
+				return func;
+			}
+		}
+		throw new Exception("O cliente que fez o login não existe");
 	}
 
 	// Apenas o Rh consegue contratar
@@ -86,10 +210,10 @@ public class Loja {
 		}
 
 		// Caso o tenha passado na verificação, o funcionario será contratado
-		this.funcionario.add(new Funcionario(nome, email, salario, Cargo.Vendedor, dataNascimento));
+		this.funcionario.add(new Funcionario(nome, email, salario, cargo, dataNascimento));
 		System.out.println("O funcionario foi contratado");
 	}
-	
+
 	// Apenas o Rh consegue demitir um funcionario
 	public void demitirFuncionario(String nome, String email, MotivoDemissao motivoDemissao, Funcionario funcionario)
 			throws Exception {
@@ -102,12 +226,11 @@ public class Loja {
 		}
 
 		// Verifica se o funcionario existe
-		if (this.funcionario.stream()
+		if (!this.funcionario.stream()
 				.anyMatch(func -> func.getNome().equalsIgnoreCase(nome) && func.getEmail().equalsIgnoreCase(email))) {
 			throw new Exception("Não existe o funcionario com os dados informados");
 		}
 
-		motivoDemissao = MotivoDemissao.Justa_Causa;
 		switch (motivoDemissao) {
 		case Justa_Causa:
 			this.funcionario.removeIf(
@@ -148,7 +271,7 @@ public class Loja {
 		}
 
 		// Verifica se o funcionario é um repositor
-		if (funcionario.getCargo() == Cargo.Repositor) {
+		if (funcionario.getCargo() != Cargo.Repositor) {
 			throw new Exception("Apenas repositores podem cadastra os produtos");
 		}
 
@@ -165,7 +288,7 @@ public class Loja {
 			System.out.println("Produto foi cadastrado");
 		}
 	}
-	
+
 	public void mostrarProdutos() {
 		System.out.println("Lista de produtos da loja");
 		this.produto.sort((p1, p2) -> p1.getNome().compareTo(p2.getNome()));
