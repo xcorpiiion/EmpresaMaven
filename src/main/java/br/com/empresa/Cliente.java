@@ -1,4 +1,4 @@
-package entities;
+package br.com.empresa;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -53,6 +53,9 @@ public class Cliente extends Pessoa {
 			System.out.print("Informe a quantidade de produtos que você deseja adicionar no carrinho: ");
 			int qtdProdutoAddCarrinho = 0;
 			qtdProdutoAddCarrinho = scanner.nextInt();
+			if(qtdProdutoAddCarrinho < 1) {
+				throw new Exception("Você precisa pelo menos add 1 produto ao carrinho");
+			}
 			// Add o item no carrinho
 			for (int i = 0; i < qtdProdutoAddCarrinho; i++) {
 				cliente.carrinhoProduto.addAll(loja.getProduto().stream()
@@ -67,7 +70,10 @@ public class Cliente extends Pessoa {
 
 	}
 
-	public void addDinheiroCarteira(Double dinheiro) {
+	public void addDinheiroCarteira(Double dinheiro) throws Exception {
+		if(dinheiro <= 0) {
+			throw new Exception("Você precisa colocar um valor acima de zero para adicionar a carteira");
+		}
 		this.dinheiroCarteira += dinheiro;
 		System.out.println("Você adicionou " + dinheiro + " a sua carteira");
 		System.out.println("O valor da sua carteira é R$: " + this.getDinheiroCarteira());
@@ -167,6 +173,9 @@ public class Cliente extends Pessoa {
 						// auxScanner agr vai armazenar a quantidade de itens que eu quero compra
 						int aux = 0;
 						aux = scanner.nextInt();
+						if(aux < 1) {
+							throw new Exception("Você precisa add pelo menos 1 produto para poder comprar");
+						}
 						auxScanner = aux;
 					} catch (NumberFormatException e) {
 						System.out.println("Você digitou algo invalido");

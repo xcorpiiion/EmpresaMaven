@@ -1,4 +1,4 @@
-package entities;
+package br.com.empresa;
 
 import java.text.SimpleDateFormat;
 
@@ -48,14 +48,6 @@ public class Funcionario extends Pessoa {
 
 	public TipoContrato getTipoContrato() {
 		return tipoContrato;
-	}
-
-	public void aumentaSalario(Double salario) {
-		this.salario += salario;
-	}
-
-	public void descontoSalario(Double descontoSalario) {
-		this.salario += descontoSalario;
 	}
 
 	public void listaTarefasFuncionario(Funcionario funcionario) {

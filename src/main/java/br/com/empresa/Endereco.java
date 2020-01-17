@@ -1,4 +1,4 @@
-package entities;
+package br.com.empresa;
 
 public class Endereco {
 	private String rua;

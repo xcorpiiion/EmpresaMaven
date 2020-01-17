@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
-import entities.Cliente;
-import entities.Funcionario;
-import entities.Empresa;
-import entities.Endereco;
-import entities.Produtos;
+import br.com.empresa.Cliente;
+import br.com.empresa.Empresa;
+import br.com.empresa.Endereco;
+import br.com.empresa.Funcionario;
+import br.com.empresa.Produtos;
 import enums.Cargo;
 import enums.MotivoDemissao;
 import enums.TipoContrato;
@@ -40,8 +40,13 @@ public class MainClass {
 		Scanner scanner = new Scanner(System.in);
 
 		List<Produtos> produtos = new ArrayList<Produtos>();
-		produtos.add(new Produtos("God of war", 150.00, 30));
-		produtos.add(new Produtos("The last of us", 120.00, 10));
+		try {
+			produtos.add(new Produtos("God of war", 150.00, 30));
+			produtos.add(new Produtos("The last of us", 120.00, 10));
+		} catch (Exception e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		}
 
 		// cadastra um funcionario do RH para poder contratar novos funcionarios
 		try {
@@ -75,30 +80,32 @@ public class MainClass {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
+		
+		System.out.print("Informe o nome da empresa: ");
+		String nomeEmpresa = scanner.nextLine();
+		System.out.print("Informe o email da empresa: ");
+		String emailEmpresa = scanner.nextLine();
+		System.out.println("Informe o cnpj da empresa (precisa ter 14 números): ");
+		String cnpj = scanner.nextLine();
+		System.out.print("Informe o nome da rua da empresa: ");
+		rua = scanner.nextLine();
+		System.out.print("Informe o da bairro da empresa: ");
+		bairro = scanner.nextLine();
+		System.out.print("Informe o cep da empresa (precisa ter 8 números): ");
+		cep = scanner.nextLine();
+		System.out.print("Informe o nome da cidade da empresa: ");
+		cidade = scanner.nextLine();
+		System.out.print("Informe o nome do estado da empresa: ");
+		estado = scanner.nextLine();
 
-//		System.out.print("Informe o nome da empresa: ");
-//		String nomeEmpresa = scanner.next();
-//		System.out.print("Informe o email da empresa: ");
-//		String emailEmpresa = scanner.next();
-//		System.out.println("Informe o cnpj da empresa (precisa ter 14 números): ");
-//		String cnpj = scanner.next();
-//		System.out.print("Informe o nome da rua da empresa: ");
-//		String ruaEmpresa = scanner.nextLine();
-//		System.out.print("Informe o da bairro da empresa: ");
-//		String bairroEmpresa = scanner.next();
-//		System.out.print("Informe o cep da empresa (precisa ter 8 números): ");
-//		String cepEmpresa = scanner.next();
-//
-//		System.out.println("Empresa criada com sucesso");
-//
-//		// cria uma loja
-//		Empresa loja = new Empresa(nomeEmpresa, emailEmpresa, produtos, cnpj, ruaEmpresa, bairroEmpresa, cepEmpresa);
+		System.out.println("Empresa criada com sucesso");
 
+		// cria uma loja
 		Empresa loja = null;
-		try {
-			loja = new Empresa("Kratos games", "kratosgames@gmail.com", produtos, "01234567890123",
-					new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo", "São Paulo"));
 
+		try {
+			loja = new Empresa(nomeEmpresa, emailEmpresa, produtos, cnpj, 
+					new Endereco(rua, bairro, cep, numeroResidencia, cidade, estado));
 			funcionario.contratarFuncionario(funcionario.getNome(), funcionario.getEmail(), funcionario.getCargo(),
 					funcionario.getSalario(), funcionario.getDataNascimento(), funcionario, loja,
 					funcionario.getTipoContrato(), funcionario.getEndereco());
@@ -158,6 +165,8 @@ public class MainClass {
 								cliente.addDinheiroCarteira(scanner.nextDouble());
 							} catch (NumberFormatException e) {
 								System.out.println("Informe um valor valido: " + e.getMessage());
+							} catch (Exception e) {
+								e.printStackTrace();
 							}
 							cadastro = 0;
 							break;

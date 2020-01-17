@@ -1,4 +1,4 @@
-package entities;
+package br.com.empresa;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ public class Empresa {
 		this.produto = produto;
 		this.cnpj = cnpj;
 		this.endereco = endereco;
-		verificaCnpj(cnpj);
+		verificaDados(nome, email, produto, cnpj, endereco);
 	}
 	
 	public Endereco getEndereco() {
@@ -151,8 +151,9 @@ public class Empresa {
 				+ "\nCidade: " + this.endereco.getCidade() + "\nEstado: " + this.endereco.getEstado();
 	}
 
-	public void verificaCnpj(String cnpj) throws Exception {
-		if(cnpj == null) {
+	public void verificaDados(String nome, String email, List<Produtos> produto, 
+			String cnpj, Endereco endereco) throws Exception {
+		if(cnpj == null || cnpj.isEmpty()) {
 			throw new Exception("O cnpj não pode ficar null");
 		}
 		
@@ -165,6 +166,22 @@ public class Empresa {
 			System.out.println("");
 		} else {
 			throw new Exception("O cnpj está errado");
+		}
+		
+		if(nome == null || nome.isEmpty()) {
+			throw new Exception("O nome está vazio ou null");
+		}
+		
+		if(email == null || email.isEmpty()) {
+			throw new Exception("O email está vazio ou null");
+		}
+		
+		if(produto == null) {
+			throw new Exception("O produto está null");
+		}
+		
+		if(endereco== null) {
+			throw new Exception("O endereço está null");
 		}
 	}
 	

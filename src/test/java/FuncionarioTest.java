@@ -9,64 +9,47 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
-import entities.Endereco;
-import entities.Funcionario;
-import entities.Produtos;
+import br.com.empresa.Endereco;
+import br.com.empresa.Funcionario;
+import br.com.empresa.Produtos;
 import enums.Cargo;
 import enums.MotivoDemissao;
 import enums.TipoContrato;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FuncionarioTest {
 
 	SimpleDateFormat nascimento = new SimpleDateFormat("dd/MM/yyyy");
 	private List<Produtos> produto = new ArrayList<Produtos>();
 	private List<Funcionario> funcionario = new ArrayList<Funcionario>();
-	private double salario;
 	private MotivoDemissao motivoDemissao;
-	
-	@Before
-	public void salarioInicial() {
-		this.salario = 5000.00;
-	}
-	
+
 	@Before
 	public void addDadosFuncionario() {
 		try {
 			nascimento.parse("03/07/1992");
-			funcionario.add(new Funcionario("Lucas", "lucas@gmail.com", 2500.00, Cargo.RH, nascimento, 
-					TipoContrato.CLT, new Endereco("Rua casa verde", "Casa Verde", "02678100", 
-							"40", "São paulo", "São Paulo")));
+			funcionario.add(new Funcionario("Lucas", "lucas@gmail.com", 2500.00, Cargo.RH, nascimento, TipoContrato.CLT,
+					new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", "São Paulo")));
 			nascimento.parse("09/04/1990");
-			funcionario.add(new Funcionario("João", "joao@gmail.com", 2000.00, Cargo.Repositor, nascimento, 
-					TipoContrato.CLT, new Endereco("Rua casa verde", "Casa Verde", "02678100", 
-							"40", "São paulo", "São Paulo")));
+			funcionario.add(
+					new Funcionario("João", "joao@gmail.com", 2000.00, Cargo.Repositor, nascimento, TipoContrato.CLT,
+							new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", "São Paulo")));
 			nascimento.parse("03/02/1985");
-			funcionario.add(new Funcionario("Weevil", "weevil@gmail.com", 1500.00, Cargo.Repositor, nascimento, 
-					TipoContrato.CLT, new Endereco("Rua casa verde", "Casa Verde", "02678100", 
-							"40", "São paulo", "São Paulo")));
+			funcionario.add(new Funcionario("Weevil", "weevil@gmail.com", 1500.00, Cargo.Repositor, nascimento,
+					TipoContrato.CLT,
+					new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", "São Paulo")));
 			nascimento.parse("26/01/1989");
-			funcionario.add(new Funcionario("Dante", "dante@gmail.com", 1200.00, Cargo.RH, nascimento, 
-					TipoContrato.CLT, new Endereco("Rua casa verde", "Casa Verde", "02678100", 
-							"40", "São paulo", "São Paulo")));
+			funcionario.add(new Funcionario("Dante", "dante@gmail.com", 1200.00, Cargo.RH, nascimento, TipoContrato.CLT,
+					new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", "São Paulo")));
 		} catch (Exception e) {
 			fail("Você informou uma data invalida");
 		}
 	}
-	
-	@Test
-	public void aumentaSalario() {
-		this.salario += 1000.00;
-		assertEquals("O salario não mudou", 6000.00, this.salario, 0);
-	}
 
-	@Test
-	public void descontoSalario() {
-		this.salario -= 1000.00;
-		assertEquals("O salario não mudou", 4000.00, this.salario, 0);
-	}
-	
 	@Test(timeout = 10)
 	public void contratarFuncionario() {
 		if (funcionario == null) {
@@ -89,9 +72,8 @@ public class FuncionarioTest {
 			fail("Você informou uma data invalida");
 		}
 		try {
-			funcionario.add(new Funcionario(nome, email, 2500.00, Cargo.RH, nascimento, 
-					TipoContrato.CLT, new Endereco("Rua casa verde", "Casa Verde", "02678100", 
-							"40", "São paulo", "São Paulo")));
+			funcionario.add(new Funcionario(nome, email, 2500.00, Cargo.RH, nascimento, TipoContrato.CLT,
+					new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", "São Paulo")));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			fail("Você informou o endereco errado");
@@ -128,7 +110,7 @@ public class FuncionarioTest {
 		System.out.println("O funcionario foi demitido");
 
 	}
-	
+
 	@Test
 	public void cadastrarProduto() {
 		if (this.produto == null) {
@@ -152,7 +134,12 @@ public class FuncionarioTest {
 					.forEach(prod -> prod.setEstoque(prod.getEstoque() + estoque));
 			System.out.println("Produto foi add ao estoque");
 		} else {
-			produto.add(new Produtos(nome, preco, estoque));
+			try {
+				produto.add(new Produtos(nome, preco, estoque));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				fail("Algum valor no produto está null");
+			}
 			System.out.println("Produto foi cadastrado");
 		}
 	}

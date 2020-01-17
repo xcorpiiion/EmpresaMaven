@@ -1,15 +1,15 @@
-package entities;
+package br.com.empresa;
 
 public class Produtos {
 	private String nome;
 	private Double preco;
 	private Integer estoque;
 	
-	public Produtos(String nome, Double preco, Integer estoque) {
-		super();
+	public Produtos(String nome, Double preco, Integer estoque) throws Exception {
 		this.nome = nome;
 		this.preco = preco;
 		this.estoque = estoque;
+		verificarDados(nome, preco, estoque);
 	}
 
 	public String getNome() {
@@ -61,6 +61,20 @@ public class Produtos {
 		return true;
 	}
 
+	public void verificarDados(String nome, Double preco, Integer estoque) throws Exception {
+		if(nome == null || nome.isEmpty()) {
+			throw new Exception("O nome do produto está vazio ou null");
+		}
+		
+		if(preco == null) {
+			throw new Exception("O nome do preõ está vazio ou null");
+		}
+		
+		if(estoque == null) {
+			throw new Exception("O nome do estoque está null");
+		}
+	}
+	
 	@Override
 	public String toString() {
 		return "Nome: " + nome + ", R$: " + preco + ", Quantidade em estoque: " + estoque;

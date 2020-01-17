@@ -1,4 +1,4 @@
-package entities;
+package br.com.empresa;
 
 import java.text.SimpleDateFormat;
 
