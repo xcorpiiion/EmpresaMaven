@@ -2,19 +2,20 @@ package entities;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class Cliente extends Pessoa {
 	private Double dinheiroCarteira;
+	private Endereco endereco;
 	private List<Produtos> carrinhoProduto = new ArrayList<Produtos>();
 	private List<Produtos> produtosComprados = new ArrayList<Produtos>();
 
-	public Cliente(String nome, String email, Double dinheiro, SimpleDateFormat dataNascimento) {
+	public Cliente(String nome, String email, Double dinheiro, SimpleDateFormat dataNascimento, Endereco endereco) {
 		super(nome, email, dataNascimento);
 		this.dinheiroCarteira = dinheiro;
+		this.endereco = endereco;
 	}
 
 	public Double getDinheiroCarteira() {
@@ -27,6 +28,14 @@ public class Cliente extends Pessoa {
 
 	public List<Produtos> getProdutosComprados() {
 		return produtosComprados;
+	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 
 	public void addItensCarrinho(Cliente cliente, Empresa loja, Scanner scanner, String nomeProduto) throws Exception {
@@ -216,6 +225,30 @@ public class Cliente extends Pessoa {
 //		System.out.println("Dinheiro na carteira R$: " + this.dinheiroCarteira);
 
 	}
+	
+	// Qualuqer pessoa consegue se cadastrar na loja
+	public void cadastrarCliente(String nome, String email, Double dinheiro, SimpleDateFormat dataNascimento
+				, Empresa loja, Endereco endereco)
+				throws Exception {
+			
+			if(loja == null) {
+				throw new Exception("A loja está nulla");
+			}
+			
+			if (loja.getCliente() == null) {
+				throw new Exception("O cliente está nullo");
+			}
+
+			// Verifica se o cliente já existe
+			if (loja.getCliente().stream()
+					.anyMatch(c -> c.getNome().equalsIgnoreCase(nome) && c.getEmail().equalsIgnoreCase(email))) {
+				throw new Exception("O cliente já está cadastrado");
+			}
+
+			// Caso o tenha passado na verificação, o funcionario será contratado
+			loja.getCliente().add(new Cliente(nome, email, dinheiro, dataNascimento, endereco));
+			System.out.println("O cliente foi cadastrado");
+		}
 
 	private int verificarValidade(String msg, String msg2, Scanner scanner, int numeroVerificador) {
 		while (numeroVerificador == 0) {

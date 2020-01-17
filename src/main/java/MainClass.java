@@ -8,13 +8,22 @@ import java.util.Scanner;
 import entities.Cliente;
 import entities.Funcionario;
 import entities.Empresa;
+import entities.Endereco;
 import entities.Produtos;
 import enums.Cargo;
 import enums.MotivoDemissao;
+import enums.TipoContrato;
 
 public class MainClass {
 
-	private static String nome = "", email = "";
+	private static String nome = "";
+	private static  String email = "";
+	private static String rua;
+	private static String bairro;
+	private static String cep;
+	private static String numeroResidencia;
+	private static String cidade;
+	private static String estado;
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -22,6 +31,7 @@ public class MainClass {
 		boolean isFinish = false;
 		double dinheiro = 0.0;
 		Cargo cargo = null;
+		TipoContrato tipoContrato = null;
 		MotivoDemissao motivoDemissao = null;
 
 		SimpleDateFormat dataNascimento = new SimpleDateFormat("dd/MM/yyyy");
@@ -39,7 +49,16 @@ public class MainClass {
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
-		Funcionario funcionario = new Funcionario("Jessie", "jessie@gmail.com", 2501.00, Cargo.RH, dataNascimento);
+
+		Funcionario funcionario = null;
+		try {
+			funcionario = new Funcionario("Jessie", "jessie@gmail.com", 2501.00, Cargo.RH, dataNascimento, 
+					TipoContrato.CLT, new Endereco("Rua casa verde", "Casa Verde", "02678100", 
+							"40", "São paulo", "São Paulo"));
+		} catch (Exception e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 
 		// Cria um cliente
 		try {
@@ -48,60 +67,75 @@ public class MainClass {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		Cliente cliente = new Cliente("Kratos", "kratos@gmail.com", 2000.00, dataNascimento);
-
-		System.out.print("Informe o nome da empresa: ");
-		String nomeEmpresa = scanner.next();
-		System.out.print("Informe o email da empresa: ");
-		String emailEmpresa = scanner.next();
-		System.out.println("Informe o cnpj da empresa (precisa ter 14 números): ");
-		String cnpj = scanner.next();
-		System.out.print("Informe o nome da rua da empresa: ");
-		String ruaEmpresa = scanner.nextLine();
-		System.out.print("Informe o da bairro da empresa: ");
-		String bairroEmpresa = scanner.next();
-		System.out.print("Informe o cep da empresa (precisa ter 8 números): ");
-		String cepEmpresa = scanner.next();
-
-		System.out.println(cepEmpresa.length());
-		
+		Cliente cliente = null;
 		try {
-			if (cnpj.length() != 14) {
-				throw new Exception("O cnpj está errado");
-			}
-			if (cnpj.matches("^[a-zA-ZÁÂÃÀÇÉÊÍÓÔÕÚÜáâãàçéêíóôõúü]*$")) {
-				throw new Exception("O cnpj está errado");
-			} else if (cnpj.matches("^[0-9]*$")) {
-				System.out.println("");
-			} else {
-				throw new Exception("O cnpj está errado");
-			}
-			
-			if (cepEmpresa.length() != 8) {
-				throw new Exception("O cep está errado");
-			}
-			if (cepEmpresa.matches("^[a-zA-ZÁÂÃÀÇÉÊÍÓÔÕÚÜáâãàçéêíóôõúü]*$")) {
-				throw new Exception("O cnpj está errado");
-			} else if (cepEmpresa.matches("^[0-9]*$")) {
-				System.out.println("");
-			} else {
-				throw new Exception("O cnpj está errado");
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
+			cliente = new Cliente("Kratos", "kratos@gmail.com", 2000.00, dataNascimento,
+					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo"));
+		} catch (Exception e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
 		}
-		System.out.println("Empresa criada com sucesso");
+		
 
-		// cria uma loja
-		Empresa loja = new Empresa(nomeEmpresa, emailEmpresa, produtos, cnpj, ruaEmpresa, bairroEmpresa, cepEmpresa);
+//		System.out.print("Informe o nome da empresa: ");
+//		String nomeEmpresa = scanner.next();
+//		System.out.print("Informe o email da empresa: ");
+//		String emailEmpresa = scanner.next();
+//		System.out.println("Informe o cnpj da empresa (precisa ter 14 números): ");
+//		String cnpj = scanner.next();
+//		System.out.print("Informe o nome da rua da empresa: ");
+//		String ruaEmpresa = scanner.nextLine();
+//		System.out.print("Informe o da bairro da empresa: ");
+//		String bairroEmpresa = scanner.next();
+//		System.out.print("Informe o cep da empresa (precisa ter 8 números): ");
+//		String cepEmpresa = scanner.next();
+//
+//		System.out.println(cepEmpresa.length());
+//		
+//		try {
+//			if (cnpj.length() != 14) {
+//				throw new Exception("O cnpj está errado");
+//			}
+//			if (cnpj.matches("^[a-zA-ZÁÂÃÀÇÉÊÍÓÔÕÚÜáâãàçéêíóôõúü]*$")) {
+//				throw new Exception("O cnpj está errado");
+//			} else if (cnpj.matches("^[0-9]*$")) {
+//				System.out.println("");
+//			} else {
+//				throw new Exception("O cnpj está errado");
+//			}
+//			
+//			if (cepEmpresa.length() != 8) {
+//				throw new Exception("O cep está errado");
+//			}
+//			if (cepEmpresa.matches("^[a-zA-ZÁÂÃÀÇÉÊÍÓÔÕÚÜáâãàçéêíóôõúü]*$")) {
+//				throw new Exception("O cnpj está errado");
+//			} else if (cepEmpresa.matches("^[0-9]*$")) {
+//				System.out.println("");
+//			} else {
+//				throw new Exception("O cnpj está errado");
+//			}
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		System.out.println("Empresa criada com sucesso");
+//
+//		// cria uma loja
+//		Empresa loja = new Empresa(nomeEmpresa, emailEmpresa, produtos, cnpj, ruaEmpresa, bairroEmpresa, cepEmpresa);
+
+		Empresa loja = null;
 		try {
-			loja.contratarFuncionario(funcionario.getNome(), funcionario.getEmail(), funcionario.getCargo(),
-					funcionario.getSalario(), funcionario.getDataNascimento(), funcionario);
-			loja.contratarFuncionario("Lucas", "lucas@gmail.com", Cargo.Repositor, funcionario.getSalario(),
-					funcionario.getDataNascimento(), funcionario);
-			loja.cadastrarCliente(cliente.getNome(), cliente.getEmail(), cliente.getDinheiroCarteira(),
-					cliente.getDataNascimento());
+			loja = new Empresa("Kratos games", "kratosgames@gmail.com", produtos, "01234567890123",
+					 new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo", "São Paulo"));
+			
+			funcionario.contratarFuncionario(funcionario.getNome(), funcionario.getEmail(), funcionario.getCargo(),
+					funcionario.getSalario(), funcionario.getDataNascimento(), funcionario, loja,
+					funcionario.getTipoContrato(), funcionario.getEndereco());
+			funcionario.contratarFuncionario("Lucas", "lucas@gmail.com", Cargo.Repositor, 2500.00,
+					funcionario.getDataNascimento(), funcionario, loja, TipoContrato.PJ,
+					new Endereco("Rua caminhão", "Santa Julia", "02100120", "45", "São paulo", "São Paulo"));
+			cliente.cadastrarCliente(cliente.getNome(), cliente.getEmail(), cliente.getDinheiroCarteira(),
+					cliente.getDataNascimento(), loja, cliente.getEndereco());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -164,9 +198,10 @@ public class MainClass {
 										"-------------------------------------------------------------------------------");
 
 								System.out.print("Informe o nome do produto que você deseja adicionar no carrinho: ");
+								String nomeProduto = "";
 								scanner.nextLine();
-								nome = scanner.nextLine();
-								cliente.addItensCarrinho(cliente, loja, scanner, nome);
+								nomeProduto = scanner.nextLine();
+								cliente.addItensCarrinho(cliente, loja, scanner, nomeProduto);
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
@@ -204,7 +239,8 @@ public class MainClass {
 							dataNascimento.parse(scanner.next());
 							System.out.println("Informe um valor que você quer colocar na sua carteira: ");
 							dinheiro = scanner.nextDouble();
-							loja.cadastrarCliente(nome, email, dinheiro, dataNascimento);
+							cliente.cadastrarCliente(nome, email, dinheiro, dataNascimento, loja,
+									cadastrarEndereco(rua, bairro, cep, numeroResidencia, cidade, estado, scanner));
 						} catch (ParseException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -264,10 +300,12 @@ public class MainClass {
 								try {
 									System.out.println("Informe os dados do funcionario que você quer contratar: ");
 									System.out.print("Informe o nome do funcionario: ");
+									String nomeNovoFuncionario = "";
 									scanner.nextLine();
-									nome = scanner.nextLine();
+									nomeNovoFuncionario = scanner.nextLine();
 									System.out.print("Informe o email do funcionario: ");
-									email = scanner.next();
+									String emailNovoFuncionario = "";
+									emailNovoFuncionario = scanner.next();
 									System.out.print("Informe a data de nascimento do funcionario (dd/MM/yyyy): ");
 									dataNascimento.parse(scanner.next());
 									System.out.println("Escolha um cargo para o funcionario");
@@ -289,9 +327,27 @@ public class MainClass {
 									}
 									System.out.print("Informe o salario do funcionario: ");
 									dinheiro = scanner.nextDouble();
+									System.out.println("Escolha um tipo de contrato para o funcionario");
+									System.out.println("1 - " + TipoContrato.CLT.toString());
+									System.out.println("2 - " + TipoContrato.PJ.toString());
+									System.out.print("Esolha uma opção: ");
+									auxCargo = 0;
+									auxCargo = scanner.nextInt();
+									switch (auxCargo) {
+									case 1:
+										tipoContrato = TipoContrato.CLT;
+										break;
+									case 2:
+										tipoContrato = TipoContrato.PJ;
+										break;
 
-									loja.contratarFuncionario(nome, email, cargo, dinheiro, dataNascimento,
-											funcionario);
+									default:
+										break;
+									}
+									
+									funcionario.contratarFuncionario(nomeNovoFuncionario, emailNovoFuncionario, cargo,
+											dinheiro, dataNascimento, funcionario, loja, tipoContrato, 
+											cadastrarEndereco(rua, bairro, cep, numeroResidencia, cidade, estado, scanner));
 								} catch (ParseException e1) {
 									// TODO Auto-generated catch block
 									e1.printStackTrace();
@@ -305,10 +361,12 @@ public class MainClass {
 								try {
 									System.out.print("Informe os dados do funcionario que você quer demitir: ");
 									System.out.print("Informe o nome do funcionario: ");
+									String nomeFuncionarioDemitir = "";
 									scanner.nextLine();
-									nome = scanner.nextLine();
+									nomeFuncionarioDemitir = scanner.nextLine();
 									System.out.print("Informe o email do funcionario: ");
-									email = scanner.next();
+									String emailFuncionarioDemitir = "";
+									emailFuncionarioDemitir = scanner.next();
 									System.out.println("Informe o motivo da demissão");
 									System.out.println("1 - " + MotivoDemissao.Justa_Causa.toString());
 									System.out.println("2 - " + MotivoDemissao.Pediu_As_Contas.toString());
@@ -323,14 +381,15 @@ public class MainClass {
 										motivoDemissao = MotivoDemissao.Pediu_As_Contas;
 										break;
 									}
-									loja.demitirFuncionario(nome, email, motivoDemissao, funcionario);
+									funcionario.demitirFuncionario(nomeFuncionarioDemitir, emailFuncionarioDemitir,
+											motivoDemissao, funcionario, loja);
 								} catch (Exception e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
 								break;
 							case 3:
-								System.out.println(loja.toString());
+								System.out.println(loja);
 								break;
 							}
 						} else {
@@ -349,17 +408,20 @@ public class MainClass {
 									String nomeProduto = "";
 									double preco = 0.0;
 									int estoque = 0;
+									System.out.println(
+											"-------------------------------------------------------------------------------");
 									switch (auxEscolhaOpcao) {
 									case 1:
 										loja.mostrarProdutos();
 										System.out.print("Informe o nome do produto que deseja alterar o nome: ");
+										String nomeNovoProduto = "";
 										scanner.nextLine();
 										nomeProduto = scanner.nextLine();
 										if (loja.verificarProdutoExiste(nomeProduto)) {
-											System.out.println("Informe o novo nome do produto");
-											scanner.nextLine();
-											nomeProduto = scanner.nextLine();
-											loja.alterarDadosProduto(funcionario, escolhaFuncionario, nomeProduto);
+											System.out.println("Informe o novo nome do produto: ");
+											nomeNovoProduto = scanner.nextLine();
+											funcionario.alterarDadosProduto(funcionario, 1, 
+													nomeProduto, nomeNovoProduto, loja);
 
 										}
 										break;
@@ -371,8 +433,8 @@ public class MainClass {
 										if (loja.verificarProdutoExiste(nomeProduto)) {
 											System.out.print("Informe o novo preço do produto: ");
 											preco = scanner.nextDouble();
-											loja.alterarDadosProduto(funcionario, escolhaFuncionario, nomeProduto,
-													preco);
+											funcionario.alterarDadosProduto(funcionario, 2, nomeProduto,
+													preco, loja);
 
 										}
 										break;
@@ -385,10 +447,10 @@ public class MainClass {
 										if (loja.verificarProdutoExiste(nomeProduto)) {
 											System.out.print("Informe o novo estoque do produto: ");
 											estoque = scanner.nextInt();
-											loja.alterarDadosProduto(funcionario, escolhaFuncionario, nomeProduto,
-													estoque);
-
+											funcionario.alterarDadosProduto(funcionario, 3, nomeProduto,
+													estoque, loja);
 										}
+										break;
 									case 4:
 										loja.mostrarProdutos();
 										System.out.print("Informe o nome do produto que deseja alterar o nome: ");
@@ -397,14 +459,14 @@ public class MainClass {
 										nomeProduto = scanner.nextLine();
 										if (loja.verificarProdutoExiste(nomeProduto)) {
 											System.out.print("Informe o novo nome do produto: ");
-											scanner.nextLine();
+											nomeNovoProduto = "";
 											nomeProduto = scanner.nextLine();
 											System.out.print("Informe o novo preço do produto: ");
 											preco = scanner.nextDouble();
 											System.out.print("Informe o novo estoque do produto: ");
 											estoque = scanner.nextInt();
-											loja.alterarDadosProduto(funcionario, escolhaFuncionario, nomeProduto,
-													preco, estoque);
+											funcionario.alterarDadosProduto(funcionario, 4, nomeProduto,
+													preco, estoque, nomeNovoProduto, loja);
 										}
 
 									default:
@@ -433,11 +495,12 @@ public class MainClass {
 									int estoqueProduto = 0;
 									estoqueProduto = scanner.nextInt();
 									System.out.println(funcionario.getCargo().toString());
-									loja.cadastrarProduto(nomeProduto, preco, estoqueProduto, funcionario);
+									funcionario.cadastrarProduto(nomeProduto, preco, estoqueProduto, funcionario, loja);
 								} catch (Exception e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
+								break;
 							}
 						}
 
@@ -446,6 +509,8 @@ public class MainClass {
 					}
 				}
 
+				break;
+			default:
 				break;
 			}
 			System.out.println("-------------------------------------------------------------------------------");
@@ -538,5 +603,24 @@ public class MainClass {
 		System.out.println("-------------------------------------------------------------------------------");
 		return numeroVerificador;
 	}
-
+	
+	private static Endereco cadastrarEndereco(String rua, String bairro, String cep, 
+			String numeroResidencia, String cidade, String estado, Scanner scanner) throws Exception {
+		System.out.print("Informe a sua rua: ");
+		scanner.nextLine();
+		rua = scanner.nextLine();
+		System.out.print("Informe o seu bairro: ");
+		bairro = scanner.nextLine();
+		System.out.print("Informe o seu cep: ");
+		cep = scanner.nextLine();
+		System.out.print("Informe o seu bairro: ");
+		bairro = scanner.nextLine();
+		System.out.print("Informe o seu número de residência: ");
+		numeroResidencia = scanner.nextLine();
+		System.out.print("Informe a sua cidade: ");
+		cidade = scanner.nextLine();
+		System.out.print("Informe o seu estado: ");
+		estado = scanner.nextLine();
+		return new Endereco(rua, bairro, cep, numeroResidencia, cidade, estado);
+	}
 }

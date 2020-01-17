@@ -1,5 +1,7 @@
 import static org.junit.Assert.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -7,6 +9,8 @@ import java.util.stream.Collectors;
 import org.junit.Before;
 import org.junit.Test;
 
+import entities.Cliente;
+import entities.Endereco;
 import entities.Produtos;
 
 public class ClienteTest {
@@ -14,7 +18,29 @@ public class ClienteTest {
 	private List<Produtos> carrinhoProduto = new ArrayList<Produtos>();
 	private List<Produtos> produtosComprados = new ArrayList<Produtos>();
 	private List<Produtos> produto = new ArrayList<Produtos>();
+	SimpleDateFormat nascimento = new SimpleDateFormat("dd/MM/yyyy");
+	private List<Cliente> cliente = new ArrayList<Cliente>();
 
+	@Before
+	public void addDadosCliente() {
+		try {
+			nascimento.parse("19/10/1992");
+			cliente.add(new Cliente("Matheus", "matheus@gmail.com", 2500.00, nascimento, 
+					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo")));
+			nascimento.parse("20/11/1999");
+			cliente.add(new Cliente("Vergil", "vergil@gmail.com", 1500.00, nascimento, 
+					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo")));
+			nascimento.parse("9/1/1992");
+			cliente.add(new Cliente("Dante", "dante@gmail.com", 900.00, nascimento, 
+					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo")));
+			nascimento.parse("19/9/1996");
+			cliente.add(new Cliente("Harry", "harry@gmail.com", 1300.00, nascimento, 
+					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo")));
+		} catch (Exception e) {
+			fail("Você digitou uma data invalida");
+		}
+	}
+	
 	@Before
 	public void addDadosProduto() {
 		produto.add(new Produtos("Tablet", 2500.00, 50));
@@ -123,4 +149,36 @@ public class ClienteTest {
 		System.out.println("Produto comprado com sucesso.");
 		System.out.println("Dinheiro na carteira R$: " + this.dinheiroCarteira);
 	}
+	
+	@Test(timeout = 50)
+	public void cadastrarCliente() {
+		if (this.cliente == null) {
+			assertEquals("O cliente está nullo", this.cliente);
+		}
+
+		String nome = "lalau";
+		String email = "lalau@gmail.com";
+
+		// Verifica se o cliente já existe
+		boolean wasCadastrado = this.cliente.stream()
+				.anyMatch(c -> c.getNome().equalsIgnoreCase(nome) && c.getEmail().equalsIgnoreCase(email));
+		assertTrue("O cliente já está cadastrado", !wasCadastrado);
+
+		// Caso o tenha passado na verificação, o funcionario será contratado
+		try {
+			nascimento.parse("03/04/2000");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			fail("Você informou uma data invalida");
+		}
+		try {
+			cliente.add(new Cliente(nome, email, 2500.00, nascimento, 
+					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo")));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			fail("O endereço está incorreto");
+		}
+		System.out.println("O cliente foi cadastrado");
+	}
+	
 }
