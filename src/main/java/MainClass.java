@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter.DEFAULT;
+
 import br.com.empresa.Cliente;
 import br.com.empresa.Empresa;
 import br.com.empresa.Endereco;
@@ -80,7 +82,7 @@ public class MainClass {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
-		
+
 		System.out.print("Informe o nome da empresa: ");
 		String nomeEmpresa = scanner.nextLine();
 		System.out.print("Informe o email da empresa: ");
@@ -104,7 +106,7 @@ public class MainClass {
 		Empresa loja = null;
 
 		try {
-			loja = new Empresa(nomeEmpresa, emailEmpresa, produtos, cnpj, 
+			loja = new Empresa(nomeEmpresa, emailEmpresa, produtos, cnpj,
 					new Endereco(rua, bairro, cep, numeroResidencia, cidade, estado));
 			funcionario.contratarFuncionario(funcionario.getNome(), funcionario.getEmail(), funcionario.getCargo(),
 					funcionario.getSalario(), funcionario.getDataNascimento(), funcionario, loja,
@@ -330,7 +332,7 @@ public class MainClass {
 							break;
 						case 2:
 							try {
-								System.out.print("Informe os dados do funcionario que você quer demitir: ");
+								System.out.println("Informe os dados do funcionario que você quer demitir: ");
 								System.out.print("Informe o nome do funcionario: ");
 								String nomeFuncionarioDemitir = "";
 								scanner.nextLine();
@@ -351,7 +353,11 @@ public class MainClass {
 								case 2:
 									motivoDemissao = MotivoDemissao.Pediu_As_Contas;
 									break;
+								default:
+									throw new Exception("O número informado não é valido");
+
 								}
+
 								funcionario.demitirFuncionario(nomeFuncionarioDemitir, emailFuncionarioDemitir,
 										motivoDemissao, funcionario, loja);
 							} catch (Exception e) {
@@ -484,7 +490,7 @@ public class MainClass {
 				}
 
 				break;
-			
+
 			default:
 				break;
 			}
