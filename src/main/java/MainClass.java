@@ -17,13 +17,13 @@ import enums.TipoContrato;
 public class MainClass {
 
 	private static String nome = "";
-	private static  String email = "";
-	private static String rua;
-	private static String bairro;
-	private static String cep;
-	private static String numeroResidencia;
-	private static String cidade;
-	private static String estado;
+	private static String email = "";
+	private static String rua = "";
+	private static String bairro = "";
+	private static String cep = "";
+	private static String numeroResidencia = "";
+	private static String cidade = "";
+	private static String estado = "";
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -52,9 +52,9 @@ public class MainClass {
 
 		Funcionario funcionario = null;
 		try {
-			funcionario = new Funcionario("Jessie", "jessie@gmail.com", 2501.00, Cargo.RH, dataNascimento, 
-					TipoContrato.CLT, new Endereco("Rua casa verde", "Casa Verde", "02678100", 
-							"40", "São paulo", "São Paulo"));
+			funcionario = new Funcionario("Jessie", "jessie@gmail.com", 2501.00, Cargo.RH, dataNascimento,
+					TipoContrato.CLT,
+					new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", "São Paulo"));
 		} catch (Exception e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
@@ -75,7 +75,6 @@ public class MainClass {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
-		
 
 //		System.out.print("Informe o nome da empresa: ");
 //		String nomeEmpresa = scanner.next();
@@ -90,34 +89,6 @@ public class MainClass {
 //		System.out.print("Informe o cep da empresa (precisa ter 8 números): ");
 //		String cepEmpresa = scanner.next();
 //
-//		System.out.println(cepEmpresa.length());
-//		
-//		try {
-//			if (cnpj.length() != 14) {
-//				throw new Exception("O cnpj está errado");
-//			}
-//			if (cnpj.matches("^[a-zA-ZÁÂÃÀÇÉÊÍÓÔÕÚÜáâãàçéêíóôõúü]*$")) {
-//				throw new Exception("O cnpj está errado");
-//			} else if (cnpj.matches("^[0-9]*$")) {
-//				System.out.println("");
-//			} else {
-//				throw new Exception("O cnpj está errado");
-//			}
-//			
-//			if (cepEmpresa.length() != 8) {
-//				throw new Exception("O cep está errado");
-//			}
-//			if (cepEmpresa.matches("^[a-zA-ZÁÂÃÀÇÉÊÍÓÔÕÚÜáâãàçéêíóôõúü]*$")) {
-//				throw new Exception("O cnpj está errado");
-//			} else if (cepEmpresa.matches("^[0-9]*$")) {
-//				System.out.println("");
-//			} else {
-//				throw new Exception("O cnpj está errado");
-//			}
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
 //		System.out.println("Empresa criada com sucesso");
 //
 //		// cria uma loja
@@ -126,8 +97,8 @@ public class MainClass {
 		Empresa loja = null;
 		try {
 			loja = new Empresa("Kratos games", "kratosgames@gmail.com", produtos, "01234567890123",
-					 new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo", "São Paulo"));
-			
+					new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo", "São Paulo"));
+
 			funcionario.contratarFuncionario(funcionario.getNome(), funcionario.getEmail(), funcionario.getCargo(),
 					funcionario.getSalario(), funcionario.getDataNascimento(), funcionario, loja,
 					funcionario.getTipoContrato(), funcionario.getEndereco());
@@ -254,262 +225,257 @@ public class MainClass {
 				}
 				break;
 			case 2:
-				cadastro = 0;
-				// Verifica se o cliente ou funcionario quer continuar loggado
-				if (isLogin != 1) {
-					cadastro = verificarValidade("Você possui cadastro?", "1 - para sim / 2 - para não: ", scanner,
-							cadastro);
-				} else {
-					cadastro = 1;
-				}
 
-				if (cadastro == 1) {
-					if (fazerLogin(scanner, loja, typeLogin, isLogin)) {
-						isLogin = 1;
+				if (fazerLogin(scanner, loja, typeLogin, isLogin)) {
+					isLogin = 1;
+					try {
+						funcionario = loja.returnFuncionarioQueFezLogin(nome, email);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+					int escolhaFuncionario = 0;
+
+					while (escolhaFuncionario == 0) {
 						try {
-							funcionario = loja.returnFuncionarioQueFezLogin(nome, email);
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-
-						int escolhaFuncionario = 0;
-
-						while (escolhaFuncionario == 0) {
-							try {
-								funcionario.listaTarefasFuncionario(funcionario);
-								escolhaFuncionario = scanner.nextInt();
-								if (escolhaFuncionario < 1 || escolhaFuncionario > 4) {
-									System.out.println("Informe um número valido");
-									escolhaFuncionario = 0;
-								}
-							} catch (NumberFormatException e) {
-								System.out.println("Você informou um digito invalido " + e.getMessage());
+							funcionario.listaTarefasFuncionario(funcionario);
+							escolhaFuncionario = scanner.nextInt();
+							if (escolhaFuncionario < 1 || escolhaFuncionario > 4) {
+								System.out.println("Informe um número valido");
+								escolhaFuncionario = 0;
 							}
-
-							System.out.println(
-									"-------------------------------------------------------------------------------");
+						} catch (NumberFormatException e) {
+							System.out.println("Você informou um digito invalido " + e.getMessage());
 						}
 
 						System.out.println(
 								"-------------------------------------------------------------------------------");
-						cadastro = 0;
-						if (funcionario.getCargo() == Cargo.RH) {
-							switch (escolhaFuncionario) {
-							case 1:
-								try {
-									System.out.println("Informe os dados do funcionario que você quer contratar: ");
-									System.out.print("Informe o nome do funcionario: ");
-									String nomeNovoFuncionario = "";
-									scanner.nextLine();
-									nomeNovoFuncionario = scanner.nextLine();
-									System.out.print("Informe o email do funcionario: ");
-									String emailNovoFuncionario = "";
-									emailNovoFuncionario = scanner.next();
-									System.out.print("Informe a data de nascimento do funcionario (dd/MM/yyyy): ");
-									dataNascimento.parse(scanner.next());
-									System.out.println("Escolha um cargo para o funcionario");
-									System.out.println("1 - " + Cargo.Repositor.toString());
-									System.out.println("2 - " + Cargo.RH.toString());
-									System.out.print("Esolha uma opção: ");
-									int auxCargo = 0;
-									auxCargo = scanner.nextInt();
-									switch (auxCargo) {
-									case 1:
-										cargo = Cargo.Repositor;
-										break;
-									case 2:
-										cargo = Cargo.RH;
-										break;
-
-									default:
-										break;
-									}
-									System.out.print("Informe o salario do funcionario: ");
-									dinheiro = scanner.nextDouble();
-									System.out.println("Escolha um tipo de contrato para o funcionario");
-									System.out.println("1 - " + TipoContrato.CLT.toString());
-									System.out.println("2 - " + TipoContrato.PJ.toString());
-									System.out.print("Esolha uma opção: ");
-									auxCargo = 0;
-									auxCargo = scanner.nextInt();
-									switch (auxCargo) {
-									case 1:
-										tipoContrato = TipoContrato.CLT;
-										break;
-									case 2:
-										tipoContrato = TipoContrato.PJ;
-										break;
-
-									default:
-										break;
-									}
-									
-									funcionario.contratarFuncionario(nomeNovoFuncionario, emailNovoFuncionario, cargo,
-											dinheiro, dataNascimento, funcionario, loja, tipoContrato, 
-											cadastrarEndereco(rua, bairro, cep, numeroResidencia, cidade, estado, scanner));
-								} catch (ParseException e1) {
-									// TODO Auto-generated catch block
-									e1.printStackTrace();
-								} catch (Exception e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-
-								break;
-							case 2:
-								try {
-									System.out.print("Informe os dados do funcionario que você quer demitir: ");
-									System.out.print("Informe o nome do funcionario: ");
-									String nomeFuncionarioDemitir = "";
-									scanner.nextLine();
-									nomeFuncionarioDemitir = scanner.nextLine();
-									System.out.print("Informe o email do funcionario: ");
-									String emailFuncionarioDemitir = "";
-									emailFuncionarioDemitir = scanner.next();
-									System.out.println("Informe o motivo da demissão");
-									System.out.println("1 - " + MotivoDemissao.Justa_Causa.toString());
-									System.out.println("2 - " + MotivoDemissao.Pediu_As_Contas.toString());
-									System.out.print("Informe o motivo: ");
-									int auxCargo = 0;
-									auxCargo = scanner.nextInt();
-									switch (auxCargo) {
-									case 1:
-										motivoDemissao = MotivoDemissao.Justa_Causa;
-										break;
-									case 2:
-										motivoDemissao = MotivoDemissao.Pediu_As_Contas;
-										break;
-									}
-									funcionario.demitirFuncionario(nomeFuncionarioDemitir, emailFuncionarioDemitir,
-											motivoDemissao, funcionario, loja);
-								} catch (Exception e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-								break;
-							case 3:
-								System.out.println(loja);
-								break;
-							}
-						} else {
-
-							switch (escolhaFuncionario) {
-							case 1:
-								try {
-									System.out.println("Informe o que você quer alterar no produto");
-									System.out.println("1 - nome");
-									System.out.println("2 - preco");
-									System.out.println("3 - estoque");
-									System.out.println("4 - tudo");
-									System.out.print("Escolha uma opção: ");
-									int auxEscolhaOpcao = 0;
-									auxEscolhaOpcao = scanner.nextInt();
-									String nomeProduto = "";
-									double preco = 0.0;
-									int estoque = 0;
-									System.out.println(
-											"-------------------------------------------------------------------------------");
-									switch (auxEscolhaOpcao) {
-									case 1:
-										loja.mostrarProdutos();
-										System.out.print("Informe o nome do produto que deseja alterar o nome: ");
-										String nomeNovoProduto = "";
-										scanner.nextLine();
-										nomeProduto = scanner.nextLine();
-										if (loja.verificarProdutoExiste(nomeProduto)) {
-											System.out.println("Informe o novo nome do produto: ");
-											nomeNovoProduto = scanner.nextLine();
-											funcionario.alterarDadosProduto(funcionario, 1, 
-													nomeProduto, nomeNovoProduto, loja);
-
-										}
-										break;
-									case 2:
-										loja.mostrarProdutos();
-										System.out.print("Informe o nome do produto que deseja alterar o nome: ");
-										scanner.nextLine();
-										nomeProduto = scanner.nextLine();
-										if (loja.verificarProdutoExiste(nomeProduto)) {
-											System.out.print("Informe o novo preço do produto: ");
-											preco = scanner.nextDouble();
-											funcionario.alterarDadosProduto(funcionario, 2, nomeProduto,
-													preco, loja);
-
-										}
-										break;
-									case 3:
-										loja.mostrarProdutos();
-										System.out.print("Informe o nome do produto que deseja alterar o nome: ");
-										nomeProduto = "";
-										scanner.nextLine();
-										nomeProduto = scanner.nextLine();
-										if (loja.verificarProdutoExiste(nomeProduto)) {
-											System.out.print("Informe o novo estoque do produto: ");
-											estoque = scanner.nextInt();
-											funcionario.alterarDadosProduto(funcionario, 3, nomeProduto,
-													estoque, loja);
-										}
-										break;
-									case 4:
-										loja.mostrarProdutos();
-										System.out.print("Informe o nome do produto que deseja alterar o nome: ");
-										nomeProduto = "";
-										scanner.nextLine();
-										nomeProduto = scanner.nextLine();
-										if (loja.verificarProdutoExiste(nomeProduto)) {
-											System.out.print("Informe o novo nome do produto: ");
-											nomeNovoProduto = "";
-											nomeProduto = scanner.nextLine();
-											System.out.print("Informe o novo preço do produto: ");
-											preco = scanner.nextDouble();
-											System.out.print("Informe o novo estoque do produto: ");
-											estoque = scanner.nextInt();
-											funcionario.alterarDadosProduto(funcionario, 4, nomeProduto,
-													preco, estoque, nomeNovoProduto, loja);
-										}
-
-									default:
-										break;
-									}
-								} catch (ParseException e1) {
-									// TODO Auto-generated catch block
-									e1.printStackTrace();
-								} catch (Exception e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-
-								break;
-							case 2:
-								try {
-									System.out.print("Informe os dados do produto que você quer cadastrar: ");
-									System.out.print("Informe o nome do produto: ");
-									scanner.nextLine();
-									String nomeProduto = "";
-									nomeProduto = scanner.nextLine();
-									System.out.print("Informe o preco do produto: ");
-									double preco = 0.0;
-									preco = scanner.nextDouble();
-									System.out.print("Informe o estoque do produto: ");
-									int estoqueProduto = 0;
-									estoqueProduto = scanner.nextInt();
-									System.out.println(funcionario.getCargo().toString());
-									funcionario.cadastrarProduto(nomeProduto, preco, estoqueProduto, funcionario, loja);
-								} catch (Exception e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-								break;
-							}
-						}
-
-					} else {
-						System.out.println("Você não possui cadastro!");
 					}
+
+					System.out
+							.println("-------------------------------------------------------------------------------");
+					cadastro = 0;
+					if (funcionario.getCargo() == Cargo.RH) {
+						switch (escolhaFuncionario) {
+						case 1:
+							try {
+								System.out.println("Informe os dados do funcionario que você quer contratar: ");
+								System.out.print("Informe o nome do funcionario: ");
+								String nomeNovoFuncionario = "";
+								scanner.nextLine();
+								nomeNovoFuncionario = scanner.nextLine();
+								System.out.print("Informe o email do funcionario: ");
+								String emailNovoFuncionario = "";
+								emailNovoFuncionario = scanner.next();
+								System.out.print("Informe a data de nascimento do funcionario (dd/MM/yyyy): ");
+								dataNascimento.parse(scanner.next());
+								System.out.println("Escolha um cargo para o funcionario");
+								System.out.println("1 - " + Cargo.Repositor.toString());
+								System.out.println("2 - " + Cargo.RH.toString());
+								System.out.print("Esolha uma opção: ");
+								int auxCargo = 0;
+								auxCargo = scanner.nextInt();
+								switch (auxCargo) {
+								case 1:
+									cargo = Cargo.Repositor;
+									break;
+								case 2:
+									cargo = Cargo.RH;
+									break;
+
+								default:
+									break;
+								}
+								System.out.print("Informe o salario do funcionario: ");
+								dinheiro = scanner.nextDouble();
+								System.out.println("Escolha um tipo de contrato para o funcionario");
+								System.out.println("1 - " + TipoContrato.CLT.toString());
+								System.out.println("2 - " + TipoContrato.PJ.toString());
+								System.out.print("Esolha uma opção: ");
+								auxCargo = 0;
+								auxCargo = scanner.nextInt();
+								switch (auxCargo) {
+								case 1:
+									tipoContrato = TipoContrato.CLT;
+									break;
+								case 2:
+									tipoContrato = TipoContrato.PJ;
+									break;
+
+								default:
+									break;
+								}
+
+								funcionario.contratarFuncionario(nomeNovoFuncionario, emailNovoFuncionario, cargo,
+										dinheiro, dataNascimento, funcionario, loja, tipoContrato,
+										cadastrarEndereco(rua, bairro, cep, numeroResidencia, cidade, estado, scanner));
+							} catch (ParseException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+
+							break;
+						case 2:
+							try {
+								System.out.print("Informe os dados do funcionario que você quer demitir: ");
+								System.out.print("Informe o nome do funcionario: ");
+								String nomeFuncionarioDemitir = "";
+								scanner.nextLine();
+								nomeFuncionarioDemitir = scanner.nextLine();
+								System.out.print("Informe o email do funcionario: ");
+								String emailFuncionarioDemitir = "";
+								emailFuncionarioDemitir = scanner.next();
+								System.out.println("Informe o motivo da demissão");
+								System.out.println("1 - " + MotivoDemissao.Justa_Causa.toString());
+								System.out.println("2 - " + MotivoDemissao.Pediu_As_Contas.toString());
+								System.out.print("Informe o motivo: ");
+								int auxCargo = 0;
+								auxCargo = scanner.nextInt();
+								switch (auxCargo) {
+								case 1:
+									motivoDemissao = MotivoDemissao.Justa_Causa;
+									break;
+								case 2:
+									motivoDemissao = MotivoDemissao.Pediu_As_Contas;
+									break;
+								}
+								funcionario.demitirFuncionario(nomeFuncionarioDemitir, emailFuncionarioDemitir,
+										motivoDemissao, funcionario, loja);
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							break;
+						case 3:
+							System.out.println(loja);
+							break;
+						case 4:
+							System.out.println(funcionario.toString(funcionario));
+							break;
+						}
+					} else {
+
+						switch (escolhaFuncionario) {
+						case 1:
+							try {
+								System.out.println("Informe o que você quer alterar no produto");
+								System.out.println("1 - nome");
+								System.out.println("2 - preco");
+								System.out.println("3 - estoque");
+								System.out.println("4 - tudo");
+								System.out.print("Escolha uma opção: ");
+								int auxEscolhaOpcao = 0;
+								auxEscolhaOpcao = scanner.nextInt();
+								String nomeProduto = "";
+								double preco = 0.0;
+								int estoque = 0;
+								System.out.println(
+										"-------------------------------------------------------------------------------");
+								switch (auxEscolhaOpcao) {
+								case 1:
+									loja.mostrarProdutos();
+									System.out.print("Informe o nome do produto que deseja alterar o nome: ");
+									String nomeNovoProduto = "";
+									scanner.nextLine();
+									nomeProduto = scanner.nextLine();
+									if (loja.verificarProdutoExiste(nomeProduto)) {
+										System.out.print("Informe o novo nome do produto: ");
+										nomeNovoProduto = scanner.nextLine();
+										funcionario.alterarDadosProduto(funcionario, 1, nomeProduto, nomeNovoProduto,
+												loja);
+
+									}
+									break;
+								case 2:
+									loja.mostrarProdutos();
+									System.out.print("Informe o nome do produto que deseja alterar o nome: ");
+									scanner.nextLine();
+									nomeProduto = scanner.nextLine();
+									if (loja.verificarProdutoExiste(nomeProduto)) {
+										System.out.print("Informe o novo preço do produto: ");
+										preco = scanner.nextDouble();
+										funcionario.alterarDadosProduto(funcionario, 2, nomeProduto, preco, loja);
+
+									}
+									break;
+								case 3:
+									loja.mostrarProdutos();
+									System.out.print("Informe o nome do produto que deseja alterar o nome: ");
+									nomeProduto = "";
+									scanner.nextLine();
+									nomeProduto = scanner.nextLine();
+									if (loja.verificarProdutoExiste(nomeProduto)) {
+										System.out.print("Informe o novo estoque do produto: ");
+										estoque = scanner.nextInt();
+										funcionario.alterarDadosProduto(funcionario, 3, nomeProduto, estoque, loja);
+									}
+									break;
+								case 4:
+									loja.mostrarProdutos();
+									System.out.print("Informe o nome do produto que deseja alterar o nome: ");
+									nomeProduto = "";
+									scanner.nextLine();
+									nomeProduto = scanner.nextLine();
+									if (loja.verificarProdutoExiste(nomeProduto)) {
+										System.out.print("Informe o novo nome do produto: ");
+										nomeNovoProduto = "";
+										nomeNovoProduto = scanner.nextLine();
+										System.out.print("Informe o novo preço do produto: ");
+										preco = scanner.nextDouble();
+										System.out.print("Informe o novo estoque do produto: ");
+										estoque = scanner.nextInt();
+										funcionario.alterarDadosProduto(funcionario, 4, nomeProduto, preco, estoque,
+												nomeNovoProduto, loja);
+									}
+
+								default:
+									break;
+								}
+							} catch (ParseException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+
+							break;
+						case 2:
+							try {
+								System.out.print("Informe os dados do produto que você quer cadastrar: ");
+								System.out.print("Informe o nome do produto: ");
+								scanner.nextLine();
+								String nomeProduto = "";
+								nomeProduto = scanner.nextLine();
+								System.out.print("Informe o preco do produto: ");
+								double preco = 0.0;
+								preco = scanner.nextDouble();
+								System.out.print("Informe o estoque do produto: ");
+								int estoqueProduto = 0;
+								estoqueProduto = scanner.nextInt();
+								System.out.println(funcionario.getCargo().toString());
+								funcionario.cadastrarProduto(nomeProduto, preco, estoqueProduto, funcionario, loja);
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							break;
+						case 3:
+							System.out.println(funcionario.toString(funcionario));
+							break;
+						}
+					}
+
+				} else {
+					System.out.println("Você não possui cadastro!");
 				}
 
 				break;
+			
 			default:
 				break;
 			}
@@ -603,9 +569,9 @@ public class MainClass {
 		System.out.println("-------------------------------------------------------------------------------");
 		return numeroVerificador;
 	}
-	
-	private static Endereco cadastrarEndereco(String rua, String bairro, String cep, 
-			String numeroResidencia, String cidade, String estado, Scanner scanner) throws Exception {
+
+	private static Endereco cadastrarEndereco(String rua, String bairro, String cep, String numeroResidencia,
+			String cidade, String estado, Scanner scanner) throws Exception {
 		System.out.print("Informe a sua rua: ");
 		scanner.nextLine();
 		rua = scanner.nextLine();
@@ -613,8 +579,6 @@ public class MainClass {
 		bairro = scanner.nextLine();
 		System.out.print("Informe o seu cep: ");
 		cep = scanner.nextLine();
-		System.out.print("Informe o seu bairro: ");
-		bairro = scanner.nextLine();
 		System.out.print("Informe o seu número de residência: ");
 		numeroResidencia = scanner.nextLine();
 		System.out.print("Informe a sua cidade: ");

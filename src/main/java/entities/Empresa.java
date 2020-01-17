@@ -14,12 +14,13 @@ public class Empresa {
 	private List<Funcionario> funcionario = new ArrayList<Funcionario>();
 	private List<Cliente> cliente = new ArrayList<Cliente>();
 
-	public Empresa(String nome, String email, List<Produtos> produto, String cnpj, Endereco endereco) {
+	public Empresa(String nome, String email, List<Produtos> produto, String cnpj, Endereco endereco) throws Exception {
 		this.nome = nome;
 		this.email = email;
 		this.produto = produto;
 		this.cnpj = cnpj;
 		this.endereco = endereco;
+		verificaCnpj(cnpj);
 	}
 	
 	public Endereco getEndereco() {
@@ -150,4 +151,21 @@ public class Empresa {
 				+ "\nCidade: " + this.endereco.getCidade() + "\nEstado: " + this.endereco.getEstado();
 	}
 
+	public void verificaCnpj(String cnpj) throws Exception {
+		if(cnpj == null) {
+			throw new Exception("O cnpj não pode ficar null");
+		}
+		
+		if (cnpj.length() != 14) {
+			throw new Exception("O cnpj está errado");
+		}
+		if (cnpj.matches("^[a-zA-ZÁÂÃÀÇÉÊÍÓÔÕÚÜáâãàçéêíóôõúü]*$")) {
+			throw new Exception("O cnpj está errado");
+		} else if (cnpj.matches("^[0-9]*$")) {
+			System.out.println("");
+		} else {
+			throw new Exception("O cnpj está errado");
+		}
+	}
+	
 }

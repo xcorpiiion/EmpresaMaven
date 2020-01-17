@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import entities.Cliente;
@@ -51,12 +52,12 @@ public class ClienteTest {
 	
 	@Before
 	public void addDadosCarrinho() {
-		this.carrinhoProduto.add(new Produtos("Tablet", 2500.00, 50));
-		this.carrinhoProduto.add(new Produtos("Computador", 3500.00, 70));
-		this.carrinhoProduto.add(new Produtos("Smartphone", 2500.00, 150));
-		this.carrinhoProduto.add(new Produtos("Fone de Ouvido", 50.00, 200));
-		this.carrinhoProduto.add(new Produtos("Tablet", 2500.00, 50));
-		this.carrinhoProduto.add(new Produtos("Tablet", 2500.00, 50));
+		carrinhoProduto.add(new Produtos("Tablet", 2500.00, 50));
+		carrinhoProduto.add(new Produtos("Computador", 3500.00, 70));
+		carrinhoProduto.add(new Produtos("Smartphone", 2500.00, 150));
+		carrinhoProduto.add(new Produtos("Fone de Ouvido", 50.00, 200));
+		carrinhoProduto.add(new Produtos("Tablet", 2500.00, 50));
+		carrinhoProduto.add(new Produtos("Tablet", 2500.00, 50));
 	}
 
 	@Before
@@ -64,32 +65,43 @@ public class ClienteTest {
 		this.dinheiroCarteira = 100000.00;
 	}
 
-	@Test
+	@Ignore
+	public void alterarDados() {
+		cliente.get(0).setNome("lucas");
+		cliente.get(0).setEmail("lucas@mail.com");
+		cliente.get(0).getEndereco().setRua("Rua dos alfeneiros");
+		cliente.get(0).getEndereco().setNumeroResidencia("45-A");
+		cliente.get(0).getEndereco().setBairro("Jardim formiga");
+		cliente.get(0).getEndereco().setCep("12345678");
+		cliente.get(0).getEndereco().setCidade("Salvador");
+		cliente.get(0).getEndereco().setEstado("São paulo");
+		
+	}
+	
+	@Test()
 	public void addCarrinho() {
-		if (this.produto == null) {
-			fail("O produto esta null");
-		}
 
+		if(produto == null) {
+			assertEquals("O produto está null", produto);
+		}
+		
 		// Verifica se existe o produto
 		String nome = "Tablet";
 		int auxQtdCarrinho = 3;
-		if (this.produto.stream().anyMatch(prod -> prod.getNome().equalsIgnoreCase(nome))) {
+		if (produto.stream().anyMatch(prod -> prod.getNome().equalsIgnoreCase(nome))) {
 			for (int i = 0; i < auxQtdCarrinho; i++) {
-				this.carrinhoProduto.addAll(this.produto.stream().filter(prod -> prod.getNome().equalsIgnoreCase(nome))
+				carrinhoProduto.addAll(produto.stream().filter(prod -> prod.getNome().equalsIgnoreCase(nome))
 						.collect(Collectors.toList()));
 			}
 		} else {
 			assertEquals("O produto não existe", nome);
 		}
 		
-		System.out.println("Produto add no carrinho");
+		
 	}
 
-	@Test
+	@Test()
 	public void comprarProduto() {
-		if (this.carrinhoProduto == null) {
-			fail("O produto esta null");
-		}
 
 		this.carrinhoProduto.forEach(System.out::println);
 		System.out.println("----------------------------------------------------------");
@@ -150,7 +162,7 @@ public class ClienteTest {
 		System.out.println("Dinheiro na carteira R$: " + this.dinheiroCarteira);
 	}
 	
-	@Test(timeout = 50)
+	@Test(timeout = 100)
 	public void cadastrarCliente() {
 		if (this.cliente == null) {
 			assertEquals("O cliente está nullo", this.cliente);

@@ -45,10 +45,15 @@ public class LojaTest {
 		produto.add(new Produtos("Computador", 3500.00, 70));
 		produto.add(new Produtos("Smartphone", 2500.00, 150));
 		produto.add(new Produtos("Fone de Ouvido", 50.00, 200));
+		
 	}
 
-	@Test
+	@Test()
 	public void verificarProdutoExiste() {
+		if(produto == null) {
+			throw new NullPointerException();
+		}
+		
 		// Verifica toda a lista e vai retorna true se existir um nome e email na lista
 		System.out.print("Informe o nome do produto: ");
 		Scanner scanner = new Scanner(System.in);

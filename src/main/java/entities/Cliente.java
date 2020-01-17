@@ -12,7 +12,7 @@ public class Cliente extends Pessoa {
 	private List<Produtos> carrinhoProduto = new ArrayList<Produtos>();
 	private List<Produtos> produtosComprados = new ArrayList<Produtos>();
 
-	public Cliente(String nome, String email, Double dinheiro, SimpleDateFormat dataNascimento, Endereco endereco) {
+	public Cliente(String nome, String email, Double dinheiro, SimpleDateFormat dataNascimento, Endereco endereco) throws Exception {
 		super(nome, email, dataNascimento);
 		this.dinheiroCarteira = dinheiro;
 		this.endereco = endereco;
@@ -269,10 +269,15 @@ public class Cliente extends Pessoa {
 	}
 
 	public String toString(Cliente cliente) {
-		return "Nome: " + cliente.getNome() + " Email: " + cliente.getEmail() + ", Valor na carteira: "
-				+ cliente.getDinheiroCarteira() + ", Produtos no carrinho: "
+		return "------Dados do cliente------" + "\nNome: " + cliente.getNome() + "\nEmail: " + cliente.getEmail() + ", Valor na carteira: "
+				+ cliente.getDinheiroCarteira() + "\nProdutos no carrinho: "
 				+ cliente.carrinhoProduto.stream().map(p1 -> p1.getNome()).collect(Collectors.toList())
-				+ ", Produtos comprados: "
-				+ cliente.produtosComprados.stream().map(p1 -> p1.getNome()).collect(Collectors.toList());
+				+ "\nProdutos comprados: "
+				+ cliente.produtosComprados.stream().map(p1 -> p1.getNome()).collect(Collectors.toList())
+				+ "\n------Endereço------"
+				+ "\nRua: " + cliente.getEndereco().getRua() + "\nNúmero residência: " + cliente.getEndereco().getNumeroResidencia()
+				+ "\nBairro: " + cliente.getEndereco().getBairro() + "\nCep: " + cliente.getEndereco().getCep()
+				+ "\nCidade: " + cliente.getEndereco().getCidade() + "\nEstado: " + cliente.getEndereco().getEstado();
 	}
+
 }

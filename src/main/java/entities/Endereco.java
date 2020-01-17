@@ -15,7 +15,7 @@ public class Endereco {
 		this.numeroResidencia = numeroResidencia;
 		this.cidade = cidade;
 		this.estado = estado;
-		validacaoEndereco(cep);
+		validacaoEndereco(rua, bairro, cep, numeroResidencia, cidade, estado);
 	}
 
 	public String getRua() {
@@ -74,18 +74,6 @@ public class Endereco {
 		result = prime * result + ((numeroResidencia == null) ? 0 : numeroResidencia.hashCode());
 		return result;
 	}
-
-	public void validacaoEndereco(String cep) throws Exception {
-		if (cep.length() != 8) {
-			throw new Exception("O cep está errado");
-		}
-		if (cep.matches("^[a-zA-ZÁÂÃÀÇÉÊÍÓÔÕÚÜáâãàçéêíóôõúü]*$")) {
-			throw new Exception("O cnpj está errado");
-		} else if (cep.matches("^[0-9]*$")) {
-		} else {
-			throw new Exception("O cep está errado");
-		}
-	}
 	
 	@Override
 	public boolean equals(Object obj) {
@@ -107,6 +95,53 @@ public class Endereco {
 		} else if (!numeroResidencia.equals(other.numeroResidencia))
 			return false;
 		return true;
+	}
+	
+	public void validacaoEndereco(String rua, String bairro, String cep, 
+			String numeroResidencia, String cidade, String estado) throws Exception {
+		
+		if(cidade == null || cidade.isEmpty()) {
+			throw new Exception("A cidade esta null ou vazia");
+		}
+		
+		if(estado == null || estado.isEmpty()) {
+			throw new Exception("O estado esta null ou vazia");
+		}
+		
+		if(rua == null || rua.isEmpty()) {
+			throw new Exception("A rua esta null ou vazia");
+		}
+		
+		if(cep == null || cep.isEmpty()) {
+			throw new Exception("O cep esta null ou vazia");
+		}
+		
+		if(cidade == null || cidade.isEmpty()) {
+			throw new Exception("A cidade esta null ou vazia");
+		}
+		
+		if(bairro == null || bairro.isEmpty()) {
+			throw new Exception("O bairro esta null ou vazia");
+		}
+		
+		if (cep.length() != 8) {
+			throw new Exception("O cep está errado");
+		}
+		if (cep.matches("^[a-zA-ZÁÂÃÀÇÉÊÍÓÔÕÚÜáâãàçéêíóôõúü]*$")) {
+			throw new Exception("O cnpj está errado");
+		} else if (cep.matches("^[0-9]*$")) {
+		} else {
+			throw new Exception("O cep está errado");
+		}
+		
+		if (cidade.matches("^[0-9]*$")) {
+			throw new Exception("A cidade está errada");
+		}
+		
+		if (estado.matches("^[0-9]*$")) {
+			throw new Exception("o estado está errada");
+		}
+		
 	}
 	
 }

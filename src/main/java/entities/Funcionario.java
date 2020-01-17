@@ -14,11 +14,12 @@ public class Funcionario extends Pessoa {
 	private TipoContrato tipoContrato;
 
 	public Funcionario(String nome, String email, Double salario, Cargo cargo, SimpleDateFormat dataNascimento,
-			TipoContrato tipoContrato, Endereco endereco) {
+			TipoContrato tipoContrato, Endereco endereco) throws Exception {
 		super(nome, email, dataNascimento);
 		this.salario = salario;
 		this.cargo = cargo;
 		this.tipoContrato = tipoContrato;
+		this.endereco = endereco;
 	}
 
 	public Endereco getEndereco() {
@@ -63,11 +64,13 @@ public class Funcionario extends Pessoa {
 			System.out.println("1 - contratar um novo funcionario");
 			System.out.println("2 - demitir um funcionario");
 			System.out.println("3 - ver dados da empresa");
+			System.out.println("4 - ver os seus dados");
 			System.out.print("Informe uma opção: ");
 		} else {
 			System.out.println("Informe o que você quer fazer");
 			System.out.println("1 - alterar dados de um produto");
 			System.out.println("2 - cadastrar um novo produto");
+			System.out.println("3 - ver os seus dados");
 			System.out.print("Informe uma opção: ");
 		}
 	}
@@ -140,10 +143,8 @@ public class Funcionario extends Pessoa {
 		}
 
 		if (escolhaOpcoes == 1) {
-			System.out.println("");
 			for (Produtos prod : loja.getProduto()) {
-
-				if (prod.getNome().equals(nomeProduto)) {
+				if (prod.getNome().equalsIgnoreCase(nomeProduto)) {
 					System.out.println("Entrou aqui");
 					prod.setNome(nomeNovoProduto);
 				}
@@ -186,7 +187,7 @@ public class Funcionario extends Pessoa {
 
 		if (escolhaOpcoes == 3) {
 			for (Produtos prod : loja.getProduto()) {
-				if (prod.getNome().equals(nomeProduto)) {
+				if (prod.getNome().equalsIgnoreCase(nomeProduto)) {
 					prod.setEstoque(estoque);
 				}
 			}
@@ -207,8 +208,8 @@ public class Funcionario extends Pessoa {
 
 		if (escolhaOpcoes == 4) {
 			for (Produtos prod : loja.getProduto()) {
-				if (prod.getNome().equals(nomeNovoProduto)) {
-					prod.setNome(nomeProduto);
+				if (prod.getNome().equalsIgnoreCase(nomeProduto)) {
+					prod.setNome(nomeNovoProduto);
 					prod.setPreco(preco);
 					prod.setEstoque(estoque);
 				}
@@ -248,9 +249,12 @@ public class Funcionario extends Pessoa {
 		}
 	}
 
-	@Override
-	public String toString() {
-		return "Funcionario [cargo=" + cargo + ", salario=" + salario + "]";
+	public String toString(Funcionario funcionario) {
+		return "------Dados do funcionario------" + "\nNome: " + funcionario.getNome() + "\nEmail: " + funcionario.getEmail() 
+		+ "\nCargo: " + funcionario.getCargo() + "Salario: " + funcionario.getSalario() + "\n------Endereço------"
+		+ "\nRua: " + funcionario.getEndereco().getRua() + "\nNúmero residência: " + funcionario.getEndereco().getNumeroResidencia()
+		+ "\nBairro: " + funcionario.getEndereco().getBairro() + "\nCep: " + funcionario.getEndereco().getCep()
+		+ "\nCidade: " + funcionario.getEndereco().getCidade() + "\nEstado: " + funcionario.getEndereco().getEstado();
 	}
 
 }
