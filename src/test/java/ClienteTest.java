@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
@@ -207,6 +208,11 @@ public class ClienteTest {
 			fail("O endereço está incorreto");
 		}
 		System.out.println("O cliente foi cadastrado");
+	}
+	
+	@After
+	public void mostrarCliente() {
+		cliente.forEach(System.out::println);
 	}
 
 }
