@@ -1,9 +1,12 @@
-package br.com.empresa;
+package br.com.contmatic.empresa;
 
 import java.text.SimpleDateFormat;
 
 public abstract class Pessoa {
-	private String nome, email;
+	private String nome;
+	
+	private String email;
+	
 	private SimpleDateFormat dataNascimento = new SimpleDateFormat("dd/MM/yyyy");
 
 	public Pessoa(String nome, String email, SimpleDateFormat dataNascimento) throws Exception {
@@ -31,6 +34,20 @@ public abstract class Pessoa {
 
 	public SimpleDateFormat getDataNascimento() {
 		return dataNascimento;
+	}
+	
+	public void validacaoDados(String nome, String email, SimpleDateFormat dataNascimento) throws Exception {
+		if(nome == null || nome.isEmpty() || nome.trim().equals("")) {
+			throw new Exception("O nome está null ou vazio");
+		}
+		
+		if(email == null || email.isEmpty() || email.trim().equals("")) {
+			throw new Exception("O email está null ou vazio");
+		}
+		
+		if(dataNascimento == null) {
+			throw new Exception("A data de nascimento está null");
+		}
 	}
 
 	@Override
@@ -62,20 +79,6 @@ public abstract class Pessoa {
 		} else if (!nome.equals(other.nome))
 			return false;
 		return true;
-	}
-	
-	public void validacaoDados(String nome, String email, SimpleDateFormat dataNascimento) throws Exception {
-		if(nome == null || nome.isEmpty()) {
-			throw new Exception("O nome está null ou vazio");
-		}
-		
-		if(email == null || email.isEmpty()) {
-			throw new Exception("O email está null ou vazio");
-		}
-		
-		if(dataNascimento == null) {
-			throw new Exception("A data de nascimento está null");
-		}
 	}
 
 }

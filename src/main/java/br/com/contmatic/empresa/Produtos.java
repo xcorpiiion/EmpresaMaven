@@ -1,4 +1,4 @@
-package br.com.empresa;
+package br.com.contmatic.empresa;
 
 public class Produtos {
 	private String nome;
@@ -62,7 +62,7 @@ public class Produtos {
 	}
 
 	public void verificarDados(String nome, Double preco, Integer estoque) throws Exception {
-		if(nome == null || nome.isEmpty()) {
+		if(nome == null || nome.isEmpty() || nome.trim().equals("")) {
 			throw new Exception("O nome do produto está vazio ou null");
 		}
 		

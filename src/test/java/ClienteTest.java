@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.junit.After;
 import org.junit.Before;
@@ -13,17 +12,21 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import br.com.empresa.Cliente;
-import br.com.empresa.Endereco;
-import br.com.empresa.Produtos;
+import br.com.contmatic.empresa.Cliente;
+import br.com.contmatic.empresa.Endereco;
+import br.com.contmatic.empresa.Produtos;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ClienteTest {
+	
 	private Double dinheiroCarteira;
+	
 	private List<Produtos> carrinhoProduto = new ArrayList<Produtos>();
-	private List<Produtos> produtosComprados = new ArrayList<Produtos>();
+	
 	private List<Produtos> produto = new ArrayList<Produtos>();
+	
 	SimpleDateFormat nascimento = new SimpleDateFormat("dd/MM/yyyy");
+	
 	private List<Cliente> cliente = new ArrayList<Cliente>();
 
 	@Before
@@ -54,7 +57,6 @@ public class ClienteTest {
 			produto.add(new Produtos("Smartphone", 2500.00, 150));
 			produto.add(new Produtos("Fone de Ouvido", 50.00, 200));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			fail("Algum valor em produto está null");
 		}
 	}
@@ -69,7 +71,6 @@ public class ClienteTest {
 			carrinhoProduto.add(new Produtos("Tablet", 2500.00, 50));
 			carrinhoProduto.add(new Produtos("Tablet", 2500.00, 50));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			fail("Algum valor em produto está null");
 		}
 
@@ -94,126 +95,88 @@ public class ClienteTest {
 	}
 
 	@Test()
-	public void addCarrinho() {
-
+	public void nao_deve_aceitar_produto_null() {
 		if (produto == null) {
 			assertEquals("O produto está null", produto);
 		}
-
-		// Verifica se existe o produto
-		String nome = "Tablet";
-		int auxQtdCarrinho = 3;
-		if(auxQtdCarrinho < 1) {
-			fail("a quantidade de produtos no carrinho não pode ser 0");
-		}
-		if (produto.stream().anyMatch(prod -> prod.getNome().equalsIgnoreCase(nome))) {
-			for (int i = 0; i < auxQtdCarrinho; i++) {
-				carrinhoProduto.addAll(produto.stream().filter(prod -> prod.getNome().equalsIgnoreCase(nome))
-						.collect(Collectors.toList()));
-			}
-		} else {
-			assertEquals("O produto não existe", nome);
-		}
-
 	}
 
 	@Test()
-	public void comprarProduto() {
-
-		this.carrinhoProduto.forEach(System.out::println);
-		System.out.println("----------------------------------------------------------");
-
-		// Opção do cliente comprar todos os itens do carrinho
-		// 1 é para compra todos os itens 2 é para escolher os itens que quer comprar
-		int opcaoCompra = 2;
-		double totalPreco = 0.0;
-		switch (opcaoCompra) {
-		case 1:
-			totalPreco = 0.0;
-			for (Produtos prod : this.carrinhoProduto) {
-				totalPreco += prod.getPreco();
-			}
-			// Pergunta se tem certeza se deseja comprar tudo
-			if (this.dinheiroCarteira >= totalPreco) {
-				this.produtosComprados.addAll(this.produto);
-				System.out.println("Itens comprado com sucesso");
-			}
-			break;
-		case 2:
-			// Pergunta o nome do produto que eu quero compra
-			String nome = "Tablet";
-			int qtdItemCarrinho = 0;
-			totalPreco = 0.0;
-			if (this.carrinhoProduto.stream().anyMatch(prod -> prod.getNome().equalsIgnoreCase(nome))) {						
-				for (Produtos prod : this.carrinhoProduto) {
-					if (prod.getNome().equalsIgnoreCase(nome)) {
-						qtdItemCarrinho++;
-						totalPreco += prod.getPreco();
-						this.produtosComprados.add(prod);
-					}
-				}
-				// mostra na tela a quantidade de itens no carrinho e pergunta quantos dele eu
-				// quero compra
-				int qtdCompra = 2;
-				if (qtdCompra <= qtdItemCarrinho) {
-					// pergunta se tem certeza que deseja compra
-					if (this.dinheiroCarteira >= totalPreco) {
-
-						this.dinheiroCarteira -= totalPreco;
-						this.produtosComprados.addAll(this.produto.stream()
-								.filter(prod -> prod.getNome().equalsIgnoreCase(nome)).collect(Collectors.toList()));
-					} else {
-						fail("O dinheiro é insulficiente");
-					}
-				}
-			} else {
-				assertTrue("O item não existe no carrinho",
-						this.carrinhoProduto.stream().anyMatch(prod -> prod.getNome().equalsIgnoreCase(nome)));
-			}
-			break;
-		default:
-			assertEquals("O número informado não é valido", opcaoCompra);
+	public void nao_deve_aceitar_cliente_null() {
+		if (cliente == null) {
+			assertNotNull("O cliente esta null", cliente);
 		}
-
-		this.produtosComprados.forEach(System.out::println);
-		System.out.println("Produto comprado com sucesso.");
-		System.out.println("Dinheiro na carteira R$: " + this.dinheiroCarteira);
+		
 	}
 
-	@Test(timeout = 100)
-	public void cadastrarCliente() {
-		if (this.cliente == null) {
-			assertEquals("O cliente está nullo", this.cliente);
+	@Test()
+	public void deve_existir_produto_na_lista() {
+		String nome = "Tablet";
+		assertTrue("O produto não existe", produto.stream().anyMatch(prod -> prod.getNome().equalsIgnoreCase(nome)));
+	}
+
+	@Test()
+	public void deve_conter_um_valor_acima_de_zero() {
+		int auxQtdCarrinho = 3;
+		if (auxQtdCarrinho < 1) {
+			fail("a quantidade de produtos no carrinho não pode ser 0");
 		}
+	}
 
-		String nome = "lalau";
+	@Test()
+	public void deve_digitar_um_valor_valido() {
+		int numeroVerificador = 2;
+		try {
+			if (numeroVerificador < 1 || numeroVerificador > 2) {
+				assertEquals("O número digitado é invalido", 1, numeroVerificador);
+			}
+		} catch (NumberFormatException e) {
+			System.out.println("Você informou um digito invalido " + e.getMessage());
+		}
+	}
+
+	@Test()
+	public void dinheiro_deve_ser_mais_do_que_total_do_valor_dos_produtos() {
+		double totalPreco = 0.0;
+		for (Produtos prod : carrinhoProduto) {
+			totalPreco += prod.getPreco();
+		}
+		assertTrue("Você não possui dinheiro suficiente", dinheiroCarteira >= totalPreco);
+	}
+
+	@Test()
+	public void nao_deve_existir_cliente_com_os_mesmos_dados() {
+		String nome = "laaaalau";
 		String email = "lalau@gmail.com";
+		assertFalse("O cliente já está cadastrado", this.cliente.stream()
+				.anyMatch(c -> c.getNome().equalsIgnoreCase(nome) && c.getEmail().equalsIgnoreCase(email)));
+	}
 
-		// Verifica se o cliente já existe
-		boolean wasCadastrado = this.cliente.stream()
-				.anyMatch(c -> c.getNome().equalsIgnoreCase(nome) && c.getEmail().equalsIgnoreCase(email));
-		assertTrue("O cliente já está cadastrado", !wasCadastrado);
-
-		// Caso o tenha passado na verificação, o funcionario será contratado
+	@Test()
+	public void dataNascimento_deve_ser_valida() {
+		
 		try {
 			nascimento.parse("03/04/2000");
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			fail("Você informou uma data invalida");
 		}
+	}
+	
+	@Test()
+	public void deve_ter_dados_validos_para_cadastrar_cliente() {
+		String nome = "lalau";
+		String email = "lalau@gmail.com";
 		try {
 			cliente.add(new Cliente(nome, email, 2500.00, nascimento,
 					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo")));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			fail("O endereço está incorreto");
 		}
-		System.out.println("O cliente foi cadastrado");
 	}
-	
+
 	@After
 	public void mostrarCliente() {
-		cliente.forEach(System.out::println);
+		System.out.println("Cliente foi cadastrado com sucesso");
 	}
 
 }

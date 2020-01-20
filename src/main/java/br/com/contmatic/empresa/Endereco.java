@@ -1,11 +1,16 @@
-package br.com.empresa;
+package br.com.contmatic.empresa;
 
 public class Endereco {
 	private String rua;
+	
 	private String bairro;
+	
 	private String cep;
+	
 	private String numeroResidencia;
+	
 	private String cidade;
+	
 	private String estado;
 	
 	public Endereco(String rua, String bairro, String cep, String numeroResidencia, String cidade, String estado) throws Exception {
