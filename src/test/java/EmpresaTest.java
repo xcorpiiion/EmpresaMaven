@@ -21,18 +21,16 @@ import enums.TipoContrato;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class EmpresaTest {
-	
+
 	SimpleDateFormat nascimento = new SimpleDateFormat("dd/MM/yyyy");
-	
+
 	private static List<Produtos> produto = new ArrayList<Produtos>();
-	
+
 	private List<Cliente> cliente = new ArrayList<Cliente>();
-	
+
 	private List<Funcionario> funcionario = new ArrayList<Funcionario>();
-	
+
 	private static Empresa loja = null;
-	
-	String cnpj;
 
 	@BeforeClass
 	public static void cadastrar_empresa() {
@@ -73,7 +71,7 @@ public class EmpresaTest {
 		try {
 			nascimento.parse("19/10/1992");
 			cliente.add(new Cliente("Matheus", "matheus@gmail.com", 2500.00, nascimento,
-					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo")));
+					new Endereco("Rua almeida", "Jardim santana", "02675000", "35-A", "São paulo", "São Paulo")));
 			nascimento.parse("20/11/1999");
 			cliente.add(new Cliente("Vergil", "vergil@gmail.com", 1500.00, nascimento,
 					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo")));
@@ -166,7 +164,6 @@ public class EmpresaTest {
 	@Test
 	public void nao_deve_aceitar_endereco_null() {
 		assertNotNull(funcionario.get(0).getEndereco());
-
 	}
 
 	@After

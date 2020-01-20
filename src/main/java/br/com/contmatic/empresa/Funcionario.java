@@ -132,7 +132,6 @@ public class Funcionario extends Pessoa {
 		}
 	}
 
-	// Alterar dados do produto
 	public void alterarDadosProduto(Funcionario funcionario, int escolhaOpcoes, String nomeProduto, Double preco,
 			Empresa loja) throws Exception {
 		if (funcionario == null) {
@@ -150,7 +149,6 @@ public class Funcionario extends Pessoa {
 		}
 	}
 
-	// Alterar dados do produto
 	public void alterarDadosProduto(Funcionario funcionario, int escolhaOpcoes, String nomeProduto, int estoque,
 			Empresa loja) throws Exception {
 		if (funcionario == null) {
@@ -168,7 +166,6 @@ public class Funcionario extends Pessoa {
 		}
 	}
 
-	// Alterar dados do produto
 	public void alterarDadosProduto(Funcionario funcionario, int escolhaOpcoes, String nomeProduto, double preco,
 			int estoque, String nomeNovoProduto, Empresa loja) throws Exception {
 		if (funcionario == null) {
@@ -188,7 +185,6 @@ public class Funcionario extends Pessoa {
 		}
 	}
 
-	// Apenas o repositor consegue colocar novos produtos
 	public void cadastrarProduto(String nome, Double preco, int estoque, Funcionario funcionario, Empresa loja)
 			throws Exception {
 		if (loja == null) {

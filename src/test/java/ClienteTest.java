@@ -1,17 +1,14 @@
 import static org.junit.Assert.*;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-
 import br.com.contmatic.empresa.Cliente;
 import br.com.contmatic.empresa.Endereco;
 import br.com.contmatic.empresa.Produtos;
@@ -73,7 +70,6 @@ public class ClienteTest {
 		} catch (Exception e) {
 			fail("Algum valor em produto está null");
 		}
-
 	}
 
 	@Before
@@ -91,7 +87,6 @@ public class ClienteTest {
 		cliente.get(0).getEndereco().setCep("12345678");
 		cliente.get(0).getEndereco().setCidade("Salvador");
 		cliente.get(0).getEndereco().setEstado("São paulo");
-
 	}
 
 	@Test()
@@ -105,8 +100,7 @@ public class ClienteTest {
 	public void nao_deve_aceitar_cliente_null() {
 		if (cliente == null) {
 			assertNotNull("O cliente esta null", cliente);
-		}
-		
+		}	
 	}
 
 	@Test()
@@ -120,18 +114,6 @@ public class ClienteTest {
 		int auxQtdCarrinho = 3;
 		if (auxQtdCarrinho < 1) {
 			fail("a quantidade de produtos no carrinho não pode ser 0");
-		}
-	}
-
-	@Test()
-	public void deve_digitar_um_valor_valido() {
-		int numeroVerificador = 2;
-		try {
-			if (numeroVerificador < 1 || numeroVerificador > 2) {
-				assertEquals("O número digitado é invalido", 1, numeroVerificador);
-			}
-		} catch (NumberFormatException e) {
-			System.out.println("Você informou um digito invalido " + e.getMessage());
 		}
 	}
 
@@ -154,7 +136,6 @@ public class ClienteTest {
 
 	@Test()
 	public void dataNascimento_deve_ser_valida() {
-		
 		try {
 			nascimento.parse("03/04/2000");
 		} catch (ParseException e) {

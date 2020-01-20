@@ -15,8 +15,8 @@ public class PessoaTest {
 	
 	@Before
 	public void cadastrarDados() {
-		nome = "";
-		email = "";
+		nome = "Lucas";
+		email = "lucas@gmail.com";
 		try {
 			dataNascimento.parse("10/01/1997");
 		} catch (ParseException e) {
@@ -31,8 +31,7 @@ public class PessoaTest {
 	
 	@Test
 	public void nao_deve_aceitar_email_null_ou_vazio() {
-		assertFalse("O email não é valido", email == null || email.isEmpty() || email.trim().equals(""));
-		
+		assertFalse("O email não é valido", email == null || email.isEmpty() || email.trim().equals(""));	
 	}
 	
 	@Test

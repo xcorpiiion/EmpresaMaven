@@ -5,19 +5,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Empresa {
-	
+
 	private String nome;
-	
+
 	private String email;
-	
+
 	private String cnpj;
-	
+
 	private Endereco endereco;
-	
+
 	private List<Produtos> produto = new ArrayList<>();
-	
+
 	private List<Funcionario> funcionario = new ArrayList<>();
-	
+
 	private List<Cliente> cliente = new ArrayList<>();
 
 	public Empresa(String nome, String email, List<Produtos> produto, String cnpj, Endereco endereco) throws Exception {
@@ -110,7 +110,7 @@ public class Empresa {
 	public void mostrarProdutos() {
 		this.produto.sort((p1, p2) -> p1.getNome().compareTo(p2.getNome()));
 	}
-	
+
 	public void verificaDados(String nome, String email, List<Produtos> produto, String cnpj, Endereco endereco)
 			throws Exception {
 		if (cnpj == null || cnpj.isEmpty() || cnpj.trim().equals("")) {

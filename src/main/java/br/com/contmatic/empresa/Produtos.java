@@ -1,8 +1,11 @@
 package br.com.contmatic.empresa;
 
 public class Produtos {
+	
 	private String nome;
+	
 	private Double preco;
+	
 	private Integer estoque;
 	
 	public Produtos(String nome, Double preco, Integer estoque) throws Exception {
@@ -35,6 +38,20 @@ public class Produtos {
 	public void setEstoque(Integer estoque) {
 		this.estoque = estoque;
 	}
+	
+	public void verificarDados(String nome, Double preco, Integer estoque) throws Exception {
+		if(nome == null || nome.isEmpty() || nome.trim().equals("")) {
+			throw new Exception("O nome do produto está vazio ou null");
+		}
+		
+		if(preco == null) {
+			throw new Exception("O nome do preõ está vazio ou null");
+		}
+		
+		if(estoque == null) {
+			throw new Exception("O nome do estoque está null");
+		}
+	}
 
 	@Override
 	public int hashCode() {
@@ -61,20 +78,6 @@ public class Produtos {
 		return true;
 	}
 
-	public void verificarDados(String nome, Double preco, Integer estoque) throws Exception {
-		if(nome == null || nome.isEmpty() || nome.trim().equals("")) {
-			throw new Exception("O nome do produto está vazio ou null");
-		}
-		
-		if(preco == null) {
-			throw new Exception("O nome do preõ está vazio ou null");
-		}
-		
-		if(estoque == null) {
-			throw new Exception("O nome do estoque está null");
-		}
-	}
-	
 	@Override
 	public String toString() {
 		return "Nome: " + nome + ", R$: " + preco + ", Quantidade em estoque: " + estoque;

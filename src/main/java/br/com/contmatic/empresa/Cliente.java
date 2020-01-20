@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Cliente extends Pessoa {
-	
+
 	private Double dinheiroCarteira;
 
 	private Endereco endereco;
@@ -75,39 +75,37 @@ public class Cliente extends Pessoa {
 		this.dinheiroCarteira += dinheiro;
 	}
 
-	
 	public void compraProduto(Cliente cliente, String nomeProduto, int qtdProdutosCompra) throws Exception {
-		if(cliente.getCarrinhoProduto() == null) {
+		if (cliente.getCarrinhoProduto() == null) {
 			throw new Exception("O carrinho esta null");
-		}	
-		if(!cliente.getCarrinhoProduto().stream().allMatch(prod -> prod.getNome().equalsIgnoreCase(nomeProduto))) {
+		}
+		if (!cliente.getCarrinhoProduto().stream().allMatch(prod -> prod.getNome().equalsIgnoreCase(nomeProduto))) {
 			throw new Exception("O produto não existe no carrinho");
-		}	
-		double totalPreco = 0.0;	
-		for(Produtos prod : cliente.getCarrinhoProduto()) {
-			if(prod.getNome().hashCode() == nomeProduto.hashCode()) {
-				if(prod.getNome().equalsIgnoreCase(nomeProduto)) {
-					if(qtdProdutosCompra > prod.getEstoque()) {
+		}
+		double totalPreco = 0.0;
+		for (Produtos prod : cliente.getCarrinhoProduto()) {
+			if (prod.getNome().hashCode() == nomeProduto.hashCode()) {
+				if (prod.getNome().equalsIgnoreCase(nomeProduto)) {
+					if (qtdProdutosCompra > prod.getEstoque()) {
 						throw new Exception("A quantidade de produtos que você quer comprar é maior do que a "
 								+ "quantidade em estoque");
 					}
 					totalPreco += prod.getPreco();
 				}
 			}
-		}		
-		if(cliente.getDinheiroCarteira() < totalPreco) {
+		}
+		if (cliente.getDinheiroCarteira() < totalPreco) {
 			throw new Exception("Dinheiro insulficiente para comprar produtos");
 		}
 		cliente.dinheiroCarteira -= totalPreco;
-		
-		for(Produtos prod : cliente.getCarrinhoProduto()) {
-			if(prod.getNome().equalsIgnoreCase(nomeProduto)) {
+
+		for (Produtos prod : cliente.getCarrinhoProduto()) {
+			if (prod.getNome().equalsIgnoreCase(nomeProduto)) {
 				cliente.produtosComprados.add(prod);
 			}
-		}		
+		}
 	}
 
-	// Qualuqer pessoa consegue se cadastrar na loja
 	public void cadastrarCliente(String nome, String email, Double dinheiro, SimpleDateFormat dataNascimento,
 			Empresa loja, Endereco endereco) throws Exception {
 		if (loja == null) {
