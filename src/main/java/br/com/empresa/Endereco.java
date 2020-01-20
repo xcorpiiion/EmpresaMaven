@@ -143,5 +143,13 @@ public class Endereco {
 		}
 		
 	}
+
+	@Override
+	public String toString() {
+		return "Endereco [rua=" + rua + ", bairro=" + bairro + ", cep=" + cep + ", numeroResidencia=" + numeroResidencia
+				+ ", cidade=" + cidade + ", estado=" + estado + "]";
+	}
+	
+	
 	
 }

@@ -12,7 +12,8 @@ public class Cliente extends Pessoa {
 	private List<Produtos> carrinhoProduto = new ArrayList<Produtos>();
 	private List<Produtos> produtosComprados = new ArrayList<Produtos>();
 
-	public Cliente(String nome, String email, Double dinheiro, SimpleDateFormat dataNascimento, Endereco endereco) throws Exception {
+	public Cliente(String nome, String email, Double dinheiro, SimpleDateFormat dataNascimento, Endereco endereco)
+			throws Exception {
 		super(nome, email, dataNascimento);
 		this.dinheiroCarteira = dinheiro;
 		this.endereco = endereco;
@@ -51,16 +52,24 @@ public class Cliente extends Pessoa {
 			// Se passou no teste, pergunta a quantidade de itens que quer adicionar no
 			// carrinho.
 			System.out.print("Informe a quantidade de produtos que você deseja adicionar no carrinho: ");
-			int qtdProdutoAddCarrinho = 0;
+			int qtdProdutoAddCarrinho;
 			qtdProdutoAddCarrinho = scanner.nextInt();
-			if(qtdProdutoAddCarrinho < 1) {
+
+			if (qtdProdutoAddCarrinho < 1) {
 				throw new Exception("Você precisa pelo menos add 1 produto ao carrinho");
 			}
-			// Add o item no carrinho
-			for (int i = 0; i < qtdProdutoAddCarrinho; i++) {
-				cliente.carrinhoProduto.addAll(loja.getProduto().stream()
-						.filter(prod -> prod.getNome().equalsIgnoreCase(nomeProduto)).collect(Collectors.toList()));
+
+			if (loja.getProduto().stream().anyMatch(
+					prod -> prod.getNome().equalsIgnoreCase(nomeProduto) && prod.getEstoque() < qtdProdutoAddCarrinho)) {
+				throw new Exception("A quantidade de produtos que você quer colocar no carrinho é maior do que a"
+						+ " quantidade em estoque");
 			}
+
+				// Add o item no carrinho
+				for (int i = 0; i < qtdProdutoAddCarrinho; i++) {
+					cliente.carrinhoProduto.addAll(loja.getProduto().stream()
+							.filter(prod -> prod.getNome().equalsIgnoreCase(nomeProduto)).collect(Collectors.toList()));
+				}
 		} else {
 			throw new Exception("O produto não existe");
 		}
@@ -71,7 +80,7 @@ public class Cliente extends Pessoa {
 	}
 
 	public void addDinheiroCarteira(Double dinheiro) throws Exception {
-		if(dinheiro <= 0) {
+		if (dinheiro <= 0) {
 			throw new Exception("Você precisa colocar um valor acima de zero para adicionar a carteira");
 		}
 		this.dinheiroCarteira += dinheiro;
@@ -173,7 +182,7 @@ public class Cliente extends Pessoa {
 						// auxScanner agr vai armazenar a quantidade de itens que eu quero compra
 						int aux = 0;
 						aux = scanner.nextInt();
-						if(aux < 1) {
+						if (aux < 1) {
 							throw new Exception("Você precisa add pelo menos 1 produto para poder comprar");
 						}
 						auxScanner = aux;
@@ -196,6 +205,13 @@ public class Cliente extends Pessoa {
 						if (this.dinheiroCarteira >= totalPreco) {
 
 							this.dinheiroCarteira -= totalPreco;
+							for(Produtos prod : loja.getProduto()) {
+								if (prod.equals(auxAddItemsCarrinho.get(0))) {
+									prod.setEstoque(prod.getEstoque() - qtdCompra);
+									break;
+
+								}
+							}
 							for (Produtos prod : auxAddItemsCarrinho) {
 								if (qtdCompra > 0) {
 									cliente.produtosComprados.add(prod);
@@ -203,6 +219,7 @@ public class Cliente extends Pessoa {
 
 								}
 								qtdCompra--;
+								
 							}
 
 							System.out.println("Produtos comprado com sucesso.");
@@ -234,30 +251,29 @@ public class Cliente extends Pessoa {
 //		System.out.println("Dinheiro na carteira R$: " + this.dinheiroCarteira);
 
 	}
-	
+
 	// Qualuqer pessoa consegue se cadastrar na loja
-	public void cadastrarCliente(String nome, String email, Double dinheiro, SimpleDateFormat dataNascimento
-				, Empresa loja, Endereco endereco)
-				throws Exception {
-			
-			if(loja == null) {
-				throw new Exception("A loja está nulla");
-			}
-			
-			if (loja.getCliente() == null) {
-				throw new Exception("O cliente está nullo");
-			}
+	public void cadastrarCliente(String nome, String email, Double dinheiro, SimpleDateFormat dataNascimento,
+			Empresa loja, Endereco endereco) throws Exception {
 
-			// Verifica se o cliente já existe
-			if (loja.getCliente().stream()
-					.anyMatch(c -> c.getNome().equalsIgnoreCase(nome) && c.getEmail().equalsIgnoreCase(email))) {
-				throw new Exception("O cliente já está cadastrado");
-			}
-
-			// Caso o tenha passado na verificação, o funcionario será contratado
-			loja.getCliente().add(new Cliente(nome, email, dinheiro, dataNascimento, endereco));
-			System.out.println("O cliente foi cadastrado");
+		if (loja == null) {
+			throw new Exception("A loja está nulla");
 		}
+
+		if (loja.getCliente() == null) {
+			throw new Exception("O cliente está nullo");
+		}
+
+		// Verifica se o cliente já existe
+		if (loja.getCliente().stream()
+				.anyMatch(c -> c.getNome().equalsIgnoreCase(nome) && c.getEmail().equalsIgnoreCase(email))) {
+			throw new Exception("O cliente já está cadastrado");
+		}
+
+		// Caso o tenha passado na verificação, o funcionario será contratado
+		loja.getCliente().add(new Cliente(nome, email, dinheiro, dataNascimento, endereco));
+		System.out.println("O cliente foi cadastrado");
+	}
 
 	private int verificarValidade(String msg, String msg2, Scanner scanner, int numeroVerificador) {
 		while (numeroVerificador == 0) {
@@ -278,15 +294,15 @@ public class Cliente extends Pessoa {
 	}
 
 	public String toString(Cliente cliente) {
-		return "------Dados do cliente------" + "\nNome: " + cliente.getNome() + "\nEmail: " + cliente.getEmail() + ", Valor na carteira: "
-				+ cliente.getDinheiroCarteira() + "\nProdutos no carrinho: "
-				+ cliente.carrinhoProduto.stream().map(p1 -> p1.getNome()).collect(Collectors.toList())
+		return "------Dados do cliente------" + "\nNome: " + cliente.getNome() + "\nEmail: " + cliente.getEmail()
+				+ ", Valor na carteira: " + cliente.getDinheiroCarteira() + "\nProdutos no carrinho: "
+				+ cliente.carrinhoProduto.stream().map(p1 -> p1.getNome()).collect(Collectors.toList()).toString().replaceFirst(",", "")
 				+ "\nProdutos comprados: "
-				+ cliente.produtosComprados.stream().map(p1 -> p1.getNome()).collect(Collectors.toList())
-				+ "\n------Endereço------"
-				+ "\nRua: " + cliente.getEndereco().getRua() + "\nNúmero residência: " + cliente.getEndereco().getNumeroResidencia()
-				+ "\nBairro: " + cliente.getEndereco().getBairro() + "\nCep: " + cliente.getEndereco().getCep()
-				+ "\nCidade: " + cliente.getEndereco().getCidade() + "\nEstado: " + cliente.getEndereco().getEstado();
+				+ cliente.produtosComprados.stream().map(p1 -> p1.getNome()).collect(Collectors.toList()).toString().replaceFirst(",", "")
+				+ "\n------Endereço------" + "\nRua: " + cliente.getEndereco().getRua() + "\nNúmero residência: "
+				+ cliente.getEndereco().getNumeroResidencia() + "\nBairro: " + cliente.getEndereco().getBairro()
+				+ "\nCep: " + cliente.getEndereco().getCep() + "\nCidade: " + cliente.getEndereco().getCidade()
+				+ "\nEstado: " + cliente.getEndereco().getEstado();
 	}
 
 }

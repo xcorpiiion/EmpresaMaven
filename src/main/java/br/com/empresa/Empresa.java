@@ -142,9 +142,9 @@ public class Empresa {
 				+ this.getEmail() + "\nCnpj: " + this.getCnpj() 
 				+ "\n------Dados dos funcionarios da empresa------"
 				+ "\n" + this.getFuncionario().stream().map(func -> "\nNome: " + func.getNome() + " |Email: " + func.getEmail()
-				+ " |Cargo: " + func.getCargo() + "\n").collect(Collectors.toList())
+				+ " |Cargo: " + func.getCargo() + "\n").collect(Collectors.toList()).toString().replaceFirst(",", "")
 				+ "\n------Dados dos produtos da empresa------"
-				+ "\n" + this.getProduto().stream().map(p1 -> "Nome: " + p1.getNome() + " |Quantidade em estoque: " + p1.getEstoque() + "\n").collect(Collectors.toList())
+				+ "\n" + this.getProduto().stream().map(p1 -> "\nNome: " + p1.getNome() + " |Quantidade em estoque: " + p1.getEstoque() + "\n").collect(Collectors.toList()).toString().replaceFirst(",", "")
 				+ "\n------Endereço da empresa------"
 				+ "\nRua: " + this.endereco.getRua() + "\nNúmero residência: " + this.endereco.getNumeroResidencia()
 				+ "\nBairro: " + this.endereco.getBairro() + "\nCep: " + this.endereco.getBairro()

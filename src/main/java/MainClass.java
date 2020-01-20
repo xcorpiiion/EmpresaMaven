@@ -25,7 +25,6 @@ public class MainClass {
 	private static String estado = "";
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		int typeLogin = 0, isLogin = 0; // determina qual é o seu tipo de Login
 		boolean isFinish = false;
 		double dinheiro = 0.0;
@@ -43,11 +42,9 @@ public class MainClass {
 			produtos.add(new Produtos("God of war", 150.00, 30));
 			produtos.add(new Produtos("The last of us", 120.00, 10));
 		} catch (Exception e3) {
-			// TODO Auto-generated catch block
 			e3.printStackTrace();
 		}
 
-		// cadastra um funcionario do RH para poder contratar novos funcionarios
 		try {
 			dataNascimento.parse("20/01/1997");
 		} catch (ParseException e1) {
@@ -60,7 +57,6 @@ public class MainClass {
 					TipoContrato.CLT,
 					new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", "São Paulo"));
 		} catch (Exception e2) {
-			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
 
@@ -68,15 +64,14 @@ public class MainClass {
 		try {
 			dataNascimento.parse("01/01/1930");
 		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
 		Cliente cliente = null;
 		try {
 			cliente = new Cliente("Kratos", "kratos@gmail.com", 2000.00, dataNascimento,
 					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo"));
 		} catch (Exception e2) {
-			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
 
@@ -84,7 +79,7 @@ public class MainClass {
 		String nomeEmpresa = scanner.nextLine();
 		System.out.print("Informe o email da empresa: ");
 		String emailEmpresa = scanner.nextLine();
-		System.out.println("Informe o cnpj da empresa (precisa ter 14 números): ");
+		System.out.print("Informe o cnpj da empresa (precisa ter 14 números): ");
 		String cnpj = scanner.nextLine();
 		System.out.print("Informe o nome da rua da empresa: ");
 		rua = scanner.nextLine();
@@ -135,7 +130,7 @@ public class MainClass {
 			switch (typeLogin) {
 			case 1:
 				int cadastro = 0;
-				// Verifica se o cliente ou funcionario quer continuar loggado
+				// Verifica se o cliente possui um cadastro na loja, caso não tenha vai dá a opção de cadastro
 				if (isLogin != 1) {
 					cadastro = verificarValidade("Você possui cadastro?", "1 - para sim / 2 - para não: ", scanner,
 							cadastro);
@@ -143,6 +138,7 @@ public class MainClass {
 					cadastro = 1;
 				}
 				if (cadastro == 1) {
+					// Verifica os dados do login, caso os dados estejam errados, retorna false e não deixa fazer o login
 					if (fazerLogin(scanner, loja, typeLogin, isLogin)) {
 						isLogin = 1;
 						typeLogin = 1;
@@ -150,7 +146,6 @@ public class MainClass {
 							System.out.println(nome);
 							cliente = loja.returnClienteQueFezLogin(nome, email);
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 						loja.mostrarProdutos();
@@ -167,7 +162,7 @@ public class MainClass {
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
-							cadastro = 0;
+							
 							break;
 						case 2:
 							try {
@@ -184,7 +179,7 @@ public class MainClass {
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
-							cadastro = 0;
+							
 							break;
 						case 3:
 							try {
@@ -192,11 +187,11 @@ public class MainClass {
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
-							cadastro = 0;
+							
 							break;
 						case 4:
 							System.out.println(cliente.toString(cliente));
-							cadastro = 0;
+							
 							break;
 						}
 
@@ -221,25 +216,22 @@ public class MainClass {
 							cliente.cadastrarCliente(nome, email, dinheiro, dataNascimento, loja,
 									cadastrarEndereco(rua, bairro, cep, numeroResidencia, cidade, estado, scanner));
 						} catch (ParseException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						} catch (NumberFormatException e) {
 							e.printStackTrace();
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
 				}
 				break;
 			case 2:
-
+				// Verifica os dados do login, caso os dados estejam errados, retorna false e não deixa fazer o login
 				if (fazerLogin(scanner, loja, typeLogin, isLogin)) {
 					isLogin = 1;
 					try {
 						funcionario = loja.returnFuncionarioQueFezLogin(nome, email);
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 
@@ -319,10 +311,10 @@ public class MainClass {
 										dinheiro, dataNascimento, funcionario, loja, tipoContrato,
 										cadastrarEndereco(rua, bairro, cep, numeroResidencia, cidade, estado, scanner));
 							} catch (ParseException e1) {
-								// TODO Auto-generated catch block
+								
 								e1.printStackTrace();
 							} catch (Exception e) {
-								// TODO Auto-generated catch block
+								
 								e.printStackTrace();
 							}
 
@@ -358,7 +350,7 @@ public class MainClass {
 								funcionario.demitirFuncionario(nomeFuncionarioDemitir, emailFuncionarioDemitir,
 										motivoDemissao, funcionario, loja);
 							} catch (Exception e) {
-								// TODO Auto-generated catch block
+								
 								e.printStackTrace();
 							}
 							break;
@@ -383,7 +375,7 @@ public class MainClass {
 								int auxEscolhaOpcao = 0;
 								auxEscolhaOpcao = scanner.nextInt();
 								String nomeProduto = "";
-								double preco = 0.0;
+								double preco;
 								int estoque = 0;
 								System.out.println(
 										"-------------------------------------------------------------------------------");
@@ -417,7 +409,7 @@ public class MainClass {
 								case 3:
 									loja.mostrarProdutos();
 									System.out.print("Informe o nome do produto que deseja alterar o nome: ");
-									nomeProduto = "";
+									
 									scanner.nextLine();
 									nomeProduto = scanner.nextLine();
 									if (loja.verificarProdutoExiste(nomeProduto)) {
@@ -429,12 +421,11 @@ public class MainClass {
 								case 4:
 									loja.mostrarProdutos();
 									System.out.print("Informe o nome do produto que deseja alterar o nome: ");
-									nomeProduto = "";
+									
 									scanner.nextLine();
 									nomeProduto = scanner.nextLine();
 									if (loja.verificarProdutoExiste(nomeProduto)) {
 										System.out.print("Informe o novo nome do produto: ");
-										nomeNovoProduto = "";
 										nomeNovoProduto = scanner.nextLine();
 										System.out.print("Informe o novo preço do produto: ");
 										preco = scanner.nextDouble();
@@ -448,23 +439,21 @@ public class MainClass {
 									break;
 								}
 							} catch (ParseException e1) {
-								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							} catch (Exception e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 
 							break;
 						case 2:
 							try {
-								System.out.print("Informe os dados do produto que você quer cadastrar: ");
+								System.out.println("Informe os dados do produto que você quer cadastrar");
 								System.out.print("Informe o nome do produto: ");
 								scanner.nextLine();
 								String nomeProduto = "";
 								nomeProduto = scanner.nextLine();
 								System.out.print("Informe o preco do produto: ");
-								double preco = 0.0;
+								double preco;
 								preco = scanner.nextDouble();
 								System.out.print("Informe o estoque do produto: ");
 								int estoqueProduto = 0;
@@ -472,7 +461,6 @@ public class MainClass {
 								System.out.println(funcionario.getCargo().toString());
 								funcionario.cadastrarProduto(nomeProduto, preco, estoqueProduto, funcionario, loja);
 							} catch (Exception e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 							break;

@@ -144,7 +144,7 @@ public class ClienteTest {
 			String nome = "Tablet";
 			int qtdItemCarrinho = 0;
 			totalPreco = 0.0;
-			if (this.carrinhoProduto.stream().anyMatch(prod -> prod.getNome().equalsIgnoreCase(nome))) {
+			if (this.carrinhoProduto.stream().anyMatch(prod -> prod.getNome().equalsIgnoreCase(nome))) {						
 				for (Produtos prod : this.carrinhoProduto) {
 					if (prod.getNome().equalsIgnoreCase(nome)) {
 						qtdItemCarrinho++;
@@ -158,6 +158,7 @@ public class ClienteTest {
 				if (qtdCompra <= qtdItemCarrinho) {
 					// pergunta se tem certeza que deseja compra
 					if (this.dinheiroCarteira >= totalPreco) {
+
 						this.dinheiroCarteira -= totalPreco;
 						this.produtosComprados.addAll(this.produto.stream()
 								.filter(prod -> prod.getNome().equalsIgnoreCase(nome)).collect(Collectors.toList()));
