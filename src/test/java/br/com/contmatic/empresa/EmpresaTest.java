@@ -1,3 +1,6 @@
+package br.com.contmatic.empresa;
+
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -52,10 +55,10 @@ public class EmpresaTest {
 					new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", "São Paulo")));
 			nascimento.parse("09/04/1990");
 			funcionario.add(
-					new Funcionario("João", "joao@gmail.com", 2000.00, Cargo.Repositor, nascimento, TipoContrato.CLT,
+					new Funcionario("João", "joao@gmail.com", 2000.00, Cargo.REPOSITOR, nascimento, TipoContrato.CLT,
 							new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", "São Paulo")));
 			nascimento.parse("03/02/1985");
-			funcionario.add(new Funcionario("Weevil", "weevil@gmail.com", 1500.00, Cargo.Repositor, nascimento,
+			funcionario.add(new Funcionario("Weevil", "weevil@gmail.com", 1500.00, Cargo.REPOSITOR, nascimento,
 					TipoContrato.CLT,
 					new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", "São Paulo")));
 			nascimento.parse("26/01/1989");
@@ -90,11 +93,12 @@ public class EmpresaTest {
 	public void add_dados_produto() {
 		try {
 			produto.add(new Produtos("Tablet", 2500.00, 50));
-			produto.add(new Produtos("Computador", 3500.00, 70));
 			produto.add(new Produtos("Smartphone", 2500.00, 150));
 			produto.add(new Produtos("Fone de Ouvido", 50.00, 200));
+			produto.add(new Produtos("Computador", 3500.00, 70));
 		} catch (Exception e) {
-			fail("Algum valor está null no produto");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -129,9 +133,7 @@ public class EmpresaTest {
 	@Test
 	public void nao_deve_aceitar_cnpj_null_ou_vazio() {
 		String cnpj = "1";
-		if (cnpj == null || cnpj.isEmpty() || cnpj.trim().equals("")) {
-			fail("O cnpj não pode ficar null");
-		}
+		assertFalse("O cnpj não é valido", cnpj == null || cnpj.isEmpty() || cnpj.trim().equals(""));
 	}
 
 	@Test
@@ -167,7 +169,7 @@ public class EmpresaTest {
 	}
 
 	@After
-	public void mostrar_dados_na_tela() {
+	public void ordena_os_produtos() {
 		produto.sort((p1, p2) -> p1.getNome().compareTo(p2.getNome()));
 	}
 

@@ -6,7 +6,13 @@ import enums.Cargo;
 import enums.MotivoDemissao;
 import enums.TipoContrato;
 
-public class Funcionario extends Pessoa {
+public class Funcionario {
+	
+	private String nome;
+
+	private String email;
+	
+	private SimpleDateFormat dataNascimento = new SimpleDateFormat("dd/MM/yyyy");
 	
 	private Cargo cargo;
 
@@ -20,11 +26,20 @@ public class Funcionario extends Pessoa {
 
 	public Funcionario(String nome, String email, Double salario, Cargo cargo, SimpleDateFormat dataNascimento,
 			TipoContrato tipoContrato, Endereco endereco) throws Exception {
-		super(nome, email, dataNascimento);
-		this.salario = salario;
+		this.nome = nome;
+		this.email = email;
+		this.dataNascimento = dataNascimento;
 		this.cargo = cargo;
-		this.tipoContrato = tipoContrato;
+		this.salario = salario;
 		this.endereco = endereco;
+		this.tipoContrato = tipoContrato;
+		nome_nao_deve_ser_null_ou_vazio(nome);
+		email_nao_deve_ser_null_ou_vazio(email);
+		nao_deve_aceitar_salario_negativo(salario);
+		nao_deve_aceitar_salario_null(salario);
+		nao_deve_aceitar_cargo_null(cargo);
+		dataNascimento_nao_deve_ser_null(dataNascimento);
+		nao_deve_aceitar_contrato_null(tipoContrato);
 	}
 
 	public Endereco getEndereco() {
@@ -54,6 +69,26 @@ public class Funcionario extends Pessoa {
 	public TipoContrato getTipoContrato() {
 		return tipoContrato;
 	}
+	
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public SimpleDateFormat getDataNascimento() {
+		return dataNascimento;
+	}
 
 	public void listaTarefasFuncionario(Funcionario funcionario) {
 		if (funcionario.getCargo() == Cargo.RH) {
@@ -71,35 +106,49 @@ public class Funcionario extends Pessoa {
 			System.out.print("Informe uma opção: ");
 		}
 	}
+	
+	private boolean isRH(Funcionario funcionario) {
+		return funcionario.getCargo() != Cargo.RH;
+	}
+	
+	private boolean isRepositor(Funcionario funcionario) {
+		return funcionario.getCargo() != Cargo.REPOSITOR;
+		
+	}
+	
+	private boolean funcionario_exite_na_lista(Empresa loja, String nome, String email) {
+		return loja.getFuncionario().stream()
+				.anyMatch(func -> func.getNome().equalsIgnoreCase(nome) && func.getEmail().equalsIgnoreCase(email));
+	}
+	
+	private boolean produto_deve_existir_na_lista(Empresa loja, String nome, Double preco) throws Exception {
+		return loja.getProduto().stream().anyMatch(prod -> prod.getNome().equalsIgnoreCase(nome) 
+				&& prod.getPreco().equals(preco));
+	}
 
 	// Apenas o Rh consegue contratar
 	public void contratarFuncionario(String nome, String email, Cargo cargo, Double salario,
 			SimpleDateFormat dataNascimento, Funcionario funcionario, Empresa loja, TipoContrato tipoContrato,
 			Endereco endereco) throws Exception {
-		if (funcionario == null) {
-			throw new Exception("O funcionario está nullo");
-		}
 
-		if (funcionario.getCargo() != Cargo.RH) {
+		if (isRH(funcionario)) {
 			throw new Exception("Apenas o RH pode contratar funcionarios");
 		}
-		if (loja.getFuncionario().stream()
-				.anyMatch(func -> func.getNome().equalsIgnoreCase(nome) && func.getEmail().equalsIgnoreCase(email))) {
+		
+		if (funcionario_exite_na_lista(loja, nome, email)) {
 			throw new Exception("O funcionario já foi contratado");
 		}
+	
 		loja.getFuncionario().add(new Funcionario(nome, email, salario, cargo, dataNascimento, tipoContrato, endereco));
 	}
 	
 	public void demitirFuncionario(String nome, String email, MotivoDemissao motivoDemissao, Funcionario funcionario,
 			Empresa loja) throws Exception {
-		if (funcionario == null) {
-			throw new Exception("O funcionario está nullo");
-		}
-		if (funcionario.getCargo() != Cargo.RH) {
+		nao_deve_aceitar_funcionario_null(funcionario);
+		if (isRH(funcionario)) {
 			throw new Exception("Apenas o RH pode contratar funcionarios");
 		}
-		if (!loja.getFuncionario().stream()
-				.anyMatch(func -> func.getNome().equalsIgnoreCase(nome) && func.getEmail().equalsIgnoreCase(email))) {
+		if (!funcionario_exite_na_lista(loja, nome, email)) {
 			throw new Exception("Não existe o funcionario com os dados informados");
 		}
 		switch (motivoDemissao) {
@@ -117,10 +166,8 @@ public class Funcionario extends Pessoa {
 	// Alterar dados do produto
 	public void alterarDadosProduto(Funcionario funcionario, int escolhaOpcoes, String nomeProduto,
 			String nomeNovoProduto, Empresa loja) throws Exception {
-		if (funcionario == null) {
-			throw new Exception("funcionario está null");
-		}
-		if (funcionario.getCargo() != Cargo.Repositor) {
+		nao_deve_aceitar_funcionario_null(funcionario);
+		if (isRepositor(funcionario)) {
 			throw new Exception("Apenas repositores podem alterar os dados do produto");
 		}
 		if (escolhaOpcoes == 1) {
@@ -134,10 +181,9 @@ public class Funcionario extends Pessoa {
 
 	public void alterarDadosProduto(Funcionario funcionario, int escolhaOpcoes, String nomeProduto, Double preco,
 			Empresa loja) throws Exception {
-		if (funcionario == null) {
-			throw new Exception("funcionario está null");
-		}
-		if (funcionario.getCargo() != Cargo.Repositor) {
+		nao_deve_aceitar_funcionario_null(funcionario);
+		
+		if (isRepositor(funcionario)) {
 			throw new Exception("Apenas repositores podem alterar os dados do produto");
 		}
 		if (escolhaOpcoes == 2) {
@@ -151,10 +197,8 @@ public class Funcionario extends Pessoa {
 
 	public void alterarDadosProduto(Funcionario funcionario, int escolhaOpcoes, String nomeProduto, int estoque,
 			Empresa loja) throws Exception {
-		if (funcionario == null) {
-			throw new Exception("funcionario está null");
-		}
-		if (funcionario.getCargo() != Cargo.Repositor) {
+		nao_deve_aceitar_funcionario_null(funcionario);
+		if (isRepositor(funcionario)) {
 			throw new Exception("Apenas repositores podem alterar os dados do produto");
 		}
 		if (escolhaOpcoes == 3) {
@@ -168,10 +212,8 @@ public class Funcionario extends Pessoa {
 
 	public void alterarDadosProduto(Funcionario funcionario, int escolhaOpcoes, String nomeProduto, double preco,
 			int estoque, String nomeNovoProduto, Empresa loja) throws Exception {
-		if (funcionario == null) {
-			throw new Exception("funcionario está null");
-		}
-		if (funcionario.getCargo() != Cargo.Repositor) {
+		nao_deve_aceitar_funcionario_null(funcionario);
+		if (isRepositor(funcionario)) {
 			throw new Exception("Apenas repositores podem alterar os dados do produto");
 		}
 		if (escolhaOpcoes == 4) {
@@ -187,23 +229,111 @@ public class Funcionario extends Pessoa {
 
 	public void cadastrarProduto(String nome, Double preco, int estoque, Funcionario funcionario, Empresa loja)
 			throws Exception {
-		if (loja == null) {
-			throw new Exception("A loja está null");
-		}
-		if (loja.getProduto() == null) {
-			throw new Exception("O produto está null");
-		}
-		if (funcionario.getCargo() != Cargo.Repositor) {
+		nao_deve_aceitar_empresas_null(loja);
+
+		if (isRepositor(funcionario)) {
 			throw new Exception("Apenas repositores podem cadastra os produtos");
 		}
-		if (loja.getProduto().stream()
-				.anyMatch(prod -> prod.getNome().equalsIgnoreCase(nome) && prod.getPreco().equals(preco))) {
+		
+		if (produto_deve_existir_na_lista(loja, nome, preco)) {
 			loja.getProduto().stream()
 					.filter(prod -> prod.getNome().equalsIgnoreCase(nome) && prod.getPreco().equals(preco))
-					.forEach(prod -> prod.setEstoque(prod.getEstoque() + estoque));
+					.forEach(prod -> {
+						try {
+							prod.setEstoque(prod.getEstoque() + estoque);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					});
 		} else {
 			loja.getProduto().add(new Produtos(nome, preco, estoque));
 		}
+	}
+	
+	private void nome_nao_deve_ser_null_ou_vazio(String nome) throws Exception {
+		if(nome == null || nome.isEmpty() || nome.trim().equals("")) {
+			throw new Exception("O nome está null ou vazio");
+		}
+	}
+	
+	private void email_nao_deve_ser_null_ou_vazio(String email) throws Exception {
+		if(email == null || email.isEmpty() || email.trim().equals("")) {
+			throw new Exception("O email está null ou vazio");
+		}
+	}
+	
+	private void dataNascimento_nao_deve_ser_null(SimpleDateFormat dataNascimento) throws Exception {
+		if(dataNascimento == null) {
+			throw new Exception("A data de nascimento está null");
+		}
+	}
+	
+	private void nao_deve_aceitar_cargo_null(Cargo cargo) throws Exception {
+		if(cargo == null) {
+			throw new NullPointerException("O cargo esta null");
+		}
+	}
+	
+	private void nao_deve_aceitar_salario_null(Double salario) throws Exception {
+		if(salario == null) {
+			throw new NullPointerException("O salario esta null");
+		}
+	}
+	
+	private void nao_deve_aceitar_salario_negativo(Double salario) throws Exception {
+		if(salario < 0) {
+			throw new Exception("O salario esta null");
+		}
+	}
+	
+	private void nao_deve_aceitar_contrato_null(TipoContrato tipoContrato) {
+		if(tipoContrato == null) {
+			throw new NullPointerException("O contrato esta null");
+		}
+	}
+	
+	private void nao_deve_aceitar_funcionario_null(Funcionario funcionario) {
+		if(funcionario == null) {
+			throw new NullPointerException("O funcionario esta null");
+		}
+	}
+	
+	private void nao_deve_aceitar_empresas_null(Empresa loja) {
+		if(loja == null) {
+			throw new NullPointerException("A empresa esta null");
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Funcionario other = (Funcionario) obj;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		return true;
 	}
 
 	public String toString(Funcionario funcionario) {

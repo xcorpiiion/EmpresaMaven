@@ -1,13 +1,12 @@
+package br.com.contmatic.empresa;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -39,10 +38,10 @@ public class FuncionarioTest {
 					new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", "São Paulo")));
 			nascimento.parse("09/04/1990");
 			funcionario.add(
-					new Funcionario("João", "joao@gmail.com", 2000.00, Cargo.Repositor, nascimento, TipoContrato.CLT,
+					new Funcionario("João", "joao@gmail.com", 2000.00, Cargo.REPOSITOR, nascimento, TipoContrato.CLT,
 							new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", "São Paulo")));
 			nascimento.parse("03/02/1985");
-			funcionario.add(new Funcionario("Weevil", "weevil@gmail.com", 1500.00, Cargo.Repositor, nascimento,
+			funcionario.add(new Funcionario("Weevil", "weevil@gmail.com", 1500.00, Cargo.REPOSITOR, nascimento,
 					TipoContrato.CLT,
 					new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", "São Paulo")));
 			nascimento.parse("26/01/1989");
@@ -66,7 +65,7 @@ public class FuncionarioTest {
 	}
 
 	@Test
-	public void nao_deve_conter_funcionario_null() {
+	public void nao_deve_existir_funcionario_null() {
 		assertNotNull("Funcionario está null", funcionario);
 	}
 
@@ -87,6 +86,11 @@ public class FuncionarioTest {
 		} catch (ParseException e) {
 			fail("Você informou uma data invalida");
 		}
+	}
+	
+	@Test(expected = ParseException.class)
+	public void dataNascimento_nao_deve_ser_invalida() throws ParseException {
+		nascimento.parse("03/04/2000");
 	}
 	
 	@Test
@@ -132,11 +136,11 @@ public class FuncionarioTest {
 	@Test
 	public void deve_ser_repositor_para_cadastrar_produtos() {
 		assertTrue("Apenas repositores podem cadastra os produtos",
-				this.funcionario.get(2).getCargo() == Cargo.Repositor);
+				this.funcionario.get(2).getCargo() == Cargo.REPOSITOR);
 	}
 
 	@Test
-	public void deve_esta_no_estoque() {
+	public void deve_existir_no_estoque() {
 		String nome = "tablet";
 		double preco = 2500.0;
 		assertTrue("O produto não existe no estoque", produto.stream()

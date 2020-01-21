@@ -1,5 +1,17 @@
 package enums;
 
 public enum Cargo {
-	Repositor, RH;
+	REPOSITOR("REPOSITOR"),
+	RH("RH");
+	
+	public String cargo;
+
+	private Cargo(String cargo) {
+		this.cargo = cargo;
+	}
+
+	public String getCargo() {
+		return cargo;
+	}
+	
 }
