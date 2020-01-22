@@ -133,7 +133,6 @@ public class Cliente {
 	}
 
 	public void compraProduto(Cliente cliente, String nomeProduto, int qtdProdutosCompra)  {
-		carrinhoIsNull();
 		if (!produtoEstaNoCarrinho(nomeProduto, cliente)) {
 			throw new RuntimeException("O produto não existe no carrinho");
 		}
@@ -168,12 +167,6 @@ public class Cliente {
 			throw new RuntimeException("O cliente já está cadastrado");
 		}
 		loja.getCliente().add(new Cliente(nome, email, dinheiro, dataNascimento, endereco));
-	}
-
-	private void carrinhoIsNull() {
-		if (nome == null) {
-			throw new NullPointerException("O carrinho está null ou vazio");
-		}
 	}
 
 	private void dinheiroIsNegative(Double dinheiro) {
@@ -212,19 +205,12 @@ public class Cliente {
 			return false;
 		return true;
 	}
-
-	public String toString(Cliente cliente) {
-		return "------Dados do cliente------" + "\nNome: " + cliente.getNome() + "\nEmail: " + cliente.getEmail()
-				+ ", Valor na carteira: " + cliente.getDinheiroCarteira() + "\nProdutos no carrinho: "
-				+ cliente.carrinhoProduto
-						.stream().map(p1 -> p1.getNome()).collect(Collectors.toList()).toString().replaceFirst(",", "")
-				+ "\nProdutos comprados: "
-				+ cliente.produtosComprados.stream().map(p1 -> p1.getNome()).collect(Collectors.toList()).toString()
-						.replaceFirst(",", "")
-				+ "\n------Endereço------" + "\nRua: " + cliente.getEndereco().getRua() + "\nNúmero residência: "
-				+ cliente.getEndereco().getNumeroResidencia() + "\nBairro: " + cliente.getEndereco().getBairro()
-				+ "\nCep: " + cliente.getEndereco().getCep() + "\nCidade: " + cliente.getEndereco().getCidade()
-				+ "\nEstado: " + cliente.getEndereco().getEstado();
+	
+	@Override
+	public String toString() {
+		return "Cliente [nome=" + nome + ", email=" + email + ", dataNascimento=" + dataNascimento
+				+ ", dinheiroCarteira=" + dinheiroCarteira + ", endereco=" + endereco + ", carrinhoProduto="
+				+ carrinhoProduto + ", produtosComprados=" + produtosComprados + "]";
 	}
 
 }

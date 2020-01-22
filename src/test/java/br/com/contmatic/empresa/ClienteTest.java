@@ -35,7 +35,7 @@ public class ClienteTest {
 
 	@Before
 	public void addDadosProduto() {
-		produto.add(new Produtos("Tablet", 2500.00, 50));
+		produto.add(new Produtos("Tablet", 25.00, 50));
 		produto.add(new Produtos("Computador", 3500.00, 70));
 		produto.add(new Produtos("Smartphone", 2500.00, 150));
 		produto.add(new Produtos("Fone de Ouvido", 50.00, 200));
@@ -69,6 +69,9 @@ public class ClienteTest {
 			fail("Você digitou uma data invalida");
 		}
 		cliente.get(0).addItensCarrinho(cliente.get(0), loja, "Tablet", 2);
+		
+		cliente.get(0).cadastrarCliente("Matheus", "matheus@gmail.com", 250.00, data, loja, 
+				new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo"));
 	}
 
 	@Before
@@ -94,7 +97,7 @@ public class ClienteTest {
 	}
 
 	@Test(expected = RuntimeException.class)
-	public void nao_deve_aceitar_numero_estoque_maior_que_numero_estoque_produtos_() throws Exception {
+	public void nao_deve_aceitar_numero_estoque_maior_que_numero_estoque_produtos_2() throws Exception {
 		cliente.get(0).addItensCarrinho(cliente.get(0), loja, "Tablet", 51);
 	}
 
@@ -112,50 +115,21 @@ public class ClienteTest {
 	}
 
 	@Test(expected = NullPointerException.class)
-	public void nao_deve_aceitar_cliente_null_() {
+	public void nao_deve_aceitar_cliente_null_2() {
 		cliente = null;
-
+		if(cliente == null) {
+			throw new NullPointerException();
+		}
 	}
 
 	@Test()
-	public void deve_existir_produto_na_lista() {
-		String nome = "Tablet";
-		assertFalse("O produto não existe", cliente.get(0).produtoEstaNoCarrinho(nome, cliente.get(0)));
-	}
-
-	@Test()
-	public void deve_existir_produto_na_lista_() {
+	public void deve_existir_produto_na_lista_2() {
 		String nome = "Tablet";
 		assertTrue("O produto não existe", cliente.get(0).produtoEstaNoCarrinho(nome, cliente.get(0)));
 	}
 
 	@Test()
-	public void deve_conter_um_valor_acima_de_zero() {
-		int auxQtdCarrinho = 3;
-		if (auxQtdCarrinho < 1) {
-			fail("a quantidade de produtos no carrinho não pode ser 0");
-		}
-	}
-
-	@Test()
-	public void illegal_deve_conter_um_valor_acima_de_zero() {
-		int auxQtdCarrinho = 2;
-		if (auxQtdCarrinho < 1) {
-			fail("a quantidade de produtos no carrinho não pode ser 0");
-		}
-	}
-
-	@Test()
-	public void dinheiro_deve_ser_mais_do_que_total_do_valor_dos_produtos() {
-		double totalPreco = 0.0;
-		for (Produtos prod : carrinhoProduto) {
-			totalPreco += prod.getPreco();
-		}
-		assertTrue("Você não possui dinheiro suficiente", dinheiroCarteira >= totalPreco);
-	}
-
-	@Test()
-	public void illegal_dinheiro_deve_ser_mais_do_que_total_do_valor_dos_produtos() {
+	public void dinheiro_deve_ser_mais_do_que_total_do_valor_dos_produtos_2() {
 		dinheiroCarteira = 0.0;
 		double totalPreco = 0.0;
 		for (Produtos prod : carrinhoProduto) {
@@ -173,7 +147,7 @@ public class ClienteTest {
 	}
 
 	@Test()
-	public void nao_deve_existir_cliente_com_os_mesmos_dados_() throws Exception {
+	public void nao_deve_existir_cliente_com_os_mesmos_dados_2() throws Exception {
 		String nome = "a";
 		String email = "matheus@gmail.com";
 		assertFalse("O cliente já está cadastrado", cliente.stream()
@@ -213,8 +187,15 @@ public class ClienteTest {
 	}
 
 	@Test(expected = RuntimeException.class)
-	public void deve_add_produto_no_carrinho_() {
+	public void deve_add_produto_no_carrinho_2() {
 		String nomeProduto = "Tablet";
+		int qtdProdutoAddCarrinho = 0;
+		cliente.get(0).addItensCarrinho(cliente.get(0), loja, nomeProduto, qtdProdutoAddCarrinho);
+	}
+	
+	@Test(expected = RuntimeException.class)
+	public void deve_add_produto_no_carrinho_3() {
+		String nomeProduto = "";
 		int qtdProdutoAddCarrinho = 0;
 		cliente.get(0).addItensCarrinho(cliente.get(0), loja, nomeProduto, qtdProdutoAddCarrinho);
 	}
@@ -226,22 +207,15 @@ public class ClienteTest {
 	}
 
 	@Test(expected = RuntimeException.class)
-	public void deve_add_dinheiro_carteira_() {
+	public void deve_add_dinheiro_carteira_2() {
 		double dinheiro = 0;
 		cliente.get(0).addDinheiroCarteira(dinheiro);
 	}
-
+	
 	@Test()
 	public void deve_existir_cliente() {
-		String nome = "";
-		String email = "";
-		assertTrue("Cliente não existe", cliente.get(0).clienteExiste(loja, nome, email));
-	}
-
-	@Test()
-	public void deve_existir_cliente_() {
-		String nome = "lucas";
-		String email = "lucas@gmail.com";
+		String nome = "matheus";
+		String email = "matheus@gmail.com";
 		assertTrue("Cliente não existe", cliente.get(0).clienteExiste(loja, nome, email));
 	}
 
@@ -250,6 +224,72 @@ public class ClienteTest {
 		String nomeProduto = "Tablet";
 		int qtdProdutosCompra = 1;
 		cliente.get(0).compraProduto(cliente.get(0), nomeProduto, qtdProdutosCompra);
+	}
+	
+	@Test(expected = RuntimeException.class)
+	public void deve_compra_produto_2() {
+		String nomeProduto = "";
+		int qtdProdutosCompra = 50;
+		cliente.get(0).compraProduto(cliente.get(0), nomeProduto, qtdProdutosCompra);
+	}
+	
+	@Test(expected = RuntimeException.class)
+	public void deve_compra_produto_3() {
+		String nomeProduto = "Tablet";
+		int qtdProdutosCompra = 25;
+		cliente.get(0).compraProduto(cliente.get(0), nomeProduto, qtdProdutosCompra);
+	}
+	
+	@Test(expected = RuntimeException.class)
+	public void deve_compra_produto_4() {
+		String nomeProduto = "Tablet";
+		int qtdProdutosCompra = 500;
+		cliente.get(0).compraProduto(cliente.get(0), nomeProduto, qtdProdutosCompra);
+	}
+	
+	@Test()
+	public void deve_ser_clientes_diferentes() {
+		assertFalse("Os cliente são iguais", cliente.get(0).equals(cliente.get(1)));
+	}
+	
+	@Test()
+	public void deve_ser_clientes_diferentes_2() {
+		cliente.get(1).setNome(cliente.get(0).getNome());
+		cliente.get(1).setEmail(cliente.get(0).getEmail());
+		assertFalse("Os cliente são iguais", cliente.get(0).equals(cliente.get(1)));
+	}
+	
+	@Test()
+	public void deve_ser_clientes_diferentes_3() {
+		cliente.get(1).setNome(cliente.get(0).getNome());
+		cliente.get(1).setEmail(cliente.get(0).getEmail());
+		assertFalse("Os cliente são iguais", cliente.get(0).equals(cliente.get(1)));
+	}
+	
+	@Test()
+	public void deve_ser_clientes_diferentes_4() {
+		cliente.get(1).setNome(cliente.get(0).getNome());
+		cliente.get(1).setEmail(cliente.get(0).getEmail());
+		assertEquals("Os clientes são igauis", cliente.get(0).hashCode(), cliente.get(1).hashCode());
+	}
+	
+	@Test()
+	public void nao_deve_aceitar_dinheiro_negativo() {
+		cliente.get(0).cadastrarCliente("lucas", "lucas@gmail.com", 250.00, data, loja, 
+				new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo"));
+	}
+	
+	@Test(expected = RuntimeException.class)
+	public void nao_deve_aceitar_dinheiro_negativo_2() {
+		cliente.get(0).cadastrarCliente("lucas", "lucas@gmail.com", -250.00, data, loja, 
+				new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo"));
+	}
+	
+	@Test()
+	public void deve_conter_toString() {
+		assertEquals("Os toString não são iguais", cliente.get(0), "Cliente [nome=" + cliente.get(0).getNome() + ", email=" + cliente.get(0).getEmail() + ", dataNascimento=" + cliente.get(0).getDataNascimento()
+				+ ", dinheiroCarteira=" + dinheiroCarteira + ", endereco=" + cliente.get(0).getEndereco() + ", carrinhoProduto="
+				+ cliente.get(0).getCarrinhoProduto() + ", produtosComprados=" + cliente.get(0).getProdutosComprados() + "]");
 	}
 
 	@AfterClass

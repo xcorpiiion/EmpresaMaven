@@ -127,7 +127,7 @@ public class Empresa {
 	
 	private void cnpjIsNull(String cnpj) {
 		if (cnpj == null) {
-			throw new RuntimeException("O cnpj não pode ficar null");
+			throw new NullPointerException("O cnpj não pode ficar null");
 		}
 	}
 	
@@ -138,9 +138,6 @@ public class Empresa {
 	}
 	
 	private void cnpjHasWord(String cnpj) {
-		if (cnpj.length() != 14) {
-			throw new RuntimeException("O cnpj está errado");
-		}
 		if (cnpj.matches("^[a-zA-ZÁÂÃÀÇÉÊÍÓÔÕÚÜáâãàçéêíóôõúü]*$")) {
 			throw new RuntimeException("O cnpj está errado");
 		} else if (cnpj.matches("^[0-9]*$")) {
