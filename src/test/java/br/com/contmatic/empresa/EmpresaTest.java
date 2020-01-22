@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -19,13 +20,15 @@ import br.com.contmatic.empresa.Empresa;
 import br.com.contmatic.empresa.Endereco;
 import br.com.contmatic.empresa.Funcionario;
 import br.com.contmatic.empresa.Produtos;
-import enums.Cargo;
-import enums.TipoContrato;
+import br.com.contmatic.enums.Cargo;
+import br.com.contmatic.enums.TipoContrato;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class EmpresaTest {
 
 	SimpleDateFormat nascimento = new SimpleDateFormat("dd/MM/yyyy");
+	
+	private Date data;
 
 	private static List<Produtos> produto = new ArrayList<Produtos>();
 
@@ -50,19 +53,19 @@ public class EmpresaTest {
 	@Before
 	public void add_dados_funcionario() {
 		try {
-			nascimento.parse("03/07/1992");
-			funcionario.add(new Funcionario("Lucas", "lucas@gmail.com", 2500.00, Cargo.RH, nascimento, TipoContrato.CLT,
+			data = nascimento.parse("03/07/1992");
+			funcionario.add(new Funcionario("Lucas", "lucas@gmail.com", 2500.00, Cargo.RH, data, TipoContrato.CLT,
 					new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", "São Paulo")));
 			nascimento.parse("09/04/1990");
 			funcionario.add(
-					new Funcionario("João", "joao@gmail.com", 2000.00, Cargo.REPOSITOR, nascimento, TipoContrato.CLT,
+					new Funcionario("João", "joao@gmail.com", 2000.00, Cargo.REPOSITOR, data, TipoContrato.CLT,
 							new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", "São Paulo")));
 			nascimento.parse("03/02/1985");
-			funcionario.add(new Funcionario("Weevil", "weevil@gmail.com", 1500.00, Cargo.REPOSITOR, nascimento,
+			funcionario.add(new Funcionario("Weevil", "weevil@gmail.com", 1500.00, Cargo.REPOSITOR, data,
 					TipoContrato.CLT,
 					new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", "São Paulo")));
 			nascimento.parse("26/01/1989");
-			funcionario.add(new Funcionario("Dante", "dante@gmail.com", 1200.00, Cargo.RH, nascimento, TipoContrato.CLT,
+			funcionario.add(new Funcionario("Dante", "dante@gmail.com", 1200.00, Cargo.RH, data, TipoContrato.CLT,
 					new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", "São Paulo")));
 		} catch (Exception e) {
 			fail("Você informou uma data invalida");
@@ -72,17 +75,17 @@ public class EmpresaTest {
 	@Before
 	public void add_dados_cliente() {
 		try {
-			nascimento.parse("19/10/1992");
-			cliente.add(new Cliente("Matheus", "matheus@gmail.com", 2500.00, nascimento,
+			data = nascimento.parse("19/10/1992");
+			cliente.add(new Cliente("Matheus", "matheus@gmail.com", 2500.00, data,
 					new Endereco("Rua almeida", "Jardim santana", "02675000", "35-A", "São paulo", "São Paulo")));
 			nascimento.parse("20/11/1999");
-			cliente.add(new Cliente("Vergil", "vergil@gmail.com", 1500.00, nascimento,
+			cliente.add(new Cliente("Vergil", "vergil@gmail.com", 1500.00, data,
 					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo")));
 			nascimento.parse("9/1/1992");
-			cliente.add(new Cliente("Dante", "dante@gmail.com", 900.00, nascimento,
+			cliente.add(new Cliente("Dante", "dante@gmail.com", 900.00, data,
 					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo")));
 			nascimento.parse("19/9/1996");
-			cliente.add(new Cliente("Harry", "harry@gmail.com", 1300.00, nascimento,
+			cliente.add(new Cliente("Harry", "harry@gmail.com", 1300.00, data,
 					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo")));
 		} catch (Exception e) {
 			fail("Você digitou uma data invalida");
@@ -97,7 +100,6 @@ public class EmpresaTest {
 			produto.add(new Produtos("Fone de Ouvido", 50.00, 200));
 			produto.add(new Produtos("Computador", 3500.00, 70));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

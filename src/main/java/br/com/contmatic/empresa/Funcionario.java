@@ -1,10 +1,9 @@
 package br.com.contmatic.empresa;
 
-import java.text.SimpleDateFormat;
-
-import enums.Cargo;
-import enums.MotivoDemissao;
-import enums.TipoContrato;
+import java.util.Date;
+import br.com.contmatic.enums.Cargo;
+import br.com.contmatic.enums.MotivoDemissao;
+import br.com.contmatic.enums.TipoContrato;
 
 public class Funcionario {
 	
@@ -12,7 +11,7 @@ public class Funcionario {
 
 	private String email;
 	
-	private SimpleDateFormat dataNascimento = new SimpleDateFormat("dd/MM/yyyy");
+	private Date dataNascimento;
 	
 	private Cargo cargo;
 
@@ -24,7 +23,7 @@ public class Funcionario {
 
 	private TipoContrato tipoContrato;
 
-	public Funcionario(String nome, String email, Double salario, Cargo cargo, SimpleDateFormat dataNascimento,
+	public Funcionario(String nome, String email, Double salario, Cargo cargo, Date dataNascimento,
 			TipoContrato tipoContrato, Endereco endereco) throws Exception {
 		this.nome = nome;
 		this.email = email;
@@ -86,7 +85,7 @@ public class Funcionario {
 		this.email = email;
 	}
 
-	public SimpleDateFormat getDataNascimento() {
+	public Date getDataNascimento() {
 		return dataNascimento;
 	}
 
@@ -128,7 +127,7 @@ public class Funcionario {
 
 	// Apenas o Rh consegue contratar
 	public void contratarFuncionario(String nome, String email, Cargo cargo, Double salario,
-			SimpleDateFormat dataNascimento, Funcionario funcionario, Empresa loja, TipoContrato tipoContrato,
+			Date dataNascimento, Funcionario funcionario, Empresa loja, TipoContrato tipoContrato,
 			Endereco endereco) throws Exception {
 
 		if (isRH(funcionario)) {
@@ -242,7 +241,6 @@ public class Funcionario {
 						try {
 							prod.setEstoque(prod.getEstoque() + estoque);
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					});
@@ -263,7 +261,7 @@ public class Funcionario {
 		}
 	}
 	
-	private void dataNascimento_nao_deve_ser_null(SimpleDateFormat dataNascimento) throws Exception {
+	private void dataNascimento_nao_deve_ser_null(Date dataNascimento) throws Exception {
 		if(dataNascimento == null) {
 			throw new Exception("A data de nascimento está null");
 		}

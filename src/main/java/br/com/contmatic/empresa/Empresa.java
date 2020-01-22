@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import br.com.contmatic.constantes.ValidationNullOrEmpty;
+import br.com.contmatic.services.EmptyStringException;
+
 public class Empresa {
 
 	private String nome;
@@ -14,30 +17,27 @@ public class Empresa {
 
 	private Endereco endereco;
 
-	private List<Produtos> produto = new ArrayList<>();
+	private List<Produtos> produto;
 
 	private List<Funcionario> funcionario = new ArrayList<>();
 
 	private List<Cliente> cliente = new ArrayList<>();
 
-	public Empresa(String nome, String email, List<Produtos> produto, String cnpj, Endereco endereco) throws Exception {
-		this.nome = nome;
-		this.email = email;
+	public Empresa(String nome, String email, List<Produtos> produto, String cnpj, Endereco endereco) {
+		setNome(nome);
+		setEmail(email);
 		this.produto = produto;
-		this.cnpj = cnpj;
-		this.endereco = endereco;
-		nome_nao_deve_ser_null_ou_vazio(nome);
-		email_nao_deve_ser_null_ou_vazio(email);
-		nao_deve_aceitar_produto_null(produto);
-		nao_deve_aceitar_cnpj_com_menos_de_14_digitos(cnpj);
-		nao_deve_aceitar_cnpj_null(cnpj);
-		nao_deve_aceitar_cnpj_vazio(cnpj);
-		nao_deve_aceitar_letras_no_cnpj(cnpj);
-		nao_deve_aceitar_endereco_null(endereco);
+		setCnpj(cnpj);
+		setEndereco(endereco);
 	}
 
 	public Endereco getEndereco() {
 		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		ValidationNullOrEmpty.enderecoIsNull(endereco);
+		this.endereco = endereco;
 	}
 
 	public String getNome() {
@@ -47,8 +47,18 @@ public class Empresa {
 	public String getCnpj() {
 		return cnpj;
 	}
+	
+	public void setCnpj(String cnpj) {
+		cnpjIsNull(cnpj);
+		cnpjIsEmpty(cnpj);
+		cnpjHasWord(cnpj);
+		cnpjSizeValidation(cnpj);
+		this.cnpj = cnpj;
+	}
 
 	public void setNome(String nome) {
+		ValidationNullOrEmpty.nomeIsNull(nome);
+		ValidationNullOrEmpty.nomeIsEmpty(nome);
 		this.nome = nome;
 	}
 
@@ -57,6 +67,8 @@ public class Empresa {
 	}
 
 	public void setEmail(String email) {
+		ValidationNullOrEmpty.emailIsNull(email);
+		ValidationNullOrEmpty.emailIsEmpty(email);
 		this.email = email;
 	}
 
@@ -72,13 +84,11 @@ public class Empresa {
 		return cliente;
 	}
 
-	// verifica se o produto existe e retorna true ou false
-	public boolean produto_deve_existir(String nome) {
+	public boolean produtoExiste(String nome) {
 		return this.produto.stream().anyMatch(prod -> prod.getNome().equalsIgnoreCase(nome));
 	}
 
-	// Verifica se eu tenho cadastro na loja ou se eu sou um funcionario da loja
-	public boolean verifica_login(String nome, String email, int verificaFuncOuCliente) {
+	public boolean verificaLogin(String nome, String email, int verificaFuncOuCliente) {
 		if (verificaFuncOuCliente == 2) {
 			if (this.funcionario.stream().anyMatch(
 					func -> func.getNome().equalsIgnoreCase(nome) && func.getEmail().equalsIgnoreCase(email))) {
@@ -93,81 +103,55 @@ public class Empresa {
 		return false;
 	}
 
-	// retorna o cliente que fez o login
-	public Cliente return_cliente_fez_login(String nome, String email) throws Exception {
+	public Cliente clienteThatDoLogin(String nome, String email) {
 		for (Cliente clien : this.cliente) {
 			if (clien.getNome().equalsIgnoreCase(nome) && clien.getEmail().equalsIgnoreCase(email)) {
 				return clien;
 			}
 		}
-		throw new Exception("O cliente que fez o login não existe");
+		throw new RuntimeException("O cliente que fez o login não existe");
 	}
 
-	// retorna o funcionario que fez o login
-	public Funcionario return_funcionario_fez_login(String nome, String email) throws Exception {
+	public Funcionario funcionarioThatDoLogin(String nome, String email) {
 		for (Funcionario func : this.funcionario) {
 			if (func.getNome().equalsIgnoreCase(nome) && func.getEmail().equalsIgnoreCase(email)) {
 				return func;
 			}
 		}
-		throw new Exception("O cliente que fez o login não existe");
+		throw new RuntimeException("O cliente que fez o login não existe");
 	}
 
 	public void mostrarProdutos() {
 		this.produto.sort((p1, p2) -> p1.getNome().compareTo(p2.getNome()));
 	}
-
-	private void nome_nao_deve_ser_null_ou_vazio(String nome) throws Exception {
-		if(nome == null || nome.isEmpty() || nome.trim().equals("")) {
-			throw new Exception("O nome está null ou vazio");
-		}
-	}
 	
-	private void email_nao_deve_ser_null_ou_vazio(String email) throws Exception {
-		if(email == null || email.isEmpty() || email.trim().equals("")) {
-			throw new Exception("O email está null ou vazio");
-		}
-	}
-	
-	private void nao_deve_aceitar_cnpj_null(String cnp) throws Exception {
+	private void cnpjIsNull(String cnpj) {
 		if (cnpj == null) {
-			throw new Exception("O cnpj não pode ficar null");
+			throw new RuntimeException("O cnpj não pode ficar null");
 		}
 	}
 	
-	private void nao_deve_aceitar_cnpj_vazio(String cnp) throws Exception {
+	private void cnpjIsEmpty(String cnpj) {
 		if (cnpj.isEmpty() || cnpj.trim().equals("")) {
-			throw new Exception("O cnpj não pode ficar vazio");
+			throw new EmptyStringException("O cnpj não pode ficar vazio");
 		}
 	}
 	
-	private void nao_deve_aceitar_letras_no_cnpj(String cnp) throws Exception {
+	private void cnpjHasWord(String cnpj) {
 		if (cnpj.length() != 14) {
-			throw new Exception("O cnpj está errado");
+			throw new RuntimeException("O cnpj está errado");
 		}
 		if (cnpj.matches("^[a-zA-ZÁÂÃÀÇÉÊÍÓÔÕÚÜáâãàçéêíóôõúü]*$")) {
-			throw new Exception("O cnpj está errado");
+			throw new RuntimeException("O cnpj está errado");
 		} else if (cnpj.matches("^[0-9]*$")) {
 		} else {
-			throw new Exception("O cnpj está errado");
+			throw new RuntimeException("O cnpj está errado");
 		}
 	}
 	
-	private void nao_deve_aceitar_cnpj_com_menos_de_14_digitos(String cnpj) throws Exception {
+	private void cnpjSizeValidation(String cnpj) {
 		if (cnpj.length() != 14) {
-			throw new Exception("O cnpj está errado");
-		}
-	}
-	
-	private void nao_deve_aceitar_produto_null(List<Produtos> produto) throws Exception {
-		if (produto == null) {
-			throw new Exception("O produto está null");
-		}
-	}
-	
-	private void nao_deve_aceitar_endereco_null(Endereco endereco) throws Exception {
-		if (endereco == null) {
-			throw new Exception("O endereço está null");
+			throw new RuntimeException("O cnpj está errado");
 		}
 	}
 

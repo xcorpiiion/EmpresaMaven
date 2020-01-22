@@ -4,10 +4,10 @@ import static org.junit.Assert.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -25,54 +25,50 @@ public class ClienteTest {
 
 	private List<Produtos> produto = new ArrayList<Produtos>();
 
-	SimpleDateFormat nascimento = new SimpleDateFormat("dd/MM/yyyy");
+	private SimpleDateFormat nascimento = new SimpleDateFormat("dd/MM/yyyy");
+
+	private Date data;
 
 	private List<Cliente> cliente = new ArrayList<Cliente>();
 
-	private Empresa loja = null;
+	private Empresa loja;
 
 	@Before
 	public void addDadosProduto() {
-		try {
-			produto.add(new Produtos("Tablet", 2500.00, 50));
-			produto.add(new Produtos("Computador", 3500.00, 70));
-			produto.add(new Produtos("Smartphone", 2500.00, 150));
-			produto.add(new Produtos("Fone de Ouvido", 50.00, 200));
-		} catch (Exception e) {
-			fail("Algum valor em produto está null");
-		}
+		produto.add(new Produtos("Tablet", 2500.00, 50));
+		produto.add(new Produtos("Computador", 3500.00, 70));
+		produto.add(new Produtos("Smartphone", 2500.00, 150));
+		produto.add(new Produtos("Fone de Ouvido", 50.00, 200));
+
 	}
 
-	@Test
+	@Before
 	public void cadastrar_empresa() {
 		List<Produtos> prod = new ArrayList<>();
-		try {
-			prod.add(new Produtos("sla", 250.00, 5));
-			this.loja = new Empresa("Kratos games", "kratosgames@gmail.com", produto, "01234567890123",
-					new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo", "São Paulo"));
-		} catch (Exception e) {
-			fail("Você informou o endereço errado");
-		}
+		prod.add(new Produtos("sla", 250.00, 5));
+		loja = new Empresa("Kratos games", "kratosgames@gmail.com", produto, "01234567890123",
+				new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo", "São Paulo"));
 	}
 
 	@Before
 	public void addDadosCliente() {
 		try {
-			nascimento.parse("19/10/1992");
-			cliente.add(new Cliente("Matheus", "matheus@gmail.com", 2500.00, nascimento,
+			data = nascimento.parse("19/10/1992");
+			cliente.add(new Cliente("Matheus", "matheus@gmail.com", 25000.00, data,
 					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo")));
 			nascimento.parse("20/11/1999");
-			cliente.add(new Cliente("Vergil", "vergil@gmail.com", 1500.00, nascimento,
+			cliente.add(new Cliente("Vergil", "vergil@gmail.com", 1500.00, data,
 					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo")));
 			nascimento.parse("9/1/1992");
-			cliente.add(new Cliente("Dante", "dante@gmail.com", 900.00, nascimento,
+			cliente.add(new Cliente("Dante", "dante@gmail.com", 900.00, data,
 					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo")));
 			nascimento.parse("19/9/1996");
-			cliente.add(new Cliente("Harry", "harry@gmail.com", 1300.00, nascimento,
+			cliente.add(new Cliente("Harry", "harry@gmail.com", 1300.00, data,
 					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo")));
 		} catch (Exception e) {
 			fail("Você digitou uma data invalida");
 		}
+		cliente.get(0).addItensCarrinho(cliente.get(0), loja, "Tablet", 2);
 	}
 
 	@Before
@@ -94,30 +90,12 @@ public class ClienteTest {
 
 	@Test
 	public void nao_deve_aceitar_numero_estoque_maior_que_numero_estoque_produtos() {
-		if(loja == null) {
-			System.out.println("É null");
-		}
-		System.out.println(loja.getNome());
-		try {
-			cliente.get(0).addItensCarrinho(cliente.get(0), this.loja, "Tablet", 5);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		cliente.get(0).addItensCarrinho(cliente.get(0), this.loja, "Tablet", 5);
 	}
 
-	@Test(expected = NullPointerException.class)
-
+	@Test(expected = RuntimeException.class)
 	public void nao_deve_aceitar_numero_estoque_maior_que_numero_estoque_produtos_() throws Exception {
-		cliente.get(0).addItensCarrinho(cliente.get(0), this.loja, "Tablet", 50);
-	}
-
-	@Test()
-	public void nao_deve_aceitar_produto_null() {
-		if (produto == null) {
-			assertEquals("O produto está null", produto);
-		}
+		cliente.get(0).addItensCarrinho(cliente.get(0), loja, "Tablet", 51);
 	}
 
 	@Test(expected = NullPointerException.class)
@@ -130,29 +108,25 @@ public class ClienteTest {
 
 	@Test()
 	public void nao_deve_aceitar_cliente_null() {
-		if (cliente == null) {
-			assertNotNull("O cliente esta null", cliente);
-		}
+		assertNotNull("O cliente esta null", cliente);
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void nao_deve_aceitar_cliente_null_() {
 		cliente = null;
-		if (cliente == null) {
-			throw new NullPointerException("O cliente está null");
-		}
+
 	}
 
 	@Test()
 	public void deve_existir_produto_na_lista() {
 		String nome = "Tablet";
-		assertTrue("O produto não existe", produto.stream().anyMatch(prod -> prod.getNome().equalsIgnoreCase(nome)));
+		assertFalse("O produto não existe", cliente.get(0).produtoEstaNoCarrinho(nome, cliente.get(0)));
 	}
 
 	@Test()
-	public void illegal_deve_existir_produto_na_lista() {
+	public void deve_existir_produto_na_lista_() {
 		String nome = "Tablet";
-		assertTrue("O produto não existe", produto.stream().anyMatch(prod -> prod.getNome().equalsIgnoreCase(nome)));
+		assertTrue("O produto não existe", cliente.get(0).produtoEstaNoCarrinho(nome, cliente.get(0)));
 	}
 
 	@Test()
@@ -205,27 +179,81 @@ public class ClienteTest {
 		assertFalse("O cliente já está cadastrado", cliente.stream()
 				.anyMatch(c -> c.getNome().equalsIgnoreCase(nome) && c.getEmail().equalsIgnoreCase(email)));
 	}
+	
+	@Test()
+	public void dataNascimento_deve_ser_valida() {
+		try {
+			data = nascimento.parse("01/01/1999");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		cliente.get(0).setDataNascimento(data);
+	}
 
 	@Test(expected = ParseException.class)
-	public void dataNascimento_deve_ser_valida() throws ParseException {
-		nascimento.parse("/04/2000");
-
+	public void dataNascimento_deve_ser_valida_2() throws ParseException {
+		data = nascimento.parse("/01/1999");
+		cliente.get(0).setDataNascimento(data);
 	}
 
 	@Test()
 	public void deve_ter_dados_validos_para_cadastrar_cliente() {
 		String nome = "lalau";
 		String email = "lalau@gmail.com";
-		try {
-			cliente.add(new Cliente(nome, email, 2500.00, nascimento,
-					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo")));
-		} catch (Exception e) {
-			fail("O endereço está incorreto");
-		}
+		cliente.add(new Cliente(nome, email, 2500.00, data,
+				new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo")));
 	}
 
-	@After
-	public void mostrarCliente() {
+	@Test()
+	public void deve_add_produto_no_carrinho() {
+		String nomeProduto = "Tablet";
+		int qtdProdutoAddCarrinho = 1;
+		cliente.get(0).addItensCarrinho(cliente.get(0), loja, nomeProduto, qtdProdutoAddCarrinho);
+	}
+
+	@Test(expected = RuntimeException.class)
+	public void deve_add_produto_no_carrinho_() {
+		String nomeProduto = "Tablet";
+		int qtdProdutoAddCarrinho = 0;
+		cliente.get(0).addItensCarrinho(cliente.get(0), loja, nomeProduto, qtdProdutoAddCarrinho);
+	}
+
+	@Test
+	public void deve_add_dinheiro_carteira() {
+		double dinheiro = 2500.00;
+		cliente.get(0).addDinheiroCarteira(dinheiro);
+	}
+
+	@Test(expected = RuntimeException.class)
+	public void deve_add_dinheiro_carteira_() {
+		double dinheiro = 0;
+		cliente.get(0).addDinheiroCarteira(dinheiro);
+	}
+
+	@Test()
+	public void deve_existir_cliente() {
+		String nome = "";
+		String email = "";
+		assertTrue("Cliente não existe", cliente.get(0).clienteExiste(loja, nome, email));
+	}
+
+	@Test()
+	public void deve_existir_cliente_() {
+		String nome = "lucas";
+		String email = "lucas@gmail.com";
+		assertTrue("Cliente não existe", cliente.get(0).clienteExiste(loja, nome, email));
+	}
+
+	@Test
+	public void deve_compra_produto() {
+		String nomeProduto = "Tablet";
+		int qtdProdutosCompra = 1;
+		cliente.get(0).compraProduto(cliente.get(0), nomeProduto, qtdProdutosCompra);
+	}
+
+	@AfterClass
+	public static void mostrarCliente() {
 		System.out.println("Cliente foi cadastrado com sucesso");
 	}
 

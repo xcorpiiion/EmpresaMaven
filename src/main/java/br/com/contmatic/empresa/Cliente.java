@@ -1,9 +1,10 @@
 package br.com.contmatic.empresa;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+import br.com.contmatic.constantes.ValidationNullOrEmpty;
 
 public class Cliente {
 
@@ -11,7 +12,7 @@ public class Cliente {
 
 	private String email;
 
-	private SimpleDateFormat dataNascimento = new SimpleDateFormat("dd/MM/yyyy");
+	private Date dataNascimento;
 
 	private Double dinheiroCarteira;
 
@@ -21,16 +22,13 @@ public class Cliente {
 
 	private List<Produtos> produtosComprados = new ArrayList<>();
 
-	public Cliente(String nome, String email, Double dinheiroCarteira, SimpleDateFormat dataNascimento,
-			Endereco endereco) throws Exception {
-		this.nome = nome;
-		this.email = email;
+	public Cliente(String nome, String email, Double dinheiroCarteira, Date dataNascimento,
+			Endereco endereco) {
+		setNome(nome);
+		setEmail(email);
 		this.dataNascimento = dataNascimento;
 		this.dinheiroCarteira = dinheiroCarteira;
-		this.endereco = endereco;
-		dataNascimentoIsNull(dataNascimento);
-		emailIsNull(email);
-		nomeIsNull(nome);
+		setEndereco(endereco);
 		dinheiroIsNegative(dinheiroCarteira);
 	}
 
@@ -50,7 +48,8 @@ public class Cliente {
 		return endereco;
 	}
 
-	public void setEndereco(Endereco endereco) throws Exception {
+	public void setEndereco(Endereco endereco) {
+		ValidationNullOrEmpty.enderecoIsNull(endereco);
 		this.endereco = endereco;
 	}
 
@@ -58,8 +57,9 @@ public class Cliente {
 		return nome;
 	}
 
-	public void setNome(String nome) throws Exception {
-		nomeIsNull(nome);
+	public void setNome(String nome) {
+		ValidationNullOrEmpty.nomeIsNull(nome);
+		ValidationNullOrEmpty.nomeIsEmpty(nome);
 		this.nome = nome;
 	}
 
@@ -67,28 +67,31 @@ public class Cliente {
 		return email;
 	}
 
-	public void setEmail(String email) throws Exception {
-		emailIsNull(email);
+	public void setEmail(String email){
+		ValidationNullOrEmpty.emailIsNull(email);
+		ValidationNullOrEmpty.emailIsEmpty(email);
 		this.email = email;
 	}
 
-	public SimpleDateFormat getDataNascimento() {
+	public Date getDataNascimento() {
 		return dataNascimento;
 	}
 
-	private void nao_deve_aceitar_produto_null(Empresa loja) throws Exception {
+	public void setDataNascimento(Date dataNascimento) {
+		ValidationNullOrEmpty.dataNascimentoIsNull(dataNascimento);
+		this.dataNascimento = dataNascimento;
+	}
+
+	private void empresaIsNull(Empresa loja) {
 		if (loja.getProduto() == null) {
-			System.out.println("Entrou aqui");
-			throw new Exception("O produto esta null");
+			throw new RuntimeException("A empresa esta null");
 		}
 	}
 
-	// verifica se o produto existe e retorna true ou false
 	public boolean produtoExisteNaLoja(String nomeProduto, Empresa loja) {
 		return loja.getProduto().stream().anyMatch(prod -> prod.getNome().equalsIgnoreCase(nomeProduto));
 	}
 
-	// verifica se o produto existe e retorna true ou false
 	public boolean produtoEstaNoCarrinho(String nomeProduto, Cliente carrinhoCliente) {
 		return carrinhoCliente.getCarrinhoProduto().stream()
 				.anyMatch(prod -> prod.getNome().equalsIgnoreCase(nomeProduto));
@@ -99,18 +102,17 @@ public class Cliente {
 				.anyMatch(c -> c.getNome().equalsIgnoreCase(nome) && c.getEmail().equalsIgnoreCase(email));
 	}
 	
-	public void addItensCarrinho(Cliente cliente, Empresa loja, String nomeProduto, int qtdProdutoAddCarrinho)
-			throws Exception {
-		nao_deve_aceitar_produto_null(loja);
+	public void addItensCarrinho(Cliente cliente, Empresa loja, String nomeProduto, int qtdProdutoAddCarrinho) {
+		empresaIsNull(loja);
 		loja.mostrarProdutos();
 		if (produtoExisteNaLoja(nomeProduto, loja)) {
 
 			if (qtdProdutoAddCarrinho < 1) {
-				throw new Exception("Você precisa pelo menos add 1 produto ao carrinho");
+				throw new RuntimeException("Você precisa pelo menos add 1 produto ao carrinho");
 			}
 			if (loja.getProduto().stream().anyMatch(prod -> prod.getNome().equalsIgnoreCase(nomeProduto)
 					&& prod.getEstoque() < qtdProdutoAddCarrinho)) {
-				throw new Exception("A quantidade de produtos que você quer colocar no carrinho é maior do que a"
+				throw new RuntimeException("A quantidade de produtos que você quer colocar no carrinho é maior do que a"
 						+ " quantidade em estoque");
 			}
 			for (int i = 0; i < qtdProdutoAddCarrinho; i++) {
@@ -118,29 +120,29 @@ public class Cliente {
 						.filter(prod -> prod.getNome().equalsIgnoreCase(nomeProduto)).collect(Collectors.toList()));
 			}
 		} else {
-			throw new Exception("O produto não existe");
+			throw new RuntimeException("O produto não existe");
 		}
 
 	}
 
-	public void addDinheiroCarteira(Double dinheiro) throws Exception {
+	public void addDinheiroCarteira(Double dinheiro) {
 		if (dinheiro <= 0) {
-			throw new Exception("Você precisa colocar um valor acima de zero para adicionar a carteira");
+			throw new RuntimeException("Você precisa colocar um valor acima de zero para adicionar a carteira");
 		}
 		this.dinheiroCarteira += dinheiro;
 	}
 
-	public void compraProduto(Cliente cliente, String nomeProduto, int qtdProdutosCompra) throws Exception {
+	public void compraProduto(Cliente cliente, String nomeProduto, int qtdProdutosCompra)  {
 		carrinhoIsNull();
 		if (!produtoEstaNoCarrinho(nomeProduto, cliente)) {
-			throw new Exception("O produto não existe no carrinho");
+			throw new RuntimeException("O produto não existe no carrinho");
 		}
 		double totalPreco = 0.0;
 		for (Produtos prod : cliente.getCarrinhoProduto()) {
 			if (prod.getNome().hashCode() == nomeProduto.hashCode()) {
 				if (prod.getNome().equalsIgnoreCase(nomeProduto)) {
 					if (qtdProdutosCompra > prod.getEstoque()) {
-						throw new Exception("A quantidade de produtos que você quer comprar é maior do que a "
+						throw new RuntimeException("A quantidade de produtos que você quer comprar é maior do que a "
 								+ "quantidade em estoque");
 					}
 					totalPreco += prod.getPreco();
@@ -148,7 +150,7 @@ public class Cliente {
 			}
 		}
 		if (cliente.getDinheiroCarteira() < totalPreco) {
-			throw new Exception("Dinheiro insulficiente para comprar produtos");
+			throw new RuntimeException("Dinheiro insulficiente para comprar produtos");
 		}
 		cliente.dinheiroCarteira -= totalPreco;
 
@@ -159,48 +161,24 @@ public class Cliente {
 		}
 	}
 
-	public void cadastrarCliente(String nome, String email, Double dinheiro, SimpleDateFormat dataNascimento,
-			Empresa loja, Endereco endereco) throws Exception {
-		lojaIsNull(loja);
+	public void cadastrarCliente(String nome, String email, Double dinheiro, Date dataNascimento,
+			Empresa loja, Endereco endereco) {
+		ValidationNullOrEmpty.lojaIsNull(loja);
 		if (clienteExiste(loja, nome, email)) {
-			throw new Exception("O cliente já está cadastrado");
+			throw new RuntimeException("O cliente já está cadastrado");
 		}
 		loja.getCliente().add(new Cliente(nome, email, dinheiro, dataNascimento, endereco));
 	}
 
-	private void carrinhoIsNull() throws Exception {
+	private void carrinhoIsNull() {
 		if (nome == null) {
-			throw new Exception("O carrinho está null ou vazio");
+			throw new NullPointerException("O carrinho está null ou vazio");
 		}
 	}
 
-	private void nomeIsNull(String nome) throws Exception {
-		if (nome == null || nome.isEmpty() || nome.trim().equals("")) {
-			throw new Exception("O nome está null ou vazio");
-		}
-	}
-
-	private void emailIsNull(String email) throws Exception {
-		if (email == null || email.isEmpty() || email.trim().equals("")) {
-			throw new Exception("O email está null ou vazio");
-		}
-	}
-
-	private void dataNascimentoIsNull(SimpleDateFormat dataNascimento) throws Exception {
-		if (dataNascimento == null) {
-			throw new NullPointerException("A data de nascimento está null");
-		}
-	}
-
-	private void dinheiroIsNegative(Double dinheiro) throws Exception {
+	private void dinheiroIsNegative(Double dinheiro) {
 		if (dinheiro < 0) {
-			throw new Exception("O valo não pode ser negativo");
-		}
-	}
-	
-	private void lojaIsNull(Empresa loja) {
-		if (loja == null) {
-			throw new NullPointerException("A loja está null");
+			throw new RuntimeException("O valo não pode ser negativo");
 		}
 	}
 
