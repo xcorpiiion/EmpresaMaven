@@ -1,12 +1,12 @@
 package br.com.contmatic.constantes;
 
-public class Constante {
+public final class Constante {
 	
-	public static String illegalWord = "^[a-zA-ZÁÂÃÀÇÉÊÍÓÔÕÚÜáâãàçéêíóôõúü]*$";
+	public static final String ILLEGAL_WORD = "^[a-zA-ZÁÂÃÀÇÉÊÍÓÔÕÚÜáâãàçéêíóôõúü]*$";
 	
-	public static String illegalNumber = "^[0-9]*$";
+	public static final String ILLEGAL_NUMBER = "^[0-9]*$";
 	
-	public Constante() {
+	private Constante() {
 		
 	}
 	

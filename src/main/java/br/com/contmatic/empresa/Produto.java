@@ -2,7 +2,7 @@ package br.com.contmatic.empresa;
 
 import br.com.contmatic.constantes.ValidationNullOrEmpty;
 
-public class Produtos {
+public class Produto {
 	
 	private String nome;
 	
@@ -10,7 +10,7 @@ public class Produtos {
 	
 	private Integer estoque;
 	
-	public Produtos(String nome, Double preco, Integer estoque){
+	public Produto(String nome, Double preco, Integer estoque){
 		setNome(nome);
 		setPreco(preco);
 		setEstoque(estoque);
@@ -47,19 +47,19 @@ public class Produtos {
 	
 	private void precoIsNull(Double preco) {
 		if(preco == null) {
-			throw new RuntimeException("O preço ou null");
+			throw new NullPointerException("O preço ou null");
 		}
 	}
 	
 	private void estoqueIsNull(Integer estoque) {
 		if(estoque == null) {
-			throw new RuntimeException("O estoque está null");
+			throw new NullPointerException("O estoque está null");
 		}
 	}
 	
 	private void estoqueIsNegative(Integer estoque) {
 		if(estoque < 0) {
-			throw new RuntimeException("O estoque não pode ser negativo");
+			throw new IllegalArgumentException("O estoque não pode ser negativo");
 		}
 	}
 
@@ -79,7 +79,7 @@ public class Produtos {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Produtos other = (Produtos) obj;
+		Produto other = (Produto) obj;
 		if (nome == null) {
 			if (other.nome != null)
 				return false;
@@ -90,7 +90,7 @@ public class Produtos {
 
 	@Override
 	public String toString() {
-		return "Nome: " + nome + ", R$: " + preco + ", Quantidade em estoque: " + estoque;
+		return "Nome: " + getNome() + ", R$: " + getPreco() + ", Quantidade em estoque: " + getEstoque();
 	}
 	
 	

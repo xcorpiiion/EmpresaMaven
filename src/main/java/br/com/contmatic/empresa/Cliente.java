@@ -18,14 +18,14 @@ public class Cliente {
 
 	private Endereco endereco;
 
-	private List<Produtos> carrinhoProduto = new ArrayList<>();
+	private List<Produto> carrinhoProduto = new ArrayList<>();
 
-	private List<Produtos> produtosComprados = new ArrayList<>();
+	private List<Produto> produtosComprados = new ArrayList<>();
 
-	public Cliente(String nome, String email, Double dinheiroCarteira, Date dataNascimento,
-			Endereco endereco) {
+	public Cliente(String nome, String email, Double dinheiroCarteira, Date dataNascimento, Endereco endereco) {
 		setNome(nome);
 		setEmail(email);
+		ValidationNullOrEmpty.dataNascimentoIsNull(dataNascimento);
 		this.dataNascimento = dataNascimento;
 		this.dinheiroCarteira = dinheiroCarteira;
 		setEndereco(endereco);
@@ -36,11 +36,11 @@ public class Cliente {
 		return dinheiroCarteira;
 	}
 
-	public List<Produtos> getCarrinhoProduto() {
+	public List<Produto> getCarrinhoProduto() {
 		return carrinhoProduto;
 	}
 
-	public List<Produtos> getProdutosComprados() {
+	public List<Produto> getProdutosComprados() {
 		return produtosComprados;
 	}
 
@@ -67,7 +67,7 @@ public class Cliente {
 		return email;
 	}
 
-	public void setEmail(String email){
+	public void setEmail(String email) {
 		ValidationNullOrEmpty.emailIsNull(email);
 		ValidationNullOrEmpty.emailIsEmpty(email);
 		this.email = email;
@@ -80,12 +80,6 @@ public class Cliente {
 	public void setDataNascimento(Date dataNascimento) {
 		ValidationNullOrEmpty.dataNascimentoIsNull(dataNascimento);
 		this.dataNascimento = dataNascimento;
-	}
-
-	private void empresaIsNull(Empresa loja) {
-		if (loja.getProduto() == null) {
-			throw new RuntimeException("A empresa esta null");
-		}
 	}
 
 	public boolean produtoExisteNaLoja(String nomeProduto, Empresa loja) {
@@ -101,77 +95,77 @@ public class Cliente {
 		return lojaCliente.getCliente().stream()
 				.anyMatch(c -> c.getNome().equalsIgnoreCase(nome) && c.getEmail().equalsIgnoreCase(email));
 	}
-	
+
 	public void addItensCarrinho(Cliente cliente, Empresa loja, String nomeProduto, int qtdProdutoAddCarrinho) {
-		empresaIsNull(loja);
+		ValidationNullOrEmpty.lojaIsNull(loja);
 		loja.mostrarProdutos();
 		if (produtoExisteNaLoja(nomeProduto, loja)) {
 
 			if (qtdProdutoAddCarrinho < 1) {
-				throw new RuntimeException("Você precisa pelo menos add 1 produto ao carrinho");
+				throw new IllegalArgumentException("Você precisa pelo menos add 1 produto ao carrinho");
 			}
 			if (loja.getProduto().stream().anyMatch(prod -> prod.getNome().equalsIgnoreCase(nomeProduto)
 					&& prod.getEstoque() < qtdProdutoAddCarrinho)) {
-				throw new RuntimeException("A quantidade de produtos que você quer colocar no carrinho é maior do que a"
-						+ " quantidade em estoque");
+				throw new IllegalArgumentException(
+						"A quantidade de produtos que você quer colocar no carrinho é maior do que a"
+								+ " quantidade em estoque");
 			}
 			for (int i = 0; i < qtdProdutoAddCarrinho; i++) {
 				cliente.carrinhoProduto.addAll(loja.getProduto().stream()
 						.filter(prod -> prod.getNome().equalsIgnoreCase(nomeProduto)).collect(Collectors.toList()));
 			}
 		} else {
-			throw new RuntimeException("O produto não existe");
+			throw new IllegalArgumentException("O produto não existe");
 		}
 
 	}
 
 	public void addDinheiroCarteira(Double dinheiro) {
 		if (dinheiro <= 0) {
-			throw new RuntimeException("Você precisa colocar um valor acima de zero para adicionar a carteira");
+			throw new IllegalArgumentException("Você precisa colocar um valor acima de zero para adicionar a carteira");
 		}
 		this.dinheiroCarteira += dinheiro;
 	}
 
-	public void compraProduto(Cliente cliente, String nomeProduto, int qtdProdutosCompra)  {
+	public void compraProduto(Cliente cliente, String nomeProduto, int qtdProdutosCompra) {
 		if (!produtoEstaNoCarrinho(nomeProduto, cliente)) {
-			throw new RuntimeException("O produto não existe no carrinho");
+			throw new IllegalArgumentException("O produto não existe no carrinho");
 		}
 		double totalPreco = 0.0;
-		for (Produtos prod : cliente.getCarrinhoProduto()) {
-			if (prod.getNome().hashCode() == nomeProduto.hashCode()) {
-				if (prod.getNome().equalsIgnoreCase(nomeProduto)) {
-					if (qtdProdutosCompra > prod.getEstoque()) {
-						throw new RuntimeException("A quantidade de produtos que você quer comprar é maior do que a "
-								+ "quantidade em estoque");
-					}
-					totalPreco += prod.getPreco();
+		for (Produto prod : cliente.getCarrinhoProduto()) {
+			if (prod.getNome().equalsIgnoreCase(nomeProduto)) {
+				if (qtdProdutosCompra > prod.getEstoque()) {
+					throw new IllegalArgumentException(
+							"A quantidade de produtos que você quer comprar é maior do que a "
+									+ "quantidade em estoque");
 				}
+				totalPreco += prod.getPreco();
 			}
 		}
 		if (cliente.getDinheiroCarteira() < totalPreco) {
-			throw new RuntimeException("Dinheiro insulficiente para comprar produtos");
+			throw new IllegalArgumentException("Dinheiro insulficiente para comprar produtos");
 		}
 		cliente.dinheiroCarteira -= totalPreco;
 
-		for (Produtos prod : cliente.getCarrinhoProduto()) {
+		for (Produto prod : cliente.getCarrinhoProduto()) {
 			if (prod.getNome().equalsIgnoreCase(nomeProduto)) {
 				cliente.produtosComprados.add(prod);
 			}
 		}
 	}
 
-	public void cadastrarCliente(String nome, String email, Double dinheiro, Date dataNascimento,
-			Empresa loja, Endereco endereco) {
+	public void cadastrarCliente(String nome, String email, Double dinheiro, Date dataNascimento, Empresa loja,
+			Endereco endereco) {
 		ValidationNullOrEmpty.lojaIsNull(loja);
 		if (clienteExiste(loja, nome, email)) {
-			throw new RuntimeException("O cliente já está cadastrado");
+			throw new IllegalArgumentException("O cliente já está cadastrado");
 		}
 		loja.getCliente().add(new Cliente(nome, email, dinheiro, dataNascimento, endereco));
 	}
 
 	private void dinheiroIsNegative(Double dinheiro) {
 		if (dinheiro < 0) {
-			throw new RuntimeException("O valo não pode ser negativo");
+			throw new IllegalArgumentException("O valo não pode ser negativo");
 		}
 	}
 
@@ -205,12 +199,12 @@ public class Cliente {
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Cliente [nome=" + nome + ", email=" + email + ", dataNascimento=" + dataNascimento
-				+ ", dinheiroCarteira=" + dinheiroCarteira + ", endereco=" + endereco + ", carrinhoProduto="
-				+ carrinhoProduto + ", produtosComprados=" + produtosComprados + "]";
+		return "Cliente [nome=" + getNome() + ", email=" + getEmail() + ", dataNascimento=" + getDataNascimento()
+				+ ", dinheiroCarteira=" + getDinheiroCarteira() + ", endereco=" + getEndereco() + ", carrinhoProduto="
+				+ getCarrinhoProduto() + ", produtosComprados=" + getProdutosComprados() + "]";
 	}
 
 }

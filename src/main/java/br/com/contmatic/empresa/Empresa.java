@@ -8,7 +8,7 @@ import br.com.contmatic.constantes.ValidationNullOrEmpty;
 import br.com.contmatic.services.EmptyStringException;
 
 public class Empresa {
-
+	
 	private String nome;
 
 	private String email;
@@ -17,13 +17,13 @@ public class Empresa {
 
 	private Endereco endereco;
 
-	private List<Produtos> produto;
+	private List<Produto> produto;
 
 	private List<Funcionario> funcionario = new ArrayList<>();
 
 	private List<Cliente> cliente = new ArrayList<>();
 
-	public Empresa(String nome, String email, List<Produtos> produto, String cnpj, Endereco endereco) {
+	public Empresa(String nome, String email, List<Produto> produto, String cnpj, Endereco endereco) {
 		setNome(nome);
 		setEmail(email);
 		this.produto = produto;
@@ -72,7 +72,7 @@ public class Empresa {
 		this.email = email;
 	}
 
-	public List<Produtos> getProduto() {
+	public List<Produto> getProduto() {
 		return produto;
 	}
 
@@ -109,7 +109,7 @@ public class Empresa {
 				return clien;
 			}
 		}
-		throw new RuntimeException("O cliente que fez o login não existe");
+		throw new IllegalArgumentException("O cliente que fez o login não existe");
 	}
 
 	public Funcionario funcionarioThatDoLogin(String nome, String email) {
@@ -118,7 +118,7 @@ public class Empresa {
 				return func;
 			}
 		}
-		throw new RuntimeException("O cliente que fez o login não existe");
+		throw new IllegalArgumentException("O cliente que fez o login não existe");
 	}
 
 	public void mostrarProdutos() {
@@ -139,19 +139,17 @@ public class Empresa {
 	
 	private void cnpjHasWord(String cnpj) {
 		if (cnpj.matches("^[a-zA-ZÁÂÃÀÇÉÊÍÓÔÕÚÜáâãàçéêíóôõúü]*$")) {
-			throw new RuntimeException("O cnpj está errado");
-		} else if (cnpj.matches("^[0-9]*$")) {
-		} else {
-			throw new RuntimeException("O cnpj está errado");
+			throw new IllegalArgumentException("O cnpj contém letras");
+		} else if (!cnpj.matches("^[0-9]*$")) {
+			throw new IllegalArgumentException("O cnpj contém letras e números");
 		}
 	}
 	
 	private void cnpjSizeValidation(String cnpj) {
 		if (cnpj.length() != 14) {
-			throw new RuntimeException("O cnpj está errado");
+			throw new IllegalArgumentException("O cnpj está errado");
 		}
 	}
-
 
 	@Override
 	public int hashCode() {

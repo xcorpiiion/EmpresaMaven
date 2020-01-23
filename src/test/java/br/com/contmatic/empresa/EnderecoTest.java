@@ -1,5 +1,12 @@
 package br.com.contmatic.empresa;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import br.com.contmatic.services.EmptyStringException;
@@ -10,94 +17,121 @@ public class EnderecoTest {
 	
 	private Endereco endereco;
 	
+	private Endereco endereco2;
+	
 	@Before
 	public void addEndereco() {
 		endereco = new Endereco("Arnaldo", "Jardim Maria", "02676020", "150-A", "São Paulo", "SP");
+		endereco2 = new Endereco("Arnaldo", "Jardim Maria", "02676020", "150-A", "São Paulo", "SP");
 	}
 	
 	@Test
 	public void nao_deve_aceitar_numero_residencia_null() {
 		endereco.setNumeroResidencia("5");
+		assertThat(endereco.getNumeroResidencia(), is("5"));
 	}
 	
 	@Test(expected = NullPointerException.class)
-	public void nao_deve_aceitar_numero_residencia_null_() {
+	public void nao_deve_aceitar_numero_residencia_null_expection() {
 		endereco.setNumeroResidencia(null);
 	}
 	
 	@Test
 	public void nao_deve_aceitar_numero_residencia_vazio() {
 		endereco.setNumeroResidencia("6");
+		assertThat(endereco.getNumeroResidencia(), is("6"));
 	}
 	
 	@Test(expected = EmptyStringException.class)
-	public void nao_deve_aceitar_numero_residencia_vazio_() {
+	public void nao_deve_aceitar_numero_residencia_vazio_expection() {
 		endereco.setNumeroResidencia("");
+	}
+	
+	@Test(expected = EmptyStringException.class)
+	public void nao_deve_aceitar_numero_residencia_com_espaco_em_branco_expection() {
+		endereco.setNumeroResidencia(" ");
 	}
 	
 	@Test
 	public void nao_deve_aceitar_cidade_null() {
 		endereco.setCidade("Rio de Janeiro");
+		assertThat(endereco.getCidade(), is("Rio de Janeiro"));
 	}
 	
 	@Test(expected = NullPointerException.class)
-	public void nao_deve_aceitar_cidade_null_() {
+	public void nao_deve_aceitar_cidade_null_expection() {
 		endereco.setCidade(null);
 	}
 	
 	@Test
 	public void nao_deve_aceitar_cidade_vazia() {
 		endereco.setCidade("a");
+		assertThat(endereco.getCidade(), is("a"));
 	}
 	
-	@Test(expected = StringFormatException.class)
-	public void nao_deve_aceitar_cidade_vazia_() {
+	@Test(expected = EmptyStringException.class)
+	public void nao_deve_aceitar_cidade_vazia_exception() {
 		endereco.setCidade("");
+	}
+	
+	@Test(expected = EmptyStringException.class)
+	public void nao_deve_aceitar_cidade_com_espaco_em_branco_expection() {
+		endereco.setCidade(" ");
 	}
 	
 	@Test
 	public void nao_deve_aceitar_numero_em_nome_cidade() {
 		endereco.setCidade("Sorocaba");
+		assertThat(endereco.getCidade(), is("Sorocaba"));
 	}
 	
 	@Test(expected = StringFormatException.class)
-	public void nao_deve_aceitar_numero_em_nome_cidade_() {
+	public void nao_deve_aceitar_numero_em_nome_cidade_exception() {
 		endereco.setCidade("0");
 	}
 	
 	@Test
 	public void nao_deve_aceitar_estado_null() {
 		endereco.setEstado("Rio de Janeiro");
+		assertThat(endereco.getEstado(), is("Rio de Janeiro"));
 	}
 	
 	@Test(expected = NullPointerException.class)
-	public void nao_deve_aceitar_estado_null_() {
+	public void nao_deve_aceitar_estado_null_exception() {
 		endereco.setEstado(null);
 	}
 	
 	@Test
 	public void nao_deve_aceitar_estado_vazio() {
 		endereco.setEstado("a");
+		assertThat(endereco.getEstado(), is("a"));
 	}
 	
 	@Test(expected = EmptyStringException.class)
-	public void nao_deve_aceitar_estado_vazio_() {
+	public void nao_deve_aceitar_estado_vazio_exception() {
 		endereco.setEstado("");
+	}
+	
+	@Test(expected = EmptyStringException.class)
+	public void nao_deve_aceitar_estado_com_espaco_em_branco_exception() {
+		endereco.setEstado(" ");
 	}
 	
 	@Test
 	public void nao_deve_aceitar_numero_em_nome_estado() {
 		endereco.setEstado("Sorocaba");
+		assertThat(endereco.getEstado(), is("Sorocaba"));
 	}
 	
 	@Test(expected = StringFormatException.class)
-	public void nao_deve_aceitar_numero_em_nome_estado_() {
+	public void nao_deve_aceitar_numero_em_nome_estado_exception() {
 		endereco.setEstado("0");
 	}
 	
 	@Test
 	public void nao_deve_aceitar_rua_null() {
 		endereco.setRua("Afronta");
+		assertThat(endereco.getRua(), is("Afronta"));
 	}
 	
 	@Test(expected = NullPointerException.class)
@@ -108,65 +142,118 @@ public class EnderecoTest {
 	@Test
 	public void nao_deve_aceitar_rua_vazia() {
 		endereco.setRua("Afronta");
+		assertThat(endereco.getRua(), is("Afronta"));
 	}
 	
 	@Test(expected = EmptyStringException.class)
-	public void nao_deve_aceitar_rua_vazia_() {
+	public void nao_deve_aceitar_rua_vazia_exception() {
 		endereco.setRua("");
+	}
+	
+	@Test(expected = EmptyStringException.class)
+	public void nao_deve_aceitar_rua_com_espaco_em_branco() {
+		endereco.setRua(" ");
 	}
 	
 	@Test
 	public void nao_deve_aceitar_cep_null() {
 		endereco.setCep("12345678");
+		assertThat(endereco.getCep(), is("12345678"));
 	}
 	
 	@Test(expected = NullPointerException.class)
-	public void nao_deve_aceitar_cep_null_() {
+	public void nao_deve_aceitar_cep_null_exception() {
 		endereco.setCep(null);
 	}
 	
 	@Test
 	public void nao_deve_aceitar_cep_vazio() {
 		endereco.setCep("12345678");
+		assertThat(endereco.getCep(), is("12345678"));
 	}
 	
 	@Test(expected = EmptyStringException.class)
-	public void nao_deve_aceitar_cep_vazio_() {
+	public void nao_deve_aceitar_cep_vazio_exception() {
 		endereco.setCep("");
+	}
+	
+	@Test(expected = EmptyStringException.class)
+	public void nao_deve_aceitar_cep_com_espaco_em_branco() {
+		endereco.setCep(" ");
 	}
 	
 	@Test
 	public void nao_deve_aceitar_tamanho_de_cep_diferente_oito() {
 		endereco.setCep("12345678");
+		assertThat(endereco.getCep(), is("12345678"));
 	}
 	
 	@Test(expected = StringSizeException.class)
-	public void nao_deve_aceitar_tamanho_de_cep_diferente_oito_() {
+	public void nao_deve_aceitar_tamanho_de_cep_diferente_oito_expection() {
 		endereco.setCep("123456789");
 	}
 	
 	@Test
 	public void nao_deve_aceitar_letras_no_cep() {
 		endereco.setCep("12345678");
+		assertThat(endereco.getCep(), is("12345678"));
 	}
 	
 	@Test(expected = StringFormatException.class)
-	public void nao_deve_aceitar_letras_no_cep_() {
+	public void nao_deve_aceitar_letras_no_cep_exception() {
 		endereco.setCep("123ss678");
 	}
 	
 	@Test
 	public void nao_deve_aceitar_bairro_null() {
 		endereco.setBairro("Bairro");
+		assertThat(endereco.getBairro(), is("Bairro"));
 	}
 	
 	@Test(expected = NullPointerException.class)
-	public void nao_deve_aceitar_bairro_null_() {
+	public void nao_deve_aceitar_bairro_null_exception() {
 		endereco.setBairro(null);
 	}
 	
 	@Test(expected = EmptyStringException.class)
-	public void nao_deve_aceitar_bairro_vazio() {
-		endereco.setBairro("Bairro");
+	public void nao_deve_aceitar_bairro_com_espaco_em_branco() {
+		endereco.setBairro(" ");
+	}
+	
+	@Test(expected = EmptyStringException.class)
+	public void nao_deve_aceitar_bairro_vazio_exception() {
+		endereco.setBairro("");
+	}
+	
+	@Test
+	public void nao_deve_conter_enderecos_iguais() {
+		assertTrue(endereco.equals(endereco2));
+	}
+	
+	@Test
+	public void nao_deve_conter_enderecos_iguais_2() {
+		assertFalse(endereco.equals(null));
+	}
+	
+	@Test
+	public void nao_deve_conter_enderecos_iguais_3() {
+		endereco2.setCep("01234567");
+		assertFalse(endereco.equals(endereco2));
+	}
+	
+	@Test
+	public void nao_deve_conter_enderecos_iguais_4() {
+		endereco2.setNumeroResidencia("0");
+		assertFalse(endereco.equals(endereco2));
+	}
+	
+	@Test
+	public void nao_deve_conter_enderecos_iguais_5() {
+		assertEquals("Os enderecos são iguais", endereco.hashCode(), endereco2.hashCode());
+	}
+	
+	@After
+	public void mostrarDados() {
+		System.out.println(endereco);
 	}
 }

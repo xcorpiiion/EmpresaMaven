@@ -6,8 +6,11 @@ import br.com.contmatic.empresa.Empresa;
 import br.com.contmatic.empresa.Endereco;
 import br.com.contmatic.services.EmptyStringException;
 
-public class ValidationNullOrEmpty {
-
+public final class ValidationNullOrEmpty {
+	
+	private ValidationNullOrEmpty() {
+		
+	}
 	
 	public static void nomeIsNull(String nome) {
 		if (nome == null) {
