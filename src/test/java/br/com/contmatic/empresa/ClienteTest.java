@@ -143,7 +143,7 @@ public class ClienteTest {
 		assertTrue("O produto não existe", cliente.get(0).produtoEstaNoCarrinho(nome, cliente.get(0)));
 	}
 	
-	@Test()
+	@Test(timeout = 100)
 	public void dataNascimento_deve_ser_valida() {
 		try {
 			data = nascimento.parse("01/01/1999");
