@@ -5,6 +5,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,7 +17,6 @@ import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import br.com.contmatic.empresa.Cliente;
 import br.com.contmatic.empresa.Empresa;
 import br.com.contmatic.empresa.Endereco;
 import br.com.contmatic.empresa.Funcionario;
@@ -27,48 +28,47 @@ import br.com.contmatic.services.EmptyStringException;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class EmpresaTest {
 
-	SimpleDateFormat nascimento = new SimpleDateFormat("dd/MM/yyyy");
+	private SimpleDateFormat nascimento;
 
 	private Date data;
 
-	private static List<Produto> produto = new ArrayList<Produto>();
+	private static List<Produto> produto;
 
-	private Cliente cliente;
-
-	private List<Funcionario> funcionario = new ArrayList<Funcionario>();
+	private List<Funcionario> funcionario;
 
 	private static Empresa loja, loja2;
 
 	@BeforeClass
 	public static void cadastrar_empresa() {
-		List<Produto> prod = new ArrayList<>();
-		prod.add(new Produto("sla", 250.00, 5));
+		produto = new ArrayList<>();
 		loja = new Empresa("Kratos games", "kratosgames@gmail.com", produto, "01234567890123",
 				new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo", "São Paulo"));
 	}
 
 	@Before
 	public void add_dados_funcionario() {
+		funcionario = new ArrayList<>();
 		try {
+			nascimento = new SimpleDateFormat("dd/MM/yyyy");
 			data = nascimento.parse("03/07/1992");
-			funcionario.add(new Funcionario("Lucas", "lucas@gmail.com", 2500.00, Cargo.RH, data, TipoContrato.CLT,
+			funcionario.add(new Funcionario("Lucas", "lucas@gmail.com", new BigDecimal(2500.00), Cargo.RH, data, TipoContrato.CLT,
 					new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", "São Paulo")));
 			nascimento.parse("09/04/1990");
-			funcionario.add(new Funcionario("João", "joao@gmail.com", 2000.00, Cargo.REPOSITOR, data, TipoContrato.CLT,
+			funcionario.add(new Funcionario("João", "joao@gmail.com", new BigDecimal(2500.00), Cargo.REPOSITOR, data, TipoContrato.CLT,
 					new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", "São Paulo")));
 			nascimento.parse("03/02/1985");
 			funcionario
-					.add(new Funcionario("Weevil", "weevil@gmail.com", 1500.00, Cargo.REPOSITOR, data, TipoContrato.CLT,
+					.add(new Funcionario("Weevil", "weevil@gmail.com", new BigDecimal(2500.00), Cargo.REPOSITOR, data, TipoContrato.CLT,
 							new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", "São Paulo")));
 			nascimento.parse("26/01/1989");
-			funcionario.add(new Funcionario("Dante", "dante@gmail.com", 1200.00, Cargo.RH, data, TipoContrato.CLT,
+			funcionario.add(new Funcionario("Dante", "dante@gmail.com", new BigDecimal(2500.00), Cargo.RH, data, TipoContrato.CLT,
 					new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", "São Paulo")));
 		} catch (Exception e) {
 			fail("Você informou uma data invalida");
 		}
 
 		try {
-			funcionario.get(0).contratarFuncionario("Dante", "dante@gmail.com", Cargo.RH, 1200.00, data,
+			funcionario.get(0).contratarFuncionario("Dante", "dante@gmail.com", Cargo.RH, new BigDecimal(1200.00), data,
 					funcionario.get(0), loja, TipoContrato.CLT,
 					new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", "São Paulo"));
 		} catch (Exception e) {
@@ -77,25 +77,13 @@ public class EmpresaTest {
 	}
 
 	@Before
-	public void add_dados_cliente() {
-		try {
-			data = nascimento.parse("19/10/1992");
-			cliente = new Cliente("Matheus", "matheus@gmail.com", 2500.00, data,
-					new Endereco("Rua almeida", "Jardim santana", "02675000", "35-A", "São paulo", "São Paulo"));
-		} catch (Exception e) {
-			fail("Você digitou uma data invalida");
-		}
-
-	}
-
-	@Before
 	public void add_dados_produto() {
-		produto.add(new Produto("Tablet", 2500.00, 50));
-		produto.add(new Produto("Smartphone", 2500.00, 150));
-		produto.add(new Produto("Fone de Ouvido", 50.00, 200));
-		produto.add(new Produto("Computador", 3500.00, 70));
+		produto.add(new Produto("Tablet", new BigDecimal(2500.00), 50));
+		produto.add(new Produto("Smartphone", new BigDecimal(2500.00), 150));
+		produto.add(new Produto("Fone de Ouvido", new BigDecimal(50.00), 200));
+		produto.add(new Produto("Computador", new BigDecimal(3500.00), 70));
 		try {
-			funcionario.get(1).cadastrarProduto("Tablet", 250.00, 5, funcionario.get(1), loja);
+			funcionario.get(1).cadastrarProduto("Tablet", new BigDecimal(250.00), 5, funcionario.get(1), loja);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -121,47 +109,6 @@ public class EmpresaTest {
 	public void nao_deve_aceitar_produto_vazio() {
 		String nomeProduto = "tablet";
 		assertTrue("O produto não existe", loja.produtoExiste(nomeProduto));
-	}
-
-	@Test()
-	public void deve_ser_funcionario_para_fazer_login() {
-		assertTrue("Não foi funcionario que fez o login", loja.verificaLogin("dante", "dante@gmail.com", 2));
-	}
-
-	@Test()
-	public void deve_ser_funcionario_para_confirmar_login() {
-		assertEquals("Não foi funcionario que fez o login", loja.getFuncionario().get(0),
-				loja.funcionarioThatDoLogin("dante", "dante@gmail.com"));
-	}
-
-	@Test(expected = RuntimeException.class)
-	public void deve_ter_email_e_login_validos_para_fazer_login_funcionario() {
-		assertEquals("Não foi funcionario que fez o login", funcionario.get(0),
-				loja.funcionarioThatDoLogin(funcionario.get(0).getNome(), "dante@gmail.com"));
-	}
-
-	@Test()
-	public void deve_ser_cliente_para_fazer_login() {
-		assertTrue("Não foi cliente que fez o login", loja.verificaLogin("a", "a@gmail.com", 1));
-	}
-
-	@Test()
-	public void deve_ser_cliente_para_confirmar_login() {
-		cliente.cadastrarCliente("a", "a@gmail.com", 250.00, data, loja,
-				new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo"));
-		assertEquals("Não foi cliente que fez o login", loja.getCliente().get(0),
-				loja.clienteThatDoLogin("a", "a@gmail.com"));
-	}
-
-	@Test(expected = RuntimeException.class)
-	public void deve_ter_email_e_login_validos_para_fazer_login_cliente() {
-		assertEquals("Não foi cliente que fez o login", funcionario.get(0),
-				loja.clienteThatDoLogin("lucas", "matheus@gmail.com"));
-	}
-
-	@Test()
-	public void deve_ser_cliente_ou_funcionario_para_fazer_login() {
-		assertFalse("Não foi cliente que fez o login", loja.verificaLogin("a", "a@gmail.com", 3));
 	}
 
 	@Test

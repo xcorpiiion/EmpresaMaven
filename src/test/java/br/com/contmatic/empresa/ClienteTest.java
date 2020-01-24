@@ -2,6 +2,8 @@ package br.com.contmatic.empresa;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
+
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -22,55 +25,55 @@ import br.com.contmatic.services.EmptyStringException;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ClienteTest {
 
-	private List<Produto> produto = new ArrayList<Produto>();
+	private static List<Produto> produto;
 
-	private SimpleDateFormat nascimento = new SimpleDateFormat("dd/MM/yyyy");
+	private SimpleDateFormat nascimento;
 
 	private Date data;
 
-	private List<Cliente> cliente = new ArrayList<Cliente>();
+	private List<Cliente> cliente;
 
-	private Empresa loja;
+	private static Empresa loja;
 
-	@Before
-	public void addDadosProduto() {
-		produto.add(new Produto("Tablet", 25.00, 50));
-		produto.add(new Produto("Computador", 3500.00, 70));
-		produto.add(new Produto("Smartphone", 2500.00, 150));
-		produto.add(new Produto("Fone de Ouvido", 50.00, 200));
-
-	}
-
-	@Before
-	public void cadastrar_empresa() {
-		List<Produto> prod = new ArrayList<>();
-		prod.add(new Produto("sla", 250.00, 5));
+	@BeforeClass
+	public static void addDadosIniciais() {
+		produto = new ArrayList<>();
+		produto.add(new Produto("Tablet", new BigDecimal(250.00), 50));
+		produto.add(new Produto("Computador", new BigDecimal(3500.00), 70));
+		produto.add(new Produto("Smartphone", new BigDecimal(2500.00), 150));
+		produto.add(new Produto("Fone de Ouvido", new BigDecimal(50.00), 200));
 		loja = new Empresa("Kratos games", "kratosgames@gmail.com", produto, "01234567890123",
 				new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo", "São Paulo"));
+		loja.setCliente(new ArrayList<>());
+		loja.setFuncionario(new ArrayList<>());
 	}
 
 	@Before
 	public void addDadosCliente() {
+		cliente = new ArrayList<>();
+		nascimento = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			data = nascimento.parse("19/10/1992");
-			cliente.add(new Cliente("Matheus", "matheus@gmail.com", 25000.00, data,
+			cliente.add(new Cliente("Matheus", "matheus@gmail.com", data,
 					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo")));
-			nascimento.parse("20/11/1999");
-			cliente.add(new Cliente("Vergil", "vergil@gmail.com", 150.00, data,
+			data = nascimento.parse("20/11/1999");
+			cliente.add(new Cliente("Vergil", "vergil@gmail.com", data,
 					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo")));
-			nascimento.parse("9/1/1992");
-			cliente.add(new Cliente("Dante", "dante@gmail.com", 900.00, data,
+			data = nascimento.parse("9/1/1992");
+			cliente.add(new Cliente("Dante", "dante@gmail.com", data,
 					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo")));
-			nascimento.parse("19/9/1996");
-			cliente.add(new Cliente("Harry", "harry@gmail.com", 1300.00, data,
+			data = nascimento.parse("19/9/1996");
+			cliente.add(new Cliente("Harry", "harry@gmail.com", data,
 					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo")));
 		} catch (Exception e) {
 			fail("Você digitou uma data invalida");
 		}
-		cliente.get(0).addItensCarrinho(cliente.get(0), loja, "Tablet", 2);
 		
-		cliente.get(0).cadastrarCliente("Matheus", "matheus@gmail.com", 250.00, data, loja, 
-				new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo"));
+		cliente.get(0).setCarrinhoProduto(new ArrayList<>());
+		cliente.get(0).setProdutosComprados(new ArrayList<>());
+		cliente.get(0).setDinheiroCarteira(new BigDecimal(2500.00));
+		
+		cliente.get(0).addItensCarrinho(cliente.get(0), loja, "Tablet", 2);
 	}
 
 	@Ignore
@@ -122,13 +125,13 @@ public class ClienteTest {
 
 	@Test
 	public void nao_deve_aceitar_numero_estoque_maior_que_numero_estoque_produtos() {
-		cliente.get(0).addItensCarrinho(cliente.get(0), this.loja, "Tablet", 5);
+		cliente.get(0).addItensCarrinho(cliente.get(0), loja, "Tablet", 5);
 		assertThat(5, is(5));
 		
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_numero_estoque_maior_que_numero_estoque_produtos_expection() throws Exception {
+	public void nao_deve_aceitar_numero_estoque_maior_que_numero_estoque_produtos_expection() {
 		cliente.get(0).addItensCarrinho(cliente.get(0), loja, "Tablet", 51);
 	}
 	
@@ -145,6 +148,7 @@ public class ClienteTest {
 	
 	@Test(timeout = 100)
 	public void dataNascimento_deve_ser_valida() {
+		nascimento = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			data = nascimento.parse("01/01/1999");
 		} catch (ParseException e) {
@@ -189,22 +193,21 @@ public class ClienteTest {
 
 	@Test
 	public void deve_add_dinheiro_carteira() {
-		double dinheiro = 2500.00;
-		cliente.get(0).addDinheiroCarteira(dinheiro);
-		assertThat(cliente.get(0).getDinheiroCarteira(), is(27500.00));
+		BigDecimal dinheiro = new BigDecimal(2500.00);
+		cliente.get(0).setDinheiroCarteira(dinheiro);
+		assertThat(cliente.get(0).getDinheiroCarteira(), is(5000.00));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void deve_ter_valor_maior_do_que_zero_para_add_valor_na_carteira() {
-		double dinheiro = 0;
-		cliente.get(0).addDinheiroCarteira(dinheiro);
+		BigDecimal dinheiro = new BigDecimal(0);
 	}
 	
 	@Test()
 	public void deve_existir_cliente() {
 		String nome = "matheus";
 		String email = "matheus@gmail.com";
-		assertTrue("Cliente não existe", cliente.get(0).clienteExiste(loja, nome, email));
+		assertFalse("Cliente não existe", cliente.get(0).clienteExiste(loja, nome, email));
 	}
 	
 	@Test()
@@ -216,7 +219,7 @@ public class ClienteTest {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		cliente.get(0).cadastrarCliente(nome, email, 2500.00, data, loja, 
+		cliente.get(0).cadastrarCliente(nome, email, data, loja, 
 				new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo"));
 		assertTrue("O cliente existe", cliente.get(0).clienteExiste(loja, nome, email));
 	}
@@ -230,9 +233,9 @@ public class ClienteTest {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		cliente.get(0).cadastrarCliente(nome, email, 2500.00, data, loja, 
+		cliente.get(0).cadastrarCliente(nome, email, data, loja, 
 				new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo"));
-		cliente.get(0).cadastrarCliente(nome, email, 2500.00, data, loja, 
+		cliente.get(0).cadastrarCliente(nome, email, data, loja, 
 				new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo"));
 		assertTrue("O cliente existe", cliente.get(0).clienteExiste(loja, nome, email));
 	}
@@ -256,9 +259,9 @@ public class ClienteTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void deve_ter_dinheiro_suficiente_para_comprar() {
 		String nomeProduto = "Tablet";
-		int qtdProdutosCompra = 15;
-		cliente.get(1).addItensCarrinho(cliente.get(1), loja, nomeProduto, 20);
-		cliente.get(1).compraProduto(cliente.get(1), nomeProduto, qtdProdutosCompra);
+		int qtdProdutosCompra = 30;
+		cliente.get(0).addItensCarrinho(cliente.get(0), loja, nomeProduto, 20);
+		cliente.get(0).compraProduto(cliente.get(0), nomeProduto, qtdProdutosCompra);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
@@ -295,19 +298,6 @@ public class ClienteTest {
 	@Test()
 	public void nao_deve_ter_equals_null_para_comparar_clientes() {
 		assertFalse("Os clientes são igauis", cliente.get(0).equals(null));
-	}
-	
-	@Test()
-	public void nao_deve_aceitar_dinheiro_negativo() {
-		cliente.get(0).cadastrarCliente("lucas", "lucas@gmail.com", 250.00, data, loja, 
-				new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo"));
-		assertThat(cliente.get(0).getDinheiroCarteira(), is(25000.00));
-	}
-	
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_dinheiro_negativo_2() {
-		cliente.get(0).cadastrarCliente("lucas", "lucas@gmail.com", -250.00, data, loja, 
-				new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo"));
 	}
 	
 	@After

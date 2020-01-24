@@ -1,16 +1,18 @@
 package br.com.contmatic.empresa;
 
+import java.math.BigDecimal;
+
 import br.com.contmatic.constantes.ValidationNullOrEmpty;
 
 public class Produto {
 	
 	private String nome;
 	
-	private Double preco;
+	private BigDecimal preco;
 	
 	private Integer estoque;
 	
-	public Produto(String nome, Double preco, Integer estoque){
+	public Produto(String nome, BigDecimal preco, Integer estoque){
 		setNome(nome);
 		setPreco(preco);
 		setEstoque(estoque);
@@ -26,11 +28,11 @@ public class Produto {
 		this.nome = nome;
 	}
 
-	public Double getPreco() {
+	public BigDecimal getPreco() {
 		return preco;
 	}
 
-	public void setPreco(Double preco) {
+	public void setPreco(BigDecimal preco) {
 		precoIsNull(preco);
 		this.preco = preco;
 	}
@@ -45,7 +47,7 @@ public class Produto {
 		this.estoque = estoque;
 	}
 	
-	private void precoIsNull(Double preco) {
+	private void precoIsNull(BigDecimal preco) {
 		if(preco == null) {
 			throw new NullPointerException("O preço ou null");
 		}
@@ -92,6 +94,4 @@ public class Produto {
 	public String toString() {
 		return "Nome: " + getNome() + ", R$: " + getPreco() + ", Quantidade em estoque: " + getEstoque();
 	}
-	
-	
 }

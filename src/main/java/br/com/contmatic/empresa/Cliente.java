@@ -1,6 +1,6 @@
 package br.com.contmatic.empresa;
 
-import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,30 +14,42 @@ public class Cliente {
 
 	private Date dataNascimento;
 
-	private Double dinheiroCarteira;
+	private BigDecimal dinheiroCarteira;
 
 	private Endereco endereco;
 
-	private List<Produto> carrinhoProduto = new ArrayList<>();
+	private List<Produto> carrinhoProduto;
 
-	private List<Produto> produtosComprados = new ArrayList<>();
+	private List<Produto> produtosComprados;
 
-	public Cliente(String nome, String email, Double dinheiroCarteira, Date dataNascimento, Endereco endereco) {
+	public Cliente(String nome, String email, Date dataNascimento, Endereco endereco) {
 		setNome(nome);
 		setEmail(email);
 		ValidationNullOrEmpty.dataNascimentoIsNull(dataNascimento);
 		this.dataNascimento = dataNascimento;
-		this.dinheiroCarteira = dinheiroCarteira;
 		setEndereco(endereco);
-		dinheiroIsNegative(dinheiroCarteira);
+	}
+	
+	
+	public BigDecimal getDinheiroCarteira() {
+		return dinheiroCarteira;
 	}
 
-	public Double getDinheiroCarteira() {
-		return dinheiroCarteira;
+	public void setDinheiroCarteira(BigDecimal dinheiroCarteira) {
+		this.dinheiroCarteira = dinheiroCarteira;
+	}
+
+	public void setCarrinhoProduto(List<Produto> carrinhoProduto) {
+		this.carrinhoProduto = carrinhoProduto;
 	}
 
 	public List<Produto> getCarrinhoProduto() {
 		return carrinhoProduto;
+	}
+	
+
+	public void setProdutosComprados(List<Produto> produtosComprados) {
+		this.produtosComprados = produtosComprados;
 	}
 
 	public List<Produto> getProdutosComprados() {
@@ -120,18 +132,11 @@ public class Cliente {
 
 	}
 
-	public void addDinheiroCarteira(Double dinheiro) {
-		if (dinheiro <= 0) {
-			throw new IllegalArgumentException("Você precisa colocar um valor acima de zero para adicionar a carteira");
-		}
-		this.dinheiroCarteira += dinheiro;
-	}
-
 	public void compraProduto(Cliente cliente, String nomeProduto, int qtdProdutosCompra) {
 		if (!produtoEstaNoCarrinho(nomeProduto, cliente)) {
 			throw new IllegalArgumentException("O produto não existe no carrinho");
 		}
-		double totalPreco = 0.0;
+		BigDecimal totalPreco = new BigDecimal(0);
 		for (Produto prod : cliente.getCarrinhoProduto()) {
 			if (prod.getNome().equalsIgnoreCase(nomeProduto)) {
 				if (qtdProdutosCompra > prod.getEstoque()) {
@@ -139,13 +144,13 @@ public class Cliente {
 							"A quantidade de produtos que você quer comprar é maior do que a "
 									+ "quantidade em estoque");
 				}
-				totalPreco += prod.getPreco();
+				totalPreco.add(prod.getPreco());
 			}
 		}
-		if (cliente.getDinheiroCarteira() < totalPreco) {
+		if (cliente.getDinheiroCarteira().compareTo(BigDecimal.ZERO) < 0) {
 			throw new IllegalArgumentException("Dinheiro insulficiente para comprar produtos");
 		}
-		cliente.dinheiroCarteira -= totalPreco;
+		cliente.dinheiroCarteira.subtract(totalPreco);
 
 		for (Produto prod : cliente.getCarrinhoProduto()) {
 			if (prod.getNome().equalsIgnoreCase(nomeProduto)) {
@@ -154,19 +159,13 @@ public class Cliente {
 		}
 	}
 
-	public void cadastrarCliente(String nome, String email, Double dinheiro, Date dataNascimento, Empresa loja,
+	public void cadastrarCliente(String nome, String email, Date dataNascimento, Empresa loja,
 			Endereco endereco) {
 		ValidationNullOrEmpty.lojaIsNull(loja);
 		if (clienteExiste(loja, nome, email)) {
 			throw new IllegalArgumentException("O cliente já está cadastrado");
 		}
-		loja.getCliente().add(new Cliente(nome, email, dinheiro, dataNascimento, endereco));
-	}
-
-	private void dinheiroIsNegative(Double dinheiro) {
-		if (dinheiro < 0) {
-			throw new IllegalArgumentException("O valo não pode ser negativo");
-		}
+		loja.getCliente().add(new Cliente(nome, email, dataNascimento, endereco));
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package br.com.contmatic.empresa;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import br.com.contmatic.constantes.ValidationNullOrEmpty;
 import br.com.contmatic.enums.Cargo;
@@ -17,13 +18,13 @@ public class Funcionario {
 
 	private Cargo cargo;
 
-	private Double salario;
+	private BigDecimal salario;
 
 	private Endereco endereco;
 
 	private TipoContrato tipoContrato;
 
-	public Funcionario(String nome, String email, Double salario, Cargo cargo, Date dataNascimento,
+	public Funcionario(String nome, String email, BigDecimal salario, Cargo cargo, Date dataNascimento,
 			TipoContrato tipoContrato, Endereco endereco) {
 		setNome(nome);
 		setEmail(email);
@@ -57,7 +58,7 @@ public class Funcionario {
 		this.cargo = cargo;
 	}
 
-	public Double getSalario() {
+	public BigDecimal getSalario() {
 		return salario;
 	}
 
@@ -103,12 +104,12 @@ public class Funcionario {
 				.anyMatch(func -> func.getNome().equalsIgnoreCase(nome) && func.getEmail().equalsIgnoreCase(email));
 	}
 
-	private boolean hasProdutoInList(Empresa loja, String nome, Double preco) {
+	private boolean hasProdutoInList(Empresa loja, String nome, BigDecimal preco) {
 		return loja.getProduto().stream()
 				.anyMatch(prod -> prod.getNome().equalsIgnoreCase(nome) && prod.getPreco().equals(preco));
 	}
 
-	public void contratarFuncionario(String nome, String email, Cargo cargo, Double salario, Date dataNascimento,
+	public void contratarFuncionario(String nome, String email, Cargo cargo, BigDecimal salario, Date dataNascimento,
 			Funcionario funcionario, Empresa loja, TipoContrato tipoContrato, Endereco endereco) {
 
 		if (isRH(funcionario)) {
@@ -151,7 +152,7 @@ public class Funcionario {
 		}
 	}
 
-	public void alterarDadosProduto(Funcionario funcionario, int escolhaOpcoes, String nomeProduto, Double preco,
+	public void alterarDadosProduto(Funcionario funcionario, int escolhaOpcoes, String nomeProduto, BigDecimal preco,
 			Empresa loja) {
 		funcionarioIsNull(funcionario);
 
@@ -182,7 +183,7 @@ public class Funcionario {
 		}
 	}
 
-	public void alterarDadosProduto(Funcionario funcionario, int escolhaOpcoes, String nomeProduto, double preco,
+	public void alterarDadosProduto(Funcionario funcionario, int escolhaOpcoes, String nomeProduto, BigDecimal preco,
 			int estoque, String nomeNovoProduto, Empresa loja) {
 		funcionarioIsNull(funcionario);
 		if (isRepositor(funcionario)) {
@@ -199,7 +200,7 @@ public class Funcionario {
 		}
 	}
 
-	public void cadastrarProduto(String nome, Double preco, int estoque, Funcionario funcionario, Empresa loja) {
+	public void cadastrarProduto(String nome, BigDecimal preco, int estoque, Funcionario funcionario, Empresa loja) {
 		funcionarioIsNull(funcionario);
 
 		if (isRepositor(funcionario)) {
@@ -221,14 +222,14 @@ public class Funcionario {
 		}
 	}
 
-	private void salarioIsNull(Double salario) {
+	private void salarioIsNull(BigDecimal salario) {
 		if (salario == null) {
 			throw new NullPointerException("O salario esta null");
 		}
 	}
 
-	private void salarioIsNegative(Double salario) {
-		if (salario < 0) {
+	private void salarioIsNegative(BigDecimal salario) {
+		if (salario.compareTo(BigDecimal.ZERO) < 0) {
 			throw new IllegalArgumentException("O salario esta null");
 		}
 	}

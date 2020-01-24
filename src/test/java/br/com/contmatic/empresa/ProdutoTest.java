@@ -6,6 +6,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+import java.math.BigDecimal;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +18,7 @@ public class ProdutoTest {
 
 	private String nome;
 
-	private Double preco;
+	private BigDecimal preco;
 
 	private Integer estoque;
 	
@@ -27,7 +29,7 @@ public class ProdutoTest {
 	@Before
 	public void dadosProdutos() throws Exception {
 		nome = "Tablet";
-		preco = 250.0;
+		preco = new BigDecimal(250.00);
 		estoque = 5;
 		produto = new Produto(nome, preco, estoque);
 	}
@@ -59,7 +61,7 @@ public class ProdutoTest {
 
 	@Test
 	public void ndeve_aceitar_preco_nao_null() {
-		produto.setPreco(250.00);
+		produto.setPreco(new BigDecimal(250.00));
 		assertThat(produto.getPreco(), is(250.00));
 	}
 	
@@ -102,7 +104,7 @@ public class ProdutoTest {
 	
 	@Test()
 	public void nao_deve_aceitar_produtos_iguais_3() {
-		produto2 = new Produto("a", 250.00, 10);
+		produto2 = new Produto("a", new BigDecimal(250.00), 10);
 		assertFalse("Os produtos são iguais", produto.equals(produto2));
 	}
 	

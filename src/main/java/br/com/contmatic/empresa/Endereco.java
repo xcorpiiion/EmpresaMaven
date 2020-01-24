@@ -8,6 +8,7 @@ import br.com.contmatic.services.StringFormatException;
 import br.com.contmatic.services.StringSizeException;
 
 public class Endereco {
+	
 	private String rua;
 
 	private String bairro;

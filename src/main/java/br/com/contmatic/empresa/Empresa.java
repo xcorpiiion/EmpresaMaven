@@ -1,14 +1,11 @@
 package br.com.contmatic.empresa;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import br.com.contmatic.constantes.ValidationNullOrEmpty;
 import br.com.contmatic.services.EmptyStringException;
 
 public class Empresa {
-	
+
 	private String nome;
 
 	private String email;
@@ -19,9 +16,9 @@ public class Empresa {
 
 	private List<Produto> produto;
 
-	private List<Funcionario> funcionario = new ArrayList<>();
+	private List<Funcionario> funcionario;
 
-	private List<Cliente> cliente = new ArrayList<>();
+	private List<Cliente> cliente;
 
 	public Empresa(String nome, String email, List<Produto> produto, String cnpj, Endereco endereco) {
 		setNome(nome);
@@ -47,7 +44,7 @@ public class Empresa {
 	public String getCnpj() {
 		return cnpj;
 	}
-	
+
 	public void setCnpj(String cnpj) {
 		cnpjIsNull(cnpj);
 		cnpjIsEmpty(cnpj);
@@ -72,12 +69,24 @@ public class Empresa {
 		this.email = email;
 	}
 
+	public void setProduto(List<Produto> produto) {
+		this.produto = produto;
+	}
+
 	public List<Produto> getProduto() {
 		return produto;
 	}
 
+	public void setFuncionario(List<Funcionario> funcionario) {
+		this.funcionario = funcionario;
+	}
+
 	public List<Funcionario> getFuncionario() {
 		return funcionario;
+	}
+
+	public void setCliente(List<Cliente> cliente) {
+		this.cliente = cliente;
 	}
 
 	public List<Cliente> getCliente() {
@@ -85,58 +94,25 @@ public class Empresa {
 	}
 
 	public boolean produtoExiste(String nome) {
-		return this.produto.stream().anyMatch(prod -> prod.getNome().equalsIgnoreCase(nome));
-	}
-
-	public boolean verificaLogin(String nome, String email, int verificaFuncOuCliente) {
-		if (verificaFuncOuCliente == 2) {
-			if (this.funcionario.stream().anyMatch(
-					func -> func.getNome().equalsIgnoreCase(nome) && func.getEmail().equalsIgnoreCase(email))) {
-				return true;
-			}
-		} else {
-			if (this.cliente.stream().anyMatch(
-					clien -> clien.getNome().equalsIgnoreCase(nome) && clien.getEmail().equalsIgnoreCase(email))) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public Cliente clienteThatDoLogin(String nome, String email) {
-		for (Cliente clien : this.cliente) {
-			if (clien.getNome().equalsIgnoreCase(nome) && clien.getEmail().equalsIgnoreCase(email)) {
-				return clien;
-			}
-		}
-		throw new IllegalArgumentException("O cliente que fez o login não existe");
-	}
-
-	public Funcionario funcionarioThatDoLogin(String nome, String email) {
-		for (Funcionario func : this.funcionario) {
-			if (func.getNome().equalsIgnoreCase(nome) && func.getEmail().equalsIgnoreCase(email)) {
-				return func;
-			}
-		}
-		throw new IllegalArgumentException("O cliente que fez o login não existe");
+		return produto.stream().anyMatch(prod -> prod.getNome().equalsIgnoreCase(nome));
 	}
 
 	public void mostrarProdutos() {
-		this.produto.sort((p1, p2) -> p1.getNome().compareTo(p2.getNome()));
+		produto.sort((p1, p2) -> p1.getNome().compareTo(p2.getNome()));
 	}
-	
+
 	private void cnpjIsNull(String cnpj) {
 		if (cnpj == null) {
 			throw new NullPointerException("O cnpj não pode ficar null");
 		}
 	}
-	
+
 	private void cnpjIsEmpty(String cnpj) {
 		if (cnpj.isEmpty() || cnpj.trim().equals("")) {
 			throw new EmptyStringException("O cnpj não pode ficar vazio");
 		}
 	}
-	
+
 	private void cnpjHasWord(String cnpj) {
 		if (cnpj.matches("^[a-zA-ZÁÂÃÀÇÉÊÍÓÔÕÚÜáâãàçéêíóôõúü]*$")) {
 			throw new IllegalArgumentException("O cnpj contém letras");
@@ -144,7 +120,7 @@ public class Empresa {
 			throw new IllegalArgumentException("O cnpj contém letras e números");
 		}
 	}
-	
+
 	private void cnpjSizeValidation(String cnpj) {
 		if (cnpj.length() != 14) {
 			throw new IllegalArgumentException("O cnpj está errado");
@@ -178,24 +154,9 @@ public class Empresa {
 
 	@Override
 	public String toString() {
-		return "------Dados da empresa------" + "\nNome: " + this.getNome() + "\nEmail:  " + this.getEmail()
-				+ "\nCnpj: " + this.getCnpj() + "\n------Dados dos funcionarios da empresa------" + "\n"
-				+ this.getFuncionario().stream()
-						.map(func -> "\nNome: " + func.getNome() + " |Email: " + func.getEmail() + " |Cargo: "
-								+ func.getCargo() + "\n")
-						.collect(Collectors.toList()).toString().replaceFirst(",", "")
-				+ "\n------Clientes da empresa------" + "\n"
-				+ this.getCliente().stream()
-						.map(clien -> "\nNome: " + clien.getNome() + " |Email: " + clien.getEmail() + "\n")
-						.collect(Collectors.toList()).toString().replaceFirst(",", "")
-				+ "\n------Dados dos produtos da empresa------" + "\n"
-				+ this.getProduto().stream()
-						.map(p1 -> "\nNome: " + p1.getNome() + " |Quantidade em estoque: " + p1.getEstoque() + "\n")
-						.collect(Collectors.toList()).toString().replaceFirst(",", "")
-				+ "\n------Endereço da empresa------" + "\nRua: " + this.endereco.getRua() + "\nNúmero residência: "
-				+ this.endereco.getNumeroResidencia() + "\nBairro: " + this.endereco.getBairro() + "\nCep: "
-				+ this.endereco.getBairro() + "\nCidade: " + this.endereco.getCidade() + "\nEstado: "
-				+ this.endereco.getEstado();
+		return "Empresa [nome=" + getNome() + ", email=" + getEmail() + ", cnpj=" + getCnpj() + ", endereco="
+				+ getEndereco() + ", produto=" + getProduto() + ", funcionario=" + getFuncionario() + ", cliente="
+				+ getCliente() + "]";
 	}
 
 }
