@@ -36,7 +36,10 @@ public class Cliente {
 	}
 
 	public void setDinheiroCarteira(BigDecimal dinheiroCarteira) {
-		this.dinheiroCarteira = dinheiroCarteira;
+		if(dinheiroCarteira.compareTo(BigDecimal.ZERO) < 0) {
+			throw new IllegalArgumentException("O valor não pode ser menor do que zero");
+		}
+		this.dinheiroCarteira = new BigDecimal(0).add(dinheiroCarteira);
 	}
 
 	public void setCarrinhoProduto(List<Produto> carrinhoProduto) {
@@ -103,11 +106,6 @@ public class Cliente {
 				.anyMatch(prod -> prod.getNome().equalsIgnoreCase(nomeProduto));
 	}
 
-	public boolean clienteExiste(Empresa lojaCliente, String nome, String email) {
-		return lojaCliente.getCliente().stream()
-				.anyMatch(c -> c.getNome().equalsIgnoreCase(nome) && c.getEmail().equalsIgnoreCase(email));
-	}
-
 	public void addItensCarrinho(Cliente cliente, Empresa loja, String nomeProduto, int qtdProdutoAddCarrinho) {
 		ValidationNullOrEmpty.lojaIsNull(loja);
 		loja.mostrarProdutos();
@@ -144,13 +142,14 @@ public class Cliente {
 							"A quantidade de produtos que você quer comprar é maior do que a "
 									+ "quantidade em estoque");
 				}
-				totalPreco.add(prod.getPreco());
+				totalPreco = totalPreco.add(prod.getPreco());
 			}
 		}
-		if (cliente.getDinheiroCarteira().compareTo(BigDecimal.ZERO) < 0) {
+		
+		if (cliente.getDinheiroCarteira().compareTo(totalPreco) < 0) {
 			throw new IllegalArgumentException("Dinheiro insulficiente para comprar produtos");
 		}
-		cliente.dinheiroCarteira.subtract(totalPreco);
+		cliente.dinheiroCarteira = cliente.dinheiroCarteira.subtract(totalPreco);
 
 		for (Produto prod : cliente.getCarrinhoProduto()) {
 			if (prod.getNome().equalsIgnoreCase(nomeProduto)) {
@@ -159,19 +158,10 @@ public class Cliente {
 		}
 	}
 
-	public void cadastrarCliente(String nome, String email, Date dataNascimento, Empresa loja,
-			Endereco endereco) {
-		ValidationNullOrEmpty.lojaIsNull(loja);
-		if (clienteExiste(loja, nome, email)) {
-			throw new IllegalArgumentException("O cliente já está cadastrado");
-		}
-		loja.getCliente().add(new Cliente(nome, email, dataNascimento, endereco));
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = super.hashCode();
+		int result = 1;
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
 		return result;
@@ -181,7 +171,7 @@ public class Cliente {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
+		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;

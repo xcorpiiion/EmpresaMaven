@@ -25,19 +25,13 @@ public class EnderecoTest {
 		endereco2 = new Endereco("Arnaldo", "Jardim Maria", "02676020", "150-A", "São Paulo", "SP");
 	}
 	
-	@Test
-	public void nao_deve_aceitar_numero_residencia_null() {
-		endereco.setNumeroResidencia("5");
-		assertThat(endereco.getNumeroResidencia(), is("5"));
-	}
-	
 	@Test(expected = NullPointerException.class)
 	public void nao_deve_aceitar_numero_residencia_null_expection() {
 		endereco.setNumeroResidencia(null);
 	}
 	
 	@Test
-	public void nao_deve_aceitar_numero_residencia_vazio() {
+	public void deve_conter_numero() {
 		endereco.setNumeroResidencia("6");
 		assertThat(endereco.getNumeroResidencia(), is("6"));
 	}
@@ -231,24 +225,24 @@ public class EnderecoTest {
 	}
 	
 	@Test
-	public void nao_deve_conter_enderecos_iguais_2() {
+	public void nao_deve_conter_enderecos_null() {
 		assertFalse(endereco.equals(null));
 	}
 	
 	@Test
-	public void nao_deve_conter_enderecos_iguais_3() {
+	public void endereco_deve_conter_endereco_o_mesmo_cep_para_serem_iguais() {
 		endereco2.setCep("01234567");
 		assertFalse(endereco.equals(endereco2));
 	}
 	
 	@Test
-	public void nao_deve_conter_enderecos_iguais_4() {
+	public void deve_conter_enderecos_numero_residencia_iguais_para_serem_igausi() {
 		endereco2.setNumeroResidencia("0");
 		assertFalse(endereco.equals(endereco2));
 	}
 	
 	@Test
-	public void nao_deve_conter_enderecos_iguais_5() {
+	public void devem_ter_os_mesmos_hashCode_para_serem_iguais() {
 		assertEquals("Os enderecos são iguais", endereco.hashCode(), endereco2.hashCode());
 	}
 	

@@ -1,7 +1,5 @@
 package br.com.contmatic.empresa;
 
-import static br.com.contmatic.constantes.Constante.ILLEGAL_WORD;
-
 import br.com.contmatic.constantes.Constante;
 import br.com.contmatic.services.EmptyStringException;
 import br.com.contmatic.services.StringFormatException;
@@ -173,9 +171,7 @@ public class Endereco {
 	}
 
 	private void cepContainsWord(String cep) {
-		if (cep.matches(ILLEGAL_WORD)) {
-			throw new StringFormatException("O cep contém alguma letra");
-		} else if (!cep.matches(Constante.ILLEGAL_NUMBER)) {
+		if (!cep.matches(Constante.ILLEGAL_NUMBER)) {
 			throw new StringFormatException("O cep contém letras e números");
 		}
 	}

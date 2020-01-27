@@ -3,6 +3,7 @@ package br.com.contmatic.empresa;
 import java.util.List;
 import br.com.contmatic.constantes.ValidationNullOrEmpty;
 import br.com.contmatic.services.EmptyStringException;
+import br.com.contmatic.services.StringSizeException;
 
 public class Empresa {
 
@@ -14,16 +15,16 @@ public class Empresa {
 
 	private Endereco endereco;
 
-	private List<Produto> produto;
+	private List<Produto> produtos;
 
-	private List<Funcionario> funcionario;
+	private List<Funcionario> funcionarios;
 
-	private List<Cliente> cliente;
+	private List<Cliente> clientes;
 
-	public Empresa(String nome, String email, List<Produto> produto, String cnpj, Endereco endereco) {
+	public Empresa(String nome, String email, List<Produto> produtos, String cnpj, Endereco endereco) {
 		setNome(nome);
 		setEmail(email);
-		this.produto = produto;
+		setProduto(produtos);
 		setCnpj(cnpj);
 		setEndereco(endereco);
 	}
@@ -69,36 +70,36 @@ public class Empresa {
 		this.email = email;
 	}
 
-	public void setProduto(List<Produto> produto) {
-		this.produto = produto;
+	public void setProduto(List<Produto> produtos) {
+		this.produtos = produtos;
 	}
 
 	public List<Produto> getProduto() {
-		return produto;
+		return produtos;
 	}
 
-	public void setFuncionario(List<Funcionario> funcionario) {
-		this.funcionario = funcionario;
+	public void setFuncionario(List<Funcionario> funcionarios) {
+		this.funcionarios = funcionarios;
 	}
 
 	public List<Funcionario> getFuncionario() {
-		return funcionario;
+		return funcionarios;
 	}
 
-	public void setCliente(List<Cliente> cliente) {
-		this.cliente = cliente;
+	public void setCliente(List<Cliente> clientes) {
+		this.clientes = clientes;
 	}
 
 	public List<Cliente> getCliente() {
-		return cliente;
+		return clientes;
 	}
 
 	public boolean produtoExiste(String nome) {
-		return produto.stream().anyMatch(prod -> prod.getNome().equalsIgnoreCase(nome));
+		return produtos.stream().anyMatch(prod -> prod.getNome().equalsIgnoreCase(nome));
 	}
 
 	public void mostrarProdutos() {
-		produto.sort((p1, p2) -> p1.getNome().compareTo(p2.getNome()));
+		produtos.sort((p1, p2) -> p1.getNome().compareTo(p2.getNome()));
 	}
 
 	private void cnpjIsNull(String cnpj) {
@@ -123,8 +124,13 @@ public class Empresa {
 
 	private void cnpjSizeValidation(String cnpj) {
 		if (cnpj.length() != 14) {
-			throw new IllegalArgumentException("O cnpj está errado");
+			throw new StringSizeException("O cnpj está errado");
 		}
+	}
+	
+	public boolean clienteExiste(Empresa lojaCliente, String nome, String email) {
+		return lojaCliente.getCliente().stream()
+				.anyMatch(c -> c.getNome().equalsIgnoreCase(nome) && c.getEmail().equalsIgnoreCase(email));
 	}
 
 	@Override

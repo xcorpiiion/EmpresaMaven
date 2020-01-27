@@ -61,8 +61,8 @@ public class ProdutoTest {
 
 	@Test
 	public void ndeve_aceitar_preco_nao_null() {
-		produto.setPreco(new BigDecimal(250.00));
-		assertThat(produto.getPreco(), is(250.00));
+		produto.setPreco(new BigDecimal(250));
+		assertThat(produto.getPreco(), is(new BigDecimal(250)));
 	}
 	
 	@Test(expected = NullPointerException.class)

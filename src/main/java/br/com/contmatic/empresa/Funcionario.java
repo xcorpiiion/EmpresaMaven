@@ -136,7 +136,6 @@ public class Funcionario {
 				(func1 -> func1.getEmail().equalsIgnoreCase(email) && func1.getNome().equalsIgnoreCase(nome)));
 	}
 
-	// Alterar dados do produto
 	public void alterarDadosProduto(Funcionario funcionario, int escolhaOpcoes, String nomeProduto,
 			String nomeNovoProduto, Empresa loja) {
 		funcionarioIsNull(funcionario);
@@ -230,7 +229,7 @@ public class Funcionario {
 
 	private void salarioIsNegative(BigDecimal salario) {
 		if (salario.compareTo(BigDecimal.ZERO) < 0) {
-			throw new IllegalArgumentException("O salario esta null");
+			throw new IllegalArgumentException("O salario não pode ser menor do que zero");
 		}
 	}
 

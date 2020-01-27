@@ -27,8 +27,6 @@ public class LoginTest {
 	
 	private List<Funcionario> funcionarios;
 	
-	private Cliente cliente;
-	
 	private static Empresa loja;
 	
 	private Login login;
@@ -80,18 +78,6 @@ public class LoginTest {
 		}
 	}
 
-	@Before
-	public void add_dados_cliente() {
-		nascimento = new SimpleDateFormat("dd/MM/yyyy");
-		try {
-			data = nascimento.parse("19/10/1992");
-			cliente = new Cliente("Matheus", "matheus@gmail.com", data,
-					new Endereco("Rua almeida", "Jardim santana", "02675000", "35-A", "São paulo", "São Paulo"));
-		} catch (Exception e) {
-			fail("Você digitou uma data invalida");
-		}
-	}
-
 	@Test()
 	public void deve_ser_funcionario_para_fazer_login() {
 		assertTrue("Não foi funcionario que fez o login", login.verificaLogin("dante", "dante@gmail.com", 2, loja));
@@ -103,34 +89,64 @@ public class LoginTest {
 				login.funcionarioThatDoLogin("dante", "dante@gmail.com", loja));
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void deve_ter_email_e_login_validos_para_fazer_login_funcionario() {
 		assertEquals("Não foi funcionario que fez o login", funcionarios.get(0),
 				login.funcionarioThatDoLogin(funcionarios.get(0).getNome(), "dante@gmail.com", loja));
 	}
 
-	@Test()
-	public void deve_ser_cliente_para_fazer_login() {
-		assertTrue("Não foi cliente que fez o login", login.verificaLogin("a", "a@gmail.com", 1, loja));
+	@Test
+	public void deve_digitar_1_ou_2_para_poder_verificar_se_quem_fez_login_foi_funcionario_ou_cliente() {
+		assertFalse(login.verificaLogin("lucas", "lucas@gmail.com", 3, loja));
 	}
-
-	@Test()
-	public void deve_ser_cliente_para_confirmar_login() {
-		cliente.cadastrarCliente("a", "a@gmail.com", data, loja,
+	
+	@Test
+	public void deve_ter_email_e_nome_validas_para_fazer_login_no_clinte() {
+		try {
+			data = nascimento.parse("19/10/1992");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		CadastroCliente cadastroCliente = new CadastroCliente(loja);
+		cadastroCliente.cadastrarCliente("Matheus", "matheus@gmail.com", data,
 				new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo"));
-		assertEquals("Não foi cliente que fez o login", loja.getCliente().get(0),
-				login.clienteThatDoLogin("a", "a@gmail.com", loja));
+		assertTrue(login.verificaLogin(loja.getCliente().get(0).getNome(), loja.getCliente().get(0).getEmail(), 1, loja));
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
+	public void deve_retornar_cliente_que_fez_login() {
+		CadastroCliente cadastroCliente = new CadastroCliente(loja);
+		cadastroCliente.cadastrarCliente("a", "a@gmail.com", data,
+					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo"));
+		System.out.println(loja.getCliente().get(0).getNome());
+		assertEquals("Não foi cliente que fez o login", loja.getCliente().get(0),
+				login.clienteThatDoLogin("matheus", "matheus@gmail.com", loja));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
 	public void deve_ter_email_e_login_validos_para_fazer_login_cliente() {
 		assertEquals("Não foi cliente que fez o login", funcionarios.get(0),
 				login.clienteThatDoLogin("lucas", "matheus@gmail.com", loja));
 	}
-
-	@Test()
-	public void deve_ser_cliente_ou_funcionario_para_fazer_login() {
-		assertTrue("Não foi cliente que fez o login", login.verificaLogin("a", "a@gmail.com", 3, loja));
+	
+	@Test
+	public void deve_gerar_hashCodes_iguais_para_diferentes_objetos_com_o_mesmo_atributo_loja() {
+		Login loginTest1 = new Login(loja);
+		Login loginTest2 = new Login(loja);
+		assertEquals(loginTest1.hashCode(), loginTest2.hashCode());
+	}
+	
+	@Test
+	public void deve_igualar_diferentes_objetos_se_possuirem_o_mesmo_atributo_loja() {
+		Login loginTest1 = new Login(loja);
+		Login loginTest2 = new Login(loja);
+		assertTrue(loginTest1.equals(loginTest2));
+	}
+	
+	@Test
+	public void deve_igualar_mesmos_objetos() {
+		Login loginTest1 = new Login(loja);
+		assertTrue(loginTest1.equals(loginTest1));
 	}
 	
 	@After

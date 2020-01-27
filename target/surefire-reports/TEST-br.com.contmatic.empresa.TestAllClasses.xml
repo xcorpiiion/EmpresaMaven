@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite tests="147" failures="0" name="br.com.contmatic.empresa.TestAllClasses" time="0.04" errors="0" skipped="0">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_191\jre\bin"/>
+    <property name="java.vm.version" value="25.191-b12"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="maven.multiModuleProjectDirectory" value="C:\Users\vinicius.cruz\Documents\workspace-spring-tool-suite-4-4.5.0.RELEASE\empresa-maven"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="path.separator" value=";"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="user.script" value=""/>
+    <property name="user.country" value="BR"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="C:\Users\vinicius.cruz\Documents\workspace-spring-tool-suite-4-4.5.0.RELEASE\empresa-maven"/>
+    <property name="java.runtime.version" value="1.8.0_191-b12"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.8.0_191\jre\lib\endorsed"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.io.tmpdir" value="C:\Users\VINICI~1.CRU\AppData\Local\Temp\"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.variant" value=""/>
+    <property name="os.name" value="Windows 10"/>
+    <property name="classworlds.conf" value="C:\Users\vinicius.cruz\Documents\workspace-spring-tool-suite-4-4.5.0.RELEASE\.metadata\.plugins\org.eclipse.m2e.launching\launches\m2conf637604993352292131.tmp"/>
+    <property name="jansi.force" value="true"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_191\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:/Program Files/Java/jre1.8.0_191/bin/server;C:/Program Files/Java/jre1.8.0_191/bin;C:/Program Files/Java/jre1.8.0_191/lib/amd64;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Git\cmd;C:\Users\vinicius.cruz\Downloads\spring-tool-suite-4-4.5.0.RELEASE-e4.14.0-win32.win32.x86_64.self-extracting\contents\sts-4.5.0.RELEASE;;."/>
+    <property name="jansi.passthrough" value="true"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.class.version" value="52.0"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="10.0"/>
+    <property name="user.home" value="C:\Users\vinicius.cruz"/>
+    <property name="user.timezone" value="GMT-03:00"/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="java.specification.version" value="1.8"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="user.name" value="vinicius.cruz"/>
+    <property name="java.class.path" value="C:\Users\vinicius.cruz\Downloads\spring-tool-suite-4-4.5.0.RELEASE-e4.14.0-win32.win32.x86_64.self-extracting\contents\sts-4.5.0.RELEASE\plugins\org.eclipse.m2e.maven.runtime_1.14.0.20191209-1923\jars\plexus-classworlds-2.6.0.jar"/>
+    <property name="java.vm.specification.version" value="1.8"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.home" value="C:\Program Files\Java\jdk1.8.0_191\jre"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -B install -Dstyle.color=always"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.language" value="pt"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="1.8.0_191"/>
+    <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.8.0_191\jre\lib\ext;C:\Windows\Sun\Java\lib\ext"/>
+    <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.8.0_191\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_191\jre\lib\rt.jar;C:\Program Files\Java\jdk1.8.0_191\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.8.0_191\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_191\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_191\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_191\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_191\jre\classes"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="maven.home" value="C:\Users\vinicius.cruz\Documents\workspace-spring-tool-suite-4-4.5.0.RELEASE\empresa-maven\EMBEDDED"/>
+    <property name="style.color" value="always"/>
+    <property name="file.separator" value="\"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.desktop" value="windows"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+  </properties>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_settar_o_cliente" time="0.004"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_settar_o_funcionario" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_ter_o_mesmo_cnpj_para_serem_iguais" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_ter_o_mesmo_hashCode_para_serem_iguais" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nao_deve_aceitar_cnpj_com_espaco_em_branco" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nao_deve_aceitar_cnpj_com_letras" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nao_deve_aceitar_cnpj_com_letras_e_numeros_juntos" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nao_deve_aceitar_cnpj_null" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nao_deve_aceitar_cnpj_null_com_letras_com_espaco_menos_14_numeros" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nao_deve_aceitar_cnpj_null_com_menos_14_numeros" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nao_deve_aceitar_cnpj_null_para_compara_lojas" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nao_deve_aceitar_cnpj_vazio" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nao_deve_aceitar_endereco_null" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nao_deve_aceitar_endereco_null_exception" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nao_deve_aceitar_null_para_comparar_lojas" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nao_deve_aceitar_produto_null" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nao_deve_aceitar_produto_que_nao_exista_na_loja" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_existir_funcionario_para_demitir" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_ser_do_rh_e_nao_pode_ser_null_para_demitir" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_ser_do_rh_para_contratar" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_ser_do_rh_para_contratar_e_nao_deve_ter_loja_null_exception" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_ser_do_rh_para_contratar_e_nao_pode_ter_salario_negativo_exception" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_ser_do_rh_para_contratar_e_nao_pode_ter_salario_null_exception" time="0.005"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_ser_do_rh_para_contratar_e_nao_pode_ter_tipoContrato_null_exception" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_ser_do_rh_para_contratar_expection" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_ser_do_rh_para_demitir" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_ser_do_rh_para_demitir_3" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_ser_do_rh_para_demitir_e_deve_possuir_mesmo_dados_de_funcionario_cadastrado" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_ser_repositor_e_nao_deve_ter_produto_na_lista" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_ser_repositor_para_atualizar_estoque_produto" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_ser_repositor_para_atualizar_estoque_produto_e_condicao_deve_ser_3" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_ser_repositor_para_atualizar_estoque_produto_exception" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_ser_repositor_para_atualizar_nome_produto" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_ser_repositor_para_atualizar_nome_produto_e_condicao_deve_ser_1" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_ser_repositor_para_atualizar_nome_produto_exception" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_ser_repositor_para_atualizar_preco_produto" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_ser_repositor_para_atualizar_preco_produto_e_condicao_deve_ser_2" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_ser_repositor_para_atualizar_preco_produto_exception" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_ser_repositor_para_atualizar_tudo_produto" time="0.002"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_ser_repositor_para_atualizar_tudo_produto_e_condicao_deve_ser_4" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_ser_repositor_para_atualizar_tudo_produto_exception" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_ser_repositor_para_cadastrar_produto" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_ser_repositor_para_cadastrar_produto_1" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_ter_salario_maior_do_que_zero" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="nao_deve_existir_funcionarios_iguais" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="nao_deve_existir_funcionarios_iguais_2" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="nao_deve_existir_funcionarios_iguais_3" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="nao_deve_existir_na_loja_funcionario_para_contratar" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="dataNascimento_deve_ser_valida" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="dataNascimento_deve_ser_valida_exception" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="dataNascimento_nao_deve_ser_null_exception" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_add_dinheiro_carteira" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_add_produto_no_carrinho" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_compra_produto" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_existir_produto_na_lista" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_ter_dinheiro_suficiente_para_comprar" time="0.002"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_ter_hashCode_iguais_para_serem_clientes_iguais" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_ter_nome_do_produto_para_compra" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_ter_o_mesmo_email_para_serem_iguais" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_ter_o_mesmo_nome_para_serem_iguais" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_ter_quantidade_de_itens_para_compra_menor_ou_igual_a_quantidade_estoque" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_ter_valor_maior_do_que_zero_para_add_valor_na_carteira" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_aceitar_email_null" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_aceitar_email_vazio" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_aceitar_email_vazio_2" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_aceitar_endereco_null" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_aceitar_loja_null" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_aceitar_nome_null" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_aceitar_nome_vazio" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_aceitar_nome_vazio_2" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_aceitar_numero_estoque_maior_que_numero_estoque_produtos" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_aceitar_numero_estoque_maior_que_numero_estoque_produtos_expection" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_aceitar_produto_sem_nome" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_pode_add_zero_produtos_no_carrinho" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_ter_equals_null_para_comparar_clientes" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_bairro_vazio_exception" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_rua_vazia_exception" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_estado_vazio_exception" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_cidade_vazia" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_estado_null_exception" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="endereco_deve_conter_endereco_o_mesmo_cep_para_serem_iguais" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_cep_null" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_conter_enderecos_null" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_cidade_null" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_estado_null" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_estado_vazio" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_bairro_null_exception" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_estado_com_espaco_em_branco_exception" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_numero_residencia_null_expection" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_rua_null" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_letras_no_cep" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_bairro_com_espaco_em_branco" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_rua_com_espaco_em_branco" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_cep_vazio" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_numero_em_nome_cidade_exception" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_cep_null_exception" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_cidade_com_espaco_em_branco_expection" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_rua_null_" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_rua_vazia" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_cep_vazio_exception" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_conter_enderecos_iguais" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_numero_residencia_vazio_expection" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_numero_residencia_com_espaco_em_branco_expection" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="deve_conter_numero" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_letras_no_cep_exception" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_cidade_vazia_exception" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_numero_em_nome_estado_exception" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_bairro_null" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_tamanho_de_cep_diferente_oito" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_tamanho_de_cep_diferente_oito_expection" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_numero_em_nome_cidade" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_numero_em_nome_estado" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="deve_conter_enderecos_numero_residencia_iguais_para_serem_igausi" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_cidade_null_expection" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="devem_ter_os_mesmos_hashCode_para_serem_iguais" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EnderecoTest" name="nao_deve_aceitar_cep_com_espaco_em_branco" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.LoginTest" name="deve_igualar_diferentes_objetos_se_possuirem_o_mesmo_atributo_loja" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.LoginTest" name="deve_ter_email_e_nome_validas_para_fazer_login_no_clinte" time="0.002"/>
+  <testcase classname="br.com.contmatic.empresa.LoginTest" name="deve_ter_email_e_login_validos_para_fazer_login_funcionario" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.LoginTest" name="deve_gerar_hashCodes_iguais_para_diferentes_objetos_com_o_mesmo_atributo_loja" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.LoginTest" name="deve_ser_funcionario_para_fazer_login" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.LoginTest" name="deve_ter_email_e_login_validos_para_fazer_login_cliente" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.LoginTest" name="deve_igualar_mesmos_objetos" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.LoginTest" name="deve_retornar_cliente_que_fez_login" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.LoginTest" name="deve_digitar_1_ou_2_para_poder_verificar_se_quem_fez_login_foi_funcionario_ou_cliente" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.LoginTest" name="deve_ser_funcionario_para_confirmar_login" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="ndeve_aceitar_preco_nao_null" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_aceitar_estoque_nao_nulo" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="nao_deve_aceitar_nome_vazio" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="nao_deve_aceitar_preco_null" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_aceitar_nome_nao_vazio" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="nao_deve_aceitar_nome_null" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="nao_deve_aceitar_produtos_iguais" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="nao_deve_aceitar_produtos_iguais_2" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="nao_deve_aceitar_produtos_iguais_3" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="nao_deve_aceitar_produtos_iguais_4" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_aceitar_estoque_que_nao_seja_negativo" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_aceitar_nome_nao_null" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="nao_deve_aceitar_estoque_negativo" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="nao_deve_aceitar_estoque_null" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.CadastroClienteTest" name="deve_igualar_diferentes_objetos_se_possuirem_o_mesmo_atributo_loja" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.CadastroClienteTest" name="deve_existir_cliente" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.CadastroClienteTest" name="deve_gerar_hashCodes_iguais_para_diferentes_objetos_com_o_mesmo_atributo_loja" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.CadastroClienteTest" name="nao_deve_existir_cliente_com_mesmo_dados_para_cadastrar_expection" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.CadastroClienteTest" name="nao_deve_existir_cliente_com_mesmo_dados_para_cadastrar" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.CadastroClienteTest" name="deve_igualar_mesmos_objetos" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.CadastroClienteTest" name="nao_deve_settar_empresa_null" time="0"/>
+</testsuite>
