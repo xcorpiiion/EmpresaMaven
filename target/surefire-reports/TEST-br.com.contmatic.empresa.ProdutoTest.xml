@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="14" failures="0" name="br.com.contmatic.empresa.ProdutoTest" time="0.001" errors="0" skipped="0">
+<testsuite tests="14" failures="0" name="br.com.contmatic.empresa.ProdutoTest" time="0.005" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_191\jre\bin"/>
@@ -27,7 +27,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="user.variant" value=""/>
     <property name="os.name" value="Windows 10"/>
-    <property name="classworlds.conf" value="C:\Users\vinicius.cruz\Documents\workspace-spring-tool-suite-4-4.5.0.RELEASE\.metadata\.plugins\org.eclipse.m2e.launching\launches\m2conf637604993352292131.tmp"/>
+    <property name="classworlds.conf" value="C:\Users\vinicius.cruz\Documents\workspace-spring-tool-suite-4-4.5.0.RELEASE\.metadata\.plugins\org.eclipse.m2e.launching\launches\m2conf4754303880540775149.tmp"/>
     <property name="jansi.force" value="true"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
     <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_191\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:/Program Files/Java/jre1.8.0_191/bin/server;C:/Program Files/Java/jre1.8.0_191/bin;C:/Program Files/Java/jre1.8.0_191/lib/amd64;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Git\cmd;C:\Users\vinicius.cruz\Downloads\spring-tool-suite-4-4.5.0.RELEASE-e4.14.0-win32.win32.x86_64.self-extracting\contents\sts-4.5.0.RELEASE;;."/>
@@ -69,13 +69,13 @@
   <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="nao_deve_aceitar_nome_vazio" time="0"/>
   <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="nao_deve_aceitar_preco_null" time="0"/>
   <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_aceitar_nome_nao_vazio" time="0"/>
-  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="nao_deve_aceitar_nome_null" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="nao_deve_aceitar_nome_null" time="0"/>
   <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="nao_deve_aceitar_produtos_iguais" time="0"/>
   <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="nao_deve_aceitar_produtos_iguais_2" time="0"/>
-  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="nao_deve_aceitar_produtos_iguais_3" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="nao_deve_aceitar_produtos_iguais_3" time="0.001"/>
   <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="nao_deve_aceitar_produtos_iguais_4" time="0"/>
   <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_aceitar_estoque_que_nao_seja_negativo" time="0"/>
   <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_aceitar_nome_nao_null" time="0"/>
-  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="nao_deve_aceitar_estoque_negativo" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="nao_deve_aceitar_estoque_negativo" time="0.004"/>
   <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="nao_deve_aceitar_estoque_null" time="0"/>
 </testsuite>
