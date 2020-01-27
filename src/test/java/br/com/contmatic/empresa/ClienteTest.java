@@ -122,14 +122,6 @@ public class ClienteTest {
 	public void nao_deve_aceitar_endereco_null() {
 		clientes.get(0).setEndereco(null);
 	}
-
-	@Test
-	public void nao_deve_aceitar_numero_estoque_maior_que_numero_estoque_produtos() {
-		clientes.get(0).addItensCarrinho(clientes.get(0), loja, "Tablet", 5);
-		assertThat(5, is(5));
-		
-	}
-
 	@Test(expected = IllegalArgumentException.class)
 	public void nao_deve_aceitar_numero_estoque_maior_que_numero_estoque_produtos_expection() {
 		clientes.get(0).addItensCarrinho(clientes.get(0), loja, "Tablet", 51);
