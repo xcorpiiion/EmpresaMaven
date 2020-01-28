@@ -2,6 +2,10 @@ package br.com.contmatic.empresa;
 
 import java.math.BigDecimal;
 import java.util.Date;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import br.com.contmatic.constantes.ValidationNullOrEmpty;
 import br.com.contmatic.enums.Cargo;
 import br.com.contmatic.enums.TipoContrato;
@@ -71,7 +75,6 @@ public class Funcionario {
 	}
 
 	public void setNome(String nome) {
-		ValidationNullOrEmpty.nomeIsNull(nome);
 		ValidationNullOrEmpty.nomeIsEmpty(nome);
 		this.nome = nome;
 	}
@@ -81,7 +84,6 @@ public class Funcionario {
 	}
 
 	public void setEmail(String email) {
-		ValidationNullOrEmpty.emailIsNull(email);
 		ValidationNullOrEmpty.emailIsEmpty(email);
 		this.email = email;
 	}
@@ -247,11 +249,7 @@ public class Funcionario {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-		return result;
+		return new HashCodeBuilder().append(nome).append(email).toHashCode();
 	}
 
 	@Override
@@ -263,27 +261,19 @@ public class Funcionario {
 		if (getClass() != obj.getClass())
 			return false;
 		Funcionario other = (Funcionario) obj;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		if (nome == null) {
-			if (other.nome != null)
-				return false;
-		} else if (!nome.equals(other.nome))
-			return false;
-		return true;
+		return new EqualsBuilder().append(email, other.email).append(nome, other.nome).isEquals();
 	}
 
 	@Override
 	public String toString() {
-		return "------Dados do funcionario------" + "\nNome: " + getNome() + "\nEmail: " + getEmail()
-				+ "\nData de nascimento: " + getDataNascimento() + "\nCargo: " + getCargo() + "\nTipo de contrato: "
-				+ getTipoContrato() + "\nSalario: " + getSalario() + "\n------Endereço------" + "\nRua: "
-				+ getEndereco().getRua() + "\nNúmero residência: " + getEndereco().getNumeroResidencia() + "\nBairro: "
-				+ getEndereco().getBairro() + "\nCep: " + getEndereco().getCep() + "\nCidade: "
-				+ getEndereco().getCidade() + "\nEstado: " + getEndereco().getEstado();
+		return new StringBuilder().append( "------Dados do funcionario------").append("\nNome: ").append(getNome())
+		        .append("\nEmail: ").append(getEmail()).append("\nData de nascimento: ").append(getDataNascimento())
+		        .append("\nCargo: ").append(getCargo()).append("\nTipo de contrato: ").append(getTipoContrato())
+		        .append("\nSalario: ").append(getSalario()).append("\n------Endereço------").append("\nRua: ")
+				.append(getEndereco().getRua()).append("\nNúmero residência: ").append(getEndereco().getNumeroResidencia())
+				.append("\nBairro: ").append(getEndereco().getBairro()).append("\nCep: ").append(getEndereco().getCep())
+				.append("\nCidade: ").append(getEndereco().getCidade()).append("\nEstado: ").append(getEndereco().getEstado())
+				.toString();
 	}
 
 }

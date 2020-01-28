@@ -1,5 +1,8 @@
 package br.com.contmatic.empresa;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import br.com.contmatic.constantes.ValidationNullOrEmpty;
 
 public class Login {
@@ -49,10 +52,7 @@ public class Login {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((loja == null) ? 0 : loja.hashCode());
-		return result;
+		return new HashCodeBuilder().append(loja).toHashCode();
 	}
 
 	@Override
@@ -64,16 +64,11 @@ public class Login {
 		if (getClass() != obj.getClass())
 			return false;
 		Login other = (Login) obj;
-		if (loja == null) {
-			if (other.loja != null)
-				return false;
-		} else if (!loja.equals(other.loja))
-			return false;
-		return true;
+		return new EqualsBuilder().append(loja, other.loja).isEquals();
 	}
 
 	@Override
 	public String toString() {
-		return "Login [loja=" + getLoja() + "]";
+		return new StringBuilder().append("Login: ").append(getLoja()).toString();
 	}
 }

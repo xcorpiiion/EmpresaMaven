@@ -1,228 +1,173 @@
 package br.com.contmatic.empresa;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import br.com.contmatic.constantes.Constante;
+import br.com.contmatic.enums.EstadosBrasil;
 import br.com.contmatic.services.EmptyStringException;
 import br.com.contmatic.services.StringFormatException;
 import br.com.contmatic.services.StringSizeException;
 
+
 public class Endereco {
-	
-	private String rua;
 
-	private String bairro;
+    private String rua;
 
-	private String cep;
+    private String bairro;
 
-	private String numeroResidencia;
+    private String cep;
 
-	private String cidade;
+    private String numeroResidencia;
 
-	private String estado;
+    private String cidade;
 
-	public Endereco(String rua, String bairro, String cep, String numeroResidencia, String cidade, String estado) {
-		setRua(rua);
-		setBairro(bairro);
-		setCep(cep);
-		setNumeroResidencia(numeroResidencia);
-		setCidade(cidade);
-		setEstado(estado);
-	}
+    private EstadosBrasil estado;
 
-	public String getRua() {
-		return rua;
-	}
+    public Endereco(String rua, String bairro, String cep, String numeroResidencia, String cidade, EstadosBrasil estado) {
+        setRua(rua);
+        setBairro(bairro);
+        setCep(cep);
+        setNumeroResidencia(numeroResidencia);
+        setCidade(cidade);
+        setEstado(estado);
+    }
 
-	public void setRua(String rua) {
-		ruaIsNull(rua);
-		ruaIsEmpty(rua);
-		this.rua = rua;
-	}
+    public Endereco() {
+    }
 
-	public String getBairro() {
-		return bairro;
-	}
+    public String getRua() {
+        return rua;
+    }
 
-	public void setBairro(String bairro) {
-		bairroIsNull(bairro);
-		bairroIsEmpty(bairro);
-		this.bairro = bairro;
-	}
+    public void setRua(String rua) {
+        ruaIsEmpty(rua);
+        this.rua = rua;
+    }
 
-	public String getCep() {
-		return cep;
-	}
+    public String getBairro() {
+        return bairro;
+    }
 
-	public void setCep(String cep) {
-		cepIsNull(cep);
-		cepIsEmpty(cep);
-		cepContainsWord(cep);
-		cepSizeValidation(cep);
-		this.cep = cep;
-	}
+    public void setBairro(String bairro) {
+        bairroIsEmpty(bairro);
+        this.bairro = bairro;
+    }
 
-	public String getCidade() {
-		return cidade;
-	}
+    public String getCep() {
+        return cep;
+    }
 
-	public void setCidade(String cidade) {
-		cidadeIsNull(cidade);
-		cidadeIsEmpty(cidade);
-		cidadeContainsNumber(cidade);
-		this.cidade = cidade;
-	}
+    public void setCep(String cep) {
+        cepIsEmpty(cep);
+        cepContainsWord(cep);
+        cepSizeValidation(cep);
+        this.cep = cep;
+    }
 
-	public String getEstado() {
-		return estado;
-	}
+    public String getCidade() {
+        return cidade;
+    }
 
-	public void setEstado(String estado) {
-		estadoIsNull(estado);
-		estadoIsEmpty(estado);
-		estadoContainsNumber(estado);
-		this.estado = estado;
-	}
+    public void setCidade(String cidade) {
+        cidadeIsEmpty(cidade);
+        cidadeContainsNumber(cidade);
+        this.cidade = cidade;
+    }
 
-	public String getNumeroResidencia() {
-		return numeroResidencia;
-	}
+    public EstadosBrasil getEstado() {
+        return estado;
+    }
 
-	public void setNumeroResidencia(String numeroResidencia) {
-		numeroResidenciaIsNull(numeroResidencia);
-		numeroResidenciaIsEmpty(numeroResidencia);
-		this.numeroResidencia = numeroResidencia;
-	}
+    public void setEstado(EstadosBrasil estado) {
+        estadoIsEmpty(estado);
+        this.estado = estado;
+    }
 
-	private void numeroResidenciaIsNull(String numeroResidencia) {
-		if (numeroResidencia == null) {
-			throw new NullPointerException("O número esta null");
-		}
-	}
+    public String getNumeroResidencia() {
+        return numeroResidencia;
+    }
 
-	private void numeroResidenciaIsEmpty(String numeroResidencia) {
-		if (numeroResidencia.isEmpty() || numeroResidencia.trim().equals("")) {
-			throw new EmptyStringException("O número esta vazio");
-		}
-	}
+    public void setNumeroResidencia(String numeroResidencia) {
+        numeroResidenciaIsEmpty(numeroResidencia);
+        this.numeroResidencia = numeroResidencia;
+    }
 
-	private void cidadeIsNull(String cidade) {
-		if (cidade == null) {
-			throw new NullPointerException("A cidade esta null");
-		}
-	}
+    private void numeroResidenciaIsEmpty(String numeroResidencia) {
+        if (StringUtils.isEmpty(numeroResidencia) || numeroResidencia.trim().equals("")) {
+            throw new EmptyStringException("O número esta vazio");
+        }
+    }
 
-	private void cidadeIsEmpty(String cidade) {
-		if (cidade.isEmpty() || cidade.trim().equals("")) {
-			throw new EmptyStringException("A cidade esta vazia");
-		}
-	}
+    private void cidadeIsEmpty(String cidade) {
+        if (StringUtils.isEmpty(cidade) || cidade.trim().equals("")) {
+            throw new EmptyStringException("A cidade esta vazia");
+        }
+    }
 
-	private void cidadeContainsNumber(String cidade) {
-		if (cidade.matches(Constante.ILLEGAL_NUMBER)) {
-			throw new StringFormatException("A cidade contém algum número");
-		}
-	}
+    private void cidadeContainsNumber(String cidade) {
+        if (cidade.matches(Constante.ILLEGAL_NUMBER)) {
+            throw new StringFormatException("A cidade contém algum número");
+        }
+    }
 
-	private void estadoIsNull(String estado) {
-		if (estado == null) {
-			throw new NullPointerException("O estado esta null");
-		}
-	}
+    private void estadoIsEmpty(EstadosBrasil estado) {
+        if (estado == null) {
+            throw new NullPointerException("O estado esta vazio");
+        }
+    }
 
-	private void estadoIsEmpty(String estado) {
-		if (estado.isEmpty() || estado.trim().equals("")) {
-			throw new EmptyStringException("O estado esta vazio");
-		}
-	}
+    private void ruaIsEmpty(String rua) {
+        if (StringUtils.isEmpty(rua) || rua.trim().equals("")) {
+            throw new EmptyStringException("A rua esta vazia");
+        }
+    }
 
-	private void estadoContainsNumber(String estado) {
-		if (estado.matches(Constante.ILLEGAL_NUMBER)) {
-			throw new StringFormatException("O estado contém algum número");
-		}
-	}
+    private void cepIsEmpty(String cep) {
+        if (StringUtils.isEmpty(cep) || cep.trim().equals("")) {
+            throw new EmptyStringException("O cep esta vazio");
+        }
+    }
 
-	private void ruaIsNull(String rua) {
-		if (rua == null) {
-			throw new NullPointerException("A rua está null");
-		}
-	}
+    private void cepSizeValidation(String cep) {
+        if (cep.length() != 8) {
+            throw new StringSizeException("O tamanho do cep é incorreto");
+        }
+    }
 
-	private void ruaIsEmpty(String rua) {
-		if (rua.isEmpty() || rua.trim().equals("")) {
-			throw new EmptyStringException("A rua esta vazia");
-		}
-	}
+    private void cepContainsWord(String cep) {
+        if (!StringUtils.isNumeric(cep)) {
+            throw new StringFormatException("O cep contém letras e números");
+        }
+    }
 
-	private void cepIsNull(String cep) {
-		if (cep == null) {
-			throw new NullPointerException("O cep está null");
-		}
-	}
+    private void bairroIsEmpty(String bairro) {
+        if (StringUtils.isEmpty(bairro) || bairro.trim().equals("")) {
+            throw new EmptyStringException("O bairro esta vazio");
+        }
+    }
 
-	private void cepIsEmpty(String cep) {
-		if (cep.isEmpty() || cep.trim().equals("")) {
-			throw new EmptyStringException("O cep esta vazio");
-		}
-	}
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(cep).append(numeroResidencia).toHashCode();
+    }
 
-	private void cepSizeValidation(String cep) {
-		if (cep.length() != 8) {
-			throw new StringSizeException("O tamanho do cep é incorreto");
-		}
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Endereco other = (Endereco) obj;
+        return new EqualsBuilder().append(cep, other.cep).append(numeroResidencia, other.numeroResidencia).isEquals();
+    }
 
-	private void cepContainsWord(String cep) {
-		if (!cep.matches(Constante.ILLEGAL_NUMBER)) {
-			throw new StringFormatException("O cep contém letras e números");
-		}
-	}
-
-	private void bairroIsNull(String bairro) {
-		if (bairro == null) {
-			throw new NullPointerException("O bairro está null");
-		}
-	}
-
-	private void bairroIsEmpty(String bairro) {
-		if (bairro.isEmpty() || bairro.trim().equals("")) {
-			throw new EmptyStringException("O bairro esta vazio");
-		}
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((cep == null) ? 0 : cep.hashCode());
-		result = prime * result + ((numeroResidencia == null) ? 0 : numeroResidencia.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Endereco other = (Endereco) obj;
-		if (cep == null) {
-			if (other.cep != null)
-				return false;
-		} else if (!cep.equals(other.cep))
-			return false;
-		if (numeroResidencia == null) {
-			if (other.numeroResidencia != null)
-				return false;
-		} else if (!numeroResidencia.equals(other.numeroResidencia))
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Endereco [rua=" + getRua() + ", bairro=" + getBairro() + ", cep=" + getCep() + ", numeroResidencia="
-				+ getNumeroResidencia() + ", cidade=" + getCidade() + ", estado=" + getEstado() + "]";
-	}
+    @Override
+    public String toString() {
+        return "Endereco [rua=" + getRua() + ", bairro=" + getBairro() + ", cep=" + getCep() + ", numeroResidencia=" + getNumeroResidencia() + ", cidade=" + getCidade() + ", estado=" + getEstado() +
+            "]";
+    }
 
 }

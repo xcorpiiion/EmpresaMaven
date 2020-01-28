@@ -20,6 +20,7 @@ import org.junit.runners.MethodSorters;
 import br.com.contmatic.empresa.Cliente;
 import br.com.contmatic.empresa.Endereco;
 import br.com.contmatic.empresa.Produto;
+import br.com.contmatic.enums.EstadosBrasil;
 import br.com.contmatic.services.EmptyStringException;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -43,7 +44,7 @@ public class ClienteTest {
 		produtos.add(new Produto("Smartphone", new BigDecimal(2500.00), 150));
 		produtos.add(new Produto("Fone de Ouvido", new BigDecimal(50.00), 200));
 		loja = new Empresa("Kratos games", "kratosgames@gmail.com", produtos, "01234567890123",
-				new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo", "São Paulo"));
+				new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo", EstadosBrasil.PIAUI));
 		loja.setCliente(new ArrayList<>());
 		loja.setFuncionario(new ArrayList<>());
 	}
@@ -55,16 +56,16 @@ public class ClienteTest {
 		try {
 			data = nascimento.parse("19/10/1992");
 			clientes.add(new Cliente("Matheus", "matheus@gmail.com", data,
-					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo")));
+					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", EstadosBrasil.RIOGRANDEDOSUL)));
 			data = nascimento.parse("20/11/1999");
 			clientes.add(new Cliente("Vergil", "vergil@gmail.com", data,
-					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo")));
+					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", EstadosBrasil.SERGIPE)));
 			data = nascimento.parse("9/1/1992");
 			clientes.add(new Cliente("Dante", "dante@gmail.com", data,
-					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo")));
+					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", EstadosBrasil.TOCANTINS)));
 			data = nascimento.parse("19/9/1996");
 			clientes.add(new Cliente("Harry", "harry@gmail.com", data,
-					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo")));
+					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", EstadosBrasil.RIOGRANDEDOSUL)));
 		} catch (Exception e) {
 			fail("Você digitou uma data invalida");
 		}
@@ -85,10 +86,10 @@ public class ClienteTest {
 		clientes.get(0).getEndereco().setBairro("Jardim formiga");
 		clientes.get(0).getEndereco().setCep("12345678");
 		clientes.get(0).getEndereco().setCidade("Salvador");
-		clientes.get(0).getEndereco().setEstado("São paulo");
+		clientes.get(0).getEndereco().setEstado(EstadosBrasil.RIOGRANDEDOSUL);
 	}
 	
-	@Test(expected = NullPointerException.class)
+	@Test(expected = EmptyStringException.class)
 	public void nao_deve_aceitar_nome_null(){
 		clientes.get(0).setNome(null);
 	}
@@ -103,7 +104,7 @@ public class ClienteTest {
 		clientes.get(0).setNome(" ");
 	}
 	
-	@Test(expected = NullPointerException.class)
+	@Test(expected = EmptyStringException.class)
 	public void nao_deve_aceitar_email_null() {
 		clientes.get(0).setEmail(null);
 	}

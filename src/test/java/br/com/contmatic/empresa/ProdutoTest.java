@@ -41,7 +41,7 @@ public class ProdutoTest {
 		assertThat(produto.getNome(), is("Tablet"));
 	}
 	
-	@Test(expected = NullPointerException.class)
+	@Test(expected = EmptyStringException.class)
 	public void nao_deve_aceitar_nome_null() {
 		produto.setNome(null);
 	}
