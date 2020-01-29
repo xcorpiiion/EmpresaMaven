@@ -38,7 +38,7 @@ public class LoginTest {
 		List<Produto> prod = new ArrayList<>();
 		prod.add(new Produto("sla", new BigDecimal(250.00), 5));
 		loja = new Empresa("Kratos games", "kratosgames@gmail.com", produtos, "01234567890123",
-				new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo", EstadosBrasil.RONDONIA));
+				new Endereco("Rua limões", "Santa Maria", "02177120", 345, "São paulo", EstadosBrasil.RONDONIA));
 		loja.setFuncionario(new ArrayList<>());
 		loja.setCliente(new ArrayList<>());
 	}
@@ -55,17 +55,17 @@ public class LoginTest {
 			funcionarios = new ArrayList<>();
 			data = nascimento.parse("03/07/1992");
 			funcionarios.add(new Funcionario("Lucas", "lucas@gmail.com", new BigDecimal(2500.00), Cargo.RH, data, TipoContrato.CLT,
-					new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", EstadosBrasil.RIODEJANEIRO)));
+					new Endereco("Rua casa verde", "Casa Verde", "02678100", 40, "São paulo", EstadosBrasil.RIODEJANEIRO)));
 			data = nascimento.parse("09/04/1990");
 			funcionarios.add(new Funcionario("João", "joao@gmail.com", new BigDecimal(2000.00), Cargo.REPOSITOR, data, TipoContrato.CLT,
-					new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", EstadosBrasil.ESPIRITOSANTO)));
+					new Endereco("Rua casa verde", "Casa Verde", "02678100", 40, "São paulo", EstadosBrasil.ESPIRITOSANTO)));
 			data = nascimento.parse("03/02/1985");
 			funcionarios
 					.add(new Funcionario("Weevil", "weevil@gmail.com", new BigDecimal(1500.00), Cargo.REPOSITOR, data, TipoContrato.CLT,
-							new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", EstadosBrasil.RIOGRANDEDONORTE)));
+							new Endereco("Rua casa verde", "Casa Verde", "02678100", 40, "São paulo", EstadosBrasil.RIOGRANDEDONORTE)));
 			data = nascimento.parse("26/01/1989");
 			funcionarios.add(new Funcionario("Dante", "dante@gmail.com", new BigDecimal(1200.00), Cargo.RH, data, TipoContrato.CLT,
-					new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", EstadosBrasil.RIOGRANDEDOSUL)));
+					new Endereco("Rua casa verde", "Casa Verde", "02678100", 40, "São paulo", EstadosBrasil.RIOGRANDEDOSUL)));
 		} catch (ParseException e) {
 			fail("Você informou uma data invalida");
 		}
@@ -73,7 +73,7 @@ public class LoginTest {
 		try {
 			funcionarios.get(0).contratarFuncionario("Dante", "dante@gmail.com", Cargo.RH, new BigDecimal(1200.00), data,
 					funcionarios.get(0), loja, TipoContrato.CLT,
-					new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", EstadosBrasil.BAHIA));
+					new Endereco("Rua casa verde", "Casa Verde", "02678100", 40, "São paulo", EstadosBrasil.BAHIA));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -110,7 +110,7 @@ public class LoginTest {
 		}
 		CadastroCliente cadastroCliente = new CadastroCliente(loja);
 		cadastroCliente.cadastrarCliente("Matheus", "matheus@gmail.com", data,
-				new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", EstadosBrasil.AMAPA));
+				new Endereco("Rua almeida", "Jardim santana", "02676000", 35, "São paulo", EstadosBrasil.AMAPA));
 		assertTrue(login.verificaLogin(loja.getCliente().get(0).getNome(), loja.getCliente().get(0).getEmail(), 1, loja));
 	}
 
@@ -118,7 +118,7 @@ public class LoginTest {
 	public void deve_retornar_cliente_que_fez_login() {
 		CadastroCliente cadastroCliente = new CadastroCliente(loja);
 		cadastroCliente.cadastrarCliente("a", "a@gmail.com", data,
-					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", EstadosBrasil.AMAZONAS));
+					new Endereco("Rua almeida", "Jardim santana", "02676000", 35, "São paulo", EstadosBrasil.AMAZONAS));
 		System.out.println(loja.getCliente().get(0).getNome());
 		assertEquals("Não foi cliente que fez o login", loja.getCliente().get(0),
 				login.clienteThatDoLogin("matheus", "matheus@gmail.com", loja));

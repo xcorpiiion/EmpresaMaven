@@ -44,7 +44,7 @@ public class EmpresaTest {
 	public static void cadastrar_empresa() {
 		produtos = new ArrayList<>();
 		loja = new Empresa("Kratos games", "kratosgames@gmail.com", produtos, "01234567890123",
-				new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo", EstadosBrasil.RIOGRANDEDONORTE));
+				new Endereco("Rua limões", "Santa Maria", "02177120", 345, "São paulo", EstadosBrasil.RIOGRANDEDONORTE));
 	}
 
 	@Before
@@ -55,11 +55,11 @@ public class EmpresaTest {
 			data = nascimento.parse("03/07/1992");
 			funcionarios.add(new Funcionario("Lucas", "lucas@gmail.com", new BigDecimal(2500.00), Cargo.RH, data,
 					TipoContrato.CLT,
-					new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", EstadosBrasil.SANTACATARINA)));
+					new Endereco("Rua casa verde", "Casa Verde", "02678100", 40, "São paulo", EstadosBrasil.SANTACATARINA)));
 			nascimento.parse("09/04/1990");
 			funcionarios.add(new Funcionario("João", "joao@gmail.com", new BigDecimal(2500.00), Cargo.REPOSITOR, data,
 					TipoContrato.CLT,
-					new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", EstadosBrasil.AMAPA)));
+					new Endereco("Rua casa verde", "Casa Verde", "02678100", 40, "São paulo", EstadosBrasil.AMAPA)));
 		} catch (Exception e) {
 			fail("Você informou uma data invalida");
 		}
@@ -99,7 +99,7 @@ public class EmpresaTest {
 	public void deve_settar_o_cliente() {
 		List<Cliente> clientes = new ArrayList<>();
 		clientes.add(new Cliente("Matheus", "matheus@gmail.com", data,
-					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", EstadosBrasil.MARANHAO)));
+					new Endereco("Rua almeida", "Jardim santana", "02676000", 35, "São paulo", EstadosBrasil.MARANHAO)));
 		loja.setCliente(clientes);
 	}
 
@@ -164,28 +164,28 @@ public class EmpresaTest {
 	@Test()
 	public void deve_ter_o_mesmo_cnpj_para_serem_iguais() {
 		loja2 = new Empresa("Kratos games", "kratosgames@gmail.com", produtos, "11234567890123",
-				new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo", EstadosBrasil.RIOGRANDEDONORTE));
+				new Endereco("Rua limões", "Santa Maria", "02177120", 345, "São paulo", EstadosBrasil.RIOGRANDEDONORTE));
 		assertFalse("As empresas são iguais", loja.equals(loja2));
 	}
 
 	@Test()
 	public void nao_deve_aceitar_null_para_comparar_lojas() {
 		loja2 = new Empresa("Kratos games", "kratosgames@gmail.com", produtos, "11234567890123",
-				new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo", EstadosBrasil.PARA));
+				new Endereco("Rua limões", "Santa Maria", "02177120", 345, "São paulo", EstadosBrasil.PARA));
 		assertFalse("As empresas são iguais", loja.equals(null));
 	}
 
 	@Test()
 	public void nao_deve_aceitar_cnpj_null_para_compara_lojas() {
 		loja2 = new Empresa("Kratos games", "kratosgames@gmail.com", produtos, "11234567890123",
-				new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo", EstadosBrasil.RIOGRANDEDONORTE));
+				new Endereco("Rua limões", "Santa Maria", "02177120", 345, "São paulo", EstadosBrasil.RIOGRANDEDONORTE));
 		assertFalse("As empresas são iguais", loja.getCnpj().equals(null));
 	}
 
 	@Test()
 	public void deve_ter_o_mesmo_hashCode_para_serem_iguais() {
 		loja2 = new Empresa("Kratos games", "kratosgames@gmail.com", produtos, "01234567890123",
-				new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo", EstadosBrasil.SERGIPE));
+				new Endereco("Rua limões", "Santa Maria", "02177120", 345, "São paulo", EstadosBrasil.SERGIPE));
 		assertEquals("As lojas são iguais", loja.hashCode(), loja2.hashCode());
 	}
 

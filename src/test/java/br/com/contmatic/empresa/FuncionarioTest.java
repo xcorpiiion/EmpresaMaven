@@ -47,7 +47,7 @@ public class FuncionarioTest {
 		produtos.add(new Produto("Fone de Ouvido", new BigDecimal(50.00), 200));
 		produtos.add(new Produto("Computador", new BigDecimal(3500.00), 70));
 		loja = new Empresa("Kratos games", "kratosgames@gmail.com", produtos, "01234567890123",
-				new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo", EstadosBrasil.SAOPAULO));
+				new Endereco("Rua limões", "Santa Maria", "02177120", 345, "São paulo", EstadosBrasil.SAOPAULO));
 		loja.setCliente(new ArrayList<>());
 		loja.setFuncionario(new ArrayList<>());
 	}
@@ -58,14 +58,14 @@ public class FuncionarioTest {
 		try {
 			data = nascimento.parse("03/07/1992");
 			funcionarios.add(new Funcionario("Lucas", "lucas@gmail.com", new BigDecimal(2500.00), Cargo.RH, data, TipoContrato.CLT,
-					new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", EstadosBrasil.SAOPAULO)));
+					new Endereco("Rua casa verde", "Casa Verde", "02678100", 40, "São paulo", EstadosBrasil.SAOPAULO)));
 			nascimento.parse("09/04/1990");
 			funcionarios.add(new Funcionario("João", "joao@gmail.com", new BigDecimal(2000.00), Cargo.REPOSITOR, data, TipoContrato.CLT,
-					new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", EstadosBrasil.RIODEJANEIRO)));
+					new Endereco("Rua casa verde", "Casa Verde", "02678100", 40, "São paulo", EstadosBrasil.RIODEJANEIRO)));
 			nascimento.parse("03/02/1985");
 			funcionarios
 					.add(new Funcionario("Weevil", "weevil@gmail.com", new BigDecimal(1500.00), Cargo.REPOSITOR, data, TipoContrato.CLT,
-							new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", EstadosBrasil.RIODEJANEIRO)));
+							new Endereco("Rua casa verde", "Casa Verde", "02678100", 40, "São paulo", EstadosBrasil.RIODEJANEIRO)));
 		} catch (Exception e) {
 			fail("Você informou uma data invalida");
 		}
@@ -75,7 +75,7 @@ public class FuncionarioTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void deve_ter_salario_maior_do_que_zero() {
 		funcionarios.add(new Funcionario("Dante", "dante@gmail.com", new BigDecimal(-1), Cargo.RH, data, TipoContrato.CLT,
-					new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", EstadosBrasil.RIOGRANDEDOSUL)));
+					new Endereco("Rua casa verde", "Casa Verde", "02678100", 40, "São paulo", EstadosBrasil.RIOGRANDEDOSUL)));
 	}
 	
 	@Test
@@ -87,7 +87,7 @@ public class FuncionarioTest {
 		}
 		funcionarios.get(0).contratarFuncionario("james", "james@gmail.com", Cargo.REPOSITOR, new BigDecimal(2500.00), data,
 				funcionarios.get(0), loja, TipoContrato.PJ,
-				new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo", EstadosBrasil.PIAUI));
+				new Endereco("Rua limões", "Santa Maria", "02177120", 345, "São paulo", EstadosBrasil.PIAUI));
 		assertFalse(loja.getFuncionario().stream().anyMatch(func -> func.getEmail().equalsIgnoreCase("james")
 				&& func.getEmail().equalsIgnoreCase("james@gmail.com")));
 	}
@@ -101,7 +101,7 @@ public class FuncionarioTest {
 		}
 		funcionarios.get(1).contratarFuncionario("james", "james@gmail.com", Cargo.REPOSITOR, new BigDecimal(2500.00), data,
 				funcionarios.get(1), loja, TipoContrato.PJ,
-				new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo", EstadosBrasil.DISTRITOFEDERAL));
+				new Endereco("Rua limões", "Santa Maria", "02177120", 345, "São paulo", EstadosBrasil.DISTRITOFEDERAL));
 	}
 
 	@Test(expected = NullPointerException.class)
@@ -113,7 +113,7 @@ public class FuncionarioTest {
 		}
 		funcionarios.get(0).contratarFuncionario("a", "a@gmail.com", null, new BigDecimal(2500.00), data, funcionarios.get(0),
 				loja, TipoContrato.PJ,
-				new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo", EstadosBrasil.ALAGOAS));
+				new Endereco("Rua limões", "Santa Maria", "02177120", 345, "São paulo", EstadosBrasil.ALAGOAS));
 	}
 
 	@Test(expected = NullPointerException.class)
@@ -125,7 +125,7 @@ public class FuncionarioTest {
 		}
 		funcionarios.get(0).contratarFuncionario("a", "a@gmail.com", Cargo.REPOSITOR, null, data,
 				funcionarios.get(0), loja, TipoContrato.PJ,
-				new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo", EstadosBrasil.CEARA));
+				new Endereco("Rua limões", "Santa Maria", "02177120", 345, "São paulo", EstadosBrasil.CEARA));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -137,7 +137,7 @@ public class FuncionarioTest {
 		}
 		funcionarios.get(0).contratarFuncionario("james", "james@gmail.com", Cargo.REPOSITOR, new BigDecimal(-10.00), data,
 				funcionarios.get(0), loja, TipoContrato.PJ,
-				new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo", EstadosBrasil.PERNAMBUCO));
+				new Endereco("Rua limões", "Santa Maria", "02177120", 345, "São paulo", EstadosBrasil.PERNAMBUCO));
 	}
 
 	@Test(expected = NullPointerException.class)
@@ -149,7 +149,7 @@ public class FuncionarioTest {
 		}
 		funcionarios.get(0).contratarFuncionario("a", "a@gmail.com", Cargo.REPOSITOR, new BigDecimal(500.00), data,
 				funcionarios.get(0), loja, null,
-				new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo", EstadosBrasil.PARA));
+				new Endereco("Rua limões", "Santa Maria", "02177120", 345, "São paulo", EstadosBrasil.PARA));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -161,10 +161,10 @@ public class FuncionarioTest {
 		}
 		funcionarios.get(0).contratarFuncionario("lucas", "lucas@gmail.com", Cargo.REPOSITOR, new BigDecimal(2500.00), data,
 				funcionarios.get(0), loja, TipoContrato.PJ,
-				new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo",EstadosBrasil.MINASGERAIS));
+				new Endereco("Rua limões", "Santa Maria", "02177120", 345, "São paulo",EstadosBrasil.MINASGERAIS));
 		funcionarios.get(0).contratarFuncionario("lucas", "lucas@gmail.com", Cargo.REPOSITOR, new BigDecimal(2500.00), data,
 				funcionarios.get(0), loja, TipoContrato.PJ,
-				new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo", EstadosBrasil.ALAGOAS));
+				new Endereco("Rua limões", "Santa Maria", "02177120", 345, "São paulo", EstadosBrasil.ALAGOAS));
 	}
 
 	@Test
@@ -176,7 +176,7 @@ public class FuncionarioTest {
 		}
 		funcionarios.get(0).contratarFuncionario("lucas", "lucas@gmail.com", Cargo.REPOSITOR, new BigDecimal(2500.00), data,
 				funcionarios.get(0), loja, TipoContrato.PJ,
-				new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo", EstadosBrasil.PERNAMBUCO));
+				new Endereco("Rua limões", "Santa Maria", "02177120", 345, "São paulo", EstadosBrasil.PERNAMBUCO));
 		funcionarios.get(0).demitirFuncionario("lucas", "lucas@gmail.com", funcionarios.get(0), loja);
 		assertFalse(loja.getFuncionario().stream().anyMatch(func -> func.getEmail().equalsIgnoreCase("lucas")
 				&& func.getEmail().equalsIgnoreCase("lucas@gmail.com")));
@@ -191,7 +191,7 @@ public class FuncionarioTest {
 		}
 		funcionarios.get(0).contratarFuncionario("lucas", "lucas@gmail.com", Cargo.REPOSITOR, new BigDecimal(2500.00), data,
 				funcionarios.get(0), loja, TipoContrato.PJ,
-				new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo", EstadosBrasil.PARAIBA));
+				new Endereco("Rua limões", "Santa Maria", "02177120", 345, "São paulo", EstadosBrasil.PARAIBA));
 		funcionarios.get(0).demitirFuncionario("lucas", "lucas@gmail.com", funcionarios.get(0), loja);
 		assertFalse(loja.getFuncionario().stream().anyMatch(func -> func.getEmail().equalsIgnoreCase("james")
 				&& func.getEmail().equalsIgnoreCase("james@gmail.com")));

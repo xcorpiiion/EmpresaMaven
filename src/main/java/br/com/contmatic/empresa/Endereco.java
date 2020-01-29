@@ -18,13 +18,13 @@ public class Endereco {
 
     private String cep;
 
-    private String numeroResidencia;
+    private int numeroResidencia;
 
     private String cidade;
 
     private EstadosBrasil estado;
 
-    public Endereco(String rua, String bairro, String cep, String numeroResidencia, String cidade, EstadosBrasil estado) {
+    public Endereco(String rua, String bairro, String cep, int numeroResidencia, String cidade, EstadosBrasil estado) {
         setRua(rua);
         setBairro(bairro);
         setCep(cep);
@@ -84,18 +84,18 @@ public class Endereco {
         this.estado = estado;
     }
 
-    public String getNumeroResidencia() {
+    public int getNumeroResidencia() {
         return numeroResidencia;
     }
 
-    public void setNumeroResidencia(String numeroResidencia) {
-        numeroResidenciaIsEmpty(numeroResidencia);
+    public void setNumeroResidencia(int numeroResidencia) {
+        numeroResidenciaLessThanZero(numeroResidencia);
         this.numeroResidencia = numeroResidencia;
     }
 
-    private void numeroResidenciaIsEmpty(String numeroResidencia) {
-        if (StringUtils.isEmpty(numeroResidencia) || numeroResidencia.trim().equals("")) {
-            throw new EmptyStringException("O número esta vazio");
+    private void numeroResidenciaLessThanZero(int numeroResidencia) {
+        if (numeroResidencia < 0) {
+            throw new IllegalArgumentException("O número é menor do que zero");
         }
     }
 

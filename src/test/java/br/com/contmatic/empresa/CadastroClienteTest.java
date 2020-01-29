@@ -34,7 +34,7 @@ public class CadastroClienteTest {
     public static void addDadosIniciais() {
         produtos = new ArrayList<>();
         produtos.add(new Produto("Tablet", new BigDecimal(250.00), 50));
-        loja = new Empresa("Kratos games", "kratosgames@gmail.com", produtos, "01234567890123", new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo", EstadosBrasil.CEARA));
+        loja = new Empresa("Kratos games", "kratosgames@gmail.com", produtos, "01234567890123", new Endereco("Rua limões", "Santa Maria", "02177120", 345, "São paulo", EstadosBrasil.CEARA));
         loja.setCliente(new ArrayList<>());
         loja.setFuncionario(new ArrayList<>());
         cadastroCliente = new CadastroCliente(loja);
@@ -46,13 +46,13 @@ public class CadastroClienteTest {
         nascimento = new SimpleDateFormat("dd/MM/yyyy");
         try {
             data = nascimento.parse("19/10/1992");
-            clientes.add(new Cliente("Matheus", "matheus@gmail.com", data, new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", EstadosBrasil.MATOGROSSODOSUL)));
+            clientes.add(new Cliente("Matheus", "matheus@gmail.com", data, new Endereco("Rua almeida", "Jardim santana", "02676000", 35, "São paulo", EstadosBrasil.MATOGROSSODOSUL)));
             data = nascimento.parse("20/11/1999");
-            clientes.add(new Cliente("Vergil", "vergil@gmail.com", data, new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", EstadosBrasil.GOIAS)));
+            clientes.add(new Cliente("Vergil", "vergil@gmail.com", data, new Endereco("Rua almeida", "Jardim santana", "02676000", 35, "São paulo", EstadosBrasil.GOIAS)));
             data = nascimento.parse("9/1/1992");
-            clientes.add(new Cliente("Dante", "dante@gmail.com", data, new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", EstadosBrasil.SAOPAULO)));
+            clientes.add(new Cliente("Dante", "dante@gmail.com", data, new Endereco("Rua almeida", "Jardim santana", "02676000", 35, "São paulo", EstadosBrasil.SAOPAULO)));
             data = nascimento.parse("19/9/1996");
-            clientes.add(new Cliente("Harry", "harry@gmail.com", data, new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", EstadosBrasil.RIODEJANEIRO)));
+            clientes.add(new Cliente("Harry", "harry@gmail.com", data, new Endereco("Rua almeida", "Jardim santana", "02676000", 35, "São paulo", EstadosBrasil.RIODEJANEIRO)));
         } catch (Exception e) {
             fail("Você digitou uma data invalida");
         }
@@ -80,7 +80,7 @@ public class CadastroClienteTest {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        cadastroCliente.cadastrarCliente(nome, email, data, new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", EstadosBrasil.SAOPAULO));
+        cadastroCliente.cadastrarCliente(nome, email, data, new Endereco("Rua almeida", "Jardim santana", "02676000", 35, "São paulo", EstadosBrasil.SAOPAULO));
         assertTrue("O cliente existe", loja.clienteExiste(loja, nome, email));
     }
 
@@ -93,8 +93,8 @@ public class CadastroClienteTest {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        cadastroCliente.cadastrarCliente(nome, email, data, new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", EstadosBrasil.RIODEJANEIRO));
-        cadastroCliente.cadastrarCliente(nome, email, data, new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", EstadosBrasil.ACRE));
+        cadastroCliente.cadastrarCliente(nome, email, data, new Endereco("Rua almeida", "Jardim santana", "02676000", 35, "São paulo", EstadosBrasil.RIODEJANEIRO));
+        cadastroCliente.cadastrarCliente(nome, email, data, new Endereco("Rua almeida", "Jardim santana", "02676000", 5, "São paulo", EstadosBrasil.ACRE));
         assertTrue("O cliente existe", loja.clienteExiste(loja, nome, email));
     }
 
