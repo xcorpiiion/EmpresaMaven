@@ -6,10 +6,11 @@ import org.apache.commons.lang3.StringUtils;
 import br.com.contmatic.empresa.Empresa;
 import br.com.contmatic.empresa.Endereco;
 import br.com.contmatic.services.EmptyStringException;
+import br.com.contmatic.services.StringFormatException;
 
-public final class ValidationNullOrEmpty {
+public final class ValidationNullEmptyStringRule {
 	
-	private ValidationNullOrEmpty() {
+	private ValidationNullEmptyStringRule() {
 		
 	}
 	
@@ -24,6 +25,11 @@ public final class ValidationNullOrEmpty {
 			throw new EmptyStringException("O email estávazio");
 		}
 	}
+	
+	public static void emailValidation(String email) {
+        if(!email.matches(Constante.VALIDATION_EMAIL))
+            throw new StringFormatException("O email que você informou esta incorreto");
+    }
 
 	public static void dataNascimentoIsNull(Date dataNascimento) {
 		if (dataNascimento == null) {

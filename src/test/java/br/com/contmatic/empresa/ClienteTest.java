@@ -21,7 +21,10 @@ import br.com.contmatic.empresa.Cliente;
 import br.com.contmatic.empresa.Endereco;
 import br.com.contmatic.empresa.Produto;
 import br.com.contmatic.enums.EstadosBrasil;
+import br.com.contmatic.fixture.factory.FixtureFactoryCliente;
+import br.com.contmatic.fixture.factory.FixtureFactoryEndereco;
 import br.com.contmatic.services.EmptyStringException;
+import br.com.contmatic.services.StringFormatException;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ClienteTest {
@@ -43,6 +46,7 @@ public class ClienteTest {
         produtos.add(new Produto("Computador", new BigDecimal(3500.00), 70));
         produtos.add(new Produto("Smartphone", new BigDecimal(2500.00), 150));
         produtos.add(new Produto("Fone de Ouvido", new BigDecimal(50.00), 200));
+        System.out.println(FixtureFactoryCliente.nomeCliente());
         loja = new Empresa("Kratos games", "kratosgames@gmail.com", produtos, "01234567890123", new Endereco("Rua limões", "Santa Maria", "02177120", 345, "São paulo", EstadosBrasil.PIAUI));
         loja.setCliente(new ArrayList<>());
         loja.setFuncionario(new ArrayList<>());
@@ -86,32 +90,38 @@ public class ClienteTest {
 
     @Test(expected = EmptyStringException.class)
     public void nao_deve_aceitar_nome_null() {
-        clientes.get(0).setNome(null);
+        System.out.println(FixtureFactoryCliente.nomeClienteNull().getNome());
+        clientes.get(0).setNome(FixtureFactoryCliente.nomeClienteNull().getNome());
     }
 
     @Test(expected = EmptyStringException.class)
     public void nao_deve_aceitar_nome_vazio() {
-        clientes.get(0).setNome("");
+        clientes.get(0).setNome(FixtureFactoryCliente.nomeClienteEmpty().getNome());
     }
 
     @Test(expected = EmptyStringException.class)
-    public void nao_deve_aceitar_nome_vazio_2() {
-        clientes.get(0).setNome(" ");
+    public void nao_deve_aceitar_nome_com_espaco_em_branco() {
+        clientes.get(0).setNome(FixtureFactoryCliente.nomeClienteBlankSpace().getNome());
     }
 
     @Test(expected = EmptyStringException.class)
     public void nao_deve_aceitar_email_null() {
-        clientes.get(0).setEmail(null);
+        clientes.get(0).setEmail(FixtureFactoryCliente.emailClienteNull().getEmail());
     }
 
     @Test(expected = EmptyStringException.class)
     public void nao_deve_aceitar_email_vazio() {
-        clientes.get(0).setEmail(" ");
+        clientes.get(0).setEmail(FixtureFactoryCliente.emailClienteEmpty().getEmail());
     }
 
     @Test(expected = EmptyStringException.class)
-    public void nao_deve_aceitar_email_vazio_2() {
-        clientes.get(0).setEmail("");
+    public void nao_deve_aceitar_email_com_espaco_em_branco() {
+        clientes.get(0).setEmail(FixtureFactoryCliente.emailClienteBlankSpace().getEmail());
+    }
+    
+    @Test(expected = StringFormatException.class)
+    public void deve_aceitar_apenas_email_validos() {
+        clientes.get(0).setEmail(FixtureFactoryCliente.emailClienteNotVallid().getEmail());
     }
 
     @Test(expected = NullPointerException.class)

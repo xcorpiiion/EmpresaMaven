@@ -1,12 +1,10 @@
 package br.com.contmatic.empresa;
 
 import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-
-import br.com.contmatic.constantes.ValidationNullOrEmpty;
+import br.com.contmatic.constantes.ValidationNullEmptyStringRule;
 import br.com.contmatic.services.EmptyStringException;
 import br.com.contmatic.services.StringSizeException;
 
@@ -39,7 +37,7 @@ public class Empresa {
     }
 
     public void setEndereco(Endereco endereco) {
-        ValidationNullOrEmpty.enderecoIsNull(endereco);
+        ValidationNullEmptyStringRule.enderecoIsNull(endereco);
         this.endereco = endereco;
     }
 
@@ -59,7 +57,7 @@ public class Empresa {
     }
 
     public void setNome(String nome) {
-        ValidationNullOrEmpty.nomeIsEmpty(nome);
+        ValidationNullEmptyStringRule.nomeIsEmpty(nome);
         this.nome = nome;
     }
 
@@ -68,7 +66,8 @@ public class Empresa {
     }
 
     public void setEmail(String email) {
-        ValidationNullOrEmpty.emailIsEmpty(email);
+        ValidationNullEmptyStringRule.emailIsEmpty(email);
+        ValidationNullEmptyStringRule.emailValidation(email);
         this.email = email;
     }
 

@@ -4,11 +4,9 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-
-import br.com.contmatic.constantes.ValidationNullOrEmpty;
+import br.com.contmatic.constantes.ValidationNullEmptyStringRule;
 
 public class Cliente {
 
@@ -29,11 +27,15 @@ public class Cliente {
     public Cliente(String nome, String email, Date dataNascimento, Endereco endereco) {
         setNome(nome);
         setEmail(email);
-        ValidationNullOrEmpty.dataNascimentoIsNull(dataNascimento);
+        ValidationNullEmptyStringRule.dataNascimentoIsNull(dataNascimento);
         this.dataNascimento = dataNascimento;
         setEndereco(endereco);
     }
 
+    public Cliente() {
+        
+    }
+    
     public BigDecimal getDinheiroCarteira() {
         return dinheiroCarteira;
     }
@@ -66,7 +68,7 @@ public class Cliente {
     }
 
     public void setEndereco(Endereco endereco) {
-        ValidationNullOrEmpty.enderecoIsNull(endereco);
+        ValidationNullEmptyStringRule.enderecoIsNull(endereco);
         this.endereco = endereco;
     }
 
@@ -75,7 +77,7 @@ public class Cliente {
     }
 
     public void setNome(String nome) {
-        ValidationNullOrEmpty.nomeIsEmpty(nome);
+        ValidationNullEmptyStringRule.nomeIsEmpty(nome);
         this.nome = nome;
     }
 
@@ -84,7 +86,7 @@ public class Cliente {
     }
 
     public void setEmail(String email) {
-        ValidationNullOrEmpty.emailIsEmpty(email);
+        ValidationNullEmptyStringRule.emailIsEmpty(email);
         this.email = email;
     }
 
@@ -93,7 +95,7 @@ public class Cliente {
     }
 
     public void setDataNascimento(Date dataNascimento) {
-        ValidationNullOrEmpty.dataNascimentoIsNull(dataNascimento);
+        ValidationNullEmptyStringRule.dataNascimentoIsNull(dataNascimento);
         this.dataNascimento = dataNascimento;
     }
 
@@ -106,7 +108,7 @@ public class Cliente {
     }
 
     public void addItensCarrinho(Cliente cliente, Empresa loja, String nomeProduto, int qtdProdutoAddCarrinho) {
-        ValidationNullOrEmpty.lojaIsNull(loja);
+        ValidationNullEmptyStringRule.lojaIsNull(loja);
         loja.mostrarProdutos();
         if (produtoExisteNaLoja(nomeProduto, loja)) {
 

@@ -6,6 +6,7 @@ import br.com.contmatic.enums.EstadosBrasil;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 
+
 public class FixtureFactoryEndereco {
 
     public static Endereco cidadeName() {
@@ -162,6 +163,44 @@ public class FixtureFactoryEndereco {
             }
         });
         return Fixture.from(Endereco.class).gimme("cepBlankSpace");
+    }
+
+    /* --------------------------------------------------------------------------- */
+
+    public static Endereco bairroName() {
+        Fixture.of(Endereco.class).addTemplate("bairroName", new Rule() {
+            {
+                add("bairro", firstName());
+            }
+        });
+        return Fixture.from(Endereco.class).gimme("bairroName");
+    }
+
+    public static Endereco bairroNull() {
+        Fixture.of(Endereco.class).addTemplate("bairroNull", new Rule() {
+            {
+                add("bairro", null);
+            }
+        });
+        return Fixture.from(Endereco.class).gimme("bairroNull");
+    }
+
+    public static Endereco bairroEmpty() {
+        Fixture.of(Endereco.class).addTemplate("bairroEmpty", new Rule() {
+            {
+                add("bairro", "");
+            }
+        });
+        return Fixture.from(Endereco.class).gimme("bairroEmpty");
+    }
+
+    public static Endereco bairroBlankSpace() {
+        Fixture.of(Endereco.class).addTemplate("bairroBlankSpace", new Rule() {
+            {
+                add("bairro", " ");
+            }
+        });
+        return Fixture.from(Endereco.class).gimme("bairroBlankSpace");
     }
     
 }

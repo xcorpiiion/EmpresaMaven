@@ -1,10 +1,8 @@
 package br.com.contmatic.empresa;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import org.junit.After;
 import org.junit.Before;
@@ -133,18 +131,18 @@ public class EnderecoTest {
 	
 	@Test(expected = EmptyStringException.class)
 	public void nao_deve_aceitar_cep_vazio_exception() {
-		endereco.setCep("");
+		endereco.setCep(FixtureFactoryEndereco.cepEmpty().getCep());
 	}
 	
 	@Test(expected = EmptyStringException.class)
 	public void nao_deve_aceitar_cep_com_espaco_em_branco() {
-		endereco.setCep(" ");
+		endereco.setCep(FixtureFactoryEndereco.cepBlankSpace().getCep());
 	}
 	
 	@Test
 	public void nao_deve_aceitar_tamanho_de_cep_diferente_oito() {
-		endereco.setCep("12345678");
-		assertThat(endereco.getCep(), is("12345678"));
+		endereco.setCep(FixtureFactoryEndereco.cepStringNumber().getCep());
+		assertEquals("O endereço não possui 8 digitos", 8, endereco.getCep().length());
 	}
 	
 	@Test(expected = StringSizeException.class)
@@ -154,8 +152,8 @@ public class EnderecoTest {
 	
 	@Test
 	public void nao_deve_aceitar_letras_no_cep() {
-		endereco.setCep("12345678");
-		assertThat(endereco.getCep(), is("12345678"));
+		endereco.setCep(FixtureFactoryEndereco.cepStringNumber().getCep());
+		assertTrue(endereco.getCep().matches(Constante.ILLEGAL_NUMBER));
 	}
 	
 	@Test(expected = StringFormatException.class)
@@ -165,23 +163,23 @@ public class EnderecoTest {
 	
 	@Test
 	public void nao_deve_aceitar_bairro_null() {
-		endereco.setBairro("Bairro");
-		assertThat(endereco.getBairro(), is("Bairro"));
+		endereco.setBairro(FixtureFactoryEndereco.bairroName().getBairro());
+		assertNotNull(endereco.getBairro());
 	}
 	
 	@Test(expected = EmptyStringException.class)
 	public void nao_deve_aceitar_bairro_null_exception() {
-		endereco.setBairro(null);
+		endereco.setBairro(FixtureFactoryEndereco.bairroNull().getBairro());
 	}
 	
 	@Test(expected = EmptyStringException.class)
 	public void nao_deve_aceitar_bairro_com_espaco_em_branco() {
-		endereco.setBairro(" ");
+		endereco.setBairro(FixtureFactoryEndereco.bairroBlankSpace().getBairro());
 	}
 	
 	@Test(expected = EmptyStringException.class)
 	public void nao_deve_aceitar_bairro_vazio_exception() {
-		endereco.setBairro("");
+		endereco.setBairro(FixtureFactoryEndereco.bairroEmpty().getBairro());
 	}
 	
 	@Test

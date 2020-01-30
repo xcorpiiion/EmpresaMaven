@@ -6,7 +6,7 @@ import java.util.Date;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import br.com.contmatic.constantes.ValidationNullOrEmpty;
+import br.com.contmatic.constantes.ValidationNullEmptyStringRule;
 import br.com.contmatic.enums.Cargo;
 import br.com.contmatic.enums.TipoContrato;
 
@@ -32,13 +32,13 @@ public class Funcionario {
 			TipoContrato tipoContrato, Endereco endereco) {
 		setNome(nome);
 		setEmail(email);
-		ValidationNullOrEmpty.dataNascimentoIsNull(dataNascimento);
+		ValidationNullEmptyStringRule.dataNascimentoIsNull(dataNascimento);
 		this.dataNascimento = dataNascimento;
 		setCargo(cargo);
 		salarioIsNull(salario);
 		salarioIsNegative(salario);
 		this.salario = salario;
-		ValidationNullOrEmpty.enderecoIsNull(endereco);
+		ValidationNullEmptyStringRule.enderecoIsNull(endereco);
 		setEndereco(endereco);
 		contratoIsNull(tipoContrato);
 		this.tipoContrato = tipoContrato;
@@ -49,7 +49,7 @@ public class Funcionario {
 	}
 
 	public void setEndereco(Endereco endereco) {
-		ValidationNullOrEmpty.enderecoIsNull(endereco);
+		ValidationNullEmptyStringRule.enderecoIsNull(endereco);
 		this.endereco = endereco;
 	}
 
@@ -75,7 +75,7 @@ public class Funcionario {
 	}
 
 	public void setNome(String nome) {
-		ValidationNullOrEmpty.nomeIsEmpty(nome);
+		ValidationNullEmptyStringRule.nomeIsEmpty(nome);
 		this.nome = nome;
 	}
 
@@ -84,7 +84,7 @@ public class Funcionario {
 	}
 
 	public void setEmail(String email) {
-		ValidationNullOrEmpty.emailIsEmpty(email);
+		ValidationNullEmptyStringRule.emailIsEmpty(email);
 		this.email = email;
 	}
 

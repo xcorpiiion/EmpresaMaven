@@ -3,7 +3,7 @@ package br.com.contmatic.empresa;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import br.com.contmatic.constantes.ValidationNullOrEmpty;
+import br.com.contmatic.constantes.ValidationNullEmptyStringRule;
 
 public class Login {
 
@@ -18,7 +18,7 @@ public class Login {
 	}
 
 	public void setLoja(Empresa loja) {
-		ValidationNullOrEmpty.lojaIsNull(loja);
+		ValidationNullEmptyStringRule.lojaIsNull(loja);
 		this.loja = loja;
 	}
 

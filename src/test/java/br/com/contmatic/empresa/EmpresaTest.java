@@ -43,7 +43,7 @@ public class EmpresaTest {
 	@BeforeClass
 	public static void cadastrar_empresa() {
 		produtos = new ArrayList<>();
-		loja = new Empresa("Kratos games", "kratosgames@gmail.com", produtos, "01234567890123",
+		loja = new Empresa("Kratos games", "kratosgames@gmail.com.br", produtos, "01234567890123",
 				new Endereco("Rua limões", "Santa Maria", "02177120", 345, "São paulo", EstadosBrasil.RIOGRANDEDONORTE));
 	}
 

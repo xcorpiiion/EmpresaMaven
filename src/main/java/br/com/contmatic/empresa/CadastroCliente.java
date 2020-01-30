@@ -4,7 +4,7 @@ import java.util.Date;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import br.com.contmatic.constantes.ValidationNullOrEmpty;
+import br.com.contmatic.constantes.ValidationNullEmptyStringRule;
 
 public class CadastroCliente {
 
@@ -19,12 +19,12 @@ public class CadastroCliente {
     }
 
     public void setLoja(Empresa loja) {
-        ValidationNullOrEmpty.lojaIsNull(loja);
+        ValidationNullEmptyStringRule.lojaIsNull(loja);
         this.loja = loja;
     }
 
     public void cadastrarCliente(String nome, String email, Date dataNascimento, Endereco endereco) {
-        ValidationNullOrEmpty.lojaIsNull(this.loja);
+        ValidationNullEmptyStringRule.lojaIsNull(this.loja);
         if (this.loja.clienteExiste(loja, nome, email)) {
             throw new IllegalArgumentException("O cliente já está cadastrado");
         }
