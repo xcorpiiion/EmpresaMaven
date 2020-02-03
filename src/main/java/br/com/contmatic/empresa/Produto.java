@@ -26,7 +26,7 @@ public class Produto {
     }
 
     public void setNome(String nome) {
-        ValidationNullEmptyStringRule.nomeIsEmpty(nome);
+        ValidationNullEmptyStringRule.stringIsEmpty(nome);
         this.nome = nome;
     }
 

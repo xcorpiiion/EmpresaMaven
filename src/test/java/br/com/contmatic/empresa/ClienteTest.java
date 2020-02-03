@@ -2,13 +2,19 @@ package br.com.contmatic.empresa;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
-
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -22,9 +28,10 @@ import br.com.contmatic.empresa.Endereco;
 import br.com.contmatic.empresa.Produto;
 import br.com.contmatic.enums.EstadosBrasil;
 import br.com.contmatic.fixture.factory.FixtureFactoryCliente;
-import br.com.contmatic.fixture.factory.FixtureFactoryEndereco;
 import br.com.contmatic.services.EmptyStringException;
 import br.com.contmatic.services.StringFormatException;
+import br.com.six2six.fixturefactory.Fixture;
+import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ClienteTest {
@@ -41,12 +48,12 @@ public class ClienteTest {
 
     @BeforeClass
     public static void addDadosIniciais() {
+        FixtureFactoryLoader.loadTemplates("br.com.contmatic.fixture.factory");
         produtos = new ArrayList<>();
         produtos.add(new Produto("Tablet", new BigDecimal(250.00), 50));
         produtos.add(new Produto("Computador", new BigDecimal(3500.00), 70));
         produtos.add(new Produto("Smartphone", new BigDecimal(2500.00), 150));
         produtos.add(new Produto("Fone de Ouvido", new BigDecimal(50.00), 200));
-        System.out.println(FixtureFactoryCliente.nomeCliente());
         loja = new Empresa("Kratos games", "kratosgames@gmail.com", produtos, "01234567890123", new Endereco("Rua limões", "Santa Maria", "02177120", 345, "São paulo", EstadosBrasil.PIAUI));
         loja.setCliente(new ArrayList<>());
         loja.setFuncionario(new ArrayList<>());
@@ -55,25 +62,11 @@ public class ClienteTest {
     @Before
     public void addDadosCliente() {
         clientes = new ArrayList<>();
-        nascimento = new SimpleDateFormat("dd/MM/yyyy");
-        try {
-            data = nascimento.parse("19/10/1992");
-            clientes.add(new Cliente("Matheus", "matheus@gmail.com", data, new Endereco("Rua almeida", "Jardim santana", "02676000", 35, "São paulo", EstadosBrasil.RIOGRANDEDOSUL)));
-            data = nascimento.parse("20/11/1999");
-            clientes.add(new Cliente("Vergil", "vergil@gmail.com", data, new Endereco("Rua almeida", "Jardim santana", "02676000", 35, "São paulo", EstadosBrasil.SERGIPE)));
-            data = nascimento.parse("9/1/1992");
-            clientes.add(new Cliente("Dante", "dante@gmail.com", data, new Endereco("Rua almeida", "Jardim santana", "02676000", 35, "São paulo", EstadosBrasil.TOCANTINS)));
-            data = nascimento.parse("19/9/1996");
-            clientes.add(new Cliente("Harry", "harry@gmail.com", data, new Endereco("Rua almeida", "Jardim santana", "02676000", 35, "São paulo", EstadosBrasil.RIOGRANDEDOSUL)));
-        } catch (Exception e) {
-            fail("Você digitou uma data invalida");
-        }
-
-        clientes.get(0).setCarrinhoProduto(new ArrayList<>());
-        clientes.get(0).setProdutosComprados(new ArrayList<>());
-
+        clientes.add(Fixture.from(Cliente.class).gimme("valid"));
+        clientes.add(Fixture.from(Cliente.class).gimme("valid"));
+        clientes.add(Fixture.from(Cliente.class).gimme("valid"));
+        clientes.add(Fixture.from(Cliente.class).gimme("valid"));
         clientes.get(0).addItensCarrinho(clientes.get(0), loja, "Tablet", 2);
-        clientes.get(0).setDinheiroCarteira(new BigDecimal(2500.00));
     }
 
     @Ignore
@@ -88,45 +81,57 @@ public class ClienteTest {
         clientes.get(0).getEndereco().setEstado(EstadosBrasil.RIOGRANDEDOSUL);
     }
 
-    @Test(expected = EmptyStringException.class)
+    @Test
     public void nao_deve_aceitar_nome_null() {
-        System.out.println(FixtureFactoryCliente.nomeClienteNull().getNome());
-        clientes.get(0).setNome(FixtureFactoryCliente.nomeClienteNull().getNome());
+        Cliente clienteInvalid = Fixture.from(Cliente.class).gimme("nomeNull");
+        //clientes.get(0).setNome(clienteInvalid.getNome());
+        Validator validador = Validation.buildDefaultValidatorFactory().getValidator();
+        Set<ConstraintViolation<Cliente>> erros = validador.validate(clienteInvalid);
+        List<String> teste = new ArrayList<String>();
+        erros.stream().forEach(t1 -> teste.add(t1.getMessage()));
+        System.out.println(teste);
     }
 
     @Test(expected = EmptyStringException.class)
     public void nao_deve_aceitar_nome_vazio() {
-        clientes.get(0).setNome(FixtureFactoryCliente.nomeClienteEmpty().getNome());
+        Cliente clienteInvalid = Fixture.from(Cliente.class).gimme("nomeEmpty");
+        clientes.get(0).setNome(clienteInvalid.getNome());
     }
 
     @Test(expected = EmptyStringException.class)
     public void nao_deve_aceitar_nome_com_espaco_em_branco() {
-        clientes.get(0).setNome(FixtureFactoryCliente.nomeClienteBlankSpace().getNome());
+        Cliente clienteInvalid = Fixture.from(Cliente.class).gimme("blanckSpace");
+        clientes.get(0).setNome(clienteInvalid.getNome());
     }
 
     @Test(expected = EmptyStringException.class)
     public void nao_deve_aceitar_email_null() {
-        clientes.get(0).setEmail(FixtureFactoryCliente.emailClienteNull().getEmail());
+        Cliente clienteInvalid = Fixture.from(Cliente.class).gimme("emailNull");
+        clientes.get(0).setNome(clienteInvalid.getEmail());
     }
 
     @Test(expected = EmptyStringException.class)
     public void nao_deve_aceitar_email_vazio() {
-        clientes.get(0).setEmail(FixtureFactoryCliente.emailClienteEmpty().getEmail());
+        Cliente clienteInvalid = Fixture.from(Cliente.class).gimme("emailEmpty");
+        clientes.get(0).setNome(clienteInvalid.getEmail());
     }
 
     @Test(expected = EmptyStringException.class)
     public void nao_deve_aceitar_email_com_espaco_em_branco() {
-        clientes.get(0).setEmail(FixtureFactoryCliente.emailClienteBlankSpace().getEmail());
+        Cliente clienteInvalid = Fixture.from(Cliente.class).gimme("emailBlankSpace");
+        clientes.get(0).setNome(clienteInvalid.getEmail());
     }
-    
+
     @Test(expected = StringFormatException.class)
     public void deve_aceitar_apenas_email_validos() {
-        clientes.get(0).setEmail(FixtureFactoryCliente.emailClienteNotVallid().getEmail());
+        Cliente clienteInvalid = Fixture.from(Cliente.class).gimme("emailInvalid");
+        clientes.get(0).setEmail(clienteInvalid.getEmail());
     }
 
     @Test(expected = NullPointerException.class)
     public void nao_deve_aceitar_endereco_null() {
-        clientes.get(0).setEndereco(null);
+        Cliente clienteInvalid = Fixture.from(Cliente.class).gimme("enderecoNull");
+        clientes.get(0).setEndereco(clienteInvalid.getEndereco());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -145,7 +150,7 @@ public class ClienteTest {
         assertTrue("O produto não existe", clientes.get(0).produtoEstaNoCarrinho(nome, clientes.get(0)));
     }
 
-    @Test(timeout = 100)
+    @Test(timeout = 200)
     public void dataNascimento_deve_ser_valida() {
         nascimento = new SimpleDateFormat("dd/MM/yyyy");
         try {
@@ -159,6 +164,7 @@ public class ClienteTest {
 
     @Test(expected = ParseException.class)
     public void dataNascimento_deve_ser_valida_exception() throws ParseException {
+        nascimento = new SimpleDateFormat("dd/MM/yyyy");
         data = nascimento.parse("/01/1999");
         clientes.get(0).setDataNascimento(data);
     }
@@ -210,6 +216,7 @@ public class ClienteTest {
     public void deve_compra_produto() {
         String nomeProduto = "Tablet";
         int qtdProdutosCompra = 1;
+        System.out.println(clientes.get(0).getDinheiroCarteira());
         clientes.get(0).compraProduto(clientes.get(0), nomeProduto, qtdProdutosCompra);
         assertTrue(clientes.get(0).getProdutosComprados().contains(loja.getProduto().get(3)));
     }
@@ -265,12 +272,12 @@ public class ClienteTest {
 
     @After
     public void deve_conter_toString() {
-        System.out.println(clientes.get(0));
+        //System.out.println(clientes.get(0));
     }
 
     @AfterClass
     public static void mostrarCliente() {
-        System.out.println("Cliente foi cadastrado com sucesso");
+       // System.out.println("Cliente foi cadastrado com sucesso");
     }
 
 }

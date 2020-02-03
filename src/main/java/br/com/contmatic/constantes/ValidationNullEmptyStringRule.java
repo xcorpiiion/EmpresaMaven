@@ -14,16 +14,17 @@ public final class ValidationNullEmptyStringRule {
 		
 	}
 	
-	public static void nomeIsEmpty(String nome) {
-		if (StringUtils.isEmpty(nome) || nome.trim().equals("")) {
-			throw new EmptyStringException("O nome está vazio");
-		}
+	public static void stringIsEmpty(String yourString) {
+	    if (StringUtils.isEmpty(yourString) || yourString.trim().equals("")) {
+            throw new EmptyStringException("O nome está vazio");
+        }
 	}
 	
-	public static void emailIsEmpty(String email) {
-		if ( StringUtils.isEmpty(email) || email.trim().equals("")) {
-			throw new EmptyStringException("O email estávazio");
-		}
+	public static void objectIsNull(Object yourObject) {
+	    if (yourObject instanceof Date) {
+	        System.out.println("Teste ok");
+            throw new NullPointerException("teste");
+        }
 	}
 	
 	public static void emailValidation(String email) {

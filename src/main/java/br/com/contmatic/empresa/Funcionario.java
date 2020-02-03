@@ -75,7 +75,7 @@ public class Funcionario {
 	}
 
 	public void setNome(String nome) {
-		ValidationNullEmptyStringRule.nomeIsEmpty(nome);
+		ValidationNullEmptyStringRule.stringIsEmpty(nome);
 		this.nome = nome;
 	}
 
@@ -84,7 +84,7 @@ public class Funcionario {
 	}
 
 	public void setEmail(String email) {
-		ValidationNullEmptyStringRule.emailIsEmpty(email);
+		ValidationNullEmptyStringRule.stringIsEmpty(email);
 		this.email = email;
 	}
 

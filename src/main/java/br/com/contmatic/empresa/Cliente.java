@@ -4,12 +4,19 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import br.com.contmatic.constantes.ValidationNullEmptyStringRule;
 
 public class Cliente {
-
+    
+    @NotEmpty(message = "Nome invalido")
+    @Pattern(regexp = "[\\d] {1,50}", message = "Nome invalido")
     private String nome;
 
     private String email;
@@ -27,8 +34,7 @@ public class Cliente {
     public Cliente(String nome, String email, Date dataNascimento, Endereco endereco) {
         setNome(nome);
         setEmail(email);
-        ValidationNullEmptyStringRule.dataNascimentoIsNull(dataNascimento);
-        this.dataNascimento = dataNascimento;
+        setDataNascimento(dataNascimento);
         setEndereco(endereco);
     }
 
@@ -77,7 +83,6 @@ public class Cliente {
     }
 
     public void setNome(String nome) {
-        ValidationNullEmptyStringRule.nomeIsEmpty(nome);
         this.nome = nome;
     }
 
@@ -86,7 +91,7 @@ public class Cliente {
     }
 
     public void setEmail(String email) {
-        ValidationNullEmptyStringRule.emailIsEmpty(email);
+ 
         this.email = email;
     }
 

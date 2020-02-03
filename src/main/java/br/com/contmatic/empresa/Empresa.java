@@ -57,7 +57,7 @@ public class Empresa {
     }
 
     public void setNome(String nome) {
-        ValidationNullEmptyStringRule.nomeIsEmpty(nome);
+        ValidationNullEmptyStringRule.stringIsEmpty(nome);
         this.nome = nome;
     }
 
@@ -66,7 +66,7 @@ public class Empresa {
     }
 
     public void setEmail(String email) {
-        ValidationNullEmptyStringRule.emailIsEmpty(email);
+        ValidationNullEmptyStringRule.stringIsEmpty(email);
         ValidationNullEmptyStringRule.emailValidation(email);
         this.email = email;
     }

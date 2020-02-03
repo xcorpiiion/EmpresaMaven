@@ -3,7 +3,6 @@ package br.com.contmatic.empresa;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import br.com.contmatic.constantes.Constante;
 import br.com.contmatic.enums.EstadosBrasil;
 import br.com.contmatic.services.EmptyStringException;
 import br.com.contmatic.services.StringFormatException;
@@ -106,7 +105,7 @@ public class Endereco {
     }
 
     private void cidadeContainsNumber(String cidade) {
-        if (cidade.matches(Constante.ILLEGAL_NUMBER)) {
+        if (!StringUtils.isAlphaSpace(cidade)) {
             throw new StringFormatException("A cidade contém algum número");
         }
     }
