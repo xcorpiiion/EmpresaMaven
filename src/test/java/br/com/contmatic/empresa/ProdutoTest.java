@@ -13,6 +13,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.contmatic.services.EmptyStringException;
+import br.com.six2six.fixturefactory.Fixture;
+import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
 public class ProdutoTest {
 
@@ -28,10 +30,11 @@ public class ProdutoTest {
 	
 	@Before
 	public void dadosProdutos() throws Exception {
+	    FixtureFactoryLoader.loadTemplates("br.com.contmatic.fixture.factory");
 		nome = "Tablet";
 		preco = new BigDecimal(250.00);
 		estoque = 5;
-		produto = new Produto(nome, preco, estoque);
+		produto = Fixture.from(Produto.class).gimme("valid");
 	}
 
 	@Test

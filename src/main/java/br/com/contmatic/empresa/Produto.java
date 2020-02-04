@@ -5,8 +5,6 @@ import java.math.BigDecimal;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import br.com.contmatic.constantes.ValidationNullEmptyStringRule;
-
 public class Produto {
 
     private String nome;
@@ -16,9 +14,9 @@ public class Produto {
     private Integer estoque;
 
     public Produto(String nome, BigDecimal preco, Integer estoque) {
-        setNome(nome);
-        setPreco(preco);
-        setEstoque(estoque);
+        this.nome = nome;
+        this.preco = preco;
+        this.estoque = estoque;
     }
 
     public String getNome() {
@@ -26,7 +24,6 @@ public class Produto {
     }
 
     public void setNome(String nome) {
-        ValidationNullEmptyStringRule.stringIsEmpty(nome);
         this.nome = nome;
     }
 

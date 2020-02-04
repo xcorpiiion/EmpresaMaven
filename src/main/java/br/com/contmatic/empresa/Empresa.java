@@ -1,43 +1,60 @@
 package br.com.contmatic.empresa;
 
 import java.util.List;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import br.com.contmatic.constantes.ValidationNullEmptyStringRule;
+import org.hibernate.validator.constraints.br.CNPJ;
+
+import br.com.contmatic.constantes.Constante;
 import br.com.contmatic.services.EmptyStringException;
 import br.com.contmatic.services.StringSizeException;
 
 public class Empresa {
 
+    @NotEmpty(message = "Nome não pode ser vazio")
     private String nome;
 
+    @NotEmpty(message = "Email não pode ser vazio")
+    @Pattern(regexp = Constante.VALIDATION_EMAIL)
     private String email;
 
+    @NotEmpty(message = "O cnpj não pode ficar vazio")
+    @CNPJ(message = "CNPJ não é valido")
     private String cnpj;
 
+    @NotNull(message = "Endereço não pode ficar nullp")
     private Endereco endereco;
 
+    @NotNull(message = "Produto não pode ficar nullo")
     private List<Produto> produtos;
 
+    @NotNull(message = "O funcionairo não pode ser nullo")
     private List<Funcionario> funcionarios;
 
+    @NotNull(message = "O cliente não pode ser nullo")
     private List<Cliente> clientes;
 
     public Empresa(String nome, String email, List<Produto> produtos, String cnpj, Endereco endereco) {
-        setNome(nome);
-        setEmail(email);
-        setProduto(produtos);
-        setCnpj(cnpj);
-        setEndereco(endereco);
+        this.nome = nome;
+        this.email = email;
+        this.produtos = produtos;
+        this.cnpj = cnpj;
+        this.endereco = endereco;
     }
 
+    public Empresa() {
+        
+    }
+    
     public Endereco getEndereco() {
         return endereco;
     }
 
     public void setEndereco(Endereco endereco) {
-        ValidationNullEmptyStringRule.enderecoIsNull(endereco);
         this.endereco = endereco;
     }
 
@@ -57,7 +74,6 @@ public class Empresa {
     }
 
     public void setNome(String nome) {
-        ValidationNullEmptyStringRule.stringIsEmpty(nome);
         this.nome = nome;
     }
 
@@ -66,8 +82,6 @@ public class Empresa {
     }
 
     public void setEmail(String email) {
-        ValidationNullEmptyStringRule.stringIsEmpty(email);
-        ValidationNullEmptyStringRule.emailValidation(email);
         this.email = email;
     }
 

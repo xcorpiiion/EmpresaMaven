@@ -5,26 +5,32 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import br.com.contmatic.constantes.Constante;
 
-import br.com.contmatic.constantes.ValidationNullEmptyStringRule;
 
 public class Cliente {
     
-    @NotEmpty(message = "Nome invalido")
-    @Pattern(regexp = "[\\d] {1,50}", message = "Nome invalido")
+    @NotEmpty(message = "Nome não pode esta vazio")
+//    @Pattern(regexp = "[^\\d] {1,50}", message = "Nome invalido")
     private String nome;
 
+    @Pattern(regexp = Constante.VALIDATION_EMAIL, message = "Email invalido")
+    @NotEmpty(message = "Email não pode esta vazio")
     private String email;
 
+    @NotNull(message = "Data de nascimento não pode ser nulla")
     private Date dataNascimento;
 
+    @Min(value = 0, message = "O valor é invalido")
     private BigDecimal dinheiroCarteira;
 
+    @NotNull(message = "O endereço esta null")
     private Endereco endereco;
 
     private List<Produto> carrinhoProduto;
@@ -35,7 +41,7 @@ public class Cliente {
         setNome(nome);
         setEmail(email);
         setDataNascimento(dataNascimento);
-        setEndereco(endereco);
+        this.endereco = endereco;
     }
 
     public Cliente() {
@@ -47,9 +53,6 @@ public class Cliente {
     }
 
     public void setDinheiroCarteira(BigDecimal dinheiroCarteira) {
-        if (dinheiroCarteira.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("O valor não pode ser menor do que zero");
-        }
         this.dinheiroCarteira = new BigDecimal(0).add(dinheiroCarteira);
     }
 
@@ -74,7 +77,6 @@ public class Cliente {
     }
 
     public void setEndereco(Endereco endereco) {
-        ValidationNullEmptyStringRule.enderecoIsNull(endereco);
         this.endereco = endereco;
     }
 
@@ -100,7 +102,6 @@ public class Cliente {
     }
 
     public void setDataNascimento(Date dataNascimento) {
-        ValidationNullEmptyStringRule.dataNascimentoIsNull(dataNascimento);
         this.dataNascimento = dataNascimento;
     }
 
@@ -113,7 +114,6 @@ public class Cliente {
     }
 
     public void addItensCarrinho(Cliente cliente, Empresa loja, String nomeProduto, int qtdProdutoAddCarrinho) {
-        ValidationNullEmptyStringRule.lojaIsNull(loja);
         loja.mostrarProdutos();
         if (produtoExisteNaLoja(nomeProduto, loja)) {
 

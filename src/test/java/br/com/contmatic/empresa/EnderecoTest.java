@@ -9,6 +9,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import br.com.contmatic.fixture.factory.FixtureFactoryEndereco;
 import br.com.contmatic.services.EmptyStringException;
 import br.com.contmatic.services.StringFormatException;
 import br.com.contmatic.services.StringSizeException;
@@ -28,8 +30,8 @@ public class EnderecoTest {
 	
 	@Before
 	public void addEndereco() {
-		endereco = Fixture.from(Endereco.class).gimme("valid");
-		endereco2 = Fixture.from(Endereco.class).gimme("valid");
+		endereco = FixtureFactoryEndereco.enderecoValido();
+		endereco2 = FixtureFactoryEndereco.enderecoValido();
 	}
 	
 	@Test(expected = IllegalArgumentException.class)

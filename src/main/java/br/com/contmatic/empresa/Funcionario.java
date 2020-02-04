@@ -3,10 +3,13 @@ package br.com.contmatic.empresa;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import br.com.contmatic.constantes.ValidationNullEmptyStringRule;
 import br.com.contmatic.enums.Cargo;
 import br.com.contmatic.enums.TipoContrato;
 
@@ -14,42 +17,48 @@ public class Funcionario {
 
 	private static final String APENAS_REPOSITORES_PODEM_ALTERAR_OS_DADOS_DO_PRODUTO = "Apenas repositores podem alterar os dados do produto";
 
+	@NotEmpty(message = "O nome não pode esta vazio")
 	private String nome;
 
+	@NotEmpty(message = "O email não pode esta vazio")
 	private String email;
 
+	@NotNull(message = "A data de nascimento não pode esta nullo")
 	private Date dataNascimento;
 
+	@NotNull(message = "O cargo não pode esta vazio")
 	private Cargo cargo;
 
+	@NotNull(message = "O salario não pode esta nullo")
+	@Min(value = 1000, message = "O valor precisa ser um salario minimo")
 	private BigDecimal salario;
 
+	@NotNull(message = "O endereco não pode ser nullo")
 	private Endereco endereco;
 
+	@NotNull(message = "O tipo de contrato não pode ser nullo")
 	private TipoContrato tipoContrato;
 
-	public Funcionario(String nome, String email, BigDecimal salario, Cargo cargo, Date dataNascimento,
+    public Funcionario(String nome, String email, BigDecimal salario, Cargo cargo, Date dataNascimento,
 			TipoContrato tipoContrato, Endereco endereco) {
-		setNome(nome);
-		setEmail(email);
-		ValidationNullEmptyStringRule.dataNascimentoIsNull(dataNascimento);
-		this.dataNascimento = dataNascimento;
-		setCargo(cargo);
-		salarioIsNull(salario);
-		salarioIsNegative(salario);
-		this.salario = salario;
-		ValidationNullEmptyStringRule.enderecoIsNull(endereco);
-		setEndereco(endereco);
-		contratoIsNull(tipoContrato);
-		this.tipoContrato = tipoContrato;
+        this.nome = nome;
+        this.email = email;
+        this.dataNascimento = dataNascimento;
+        this.cargo = cargo;
+        this.salario = salario;
+        this.endereco = endereco;
+        this.tipoContrato = tipoContrato;
 	}
+    
+    public Funcionario() {
+        
+    }
 
 	public Endereco getEndereco() {
 		return endereco;
 	}
 
 	public void setEndereco(Endereco endereco) {
-		ValidationNullEmptyStringRule.enderecoIsNull(endereco);
 		this.endereco = endereco;
 	}
 
@@ -66,7 +75,11 @@ public class Funcionario {
 		return salario;
 	}
 
-	public TipoContrato getTipoContrato() {
+	public void setSalario(BigDecimal salario) {
+        this.salario = salario;
+    }
+
+    public TipoContrato getTipoContrato() {
 		return tipoContrato;
 	}
 
@@ -75,7 +88,6 @@ public class Funcionario {
 	}
 
 	public void setNome(String nome) {
-		ValidationNullEmptyStringRule.stringIsEmpty(nome);
 		this.nome = nome;
 	}
 
@@ -84,7 +96,6 @@ public class Funcionario {
 	}
 
 	public void setEmail(String email) {
-		ValidationNullEmptyStringRule.stringIsEmpty(email);
 		this.email = email;
 	}
 
@@ -220,24 +231,6 @@ public class Funcionario {
 	private void cargoIsNull(Cargo cargo) {
 		if (cargo == null) {
 			throw new NullPointerException("O cargo esta null");
-		}
-	}
-
-	private void salarioIsNull(BigDecimal salario) {
-		if (salario == null) {
-			throw new NullPointerException("O salario esta null");
-		}
-	}
-
-	private void salarioIsNegative(BigDecimal salario) {
-		if (salario.compareTo(BigDecimal.ZERO) < 0) {
-			throw new IllegalArgumentException("O salario não pode ser menor do que zero");
-		}
-	}
-
-	private void contratoIsNull(TipoContrato tipoContrato) {
-		if (tipoContrato == null) {
-			throw new NullPointerException("O contrato esta null");
 		}
 	}
 

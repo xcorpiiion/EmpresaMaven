@@ -3,18 +3,22 @@ package br.com.contmatic.empresa;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import br.com.contmatic.enums.EstadosBrasil;
+
+import br.com.contmatic.fixture.factory.FixtureFactoryEndereco;
+import br.com.six2six.fixturefactory.Fixture;
+import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
 public class CadastroClienteTest {
 
@@ -32,9 +36,10 @@ public class CadastroClienteTest {
 
     @BeforeClass
     public static void addDadosIniciais() {
+        FixtureFactoryLoader.loadTemplates("br.com.contmatic.fixture.factory");
         produtos = new ArrayList<>();
         produtos.add(new Produto("Tablet", new BigDecimal(250.00), 50));
-        loja = new Empresa("Kratos games", "kratosgames@gmail.com", produtos, "01234567890123", new Endereco("Rua limões", "Santa Maria", "02177120", 345, "São paulo", EstadosBrasil.CEARA));
+        loja = Fixture.from(Empresa.class).gimme("valid");
         loja.setCliente(new ArrayList<>());
         loja.setFuncionario(new ArrayList<>());
         cadastroCliente = new CadastroCliente(loja);
@@ -43,23 +48,12 @@ public class CadastroClienteTest {
     @Before
     public void addDadosCliente() {
         clientes = new ArrayList<>();
-        nascimento = new SimpleDateFormat("dd/MM/yyyy");
-        try {
-            data = nascimento.parse("19/10/1992");
-            clientes.add(new Cliente("Matheus", "matheus@gmail.com", data, new Endereco("Rua almeida", "Jardim santana", "02676000", 35, "São paulo", EstadosBrasil.MATOGROSSODOSUL)));
-            data = nascimento.parse("20/11/1999");
-            clientes.add(new Cliente("Vergil", "vergil@gmail.com", data, new Endereco("Rua almeida", "Jardim santana", "02676000", 35, "São paulo", EstadosBrasil.GOIAS)));
-            data = nascimento.parse("9/1/1992");
-            clientes.add(new Cliente("Dante", "dante@gmail.com", data, new Endereco("Rua almeida", "Jardim santana", "02676000", 35, "São paulo", EstadosBrasil.SAOPAULO)));
-            data = nascimento.parse("19/9/1996");
-            clientes.add(new Cliente("Harry", "harry@gmail.com", data, new Endereco("Rua almeida", "Jardim santana", "02676000", 35, "São paulo", EstadosBrasil.RIODEJANEIRO)));
-        } catch (Exception e) {
-            fail("Você digitou uma data invalida");
-        }
-
+        clientes.add(Fixture.from(Cliente.class).gimme("valid"));
+        clientes.add(Fixture.from(Cliente.class).gimme("valid"));
+        clientes.add(Fixture.from(Cliente.class).gimme("valid"));
+        clientes.add(Fixture.from(Cliente.class).gimme("valid"));
         clientes.get(0).setCarrinhoProduto(new ArrayList<>());
         clientes.get(0).setProdutosComprados(new ArrayList<>());
-
         clientes.get(0).addItensCarrinho(clientes.get(0), loja, "Tablet", 2);
         clientes.get(0).setDinheiroCarteira(new BigDecimal(2500.00));
     }
@@ -80,7 +74,7 @@ public class CadastroClienteTest {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        cadastroCliente.cadastrarCliente(nome, email, data, new Endereco("Rua almeida", "Jardim santana", "02676000", 35, "São paulo", EstadosBrasil.SAOPAULO));
+        cadastroCliente.cadastrarCliente(nome, email, data, FixtureFactoryEndereco.enderecoValido());
         assertTrue("O cliente existe", loja.clienteExiste(loja, nome, email));
     }
 
@@ -93,8 +87,8 @@ public class CadastroClienteTest {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        cadastroCliente.cadastrarCliente(nome, email, data, new Endereco("Rua almeida", "Jardim santana", "02676000", 35, "São paulo", EstadosBrasil.RIODEJANEIRO));
-        cadastroCliente.cadastrarCliente(nome, email, data, new Endereco("Rua almeida", "Jardim santana", "02676000", 5, "São paulo", EstadosBrasil.ACRE));
+        cadastroCliente.cadastrarCliente(nome, email, data, FixtureFactoryEndereco.enderecoValido());
+        cadastroCliente.cadastrarCliente(nome, email, data, FixtureFactoryEndereco.enderecoValido());
         assertTrue("O cliente existe", loja.clienteExiste(loja, nome, email));
     }
 

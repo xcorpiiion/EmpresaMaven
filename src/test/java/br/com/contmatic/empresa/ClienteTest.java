@@ -1,19 +1,17 @@
 package br.com.contmatic.empresa;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -23,13 +21,11 @@ import org.junit.FixMethodOrder;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import br.com.contmatic.empresa.Cliente;
-import br.com.contmatic.empresa.Endereco;
-import br.com.contmatic.empresa.Produto;
+
 import br.com.contmatic.enums.EstadosBrasil;
-import br.com.contmatic.fixture.factory.FixtureFactoryCliente;
 import br.com.contmatic.services.EmptyStringException;
 import br.com.contmatic.services.StringFormatException;
+import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
@@ -54,7 +50,7 @@ public class ClienteTest {
         produtos.add(new Produto("Computador", new BigDecimal(3500.00), 70));
         produtos.add(new Produto("Smartphone", new BigDecimal(2500.00), 150));
         produtos.add(new Produto("Fone de Ouvido", new BigDecimal(50.00), 200));
-        loja = new Empresa("Kratos games", "kratosgames@gmail.com", produtos, "01234567890123", new Endereco("Rua limões", "Santa Maria", "02177120", 345, "São paulo", EstadosBrasil.PIAUI));
+        loja = Fixture.from(Empresa.class).gimme("valid");
         loja.setCliente(new ArrayList<>());
         loja.setFuncionario(new ArrayList<>());
     }
@@ -84,12 +80,10 @@ public class ClienteTest {
     @Test
     public void nao_deve_aceitar_nome_null() {
         Cliente clienteInvalid = Fixture.from(Cliente.class).gimme("nomeNull");
-        //clientes.get(0).setNome(clienteInvalid.getNome());
-        Validator validador = Validation.buildDefaultValidatorFactory().getValidator();
-        Set<ConstraintViolation<Cliente>> erros = validador.validate(clienteInvalid);
-        List<String> teste = new ArrayList<String>();
-        erros.stream().forEach(t1 -> teste.add(t1.getMessage()));
-        System.out.println(teste);
+        clientes.get(0).setNome(clienteInvalid.getNome());
+        ValidadorAnnotionsMsgErro<Cliente> validador = new ValidadorAnnotionsMsgErro<Cliente>();
+        System.out.println(validador.returnAnnotationMsgError(clientes.get(0)));
+        assertEquals("Nome não pode esta vazio", validador.returnAnnotationMsgError(clientes.get(0)));
     }
 
     @Test(expected = EmptyStringException.class)
@@ -125,6 +119,7 @@ public class ClienteTest {
     @Test(expected = StringFormatException.class)
     public void deve_aceitar_apenas_email_validos() {
         Cliente clienteInvalid = Fixture.from(Cliente.class).gimme("emailInvalid");
+        System.out.println();
         clientes.get(0).setEmail(clienteInvalid.getEmail());
     }
 
