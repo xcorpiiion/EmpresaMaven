@@ -14,16 +14,16 @@ public class FixtureFactoryFuncionario implements TemplateLoader {
 
     @Override
     public void load() {
-        Random random = new Random();
         Fixture.of(Funcionario.class).addTemplate("valid", new Rule() {
             {
                 add("nome", name());
                 add("email", "teste@gmail.com");
                 add("dataNascimento", new Date());
-                add("cargo", Cargo.values()[random.nextInt(Cargo.values().length)]);
-                add("salario", new BigDecimal(1000.00 + (random.nextDouble() * (5000 - 8500))));
+                add("cargo", Cargo.values()[new Random().nextInt(Cargo.values().length)]);
+                add("salario", new BigDecimal(1000.00 + (new Random().nextDouble() * (5000 - 8500))));
                 add("endereco", FixtureFactoryEndereco.enderecoValido());
-                add("tipoContrato", TipoContrato.values()[random.nextInt(TipoContrato.values().length)]);
+                add("tipoContrato", TipoContrato.values()[new Random().nextInt(TipoContrato.values().length)]);
+                add("cpf", GeradorCpf.gerardorRandomCpf());
             }
         });
         Fixture.of(Funcionario.class).addTemplate("nomeNull").inherits("valid", new Rule() {
@@ -84,6 +84,27 @@ public class FixtureFactoryFuncionario implements TemplateLoader {
         Fixture.of(Funcionario.class).addTemplate("tipoContratoNull").inherits("valid", new Rule() {
             {
                 add("tipoContrato", null);
+            }
+        });
+        Fixture.of(Funcionario.class).addTemplate("cpfNull").inherits("valid", new Rule() {
+            {
+                add("cpf", null);
+            }
+        });
+        Fixture.of(Funcionario.class).addTemplate("cpfEmpty").inherits("valid", new Rule() {
+            {
+                add("cpf", null);
+            }
+        });
+        
+        Fixture.of(Funcionario.class).addTemplate("cpfBlankSpace").inherits("valid", new Rule() {
+            {
+                add("cpf", null);
+            }
+        });
+        Fixture.of(Funcionario.class).addTemplate("invalidCpf").inherits("valid", new Rule() {
+            {
+                add("cpf", null);
             }
         });
     }

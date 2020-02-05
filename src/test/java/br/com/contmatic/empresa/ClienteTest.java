@@ -3,6 +3,8 @@ package br.com.contmatic.empresa;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -40,17 +42,17 @@ public class ClienteTest {
 
     private List<Cliente> clientes;
 
+    private static ValidadorAnnotionsMsgErro<Cliente> validadorAnnotionsMsgErro;
+    
     private static Empresa loja;
 
     @BeforeClass
     public static void addDadosIniciais() {
         FixtureFactoryLoader.loadTemplates("br.com.contmatic.fixture.factory");
         produtos = new ArrayList<>();
-        produtos.add(new Produto("Tablet", new BigDecimal(250.00), 50));
-        produtos.add(new Produto("Computador", new BigDecimal(3500.00), 70));
-        produtos.add(new Produto("Smartphone", new BigDecimal(2500.00), 150));
-        produtos.add(new Produto("Fone de Ouvido", new BigDecimal(50.00), 200));
+        produtos.add(Fixture.from(Produto.class).gimme("valid"));
         loja = Fixture.from(Empresa.class).gimme("valid");
+        loja.setProduto(produtos);
         loja.setCliente(new ArrayList<>());
         loja.setFuncionario(new ArrayList<>());
     }
@@ -62,7 +64,7 @@ public class ClienteTest {
         clientes.add(Fixture.from(Cliente.class).gimme("valid"));
         clientes.add(Fixture.from(Cliente.class).gimme("valid"));
         clientes.add(Fixture.from(Cliente.class).gimme("valid"));
-        clientes.get(0).addItensCarrinho(clientes.get(0), loja, "Tablet", 2);
+        clientes.get(0).addItensCarrinho(clientes.get(0), loja, loja.getProduto().get(0).getNome(), 2);
     }
 
     @Ignore
@@ -81,9 +83,8 @@ public class ClienteTest {
     public void nao_deve_aceitar_nome_null() {
         Cliente clienteInvalid = Fixture.from(Cliente.class).gimme("nomeNull");
         clientes.get(0).setNome(clienteInvalid.getNome());
-        ValidadorAnnotionsMsgErro<Cliente> validador = new ValidadorAnnotionsMsgErro<Cliente>();
-        System.out.println(validador.returnAnnotationMsgError(clientes.get(0)));
-        assertEquals("Nome não pode esta vazio", validador.returnAnnotationMsgError(clientes.get(0)));
+        validadorAnnotionsMsgErro = new ValidadorAnnotionsMsgErro<Cliente>();
+        assertEquals("Nome não pode esta vazio", validadorAnnotionsMsgErro.returnAnnotationMsgError(clientes.get(0)));
     }
 
     @Test(expected = EmptyStringException.class)
@@ -164,9 +165,10 @@ public class ClienteTest {
         clientes.get(0).setDataNascimento(data);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void dataNascimento_nao_deve_ser_null_exception() throws ParseException {
-        clientes.get(0).setDataNascimento(null);
+        Cliente clienteValid = Fixture.from(Cliente.class).gimme("dataNascimentoNull");
+        assertNotNull(clienteValid);
     }
 
     @Test()

@@ -9,7 +9,7 @@ import static org.junit.Assert.assertTrue;
 import java.math.BigDecimal;
 
 import org.junit.After;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import br.com.contmatic.services.EmptyStringException;
@@ -19,21 +19,14 @@ import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 public class ProdutoTest {
 
 	private String nome;
-
-	private BigDecimal preco;
-
-	private Integer estoque;
 	
-	private Produto produto;
+	private static Produto produto;
 	
 	private Produto produto2;
 	
-	@Before
-	public void dadosProdutos() throws Exception {
+	@BeforeClass
+	public static void dadosProdutos() {
 	    FixtureFactoryLoader.loadTemplates("br.com.contmatic.fixture.factory");
-		nome = "Tablet";
-		preco = new BigDecimal(250.00);
-		estoque = 5;
 		produto = Fixture.from(Produto.class).gimme("valid");
 	}
 

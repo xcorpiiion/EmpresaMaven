@@ -38,10 +38,9 @@ public class Empresa {
     @NotNull(message = "O cliente não pode ser nullo")
     private List<Cliente> clientes;
 
-    public Empresa(String nome, String email, List<Produto> produtos, String cnpj, Endereco endereco) {
+    public Empresa(String nome, String email, String cnpj, Endereco endereco) {
         this.nome = nome;
         this.email = email;
-        this.produtos = produtos;
         this.cnpj = cnpj;
         this.endereco = endereco;
     }
@@ -135,8 +134,8 @@ public class Empresa {
         }
     }
 
-    public boolean clienteExiste(Empresa lojaCliente, String nome, String email) {
-        return lojaCliente.getCliente().stream().anyMatch(c -> c.getNome().equalsIgnoreCase(nome) && c.getEmail().equalsIgnoreCase(email));
+    public boolean clienteExiste(Empresa lojaCliente, String cpf) {
+        return lojaCliente.getCliente().stream().anyMatch(c -> c.getCpf().equals(cpf));
     }
 
     @Override

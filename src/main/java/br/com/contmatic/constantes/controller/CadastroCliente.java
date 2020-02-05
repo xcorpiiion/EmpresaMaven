@@ -1,4 +1,4 @@
-package br.com.contmatic.empresa;
+package br.com.contmatic.constantes.controller;
 
 import java.util.Date;
 
@@ -6,6 +6,10 @@ import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import br.com.contmatic.empresa.Cliente;
+import br.com.contmatic.empresa.Empresa;
+import br.com.contmatic.empresa.Endereco;
 
 public class CadastroCliente {
 
@@ -24,11 +28,11 @@ public class CadastroCliente {
         this.loja = loja;
     }
 
-    public void cadastrarCliente(String nome, String email, Date dataNascimento, Endereco endereco) {
-        if (this.loja.clienteExiste(loja, nome, email)) {
+    public void cadastrarCliente(String nome, String email, Date dataNascimento, Endereco endereco, String cpf) {
+        if (this.loja.clienteExiste(loja, cpf)) {
             throw new IllegalArgumentException("O cliente já está cadastrado");
         }
-        this.loja.getCliente().add(new Cliente(nome, email, dataNascimento, endereco));
+        this.loja.getCliente().add(new Cliente(nome, email, dataNascimento, endereco, cpf));
     }
 
     @Override

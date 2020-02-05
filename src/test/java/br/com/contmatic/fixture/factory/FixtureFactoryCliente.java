@@ -14,6 +14,7 @@ public class FixtureFactoryCliente implements TemplateLoader {
 
     @Override
     public void load() {
+        
         Fixture.of(Cliente.class).addTemplate("valid", new Rule() {
             {
                 add("nome", name());
@@ -23,6 +24,7 @@ public class FixtureFactoryCliente implements TemplateLoader {
                 add("carrinhoProduto", new ArrayList<>());
                 add("produtosComprados", new ArrayList<>());
                 add("endereco", FixtureFactoryEndereco.enderecoValido());
+                add("cpf", GeradorCpf.gerardorRandomCpf());
             }
         });
         Fixture.of(Cliente.class).addTemplate("nomeNull").inherits("valid", new Rule() {
@@ -63,6 +65,11 @@ public class FixtureFactoryCliente implements TemplateLoader {
         Fixture.of(Cliente.class).addTemplate("enderecoNull").inherits("valid", new Rule() {
             {
                 add("endereco", null);
+            }
+        });
+        Fixture.of(Cliente.class).addTemplate("dataNascimentoNull").inherits("valid", new Rule() {
+            {
+                add("dataNascimento", null);
             }
         });
 

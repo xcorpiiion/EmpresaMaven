@@ -6,11 +6,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.validator.constraints.br.CPF;
+
 import br.com.contmatic.constantes.Constante;
 
 
@@ -33,15 +36,21 @@ public class Cliente {
     @NotNull(message = "O endereço esta null")
     private Endereco endereco;
 
+    @NotEmpty(message = "O cpf está vazio")
+    @NotBlank(message = "O cpf está com um espaço em branco")
+    @CPF(message = "O cpf é invalido")
+    private String cpf;
+    
     private List<Produto> carrinhoProduto;
 
     private List<Produto> produtosComprados;
 
-    public Cliente(String nome, String email, Date dataNascimento, Endereco endereco) {
+    public Cliente(String nome, String email, Date dataNascimento, Endereco endereco, String cpf) {
         setNome(nome);
         setEmail(email);
         setDataNascimento(dataNascimento);
         this.endereco = endereco;
+        this.cpf = cpf;
     }
 
     public Cliente() {
@@ -103,6 +112,14 @@ public class Cliente {
 
     public void setDataNascimento(Date dataNascimento) {
         this.dataNascimento = dataNascimento;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public boolean produtoExisteNaLoja(String nomeProduto, Empresa loja) {

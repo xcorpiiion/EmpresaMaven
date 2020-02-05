@@ -29,7 +29,7 @@ public class FixtureFactoryEndereco implements TemplateLoader{
     
     @Override
     public void load() {
-        Fixture.from(Endereco.class).gimme("valid");
+        FixtureFactoryEndereco.enderecoValido();
         StringBuilder cepRandom = new StringBuilder();
         cepRandom.append(new Random().nextInt(90000000) + 10000000);
         int randomEstadoName = new Random().nextInt(EstadosBrasil.values().length);
