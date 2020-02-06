@@ -3,8 +3,8 @@ package br.com.contmatic.empresa;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -24,9 +24,10 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import br.com.contmatic.constantes.Constante;
 import br.com.contmatic.enums.EstadosBrasil;
+import br.com.contmatic.fixture.factory.GeradorCpf;
 import br.com.contmatic.services.EmptyStringException;
-import br.com.contmatic.services.StringFormatException;
 import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
@@ -41,8 +42,6 @@ public class ClienteTest {
     private Date data;
 
     private List<Cliente> clientes;
-
-    private static ValidadorAnnotionsMsgErro<Cliente> validadorAnnotionsMsgErro;
     
     private static Empresa loja;
 
@@ -64,7 +63,7 @@ public class ClienteTest {
         clientes.add(Fixture.from(Cliente.class).gimme("valid"));
         clientes.add(Fixture.from(Cliente.class).gimme("valid"));
         clientes.add(Fixture.from(Cliente.class).gimme("valid"));
-        clientes.get(0).addItensCarrinho(clientes.get(0), loja, loja.getProduto().get(0).getNome(), 2);
+        clientes.get(0).addItensCarrinho(clientes.get(0), loja, loja.getProduto().get(0).getNome(), 1);
     }
 
     @Ignore
@@ -80,11 +79,10 @@ public class ClienteTest {
     }
 
     @Test
-    public void nao_deve_aceitar_nome_null() {
+    public void nao_deve_aceitar_nome_null_error() {
         Cliente clienteInvalid = Fixture.from(Cliente.class).gimme("nomeNull");
         clientes.get(0).setNome(clienteInvalid.getNome());
-        validadorAnnotionsMsgErro = new ValidadorAnnotionsMsgErro<Cliente>();
-        assertEquals("Nome não pode esta vazio", validadorAnnotionsMsgErro.returnAnnotationMsgError(clientes.get(0)));
+        assertNull(clientes.get(0).getNome());
     }
 
     @Test(expected = EmptyStringException.class)
@@ -93,10 +91,11 @@ public class ClienteTest {
         clientes.get(0).setNome(clienteInvalid.getNome());
     }
 
-    @Test(expected = EmptyStringException.class)
+    @Test
     public void nao_deve_aceitar_nome_com_espaco_em_branco() {
-        Cliente clienteInvalid = Fixture.from(Cliente.class).gimme("blanckSpace");
+        Cliente clienteInvalid = Fixture.from(Cliente.class).gimme("nomeBlankSpace");
         clientes.get(0).setNome(clienteInvalid.getNome());
+        assertEquals(Constante.NOME_NAO_PODE_ESTA_VAZIO, ValidadorAnnotionsMsgErro.returnAnnotationMsgError(clientes.get(0), Constante.NOME_NAO_PODE_ESTA_VAZIO));
     }
 
     @Test(expected = EmptyStringException.class)
@@ -111,16 +110,17 @@ public class ClienteTest {
         clientes.get(0).setNome(clienteInvalid.getEmail());
     }
 
-    @Test(expected = EmptyStringException.class)
+    @Test
     public void nao_deve_aceitar_email_com_espaco_em_branco() {
         Cliente clienteInvalid = Fixture.from(Cliente.class).gimme("emailBlankSpace");
-        clientes.get(0).setNome(clienteInvalid.getEmail());
+        clientes.get(0).setEmail(clienteInvalid.getEmail());
+        clientes.get(0).setCpf(GeradorCpf.gerardorRandomCpf());
+        assertEquals(Constante.O_CPF_ESTA_INVALIDO, ValidadorAnnotionsMsgErro.returnAnnotationMsgError(clientes.get(0), Constante.O_CPF_ESTA_INVALIDO));
     }
 
-    @Test(expected = StringFormatException.class)
+    @Test
     public void deve_aceitar_apenas_email_validos() {
         Cliente clienteInvalid = Fixture.from(Cliente.class).gimme("emailInvalid");
-        System.out.println();
         clientes.get(0).setEmail(clienteInvalid.getEmail());
     }
 
@@ -138,12 +138,6 @@ public class ClienteTest {
     @Test(expected = NullPointerException.class)
     public void nao_deve_aceitar_loja_null() throws Exception {
         clientes.get(0).addItensCarrinho(clientes.get(0), null, "Tablet", 51);
-    }
-
-    @Test()
-    public void deve_existir_produto_na_lista() {
-        String nome = "Tablet";
-        assertTrue("O produto não existe", clientes.get(0).produtoEstaNoCarrinho(nome, clientes.get(0)));
     }
 
     @Test(timeout = 200)
@@ -173,10 +167,8 @@ public class ClienteTest {
 
     @Test()
     public void deve_add_produto_no_carrinho() {
-        String nomeProduto = "Tablet";
-        int qtdProdutoAddCarrinho = 1;
-        clientes.get(0).addItensCarrinho(clientes.get(0), loja, nomeProduto, qtdProdutoAddCarrinho);
-        assertTrue("O produto não exite no carrinho", clientes.get(0).produtoEstaNoCarrinho(nomeProduto, clientes.get(0)));
+        clientes.get(0).addItensCarrinho(clientes.get(0), loja, loja.getProduto().get(0).getNome(), 2);
+        assertTrue("O produto não exite no carrinho", clientes.get(0).produtoEstaNoCarrinho(loja.getProduto().get(0).getNome(), clientes.get(0)));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -196,35 +188,12 @@ public class ClienteTest {
     @Test
     public void deve_add_dinheiro_carteira() {
         BigDecimal dinheiro = new BigDecimal(2500);
+        BigDecimal dinheiroAnterior = clientes.get(0).getDinheiroCarteira();
         clientes.get(0).setDinheiroCarteira(clientes.get(0).getDinheiroCarteira().add(dinheiro));
-        System.out.println(clientes.get(0).getDinheiroCarteira());
-        assertThat(clientes.get(0).getDinheiroCarteira(), is(new BigDecimal(5000)));
+        assertTrue(clientes.get(0).getDinheiroCarteira().compareTo(dinheiroAnterior) > 0);
 
     }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void deve_ter_valor_maior_do_que_zero_para_add_valor_na_carteira() {
-        BigDecimal dinheiro = new BigDecimal(-1);
-        clientes.get(0).setDinheiroCarteira(dinheiro);
-
-    }
-
-    @Test
-    public void deve_compra_produto() {
-        String nomeProduto = "Tablet";
-        int qtdProdutosCompra = 1;
-        System.out.println(clientes.get(0).getDinheiroCarteira());
-        clientes.get(0).compraProduto(clientes.get(0), nomeProduto, qtdProdutosCompra);
-        assertTrue(clientes.get(0).getProdutosComprados().contains(loja.getProduto().get(3)));
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void deve_ter_nome_do_produto_para_compra() {
-        String nomeProduto = "";
-        int qtdProdutosCompra = 50;
-        clientes.get(0).compraProduto(clientes.get(0), nomeProduto, qtdProdutosCompra);
-    }
-
+    
     @Test(expected = IllegalArgumentException.class)
     public void deve_ter_dinheiro_suficiente_para_comprar() {
         String nomeProduto = "Tablet";

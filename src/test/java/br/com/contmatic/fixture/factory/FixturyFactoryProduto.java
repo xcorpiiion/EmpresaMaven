@@ -14,7 +14,7 @@ public class FixturyFactoryProduto implements TemplateLoader {
             {
                 add("nome", name());
                 add("preco", new BigDecimal(50.00 + (new Random().nextDouble() * (100 - 250))));
-                add("estoque", 10 + (new Random().nextInt() * 50));
+                add("estoque", 10 + (new Random().nextInt(50)));
             }
         });
         return Fixture.from(Produto.class).gimme("valid");

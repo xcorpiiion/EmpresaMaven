@@ -53,8 +53,7 @@ public class FuncionarioTest {
     public void deve_ter_salario_maior_do_que_zero() {
         funcionarios.add(Fixture.from(Funcionario.class).gimme("salarioLess1"));
         funcionarios.get(3).setSalario(funcionarios.get(3).getSalario());
-        ValidadorAnnotionsMsgErro<Funcionario> validadorAnnotionsMsgErro = new ValidadorAnnotionsMsgErro<>();
-        assertEquals("O valor precisa ser um salario minimo", validadorAnnotionsMsgErro.returnAnnotationMsgError(funcionarios.get(3)));
+        assertEquals("O valor precisa ser um salario minimo", ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionarios.get(3)));
     }
 
     @Test

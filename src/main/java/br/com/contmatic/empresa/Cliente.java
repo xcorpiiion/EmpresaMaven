@@ -10,35 +10,37 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
 
 import br.com.contmatic.constantes.Constante;
 
 
 public class Cliente {
-    
-    @NotEmpty(message = "Nome não pode esta vazio")
-//    @Pattern(regexp = "[^\\d] {1,50}", message = "Nome invalido")
-    private String nome;
 
-    @Pattern(regexp = Constante.VALIDATION_EMAIL, message = "Email invalido")
-    @NotEmpty(message = "Email não pode esta vazio")
+    @NotEmpty(message = Constante.NOME_NAO_PODE_ESTA_VAZIO)
+    @Length(min = 3, max = 50)
+    private String nome;
+    
+    @Pattern(regexp = Constante.VALIDATION_EMAIL, message = Constante.EMAIL_INVALIDO)
+    @NotEmpty(message = Constante.EMAIL_NAO_PODE_ESTA_VAZIO)
     private String email;
 
-    @NotNull(message = "Data de nascimento não pode ser nulla")
+    @NotNull(message = Constante.DATA_DE_NASCIMENTO_NAO_PODE_SER_NULLA)
     private Date dataNascimento;
 
     @Min(value = 0, message = "O valor é invalido")
     private BigDecimal dinheiroCarteira;
 
-    @NotNull(message = "O endereço esta null")
+    @NotNull(message = Constante.O_ENDEREÇO_ESTA_NULL)
     private Endereco endereco;
 
-    @NotEmpty(message = "O cpf está vazio")
-    @NotBlank(message = "O cpf está com um espaço em branco")
-    @CPF(message = "O cpf é invalido")
+    @NotEmpty(message = Constante.O_CPF_ESTA_VAZIO)
+    @NotBlank(message = Constante.O_CPF_ESTA_COM_UM_ESPAÇO_EM_BRANCO)
+    @CPF(message = Constante.O_CPF_ESTA_INVALIDO)
     private String cpf;
     
     private List<Produto> carrinhoProduto;
@@ -46,9 +48,9 @@ public class Cliente {
     private List<Produto> produtosComprados;
 
     public Cliente(String nome, String email, Date dataNascimento, Endereco endereco, String cpf) {
-        setNome(nome);
-        setEmail(email);
-        setDataNascimento(dataNascimento);
+        this.nome = nome;
+        this.email = email;
+        this.dataNascimento = dataNascimento;
         this.endereco = endereco;
         this.cpf = cpf;
     }
