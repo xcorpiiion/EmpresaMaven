@@ -68,12 +68,12 @@ public class FixtureFactoryEmpresa implements TemplateLoader {
         });
         Fixture.of(Empresa.class).addTemplate("cnpjContainsWord").inherits("valid", new Rule() {
             {
-                add("cnpj", null);
+                add("cnpj", "dsd454sd5s");
             }
         });
         Fixture.of(Empresa.class).addTemplate("cnpjWrongSize").inherits("valid", new Rule() {
             {
-                add("cnpj", "");
+                add("cnpj", "123456879");
             }
         });
         Fixture.of(Empresa.class).addTemplate("enderecoNull").inherits("valid", new Rule() {

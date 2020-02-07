@@ -12,15 +12,20 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.br.CPF;
 
+import br.com.contmatic.constantes.Constante;
 import br.com.contmatic.enums.Cargo;
 import br.com.contmatic.enums.TipoContrato;
 
 public class Funcionario {
 
-    @NotEmpty(message = "O nome não pode esta vazio")
+    @NotBlank(message = Constante.NOME_NAO_PODE_ESTA_VAZIO)
+    @NotNull(message = "")
+    @NotEmpty(message = Constante.NOME_NAO_PODE_ESTA_VAZIO)
     private String nome;
 
-    @NotEmpty(message = "O email não pode esta vazio")
+    @NotNull(message = Constante.EMAIL_INVALIDO)
+    @NotBlank(message = Constante.VALIDATION_EMAIL)
+    @NotEmpty(message = Constante.EMAIL_NAO_PODE_ESTA_VAZIO)
     private String email;
 
     @NotNull(message = "A data de nascimento não pode esta nullo")
@@ -43,7 +48,7 @@ public class Funcionario {
     @NotBlank(message = "O cpf está com um espaço em branco")
     @CPF(message = "O cpf é invalido")
     private String cpf;
-
+    
     public Funcionario(String nome, String email, BigDecimal salario, Cargo cargo, Date dataNascimento, TipoContrato tipoContrato, Endereco endereco, String cpf) {
         this.nome = nome;
         this.email = email;
@@ -113,7 +118,7 @@ public class Funcionario {
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
-
+    
     @Override
     public int hashCode() {
         return new HashCodeBuilder().append(cpf).toHashCode();

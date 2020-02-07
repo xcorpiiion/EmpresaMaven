@@ -26,6 +26,10 @@ public final class Constante {
     
     public static final String O_CPF_ESTA_INVALIDO = "O cpf está invalido";
     
+    public static final String O_VALOR_ESTA_NULLO = "O valor esta nullo";
+    
+    public static final String O_VALOR_NÃO_É_VALIDO = "O valor não é valido";
+    
     private Constante() {
     }
 

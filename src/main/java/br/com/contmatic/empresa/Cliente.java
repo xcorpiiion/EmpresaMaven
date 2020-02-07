@@ -3,8 +3,8 @@ package br.com.contmatic.empresa;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -21,10 +21,12 @@ import br.com.contmatic.constantes.Constante;
 
 public class Cliente {
 
+    @NotBlank(message = Constante.NOME_NAO_PODE_ESTA_VAZIO)
     @NotEmpty(message = Constante.NOME_NAO_PODE_ESTA_VAZIO)
     @Length(min = 3, max = 50)
     private String nome;
     
+    @NotBlank(message = Constante.EMAIL_NAO_PODE_ESTA_VAZIO)
     @Pattern(regexp = Constante.VALIDATION_EMAIL, message = Constante.EMAIL_INVALIDO)
     @NotEmpty(message = Constante.EMAIL_NAO_PODE_ESTA_VAZIO)
     private String email;
@@ -43,8 +45,10 @@ public class Cliente {
     @CPF(message = Constante.O_CPF_ESTA_INVALIDO)
     private String cpf;
     
-    private List<Produto> carrinhoProduto;
+    @Valid
+    private List<Produto> produtosNoCarrinho;
 
+    @Valid
     private List<Produto> produtosComprados;
 
     public Cliente(String nome, String email, Date dataNascimento, Endereco endereco, String cpf) {
@@ -67,12 +71,12 @@ public class Cliente {
         this.dinheiroCarteira = new BigDecimal(0).add(dinheiroCarteira);
     }
 
-    public void setCarrinhoProduto(List<Produto> carrinhoProduto) {
-        this.carrinhoProduto = carrinhoProduto;
+    public List<Produto> getProdutosNoCarrinho() {
+        return produtosNoCarrinho;
     }
 
-    public List<Produto> getCarrinhoProduto() {
-        return carrinhoProduto;
+    public void setProdutosNoCarrinho(List<Produto> produtosNoCarrinho) {
+        this.produtosNoCarrinho = produtosNoCarrinho;
     }
 
     public void setProdutosComprados(List<Produto> produtosComprados) {
@@ -124,59 +128,6 @@ public class Cliente {
         this.cpf = cpf;
     }
 
-    public boolean produtoExisteNaLoja(String nomeProduto, Empresa loja) {
-        return loja.getProduto().stream().anyMatch(prod -> prod.getNome().equalsIgnoreCase(nomeProduto));
-    }
-
-    public boolean produtoEstaNoCarrinho(String nomeProduto, Cliente carrinhoCliente) {
-        return carrinhoCliente.getCarrinhoProduto().stream().anyMatch(prod -> prod.getNome().equalsIgnoreCase(nomeProduto));
-    }
-
-    public void addItensCarrinho(Cliente cliente, Empresa loja, String nomeProduto, int qtdProdutoAddCarrinho) {
-        loja.mostrarProdutos();
-        if (produtoExisteNaLoja(nomeProduto, loja)) {
-
-            if (qtdProdutoAddCarrinho < 1) {
-                throw new IllegalArgumentException("Você precisa pelo menos add 1 produto ao carrinho");
-            }
-            if (loja.getProduto().stream().anyMatch(prod -> prod.getNome().equalsIgnoreCase(nomeProduto) && prod.getEstoque() < qtdProdutoAddCarrinho)) {
-                throw new IllegalArgumentException("A quantidade de produtos que você quer colocar no carrinho é maior do que a" + " quantidade em estoque");
-            }
-            for(int i = 0 ; i < qtdProdutoAddCarrinho ; i++) {
-                cliente.carrinhoProduto.addAll(loja.getProduto().stream().filter(prod -> prod.getNome().equalsIgnoreCase(nomeProduto)).collect(Collectors.toList()));
-            }
-        } else {
-            throw new IllegalArgumentException("O produto não existe");
-        }
-
-    }
-
-    public void compraProduto(Cliente cliente, String nomeProduto, int qtdProdutosCompra) {
-        if (!produtoEstaNoCarrinho(nomeProduto, cliente)) {
-            throw new IllegalArgumentException("O produto não existe no carrinho");
-        }
-        BigDecimal totalPreco = new BigDecimal(0);
-        for(Produto prod : cliente.getCarrinhoProduto()) {
-            if (prod.getNome().equalsIgnoreCase(nomeProduto)) {
-                if (qtdProdutosCompra > prod.getEstoque()) {
-                    throw new IllegalArgumentException("A quantidade de produtos que você quer comprar é maior do que a " + "quantidade em estoque");
-                }
-                totalPreco = totalPreco.add(prod.getPreco());
-            }
-        }
-
-        if (cliente.getDinheiroCarteira().compareTo(totalPreco) < 0) {
-            throw new IllegalArgumentException("Dinheiro insulficiente para comprar produtos");
-        }
-        cliente.dinheiroCarteira = cliente.dinheiroCarteira.subtract(totalPreco);
-
-        for(Produto prod : cliente.getCarrinhoProduto()) {
-            if (prod.getNome().equalsIgnoreCase(nomeProduto)) {
-                cliente.produtosComprados.add(prod);
-            }
-        }
-    }
-
     @Override
     public int hashCode() {
         return new HashCodeBuilder().append(nome).append(email).toHashCode();
@@ -198,7 +149,7 @@ public class Cliente {
     public String toString() {
         return new StringBuilder().append("Cliente: ").append(getNome()).append(", email: ").append(getEmail()).append(", data de nascimento: ").
         append(getDataNascimento()).append(", dinheiro: ").append(getDinheiroCarteira()).append(", produtos no carrinho: ").
-        append(getCarrinhoProduto()).append(", produtos comprados: ").append(getProdutosComprados()).toString();        
+        append(getProdutosNoCarrinho()).append(", produtos comprados: ").append(getProdutosComprados()).toString();        
     }
 
 }

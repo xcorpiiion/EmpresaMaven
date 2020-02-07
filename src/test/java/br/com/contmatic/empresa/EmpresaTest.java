@@ -16,8 +16,7 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import br.com.contmatic.services.EmptyStringException;
-import br.com.contmatic.services.StringSizeException;
+import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
@@ -86,13 +85,9 @@ public class EmpresaTest {
     }
 
     @Test
-    public void nao_deve_aceitar_cnpj_null_com_letras_com_espaco_menos_14_numeros() {
-        assertEquals(14, loja.getCnpj().length());
-    }
-
-    @Test(expected = EmptyStringException.class)
     public void nao_deve_aceitar_cnpj_null() {
-        loja.setCnpj(null);
+        loja = Fixture.from(Empresa.class).gimme("cnpjNull");
+        assertNotNull(loja.getCnpj());
     }
 
     @Test
@@ -101,28 +96,22 @@ public class EmpresaTest {
         loja.setCnpj(cnpj);
     }
 
-    @Test(expected = EmptyStringException.class)
+    @Test
     public void nao_deve_aceitar_cnpj_com_espaco_em_branco() {
-        String cnpj = " ";
-        loja.setCnpj(cnpj);
+        loja = Fixture.from(Empresa.class).gimme("cnpjBlankSpace");
+        assertEquals("O cnpj não pode ficar vazio", ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, "O cnpj não pode ficar vazio"));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void nao_deve_aceitar_cnpj_com_letras() {
-        String cnpj = "a";
-        loja.setCnpj(cnpj);
+        loja = Fixture.from(Empresa.class).gimme("cnpjContainsWord");
+        assertEquals("CNPJ não é valido", ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, "CNPJ não é valido"));
     }
 
-    @Test(expected = RuntimeException.class)
-    public void nao_deve_aceitar_cnpj_com_letras_e_numeros_juntos() {
-        String cnpj = "1234567890123a";
-        loja.setCnpj(cnpj);
-    }
-
-    @Test(expected = StringSizeException.class)
+    @Test
     public void nao_deve_aceitar_cnpj_null_com_menos_14_numeros() {
-        String cnpj = "1234567890123";
-        loja.setCnpj(cnpj);
+        loja = Fixture.from(Empresa.class).gimme("cnpjWrongSize");
+        assertEquals("CNPJ não é valido", ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, "CNPJ não é valido"));
     }
 
     @Test

@@ -1,17 +1,17 @@
 package br.com.contmatic.empresa;
 
 import java.util.List;
+
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import org.apache.commons.lang3.StringUtils;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.br.CNPJ;
 
 import br.com.contmatic.constantes.Constante;
-import br.com.contmatic.services.EmptyStringException;
-import br.com.contmatic.services.StringSizeException;
 
 public class Empresa {
 
@@ -22,6 +22,7 @@ public class Empresa {
     @Pattern(regexp = Constante.VALIDATION_EMAIL)
     private String email;
 
+    @NotBlank(message = "O cnpj não pode ficar vazio")
     @NotEmpty(message = "O cnpj não pode ficar vazio")
     @CNPJ(message = "CNPJ não é valido")
     private String cnpj;
@@ -66,9 +67,6 @@ public class Empresa {
     }
 
     public void setCnpj(String cnpj) {
-        cnpjIsEmpty(cnpj);
-        cnpjHasWord(cnpj);
-        cnpjSizeValidation(cnpj);
         this.cnpj = cnpj;
     }
 
@@ -114,24 +112,6 @@ public class Empresa {
 
     public void mostrarProdutos() {
         produtos.sort((p1, p2) -> p1.getNome().compareTo(p2.getNome()));
-    }
-
-    private void cnpjIsEmpty(String cnpj) {
-        if (StringUtils.isEmpty(cnpj) || cnpj.trim().equals("")) {
-            throw new EmptyStringException("O cnpj não pode ficar vazio");
-        }
-    }
-
-    private void cnpjHasWord(String cnpj) {
-        if (!StringUtils.isNumeric(cnpj)) {
-            throw new IllegalArgumentException("O cnpj contém letras");
-        }
-    }
-
-    private void cnpjSizeValidation(String cnpj) {
-        if (cnpj.length() != 14) {
-            throw new StringSizeException("O cnpj está errado");
-        }
     }
 
     public boolean clienteExiste(Empresa lojaCliente, String cpf) {

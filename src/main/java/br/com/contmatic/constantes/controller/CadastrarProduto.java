@@ -5,29 +5,15 @@ import br.com.contmatic.empresa.Empresa;
 import br.com.contmatic.empresa.Funcionario;
 import br.com.contmatic.empresa.Produto;
 import br.com.contmatic.enums.Cargo;
-import br.com.contmatic.services.IHasProdutoInList;
 
-public class CadastrarProduto implements IHasProdutoInList {
+public class CadastrarProduto {
 
-    private Funcionario funcionario;
-
-    public CadastrarProduto(Funcionario funcionario) {
-        this.funcionario = funcionario;
+    private CadastrarProduto() {
+        
     }
-
-    public Funcionario getFuncionario() {
-        return funcionario;
-    }
-
-    public void setFuncionario(Funcionario funcionario) {
-        this.funcionario = funcionario;
-    }
-
-    public void cadastrarProduto(String nome, BigDecimal preco, int estoque, Empresa loja) {
-        if (this.funcionario.getCargo() != Cargo.REPOSITOR) {
-            throw new IllegalArgumentException("Apenas repositores podem cadastra os produtos");
-        }
-
+    
+    public static void cadastrarProduto(String nome, BigDecimal preco, int estoque, Empresa loja, Funcionario funcionario) {
+        cargoFuncionario(funcionario);
         if (hasProdutoInList(loja, nome, preco)) {
             loja.getProduto().stream().filter(prod -> prod.getNome().equalsIgnoreCase(nome) && prod.getPreco().equals(preco)).forEach(prod -> prod.setEstoque(prod.getEstoque() + estoque));
         } else {
@@ -35,9 +21,15 @@ public class CadastrarProduto implements IHasProdutoInList {
         }
     }
 
-    @Override
-    public boolean hasProdutoInList(Empresa loja, String nome, BigDecimal preco) {
+    private static boolean hasProdutoInList(Empresa loja, String nome, BigDecimal preco) {
         return loja.getProduto().stream().anyMatch(prod -> prod.getNome().equalsIgnoreCase(nome) && prod.getPreco().equals(preco));
+    }
+
+    private static void cargoFuncionario(Funcionario funcionario) {
+        if (funcionario.getCargo() != Cargo.REPOSITOR) {
+            throw new IllegalArgumentException("Apenas repositores podem cadastra os produtos");
+        }
+        
     }
 
 }

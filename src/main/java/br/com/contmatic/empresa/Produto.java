@@ -2,15 +2,30 @@ package br.com.contmatic.empresa;
 
 import java.math.BigDecimal;
 
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.validator.constraints.Length;
+
+import br.com.contmatic.constantes.Constante;
 
 public class Produto {
 
+    @NotBlank(message = Constante.NOME_NAO_PODE_ESTA_VAZIO)
+    @NotEmpty(message = Constante.NOME_NAO_PODE_ESTA_VAZIO)
+    @Length(min = 3, max = 50)
     private String nome;
 
+    @NotNull(message = Constante.O_VALOR_ESTA_NULLO)
+    @DecimalMin(value = "1.00", message = Constante.O_VALOR_NÃO_É_VALIDO)
     private BigDecimal preco;
 
+    @Min(value = 1)
     private Integer estoque;
 
     public Produto(String nome, BigDecimal preco, Integer estoque) {
@@ -35,7 +50,6 @@ public class Produto {
     }
 
     public void setPreco(BigDecimal preco) {
-        precoIsNull(preco);
         this.preco = preco;
     }
 
@@ -44,27 +58,7 @@ public class Produto {
     }
 
     public void setEstoque(Integer estoque) {
-        estoqueIsNull(estoque);
-        estoqueIsNegative(estoque);
         this.estoque = estoque;
-    }
-
-    private void precoIsNull(BigDecimal preco) {
-        if (preco == null) {
-            throw new NullPointerException("O preço ou null");
-        }
-    }
-
-    private void estoqueIsNull(Integer estoque) {
-        if (estoque == null) {
-            throw new NullPointerException("O estoque está null");
-        }
-    }
-
-    private void estoqueIsNegative(Integer estoque) {
-        if (estoque < 0) {
-            throw new IllegalArgumentException("O estoque não pode ser negativo");
-        }
     }
 
     @Override

@@ -49,21 +49,21 @@ public class LoginTest {
     @Before
     public void add_dados_funcionario() {
         funcionarios = new ArrayList<>();
-        funcionarios.add(new Funcionario("lucas", "lucas@gmail.com", new BigDecimal(2500.00), Cargo.RH, new Date(), TipoContrato.CLT, Fixture.from(Endereco.class).gimme("valid"), "000.000.000-00"));
-        contrarFuncionario = new ContratarFuncionario(funcionarios.get(0));
+        funcionarios.add(
+            new Funcionario("lucas", "lucas@gmail.com", new BigDecimal(2500.00), Cargo.RH, new Date(), TipoContrato.CLT, Fixture.from(Endereco.class).gimme("valid"), GeradorCpf.gerardorRandomCpf()));
+        ContratarFuncionario.contratarFuncionario("matheus", "matheus@gmail.com", Cargo.REPOSITOR, new BigDecimal(3500.00), new Date(), loja, TipoContrato.CLT,
+            Fixture.from(Endereco.class).gimme("valid"), GeradorCpf.gerardorRandomCpf(), funcionarios.get(0));
     }
 
-    @Test()
+    @Test
     public void deve_ser_funcionario_para_fazer_login() {
-        contrarFuncionario.contratarFuncionario("lucas", "lucas@gmail.com", Cargo.REPOSITOR, new BigDecimal(2500.00), new Date(), loja, TipoContrato.CLT, Fixture.from(Endereco.class).gimme("valid"),
-            GeradorCpf.gerardorRandomCpf());
-        assertTrue("Não foi funcionario que fez o login", login.verificaLoginFuncioanrio("lucas", "lucas@gmail.com", loja));
+        ContratarFuncionario.contratarFuncionario("matheus", "matheus@gmail.com", Cargo.REPOSITOR, new BigDecimal(3500.00), new Date(), loja, TipoContrato.CLT, Fixture.from(Endereco.class).gimme("valid"), GeradorCpf.gerardorRandomCpf(), funcionarios.get(0));
+        assertTrue("Não foi funcionario que fez o login", login.verificaLoginFuncioanrio("matheus", "matheus@gmail.com", loja));
     }
 
     @Test()
     public void deve_ser_funcionario_para_confirmar_login() {
-        contrarFuncionario.contratarFuncionario("a", "a@gmail.com", Cargo.REPOSITOR, new BigDecimal(2500.00), new Date(), loja, TipoContrato.CLT, Fixture.from(Endereco.class).gimme("valid"),
-            GeradorCpf.gerardorRandomCpf());
+        ContratarFuncionario.contratarFuncionario("matheus", "matheus@gmail.com", Cargo.REPOSITOR, new BigDecimal(3500.00), new Date(), loja, TipoContrato.CLT, Fixture.from(Endereco.class).gimme("valid"), GeradorCpf.gerardorRandomCpf(), funcionarios.get(0));
         assertEquals("Não foi funcionario que fez o login", loja.getFuncionario().get(0),
             login.funcionarioThatDoLogin(loja.getFuncionario().get(0).getNome(), loja.getFuncionario().get(0).getEmail(), loja));
     }

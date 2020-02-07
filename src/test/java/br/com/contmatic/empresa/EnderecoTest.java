@@ -232,6 +232,7 @@ public class EnderecoTest {
 	@Test
 	public void deve_conter_numero_residencia_iguais_para_serem_igausi() {
 		endereco2.setNumeroResidencia(endereco.getNumeroResidencia());
+		endereco2.setCep(endereco.getCep());
 		assertTrue(endereco.equals(endereco2));
 	}
 	

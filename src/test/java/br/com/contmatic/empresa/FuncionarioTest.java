@@ -3,6 +3,7 @@ package br.com.contmatic.empresa;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+
 import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
@@ -53,7 +55,7 @@ public class FuncionarioTest {
     public void deve_ter_salario_maior_do_que_zero() {
         funcionarios.add(Fixture.from(Funcionario.class).gimme("salarioLess1"));
         funcionarios.get(3).setSalario(funcionarios.get(3).getSalario());
-        assertEquals("O valor precisa ser um salario minimo", ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionarios.get(3)));
+        assertEquals("O valor precisa ser um salario minimo", ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionarios.get(3), "O valor precisa ser um salario minimo"));
     }
 
     @Test
