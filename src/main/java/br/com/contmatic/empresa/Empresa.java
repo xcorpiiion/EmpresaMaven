@@ -1,16 +1,14 @@
 package br.com.contmatic.empresa;
 
 import java.util.List;
-
+import java.util.Set;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.br.CNPJ;
-
 import br.com.contmatic.constantes.Constante;
 
 public class Empresa {
@@ -26,9 +24,12 @@ public class Empresa {
     @NotEmpty(message = "O cnpj não pode ficar vazio")
     @CNPJ(message = "CNPJ não é valido")
     private String cnpj;
+    
+    @NotNull(message = Constante.O_TELEFONE_NÃO_PODE_FICAR_VAZIO)
+    private Set<Telefone> telefones;
 
-    @NotNull(message = "Endereço não pode ficar nullp")
-    private Endereco endereco;
+    @NotNull(message = "Endereço não pode ficar nullo")
+    private Set<Endereco> enderecos;
 
     @NotNull(message = "Produto não pode ficar nullo")
     private List<Produto> produtos;
@@ -43,19 +44,18 @@ public class Empresa {
         this.nome = nome;
         this.email = email;
         this.cnpj = cnpj;
-        this.endereco = endereco;
+        this.enderecos.add(endereco);
     }
 
     public Empresa() {
-        
     }
     
-    public Endereco getEndereco() {
-        return endereco;
+    public Set<Endereco> getEndereco() {
+        return enderecos;
     }
 
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
+    public void setEndereco(Set<Endereco> endereco) {
+        this.enderecos = endereco;
     }
 
     public String getNome() {
@@ -82,6 +82,14 @@ public class Empresa {
         this.email = email;
     }
 
+    public Set<Telefone> getTelefones() {
+        return telefones;
+    }
+
+    public void setTelefones(Set<Telefone> telefones) {
+        this.telefones = telefones;
+    }
+
     public void setProduto(List<Produto> produtos) {
         this.produtos = produtos;
     }
@@ -104,18 +112,6 @@ public class Empresa {
 
     public List<Cliente> getCliente() {
         return clientes;
-    }
-
-    public boolean produtoExiste(String nome) {
-        return produtos.stream().anyMatch(prod -> prod.getNome().equalsIgnoreCase(nome));
-    }
-
-    public void mostrarProdutos() {
-        produtos.sort((p1, p2) -> p1.getNome().compareTo(p2.getNome()));
-    }
-
-    public boolean clienteExiste(Empresa lojaCliente, String cpf) {
-        return lojaCliente.getCliente().stream().anyMatch(c -> c.getCpf().equals(cpf));
     }
 
     @Override

@@ -1,4 +1,4 @@
-package br.com.contmatic.constantes.controller;
+package br.com.contmatic.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +18,10 @@ public final class CarrinhoCliente {
         Preconditions.checkArgument(qtdProdutoAddCarrinho > 0, new IllegalArgumentException("Você precisa pelo menos add 1 produto ao carrinho"));
         Preconditions.checkArgument(loja.getProduto().stream().anyMatch(prod -> prod.getNome().equalsIgnoreCase(nomeProduto) && prod.getEstoque() > qtdProdutoAddCarrinho),
             new IllegalArgumentException("A quantidade de produtos que você quer colocar no carrinho é maior do que a" + " quantidade em estoque"));
-        List<Produto> teste = new ArrayList<>();
+        List<Produto> produtos = new ArrayList<>();
         for(int i = 0 ; i < qtdProdutoAddCarrinho ; i++) {
-            teste.addAll(loja.getProduto().stream().filter(prod -> prod.getNome().equalsIgnoreCase(nomeProduto)).collect(Collectors.toList()));
+            produtos.addAll(loja.getProduto().stream().filter(produto -> produto.getNome().equalsIgnoreCase(nomeProduto)).collect(Collectors.toList()));
         }
-        cliente.setProdutosNoCarrinho(teste);
+        cliente.setCarrinhoProdutos(produtos);
     }
 }

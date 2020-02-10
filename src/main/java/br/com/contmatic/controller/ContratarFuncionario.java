@@ -1,4 +1,4 @@
-package br.com.contmatic.constantes.controller;
+package br.com.contmatic.controller;
 
 import java.math.BigDecimal;
 import java.util.Date;

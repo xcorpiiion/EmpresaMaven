@@ -1,6 +1,8 @@
 package br.com.contmatic.fixture.factory;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+
 import br.com.contmatic.empresa.Empresa;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
@@ -15,7 +17,8 @@ public class FixtureFactoryEmpresa implements TemplateLoader {
                 add("nome", name());
                 add("email", "teste@gmail.com");
                 add("cnpj", cnpj());
-                add("endereco", FixtureFactoryEndereco.enderecoValido());
+                add("enderecos", new HashSet<>());
+                add("telefones", new HashSet<>());
                 add("produtos", new ArrayList<>());
                 add("funcionarios", new ArrayList<>());
                 add("clientes", new ArrayList<>());

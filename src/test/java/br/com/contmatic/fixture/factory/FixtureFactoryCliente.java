@@ -21,7 +21,7 @@ public class FixtureFactoryCliente implements TemplateLoader {
                 add("email", "teste@gmail.com");
                 add("dataNascimento", new Date());
                 add("dinheiroCarteira", new BigDecimal(4000.00 + (new Random().nextDouble() * (5000 - 8500))));
-                add("produtosNoCarrinho", new ArrayList<>());
+                add("carrinhoProdutos", new ArrayList<>());
                 add("produtosComprados", new ArrayList<>());
                 add("endereco", FixtureFactoryEndereco.enderecoValido());
                 add("cpf", GeradorCpf.gerardorRandomCpf());

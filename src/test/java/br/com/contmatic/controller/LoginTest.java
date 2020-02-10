@@ -9,9 +9,10 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import br.com.contmatic.constantes.controller.CadastroCliente;
-import br.com.contmatic.constantes.controller.ContratarFuncionario;
-import br.com.contmatic.constantes.controller.Login;
+
+import br.com.contmatic.controller.CadastroCliente;
+import br.com.contmatic.controller.ContratarFuncionario;
+import br.com.contmatic.controller.Login;
 import br.com.contmatic.empresa.Empresa;
 import br.com.contmatic.empresa.Endereco;
 import br.com.contmatic.empresa.Funcionario;
@@ -29,8 +30,6 @@ public class LoginTest {
 
     private static Empresa loja;
 
-    private Login login;
-
     ContratarFuncionario contrarFuncionario;
 
     @BeforeClass
@@ -40,12 +39,7 @@ public class LoginTest {
         loja.setFuncionario(new ArrayList<>());
         loja.setCliente(new ArrayList<>());
     }
-
-    @Before
-    public void iniciarLogin() {
-        login = new Login();
-    }
-
+    
     @Before
     public void add_dados_funcionario() {
         funcionarios = new ArrayList<>();
@@ -56,40 +50,38 @@ public class LoginTest {
     }
 
     @Test
-    public void deve_ser_funcionario_para_fazer_login() {
+    public void deve_ser_funcionario_para_fazer_Login() {
         ContratarFuncionario.contratarFuncionario("matheus", "matheus@gmail.com", Cargo.REPOSITOR, new BigDecimal(3500.00), new Date(), loja, TipoContrato.CLT, Fixture.from(Endereco.class).gimme("valid"), GeradorCpf.gerardorRandomCpf(), funcionarios.get(0));
-        assertTrue("Não foi funcionario que fez o login", login.verificaLoginFuncioanrio("matheus", "matheus@gmail.com", loja));
+        assertTrue("Não foi funcionario que fez o Login", Login.verificaLoginFuncioanrio("matheus", "matheus@gmail.com", loja));
     }
 
     @Test()
-    public void deve_ser_funcionario_para_confirmar_login() {
+    public void deve_ser_funcionario_para_confirmar_Login() {
         ContratarFuncionario.contratarFuncionario("matheus", "matheus@gmail.com", Cargo.REPOSITOR, new BigDecimal(3500.00), new Date(), loja, TipoContrato.CLT, Fixture.from(Endereco.class).gimme("valid"), GeradorCpf.gerardorRandomCpf(), funcionarios.get(0));
-        assertEquals("Não foi funcionario que fez o login", loja.getFuncionario().get(0),
-            login.funcionarioThatDoLogin(loja.getFuncionario().get(0).getNome(), loja.getFuncionario().get(0).getEmail(), loja));
+        assertEquals("Não foi funcionario que fez o Login", loja.getFuncionario().get(0),
+            Login.funcionarioThatDoLogin(loja.getFuncionario().get(0).getNome(), loja.getFuncionario().get(0).getEmail(), loja));
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void deve_ter_email_e_login_validos_para_fazer_login_funcionario() {
-        assertEquals("Não foi funcionario que fez o login", funcionarios.get(0), login.funcionarioThatDoLogin(funcionarios.get(0).getNome(), "dante@gmail.com", loja));
+    public void deve_ter_email_e_Login_validos_para_fazer_Login_funcionario() {
+        assertEquals("Não foi funcionario que fez o Login", funcionarios.get(0), Login.funcionarioThatDoLogin(funcionarios.get(0).getNome(), "dante@gmail.com", loja));
     }
 
     @Test
-    public void deve_ter_email_e_nome_validas_para_fazer_login_no_clinte() {
-        CadastroCliente cadastroCliente = new CadastroCliente(loja);
-        cadastroCliente.cadastrarCliente("Matheus", "matheus@gmail.com", new Date(), Fixture.from(Endereco.class).gimme("valid"), GeradorCpf.gerardorRandomCpf());
-        assertTrue(login.verificaLoginCliente(loja.getCliente().get(0).getNome(), loja.getCliente().get(0).getEmail(), loja));
+    public void deve_ter_email_e_nome_validas_para_fazer_Login_no_clinte() {
+        CadastroCliente.cadastrarClienteNaLoja("Matheus", "matheus@gmail.com", new Date(), Fixture.from(Endereco.class).gimme("valid"), GeradorCpf.gerardorRandomCpf(), loja);
+        assertTrue(Login.verificaLoginCliente(loja.getCliente().get(0).getNome(), loja.getCliente().get(0).getEmail(), loja));
     }
 
     @Test
-    public void deve_retornar_cliente_que_fez_login() {
-        CadastroCliente cadastroCliente = new CadastroCliente(loja);
-        cadastroCliente.cadastrarCliente("a", "a@gmail.com", data, Fixture.from(Endereco.class).gimme("valid"), GeradorCpf.gerardorRandomCpf());
-        assertEquals("Não foi cliente que fez o login", loja.getCliente().get(0), login.clienteThatDoLogin("matheus", "matheus@gmail.com", loja));
+    public void deve_retornar_cliente_que_fez_Login() {
+        CadastroCliente.cadastrarClienteNaLoja("a", "a@gmail.com", data, Fixture.from(Endereco.class).gimme("valid"), GeradorCpf.gerardorRandomCpf(), loja);
+        assertEquals("Não foi cliente que fez o Login", loja.getCliente().get(0), Login.clienteThatDoLogin("matheus", "matheus@gmail.com", loja));
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void deve_ter_email_e_login_validos_para_fazer_login_cliente() {
-        assertEquals("Não foi cliente que fez o login", funcionarios.get(0), login.clienteThatDoLogin("lucas", "matheus@gmail.com", loja));
+    public void deve_ter_email_e_Login_validos_para_fazer_Login_cliente() {
+        assertEquals("Não foi cliente que fez o Login", funcionarios.get(0), Login.clienteThatDoLogin("lucas", "matheus@gmail.com", loja));
     }
 
 }

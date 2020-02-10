@@ -1,4 +1,4 @@
-package br.com.contmatic.constantes.controller;
+package br.com.contmatic.controller;
 
 import br.com.contmatic.empresa.Empresa;
 import br.com.contmatic.empresa.Funcionario;

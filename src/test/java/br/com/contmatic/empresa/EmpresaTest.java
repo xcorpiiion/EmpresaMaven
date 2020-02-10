@@ -3,7 +3,6 @@ package br.com.contmatic.empresa;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -33,6 +32,7 @@ public class EmpresaTest {
     public static void cadastrar_empresa() {
         FixtureFactoryLoader.loadTemplates("br.com.contmatic.fixture.factory");
         loja = Fixture.from(Empresa.class).gimme("valid");
+        loja.getEndereco().add(Fixture.from(Endereco.class).gimme("valid"));
     }
 
     @Before
@@ -48,17 +48,11 @@ public class EmpresaTest {
         produtos.add(Fixture.from(Produto.class).gimme("valid"));
         produtos.add(Fixture.from(Produto.class).gimme("valid"));
         produtos.add(Fixture.from(Produto.class).gimme("valid"));
-
     }
 
     @Before
     public void deve_mostrar_endereco() {
         System.out.println(loja.getEndereco());
-    }
-
-    @Before
-    public void ordena_os_produtos() {
-        loja.mostrarProdutos();
     }
 
     @Test()
@@ -78,22 +72,10 @@ public class EmpresaTest {
         loja.setCliente(clientes);
     }
 
-    @Test()
-    public void nao_deve_aceitar_produto_que_nao_exista_na_loja() {
-        loja.setProduto(produtos);
-        assertTrue("O produto não existe", loja.produtoExiste(loja.getProduto().get(0).getNome()));
-    }
-
     @Test
     public void nao_deve_aceitar_cnpj_null() {
         loja = Fixture.from(Empresa.class).gimme("cnpjNull");
         assertNotNull(loja.getCnpj());
-    }
-
-    @Test
-    public void nao_deve_aceitar_cnpj_vazio() {
-        String cnpj = "";
-        loja.setCnpj(cnpj);
     }
 
     @Test
@@ -117,13 +99,6 @@ public class EmpresaTest {
     @Test
     public void nao_deve_aceitar_endereco_null() {
         assertNotNull(funcionarios.get(0).getEndereco());
-    }
-
-    @Test
-    public void nao_deve_aceitar_endereco_null_exception() {
-        loja = Fixture.from(Empresa.class).gimme("enderecoNull");
-        System.out.println(loja.getEndereco());
-        assertNull(loja.getEndereco());
     }
 
     @Test()

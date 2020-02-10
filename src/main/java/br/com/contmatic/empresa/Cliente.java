@@ -21,6 +21,11 @@ import br.com.contmatic.constantes.Constante;
 
 public class Cliente {
 
+    @NotEmpty(message = Constante.O_CPF_ESTA_VAZIO)
+    @NotBlank(message = Constante.O_CPF_ESTA_COM_UM_ESPAÇO_EM_BRANCO)
+    @CPF(message = Constante.O_CPF_ESTA_INVALIDO)
+    private String cpf;
+    
     @NotBlank(message = Constante.NOME_NAO_PODE_ESTA_VAZIO)
     @NotEmpty(message = Constante.NOME_NAO_PODE_ESTA_VAZIO)
     @Length(min = 3, max = 50)
@@ -39,14 +44,9 @@ public class Cliente {
 
     @NotNull(message = Constante.O_ENDEREÇO_ESTA_NULL)
     private Endereco endereco;
-
-    @NotEmpty(message = Constante.O_CPF_ESTA_VAZIO)
-    @NotBlank(message = Constante.O_CPF_ESTA_COM_UM_ESPAÇO_EM_BRANCO)
-    @CPF(message = Constante.O_CPF_ESTA_INVALIDO)
-    private String cpf;
     
     @Valid
-    private List<Produto> produtosNoCarrinho;
+    private List<Produto> carrinhoProdutos;
 
     @Valid
     private List<Produto> produtosComprados;
@@ -63,36 +63,12 @@ public class Cliente {
         
     }
     
-    public BigDecimal getDinheiroCarteira() {
-        return dinheiroCarteira;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setDinheiroCarteira(BigDecimal dinheiroCarteira) {
-        this.dinheiroCarteira = new BigDecimal(0).add(dinheiroCarteira);
-    }
-
-    public List<Produto> getProdutosNoCarrinho() {
-        return produtosNoCarrinho;
-    }
-
-    public void setProdutosNoCarrinho(List<Produto> produtosNoCarrinho) {
-        this.produtosNoCarrinho = produtosNoCarrinho;
-    }
-
-    public void setProdutosComprados(List<Produto> produtosComprados) {
-        this.produtosComprados = produtosComprados;
-    }
-
-    public List<Produto> getProdutosComprados() {
-        return produtosComprados;
-    }
-
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public String getNome() {
@@ -108,7 +84,6 @@ public class Cliente {
     }
 
     public void setEmail(String email) {
- 
         this.email = email;
     }
 
@@ -120,12 +95,36 @@ public class Cliente {
         this.dataNascimento = dataNascimento;
     }
 
-    public String getCpf() {
-        return cpf;
+    public BigDecimal getDinheiroCarteira() {
+        return dinheiroCarteira;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setDinheiroCarteira(BigDecimal dinheiroCarteira) {
+        this.dinheiroCarteira = new BigDecimal(0).add(dinheiroCarteira);
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
+    public List<Produto> getCarrinhoProdutos() {
+        return carrinhoProdutos;
+    }
+
+    public void setCarrinhoProdutos(List<Produto> carrinhoProdutos) {
+        this.carrinhoProdutos = carrinhoProdutos;
+    }
+
+    public List<Produto> getProdutosComprados() {
+        return produtosComprados;
+    }
+
+    public void setProdutosComprados(List<Produto> produtosComprados) {
+        this.produtosComprados = produtosComprados;
     }
 
     @Override
@@ -149,7 +148,7 @@ public class Cliente {
     public String toString() {
         return new StringBuilder().append("Cliente: ").append(getNome()).append(", email: ").append(getEmail()).append(", data de nascimento: ").
         append(getDataNascimento()).append(", dinheiro: ").append(getDinheiroCarteira()).append(", produtos no carrinho: ").
-        append(getProdutosNoCarrinho()).append(", produtos comprados: ").append(getProdutosComprados()).toString();        
+        append(getCarrinhoProdutos()).append(", produtos comprados: ").append(getProdutosComprados()).toString();        
     }
 
 }

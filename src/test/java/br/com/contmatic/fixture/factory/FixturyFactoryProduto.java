@@ -13,7 +13,7 @@ public class FixturyFactoryProduto implements TemplateLoader {
         Fixture.of(Produto.class).addTemplate("valid", new Rule() {
             {
                 add("nome", name());
-                add("preco", new BigDecimal(50.00 + (new Random().nextDouble() * (100 - 250))));
+                add("preco", new BigDecimal(50.00 + (new Random().nextDouble() * 250)));
                 add("estoque", 10 + (new Random().nextInt(50)));
             }
         });

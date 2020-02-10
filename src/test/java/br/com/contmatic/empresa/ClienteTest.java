@@ -25,8 +25,8 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import br.com.contmatic.constantes.Constante;
-import br.com.contmatic.constantes.controller.CarrinhoCliente;
-import br.com.contmatic.constantes.controller.CompraProduto;
+import br.com.contmatic.controller.CarrinhoCliente;
+import br.com.contmatic.controller.CompraProduto;
 import br.com.contmatic.enums.EstadosBrasil;
 import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
 import br.com.six2six.fixturefactory.Fixture;
@@ -83,7 +83,6 @@ public class ClienteTest {
         Cliente clienteInvalid = Fixture.from(Cliente.class).gimme("nomeNull");
         clientes.get(0).setNome(clienteInvalid.getNome());
         ValidadorAnnotionsMsgErro.returnAnnotationMsgError(clientes.get(0), Constante.NOME_NAO_PODE_ESTA_VAZIO);
-        clientes.get(0).setCpf("0");
         ValidadorAnnotionsMsgErro.returnAnnotationMsgError(clientes.get(0), Constante.NOME_NAO_PODE_ESTA_VAZIO);
         assertNull(clientes.get(0).getNome());
     }
@@ -165,7 +164,7 @@ public class ClienteTest {
     @Test()
     public void deve_add_produto_no_carrinho() {
         CarrinhoCliente.addItensCarrinho(clientes.get(0), loja, loja.getProduto().get(0).getNome(), 2);
-        assertTrue("O produto não exite no carrinho", clientes.get(0).getProdutosNoCarrinho().get(0).getNome().equalsIgnoreCase(loja.getProduto().get(0).getNome()));
+        assertTrue("O produto não exite no carrinho", clientes.get(0).getCarrinhoProdutos().get(0).getNome().equalsIgnoreCase(loja.getProduto().get(0).getNome()));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -197,7 +196,7 @@ public class ClienteTest {
         int qtdProdutosCompra = 5;
         clientes.get(0).setDinheiroCarteira(new BigDecimal(350));
         CarrinhoCliente.addItensCarrinho(clientes.get(0), loja, nomeProduto, qtdProdutosCompra);
-        CompraProduto.compraProduto(clientes.get(0), nomeProduto, qtdProdutosCompra);
+        CompraProduto.compraProduto(clientes.get(0), nomeProduto, 5);
     }
 
     @Test(expected = IllegalArgumentException.class)
