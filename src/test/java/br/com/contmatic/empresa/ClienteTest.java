@@ -1,33 +1,29 @@
 package br.com.contmatic.empresa;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import br.com.contmatic.constantes.Constante;
 import br.com.contmatic.controller.CarrinhoCliente;
 import br.com.contmatic.controller.CompraProduto;
-import br.com.contmatic.enums.EstadosBrasil;
 import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
@@ -36,10 +32,6 @@ import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 public class ClienteTest {
 
     private static List<Produto> produtos;
-
-    private SimpleDateFormat nascimento;
-
-    private Date data;
 
     private List<Cliente> clientes;
 
@@ -60,22 +52,10 @@ public class ClienteTest {
     public void addDadosCliente() {
         clientes = new ArrayList<>();
         clientes.add(Fixture.from(Cliente.class).gimme("valid"));
-        clientes.add(Fixture.from(Cliente.class).gimme("valid"));
-        clientes.add(Fixture.from(Cliente.class).gimme("valid"));
-        clientes.add(Fixture.from(Cliente.class).gimme("valid"));
+        Set<Telefone> telefone = new HashSet<>();
+        telefone.add(Fixture.from(Telefone.class).gimme("valid"));
+        clientes.get(0).setTelefones(telefone);
         CarrinhoCliente.addItensCarrinho(clientes.get(0), loja, loja.getProduto().get(0).getNome(), 5);
-    }
-
-    @Ignore
-    public void alterarDados() throws Exception {
-        clientes.get(0).setNome("lucas");
-        clientes.get(0).setEmail("lucas@mail.com");
-        clientes.get(0).getEndereco().setRua("Rua dos alfeneiros");
-        clientes.get(0).getEndereco().setNumeroResidencia(45);
-        clientes.get(0).getEndereco().setBairro("Jardim formiga");
-        clientes.get(0).getEndereco().setCep("12345678");
-        clientes.get(0).getEndereco().setCidade("Salvador");
-        clientes.get(0).getEndereco().setEstado(EstadosBrasil.RIOGRANDEDOSUL);
     }
 
     @Test
@@ -124,35 +104,10 @@ public class ClienteTest {
     }
 
     @Test
-    public void deve_aceitar_apenas_email_validos() {
-        Cliente clienteInvalid = Fixture.from(Cliente.class).gimme("emailInvalid");
-        clientes.get(0).setEmail(clienteInvalid.getEmail());
-    }
-
-    @Test
     public void nao_deve_aceitar_endereco_null() {
         Cliente clienteInvalid = Fixture.from(Cliente.class).gimme("enderecoNull");
         clientes.get(0).setEndereco(clienteInvalid.getEndereco());
         assertNull(clientes.get(0).getEndereco());
-    }
-
-    @Test(timeout = 200)
-    public void dataNascimento_deve_ser_valida() {
-        nascimento = new SimpleDateFormat("dd/MM/yyyy");
-        try {
-            data = nascimento.parse("01/01/1999");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        clientes.get(0).setDataNascimento(data);
-        assertThat(data, is(clientes.get(0).getDataNascimento()));
-    }
-
-    @Test(expected = ParseException.class)
-    public void dataNascimento_deve_ser_valida_exception() throws ParseException {
-        nascimento = new SimpleDateFormat("dd/MM/yyyy");
-        data = nascimento.parse("/01/1999");
-        clientes.get(0).setDataNascimento(data);
     }
 
     @Test
@@ -189,11 +144,11 @@ public class ClienteTest {
         assertTrue(clientes.get(0).getDinheiroCarteira().compareTo(dinheiroAnterior) > 0);
 
     }
-    
+
     @Test
     public void deve_comprar() {
         String nomeProduto = loja.getProduto().get(0).getNome();
-        int qtdProdutosCompra = 5;
+        int qtdProdutosCompra = 2;
         clientes.get(0).setDinheiroCarteira(new BigDecimal(350));
         CarrinhoCliente.addItensCarrinho(clientes.get(0), loja, nomeProduto, qtdProdutosCompra);
         CompraProduto.compraProduto(clientes.get(0), nomeProduto, 5);

@@ -22,7 +22,7 @@ public class Produto {
     private String nome;
 
     @NotNull(message = Constante.O_VALOR_ESTA_NULLO)
-    @DecimalMin(value = "1.00", message = Constante.O_VALOR_NÃO_É_VALIDO)
+    @DecimalMin(value = "1.00", message = Constante.O_VALOR_NAO_E_VALIDO)
     private BigDecimal preco;
 
     @Min(value = 1)

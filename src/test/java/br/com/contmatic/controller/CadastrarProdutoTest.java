@@ -1,7 +1,6 @@
 package br.com.contmatic.controller;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ import br.com.contmatic.enums.Cargo;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
-public class AlterarDadosProdutoTest {
+public class CadastrarProdutoTest {
 
     private static List<Produto> produtos;
 
@@ -43,30 +42,18 @@ public class AlterarDadosProdutoTest {
         funcionario = Fixture.from(Funcionario.class).gimme("valid");
         funcionario.setCargo(Cargo.REPOSITOR);
     }
-
+    
     @Test
-    public void deve_alterar_nome_produto() {
-        AlterarDadosProduto.alterarNomeProduto(produtos.get(0).getNome(), "Tablet", loja, funcionario);
-        assertEquals("Tablet", loja.getProduto().get(0).getNome());
+    public void deve_cadastrar_produto() {
+        CadastrarProduto.cadastrarNovoProdutoNaLoja("Tablet", new BigDecimal(350.00), 50, loja, funcionario);
+        assertTrue("O produto não existe", loja.getProduto().get(4).getNome().equalsIgnoreCase("tablet"));
     }
-
-    @Test
-    public void deve_alterar_estoque() {
-        AlterarDadosProduto.alterarEstoqueProduto(produtos.get(0).getNome(), 10, loja, funcionario);
-        assertTrue(loja.getProduto().get(0).getEstoque() == 10);
-    }
-
-    @Test
-    public void deve_alterar_preco() {
-        AlterarDadosProduto.alterarPrecoProduto(produtos.get(0).getNome(), new BigDecimal(350.00), loja, funcionario);
-        assertTrue(loja.getProduto().get(0).getPreco().compareTo(new BigDecimal(350.00)) == 0);
-    }
-
-    @Test
-    public void deve_alterar_todos_dados_produto() {
-        AlterarDadosProduto.alterarTodosDadosDoProduto(produtos.get(0).getNome(), new BigDecimal(250.00), 10, "Tablet", loja, funcionario);
-        assertTrue(loja.getProduto().get(0).getPreco().compareTo(new BigDecimal(250.00)) == 0 && loja.getProduto().get(0).getNome().equalsIgnoreCase("Tablet") &&
-            loja.getProduto().get(0).getEstoque().equals(10));
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void deve_retornar_expection_caso_produto_esteja_cadastrado() {
+        CadastrarProduto.cadastrarNovoProdutoNaLoja("Tablet", new BigDecimal(350.00), 50, loja, funcionario);
+        CadastrarProduto.cadastrarNovoProdutoNaLoja("Tablet", new BigDecimal(350.00), 50, loja, funcionario);
+        assertTrue("O produto não existe", loja.getProduto().get(4).getNome().equalsIgnoreCase("tablet"));
     }
 
 }

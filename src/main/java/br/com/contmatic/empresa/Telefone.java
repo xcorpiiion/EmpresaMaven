@@ -1,26 +1,51 @@
 package br.com.contmatic.empresa;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+
+import br.com.contmatic.constantes.Constante;
 import br.com.contmatic.enums.TipoTelefone;
 
 public class Telefone {
+
+    @NotBlank(message = Constante.O_TELEFONE_NAO_PODE_FICAR_VAZIO)
+    @NotEmpty(message = Constante.O_TELEFONE_NAO_PODE_FICAR_VAZIO)
+    @NotNull(message = Constante.O_TELEFONE_NAO_PODE_FICAR_VAZIO)
+    @Pattern(regexp = Constante.PHONE_VALIDATION, message = Constante.O_TELEFONE_NAO_E_VALIDO)
+    private String phone;
     
-    private String phones;
+    @NotBlank(message = Constante.O_TELEFONE_NAO_PODE_FICAR_VAZIO)
+    @NotEmpty(message = Constante.O_TELEFONE_NAO_PODE_FICAR_VAZIO)
+    @NotNull(message = Constante.O_TELEFONE_NAO_PODE_FICAR_VAZIO)
+    @Pattern(regexp = Constante.PHONE_VALIDATION, message = Constante.O_TELEFONE_NAO_E_VALIDO)
+    private String cellphone;
     
     private TipoTelefone tipoTelefone;
-
-    public Telefone(String telefone, TipoTelefone tipoTelefone) {
-        this.phones = telefone;
-        this.tipoTelefone = tipoTelefone;
+    
+    public Telefone(String phone, String cellphone) {
+        this.phone = phone;
+        this.cellphone = cellphone;
     }
-
+    
+    public Telefone(String cellphone) {
+        this.cellphone = cellphone;
+    }
+    
+    public Telefone() {
+        
+    }
+    
     public String getPhones() {
-        return phones;
+        return phone;
     }
     
     public void setPhones(String phones) {
-        this.phones = phones;
+        this.phone = phones;
     }
 
     public TipoTelefone getTipoTelefone() {
@@ -33,7 +58,7 @@ public class Telefone {
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(phones).toHashCode();
+        return new HashCodeBuilder().append(phone).append(cellphone).toHashCode();
     }
 
     @Override
@@ -45,12 +70,12 @@ public class Telefone {
         if (getClass() != obj.getClass())
             return false;
         Telefone other = (Telefone) obj;
-        return new EqualsBuilder().append(phones, other).isEquals();
+        return new EqualsBuilder().append(phone, other).append(cellphone, other).isEquals();
     }
 
     @Override
     public String toString() {
-        return "Telefone [telefone=" + phones + ", tipoTelefone=" + tipoTelefone + "]";
+        return "Telefone [telefone=" + phone + ", tipoTelefone=" + tipoTelefone + "]";
     }
 
 }

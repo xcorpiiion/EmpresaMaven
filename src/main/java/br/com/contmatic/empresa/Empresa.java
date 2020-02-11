@@ -25,7 +25,7 @@ public class Empresa {
     @CNPJ(message = "CNPJ não é valido")
     private String cnpj;
     
-    @NotNull(message = Constante.O_TELEFONE_NÃO_PODE_FICAR_VAZIO)
+    @NotNull(message = Constante.O_TELEFONE_NAO_PODE_FICAR_VAZIO)
     private Set<Telefone> telefones;
 
     @NotNull(message = "Endereço não pode ficar nullo")

@@ -1,17 +1,14 @@
 package br.com.contmatic.empresa;
 
 import java.math.BigDecimal;
-import java.util.Date;
-
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.br.CPF;
-
+import org.joda.time.DateTime;
 import br.com.contmatic.constantes.Constante;
 import br.com.contmatic.enums.Cargo;
 import br.com.contmatic.enums.TipoContrato;
@@ -29,7 +26,7 @@ public class Funcionario {
     private String email;
 
     @NotNull(message = "A data de nascimento não pode esta nullo")
-    private Date dataNascimento;
+    private DateTime dataNascimento;
 
     @NotNull(message = "O cargo não pode esta vazio")
     private Cargo cargo;
@@ -49,7 +46,7 @@ public class Funcionario {
     @CPF(message = "O cpf é invalido")
     private String cpf;
     
-    public Funcionario(String nome, String email, BigDecimal salario, Cargo cargo, Date dataNascimento, TipoContrato tipoContrato, Endereco endereco, String cpf) {
+    public Funcionario(String nome, String email, BigDecimal salario, Cargo cargo, DateTime dataNascimento, TipoContrato tipoContrato, Endereco endereco, String cpf) {
         this.nome = nome;
         this.email = email;
         this.dataNascimento = dataNascimento;
@@ -107,7 +104,7 @@ public class Funcionario {
         this.email = email;
     }
 
-    public Date getDataNascimento() {
+    public DateTime getDataNascimento() {
         return dataNascimento;
     }
 

@@ -29,7 +29,6 @@ public final class AlterarDadosProduto {
                 produto.setPreco(preco);
             }
         }
-
     }
 
     public static void alterarEstoqueProduto(String nomeProduto, int estoque, Empresa loja, Funcionario funcionario) {
@@ -39,7 +38,6 @@ public final class AlterarDadosProduto {
                 prod.setEstoque(estoque);
             }
         }
-
     }
 
     public static void alterarTodosDadosDoProduto(String nomeProduto, BigDecimal preco, int estoque, String nomeNovoProduto, Empresa loja, Funcionario funcionario) {

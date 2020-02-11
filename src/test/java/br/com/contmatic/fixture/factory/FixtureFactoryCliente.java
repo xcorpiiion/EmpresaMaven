@@ -2,8 +2,10 @@ package br.com.contmatic.fixture.factory;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashSet;
 import java.util.Random;
+
+import org.joda.time.DateTime;
 
 import br.com.contmatic.empresa.Cliente;
 import br.com.six2six.fixturefactory.Fixture;
@@ -19,12 +21,13 @@ public class FixtureFactoryCliente implements TemplateLoader {
             {
                 add("nome", name());
                 add("email", "teste@gmail.com");
-                add("dataNascimento", new Date());
+                add("dataNascimento", new DateTime());
                 add("dinheiroCarteira", new BigDecimal(4000.00 + (new Random().nextDouble() * (5000 - 8500))));
                 add("carrinhoProdutos", new ArrayList<>());
                 add("produtosComprados", new ArrayList<>());
                 add("endereco", FixtureFactoryEndereco.enderecoValido());
                 add("cpf", GeradorCpf.gerardorRandomCpf());
+                add("telefones", new HashSet<>());
             }
         });
         Fixture.of(Cliente.class).addTemplate("nomeNull").inherits("valid", new Rule() {
@@ -70,6 +73,11 @@ public class FixtureFactoryCliente implements TemplateLoader {
         Fixture.of(Cliente.class).addTemplate("dataNascimentoNull").inherits("valid", new Rule() {
             {
                 add("dataNascimento", null);
+            }
+        });
+        Fixture.of(Cliente.class).addTemplate("telefoneNull").inherits("valid", new Rule() {
+            {
+                add("telefones", null);
             }
         });
 
