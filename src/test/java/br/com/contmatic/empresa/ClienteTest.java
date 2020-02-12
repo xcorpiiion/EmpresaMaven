@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
@@ -22,8 +21,11 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import br.com.contmatic.constantes.Constante;
+import br.com.contmatic.controller.AddTelefone;
 import br.com.contmatic.controller.CarrinhoCliente;
 import br.com.contmatic.controller.CompraProduto;
+import br.com.contmatic.enums.TipoTelefone;
+import br.com.contmatic.fixture.factory.GeradorTelefone;
 import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
@@ -63,8 +65,21 @@ public class ClienteTest {
         Cliente clienteInvalid = Fixture.from(Cliente.class).gimme("nomeNull");
         clientes.get(0).setNome(clienteInvalid.getNome());
         ValidadorAnnotionsMsgErro.returnAnnotationMsgError(clientes.get(0), Constante.NOME_NAO_PODE_ESTA_VAZIO);
-        ValidadorAnnotionsMsgErro.returnAnnotationMsgError(clientes.get(0), Constante.NOME_NAO_PODE_ESTA_VAZIO);
         assertNull(clientes.get(0).getNome());
+    }
+    
+    @Test
+    public void deve_add_novo_telefone_movel_para_cliente() {
+        String telefone = GeradorTelefone.geradorCellPhone();
+        AddTelefone.addTelefoneCliente(clientes.get(0), new Telefone(telefone, TipoTelefone.MOVEL));
+        assertTrue(clientes.get(0).getTelefones().stream().anyMatch(phone -> phone.getPhones().equals(telefone)));
+    }
+    
+    @Test
+    public void deve_add_novo_telefone_fixo_para_cliente() {
+        String telefone = GeradorTelefone.geradorPhone();
+        AddTelefone.addTelefoneCliente(clientes.get(0), new Telefone(telefone, TipoTelefone.FIXO));
+        assertTrue(clientes.get(0).getTelefones().stream().anyMatch(phone -> phone.getPhones().equals(telefone)));
     }
 
     @Test
@@ -149,9 +164,10 @@ public class ClienteTest {
     public void deve_comprar() {
         String nomeProduto = loja.getProduto().get(0).getNome();
         int qtdProdutosCompra = 2;
-        clientes.get(0).setDinheiroCarteira(new BigDecimal(350));
+        clientes.get(0).setDinheiroCarteira(new BigDecimal(950));
+        System.out.println(clientes.get(0).getDinheiroCarteira());
         CarrinhoCliente.addItensCarrinho(clientes.get(0), loja, nomeProduto, qtdProdutosCompra);
-        CompraProduto.compraProduto(clientes.get(0), nomeProduto, 5);
+        CompraProduto.compraProduto(clientes.get(0), nomeProduto, 1);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -173,24 +189,17 @@ public class ClienteTest {
     }
 
     @Test()
-    public void deve_ter_o_mesmo_email_para_serem_iguais() {
-        clientes.get(1).setNome("a");
-        clientes.get(1).setEmail(clientes.get(0).getEmail());
-        assertFalse("Os cliente são iguais", clientes.get(0).equals(clientes.get(1)));
-    }
-
-    @Test
-    public void deve_ter_o_mesmo_nome_para_serem_iguais() {
-        clientes.get(1).setNome(clientes.get(0).getNome());
-        clientes.get(1).setEmail("a");
-        assertFalse("Os cliente são iguais", clientes.get(0).equals(clientes.get(1)));
+    public void deve_retornar_true_no_equals_para_serem_iguais() {
+        clientes.add(Fixture.from(Cliente.class).gimme("valid"));
+        clientes.get(1).setCpf(clientes.get(0).getCpf());
+        assertTrue("Os cliente são iguais", clientes.get(0).equals(clientes.get(1)));
     }
 
     @Test()
     public void deve_ter_hashCode_iguais_para_serem_clientes_iguais() {
-        clientes.get(1).setNome(clientes.get(0).getNome());
-        clientes.get(1).setEmail(clientes.get(0).getEmail());
-        assertEquals("Os clientes são igauis", clientes.get(0).hashCode(), clientes.get(1).hashCode());
+        clientes.add(Fixture.from(Cliente.class).gimme("valid"));
+        clientes.get(1).setCpf(clientes.get(0).getCpf());
+        assertTrue(clientes.get(0).hashCode() == clientes.get(1).hashCode());
     }
 
     @Test()
@@ -200,12 +209,6 @@ public class ClienteTest {
 
     @After
     public void deve_conter_toString() {
-        // System.out.println(clientes.get(0));
+         System.out.println(clientes.get(0));
     }
-
-    @AfterClass
-    public static void mostrarCliente() {
-        // System.out.println("Cliente foi cadastrado com sucesso");
-    }
-
 }

@@ -1,6 +1,8 @@
 package br.com.contmatic.empresa;
 
 import java.math.BigDecimal;
+import java.util.Set;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -24,6 +26,11 @@ public class Funcionario {
     @NotBlank(message = Constante.VALIDATION_EMAIL)
     @NotEmpty(message = Constante.EMAIL_NAO_PODE_ESTA_VAZIO)
     private String email;
+    
+    @NotEmpty(message = "O cpf está vazio")
+    @NotBlank(message = "O cpf está com um espaço em branco")
+    @CPF(message = "O cpf é invalido")
+    private String cpf;
 
     @NotNull(message = "A data de nascimento não pode esta nullo")
     private DateTime dataNascimento;
@@ -41,10 +48,8 @@ public class Funcionario {
     @NotNull(message = "O tipo de contrato não pode ser nullo")
     private TipoContrato tipoContrato;
 
-    @NotEmpty(message = "O cpf está vazio")
-    @NotBlank(message = "O cpf está com um espaço em branco")
-    @CPF(message = "O cpf é invalido")
-    private String cpf;
+    @NotNull(message = Constante.O_TELEFONE_NAO_PODE_FICAR_VAZIO)
+    private Set<Telefone> telefones;
     
     public Funcionario(String nome, String email, BigDecimal salario, Cargo cargo, DateTime dataNascimento, TipoContrato tipoContrato, Endereco endereco, String cpf) {
         this.nome = nome;
@@ -116,6 +121,14 @@ public class Funcionario {
         this.cpf = cpf;
     }
     
+    public Set<Telefone> getTelefones() {
+        return telefones;
+    }
+
+    public void setTelefones(Set<Telefone> telefones) {
+        this.telefones = telefones;
+    }
+
     @Override
     public int hashCode() {
         return new HashCodeBuilder().append(cpf).toHashCode();

@@ -5,6 +5,10 @@ import br.com.contmatic.empresa.Empresa;
 import br.com.contmatic.empresa.Funcionario;
 
 public final class Login {
+    
+    private Login() {
+        
+    }
 
     public static boolean verificaLoginFuncioanrio(String nome, String email, Empresa loja) {
         return loja.getFuncionario().stream().anyMatch(func -> func.getNome().equalsIgnoreCase(nome) && func.getEmail().equalsIgnoreCase(email));

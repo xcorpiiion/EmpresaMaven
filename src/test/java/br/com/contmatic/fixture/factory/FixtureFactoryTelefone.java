@@ -13,7 +13,6 @@ public class FixtureFactoryTelefone implements TemplateLoader {
         Fixture.of(Telefone.class).addTemplate("valid", new Rule() {
             {
                 add("phone", GeradorTelefone.geradorPhone());
-                add("cellphone", GeradorTelefone.geradorCellPhone());
             }
         });
         Fixture.of(Telefone.class).addTemplate("phoneNull").inherits("valid", new Rule() {

@@ -1,14 +1,14 @@
 package br.com.contmatic.controller;
 
 import static org.junit.Assert.assertTrue;
+
 import org.joda.time.DateTime;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import br.com.contmatic.constantes.Constante;
+
 import br.com.contmatic.empresa.Empresa;
 import br.com.contmatic.empresa.Endereco;
 import br.com.contmatic.fixture.factory.GeradorCpf;
-import br.com.contmatic.fixture.factory.GeradorTelefone;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 

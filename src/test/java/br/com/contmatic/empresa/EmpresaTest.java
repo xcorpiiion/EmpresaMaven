@@ -8,13 +8,15 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import br.com.contmatic.controller.AddTelefone;
+import br.com.contmatic.enums.TipoTelefone;
+import br.com.contmatic.fixture.factory.GeradorTelefone;
 import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
@@ -50,19 +52,28 @@ public class EmpresaTest {
         produtos.add(Fixture.from(Produto.class).gimme("valid"));
     }
 
-    @Before
-    public void deve_mostrar_endereco() {
-        System.out.println(loja.getEndereco());
-    }
+//    @Before
+//    public void deve_mostrar_endereco() {
+//        System.out.println(loja.getEndereco());
+//    }
 
+    @Test
+    public void deve_add_novo_telefone_movel_para_cliente() {
+        String telefone = GeradorTelefone.geradorCellPhone();
+        AddTelefone.addTelefoneEmpresa(loja, new Telefone(telefone, TipoTelefone.MOVEL));
+        assertTrue(loja.getTelefones().stream().anyMatch(phone -> phone.getPhones().equals(telefone)));
+    }
+    
+    @Test
+    public void deve_add_novo_telefone_fixo_para_cliente() {
+        String telefone = GeradorTelefone.geradorPhone();
+        AddTelefone.addTelefoneEmpresa(loja, new Telefone(telefone, TipoTelefone.FIXO));
+        assertTrue(loja.getTelefones().stream().anyMatch(phone -> phone.getPhones().equals(telefone)));
+    }
+    
     @Test()
     public void nao_deve_aceitar_produto_null() {
         assertNotNull("O produto esta null", produtos);
-    }
-
-    @Test
-    public void deve_settar_o_funcionario() {
-        loja.setFuncionario(funcionarios);
     }
 
     @Test
@@ -127,9 +138,9 @@ public class EmpresaTest {
         assertEquals("As lojas são iguais", loja.hashCode(), loja2.hashCode());
     }
 
-    @AfterClass
-    public static void mostrar_dados_empresa() {
-        System.out.println(loja);
-    }
+//    @AfterClass
+//    public static void mostrar_dados_empresa() {
+//        System.out.println(loja);
+//    }
 
 }

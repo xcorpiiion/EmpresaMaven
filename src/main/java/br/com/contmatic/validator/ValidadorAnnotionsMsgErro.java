@@ -16,11 +16,10 @@ public class ValidadorAnnotionsMsgErro {
         erros.stream().forEach(t1 -> errosMsg.add(t1.getMessage()));
         for(String erros1 : errosMsg) {
             if(msgErroEsperada.equalsIgnoreCase(erros1)) {
-                System.out.println("mensagem de erro: " + errosMsg.get(0));
                 return erros1;
             }
         }
-        return "";
+        return null;
     }
     
 }

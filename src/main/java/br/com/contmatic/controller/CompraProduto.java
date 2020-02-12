@@ -21,7 +21,7 @@ public final class CompraProduto {
         totalPreco = new BigDecimal(0);
         checkArgument(produtoEstaNoCarrinho(nomeProduto, cliente), "O produto não existe no carrinho");
         somaValoresProdutos(cliente, nomeProduto, qtdProdutosCompra);
-        Preconditions.checkArgument(possuiDinheiroParaCompraProduto(cliente), new IllegalArgumentException("Dinheiro insulficiente para comprar produtos"));
+        Preconditions.checkArgument(!possuiDinheiroParaCompraProduto(cliente), new IllegalArgumentException("Dinheiro insulficiente para comprar produtos"));
         descontaValorCompraDoDinheiro(cliente, totalPreco);
         addProdutoNaListaProdutosComprados(cliente, nomeProduto);
         removeProdutosCompradoDoCarrinho(cliente);

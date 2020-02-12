@@ -18,33 +18,24 @@ public class Telefone {
     @NotNull(message = Constante.O_TELEFONE_NAO_PODE_FICAR_VAZIO)
     @Pattern(regexp = Constante.PHONE_VALIDATION, message = Constante.O_TELEFONE_NAO_E_VALIDO)
     private String phone;
-    
-    @NotBlank(message = Constante.O_TELEFONE_NAO_PODE_FICAR_VAZIO)
-    @NotEmpty(message = Constante.O_TELEFONE_NAO_PODE_FICAR_VAZIO)
-    @NotNull(message = Constante.O_TELEFONE_NAO_PODE_FICAR_VAZIO)
-    @Pattern(regexp = Constante.PHONE_VALIDATION, message = Constante.O_TELEFONE_NAO_E_VALIDO)
-    private String cellphone;
-    
+
     private TipoTelefone tipoTelefone;
-    
-    public Telefone(String phone, String cellphone) {
+
+    public Telefone(String phone,TipoTelefone tipoTelefone) {
         this.phone = phone;
-        this.cellphone = cellphone;
+        this.tipoTelefone = tipoTelefone;
     }
-    
-    public Telefone(String cellphone) {
-        this.cellphone = cellphone;
-    }
-    
+
     public Telefone() {
-        
+
     }
-    
+
     public String getPhones() {
         return phone;
     }
-    
+
     public void setPhones(String phones) {
+        
         this.phone = phones;
     }
 
@@ -58,7 +49,7 @@ public class Telefone {
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(phone).append(cellphone).toHashCode();
+        return new HashCodeBuilder().append(phone).toHashCode();
     }
 
     @Override
@@ -70,7 +61,7 @@ public class Telefone {
         if (getClass() != obj.getClass())
             return false;
         Telefone other = (Telefone) obj;
-        return new EqualsBuilder().append(phone, other).append(cellphone, other).isEquals();
+        return new EqualsBuilder().append(phone, other).isEquals();
     }
 
     @Override

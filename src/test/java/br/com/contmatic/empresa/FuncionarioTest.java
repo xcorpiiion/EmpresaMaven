@@ -15,6 +15,9 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import br.com.contmatic.controller.AddTelefone;
+import br.com.contmatic.enums.TipoTelefone;
+import br.com.contmatic.fixture.factory.GeradorTelefone;
 import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
@@ -51,6 +54,20 @@ public class FuncionarioTest {
 
     }
 
+    @Test
+    public void deve_add_novo_telefone_movel_para_cliente() {
+        String telefone = GeradorTelefone.geradorCellPhone();
+        AddTelefone.addTelefoneFuncionario(funcionarios.get(0), new Telefone(telefone, TipoTelefone.MOVEL));
+        assertTrue(funcionarios.get(0).getTelefones().stream().anyMatch(phone -> phone.getPhones().equals(telefone)));
+    }
+    
+    @Test
+    public void deve_add_novo_telefone_fixo_para_cliente() {
+        String telefone = GeradorTelefone.geradorPhone();
+        AddTelefone.addTelefoneFuncionario(funcionarios.get(0), new Telefone(telefone, TipoTelefone.FIXO));
+        assertTrue(funcionarios.get(0).getTelefones().stream().anyMatch(phone -> phone.getPhones().equals(telefone)));
+    }
+    
     @Test
     public void deve_ter_salario_maior_do_que_zero() {
         funcionarios.add(Fixture.from(Funcionario.class).gimme("salarioLess1"));

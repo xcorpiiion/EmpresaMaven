@@ -7,6 +7,10 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>EmpresaMaven</name>
 	<!-- https://mvnrepository.com/artifact/junit/junit -->
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -89,6 +93,5 @@
 			<artifactId>guava</artifactId>
 			<version>28.1-jre</version>
 		</dependency>
-
 	</dependencies>
 </project>

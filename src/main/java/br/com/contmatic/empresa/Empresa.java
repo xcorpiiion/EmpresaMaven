@@ -1,23 +1,34 @@
 package br.com.contmatic.empresa;
 
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
+import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
+
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.br.CNPJ;
 import br.com.contmatic.constantes.Constante;
 
 public class Empresa {
 
     @NotEmpty(message = "Nome não pode ser vazio")
+    @Size(min = 3, max = 100, message = "O nome não é valido")
     private String nome;
 
     @NotEmpty(message = "Email não pode ser vazio")
     @Pattern(regexp = Constante.VALIDATION_EMAIL)
+    @Range(min = 5, max = 500, message = "Não foi possivel criar o email")
     private String email;
 
     @NotBlank(message = "O cnpj não pode ficar vazio")
@@ -40,11 +51,33 @@ public class Empresa {
     @NotNull(message = "O cliente não pode ser nullo")
     private List<Cliente> clientes;
 
-    public Empresa(String nome, String email, String cnpj, Endereco endereco) {
+    public Empresa(String nome, String email, String cnpj, Endereco endereco, Set<Telefone> telefones) {
         this.nome = nome;
         this.email = email;
         this.cnpj = cnpj;
+        this.telefones = new HashSet<>();
         this.enderecos.add(endereco);
+        this.telefones = telefones;
+    }
+    
+    public Empresa(String nome, String email, String cnpj, Endereco endereco, Telefone telefone) {
+        this.nome = nome;
+        this.email = email;
+        this.cnpj = cnpj;
+        this.telefones = new HashSet<>();
+        this.enderecos = new HashSet<>();
+        this.enderecos.add(endereco);
+        this.telefones.add(telefone);
+    }
+    
+    public Empresa(String nome, String email, String cnpj, Set<Endereco> enderecos, Set<Telefone> telefones) {
+        this.nome = nome;
+        this.email = email;
+        this.cnpj = cnpj;
+        this.telefones = new HashSet<>();
+        this.enderecos = new HashSet<>();
+        this.enderecos = enderecos;
+        this.telefones = telefones;
     }
 
     public Empresa() {
@@ -133,8 +166,9 @@ public class Empresa {
 
     @Override
     public String toString() {
+        reflectionToString(this, JSON_STYLE);
         return new StringBuilder().append("Nome: ").append(getNome()).append(", email: ").append(getEmail()).append(", endereco: ").append(getEndereco()).append(", produtos: ").append(getProduto())
-                .append(", funcionarios: ").append(getFuncionario()).append(", clientes: ").append(getCliente()).toString();
+                .append(", funcionarios: ").append(getFuncionario()).append(", clientes: ").append(getCliente()).append(", Telefone: ").append(getTelefones()).toString();
     }
 
 }

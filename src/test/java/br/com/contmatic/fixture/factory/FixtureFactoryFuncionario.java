@@ -1,8 +1,11 @@
 package br.com.contmatic.fixture.factory;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.util.HashSet;
 import java.util.Random;
+
+import org.joda.time.DateTime;
+
 import br.com.contmatic.empresa.Funcionario;
 import br.com.contmatic.enums.Cargo;
 import br.com.contmatic.enums.TipoContrato;
@@ -18,12 +21,13 @@ public class FixtureFactoryFuncionario implements TemplateLoader {
             {
                 add("nome", name());
                 add("email", "teste@gmail.com");
-                add("dataNascimento", new Date());
+                add("dataNascimento", new DateTime());
                 add("cargo", Cargo.values()[new Random().nextInt(Cargo.values().length)]);
                 add("salario", new BigDecimal(1000.00 + (new Random().nextDouble() * (5000 - 8500))));
                 add("endereco", FixtureFactoryEndereco.enderecoValido());
                 add("tipoContrato", TipoContrato.values()[new Random().nextInt(TipoContrato.values().length)]);
                 add("cpf", GeradorCpf.gerardorRandomCpf());
+                add("telefones", new HashSet<>());
             }
         });
         Fixture.of(Funcionario.class).addTemplate("nomeNull").inherits("valid", new Rule() {
@@ -105,6 +109,11 @@ public class FixtureFactoryFuncionario implements TemplateLoader {
         Fixture.of(Funcionario.class).addTemplate("invalidCpf").inherits("valid", new Rule() {
             {
                 add("cpf", null);
+            }
+        });
+        Fixture.of(Funcionario.class).addTemplate("telefoneNull").inherits("valid", new Rule() {
+            {
+                add("telefones", null);
             }
         });
     }

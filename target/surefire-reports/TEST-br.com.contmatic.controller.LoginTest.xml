@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="1" failures="0" name="br.com.contmatic.empresa.ProdutoTest" time="0.001" errors="0" skipped="0">
+<testsuite tests="6" failures="0" name="br.com.contmatic.controller.LoginTest" time="0.007" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_191\jre\bin"/>
@@ -64,5 +64,10 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_armazenar_nome_null_e_armazenar_no_validationAnnotation" time="0.001"/>
+  <testcase classname="br.com.contmatic.controller.LoginTest" name="deve_ter_email_e_nome_validas_para_fazer_Login_no_clinte" time="0.002"/>
+  <testcase classname="br.com.contmatic.controller.LoginTest" name="deve_ter_email_e_Login_validos_para_fazer_Login_funcionario" time="0.001"/>
+  <testcase classname="br.com.contmatic.controller.LoginTest" name="deve_ser_funcionario_para_fazer_Login" time="0.001"/>
+  <testcase classname="br.com.contmatic.controller.LoginTest" name="deve_ter_email_e_Login_validos_para_fazer_Login_cliente" time="0.001"/>
+  <testcase classname="br.com.contmatic.controller.LoginTest" name="deve_retornar_cliente_que_fez_Login" time="0.001"/>
+  <testcase classname="br.com.contmatic.controller.LoginTest" name="deve_ser_funcionario_para_confirmar_Login" time="0.001"/>
 </testsuite>

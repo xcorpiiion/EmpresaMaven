@@ -1,37 +1,44 @@
 package br.com.contmatic.empresa;
 
+import static br.com.contmatic.constantes.Constante.NOME_NAO_PODE_ESTA_VAZIO;
+
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.br.CPF;
 import org.joda.time.DateTime;
+
 import br.com.contmatic.constantes.Constante;
 
 public class Cliente {
 
+    @CPF(message = Constante.O_CPF_ESTA_INVALIDO)
     @NotEmpty(message = Constante.O_CPF_ESTA_VAZIO)
     @NotBlank(message = Constante.O_CPF_ESTA_COM_UM_ESPACO_EM_BRANCO)
-    @CPF(message = Constante.O_CPF_ESTA_INVALIDO)
     private String cpf;
     
-    @NotBlank(message = Constante.NOME_NAO_PODE_ESTA_VAZIO)
+    @NotBlank(message = NOME_NAO_PODE_ESTA_VAZIO)
     @NotEmpty(message = Constante.NOME_NAO_PODE_ESTA_VAZIO)
     @Length(min = 3, max = 50)
     private String nome;
     
     @NotBlank(message = Constante.EMAIL_NAO_PODE_ESTA_VAZIO)
-    @Pattern(regexp = Constante.VALIDATION_EMAIL, message = Constante.EMAIL_INVALIDO)
+    @Email(message = Constante.EMAIL_INVALIDO)
+//    @Pattern(regexp = Constante.VALIDATION_EMAIL, message = Constante.EMAIL_INVALIDO)
     @NotEmpty(message = Constante.EMAIL_NAO_PODE_ESTA_VAZIO)
+    @Range(min = 5, max = 500, message = "Não foi possivel criar o email")
     private String email;
 
     @NotNull(message = Constante.DATA_DE_NASCIMENTO_NAO_PODE_SER_NULLA)
@@ -68,6 +75,14 @@ public class Cliente {
         this.endereco = endereco;
         this.cpf = cpf;     
         this.telefones = telefones;
+    }
+    
+    public Cliente(String nome, String email, DateTime dataNascimento, Endereco endereco, String cpf) {
+        this.nome = nome;
+        this.email = email;
+        this.dataNascimento = dataNascimento;
+        this.endereco = endereco;
+        this.cpf = cpf;
     }
 
     public Cliente() {
@@ -148,7 +163,7 @@ public class Cliente {
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(nome).append(email).toHashCode();
+        return new HashCodeBuilder().append(cpf).toHashCode();
     }
 
     @Override
@@ -160,7 +175,7 @@ public class Cliente {
         if (getClass() != obj.getClass())
             return false;
         Cliente other = (Cliente) obj;
-        return new EqualsBuilder().append(nome, other.nome).append(email, other.email).isEquals();
+        return new EqualsBuilder().append(cpf, other.cpf).isEquals();
     }
 
     @Override
