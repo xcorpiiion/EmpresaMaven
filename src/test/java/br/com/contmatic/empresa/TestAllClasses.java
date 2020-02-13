@@ -4,10 +4,11 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
-import br.com.contmatic.controller.LoginTest;
-
+/**
+ * The Class TestAllClasses.
+ */
 @RunWith(Suite.class)
-@SuiteClasses({ EmpresaTest.class, FuncionarioTest.class, ClienteTest.class, EnderecoTest.class, LoginTest.class, ProdutoTest.class })
+@SuiteClasses({ EmpresaTest.class, FuncionarioTest.class, ClienteTest.class, EnderecoTest.class, ProdutoTest.class })
 public class TestAllClasses {
 
 }

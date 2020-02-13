@@ -1,5 +1,12 @@
 package br.com.contmatic.enums;
 
+/**
+ * The Enum Cargo.
+ */
 public enum Cargo {
-	REPOSITOR, RH;
+	
+	/** The repositor. */
+	REPOSITOR, 
+ /** The rh. */
+ RH;
 }

@@ -13,8 +13,14 @@ import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
 
+/**
+ * The Class FixtureFactoryFuncionario.
+ */
 public class FixtureFactoryFuncionario implements TemplateLoader {
 
+    /**
+     * Load.
+     */
     @Override
     public void load() {
         Fixture.of(Funcionario.class).addTemplate("valid", new Rule() {

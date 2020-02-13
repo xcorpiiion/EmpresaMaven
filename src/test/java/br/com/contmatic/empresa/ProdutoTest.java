@@ -7,112 +7,123 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
-import java.math.BigDecimal;
-
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import br.com.contmatic.services.EmptyStringException;
+import br.com.contmatic.constantes.Constante;
+import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
+/**
+ * The Class ProdutoTest.
+ */
 public class ProdutoTest {
 
-	private String nome;
-	
-	private static Produto produto;
-	
-	private Produto produto2;
-	
-	@BeforeClass
-	public static void dadosProdutos() {
-	    FixtureFactoryLoader.loadTemplates("br.com.contmatic.fixture.factory");
-		produto = Fixture.from(Produto.class).gimme("valid");
-	}
+    /** The produto. */
+    private static Produto produto;
+    
+    private static Produto produto2;
 
-	@Test
-	public void deve_armazenar_nome_null_e_armazenar_no_validationAnnotation() {
-		produto = Fixture.from(Produto.class).gimme("nomeNull");
-		assertNull(produto.getNome());
-	}
-	
-//	@Test(expected = EmptyStringException.class)
-//	public void nao_deve_aceitar_nome_null() {
-//		produto.setNome(null);
-//	}
-//
-//	@Test(expected = EmptyStringException.class)
-//	public void nao_deve_aceitar_nome_vazio() {
-//		nome = " ";
-//		produto.setNome(nome);
-//	}
-//	
-//	@Test
-//	public void deve_aceitar_nome_nao_vazio() {
-//		produto.setNome("Tablet");
-//		assertThat(produto.getNome(), is("Tablet"));
-//		
-//	}
-//
-//	@Test
-//	public void ndeve_aceitar_preco_nao_null() {
-//		produto.setPreco(new BigDecimal(250));
-//		assertThat(produto.getPreco(), is(new BigDecimal(250)));
-//	}
-//	
-//	@Test(expected = NullPointerException.class)
-//	public void nao_deve_aceitar_preco_null() {
-//		produto.setPreco(null);
-//	}
-//
-//	@Test
-//	public void deve_aceitar_estoque_nao_nulo() {
-//		produto.setEstoque(5);
-//		assertThat(produto.getEstoque(), is(5));
-//	}
-//	
-//	@Test(expected = NullPointerException.class)
-//	public void nao_deve_aceitar_estoque_null() {
-//		produto.setEstoque(null);
-//	}
-//	
-//	@Test
-//	public void deve_aceitar_estoque_que_nao_seja_negativo() {
-//		produto.setEstoque(5);
-//		assertThat(produto.getEstoque(), is(5));
-//	}
-//	
-//	@Test(expected = RuntimeException.class)
-//	public void nao_deve_aceitar_estoque_negativo() {
-//		produto.setEstoque(-1);
-//	}
-//	
-//	@Test()
-//	public void nao_deve_aceitar_produtos_iguais() {
-//		assertTrue("Os produtos são iguais", produto.equals(produto));
-//	}
-//	
-//	@Test()
-//	public void nao_deve_aceitar_produtos_iguais_2() {
-//		assertFalse("Os produtos são iguais", produto.equals(null));
-//	}
-//	
-//	@Test()
-//	public void nao_deve_aceitar_produtos_iguais_3() {
-//		produto2 = new Produto("a", new BigDecimal(250.00), 10);
-//		assertFalse("Os produtos são iguais", produto.equals(produto2));
-//	}
-//	
-//	@Test()
-//	public void nao_deve_aceitar_produtos_iguais_4() {
-//		assertEquals("Os produtos são iguais", produto.hashCode(), produto.hashCode());
-//	}
-	
-	
-	@After
-	public void mostrarDados() {
-		System.out.println(produto);
-	}
+    /**
+     * Dados produtos.
+     */
+    @BeforeClass
+    public static void dadosProdutos() {
+        FixtureFactoryLoader.loadTemplates("br.com.contmatic.fixture.factory");
+        produto = Fixture.from(Produto.class).gimme("valid");
+    }
+
+    /**
+     * Deve armazenar nome null e armazenar no validation annotation.
+     */
+    @Test
+    public void deve_armazenar_nome_null_e_armazenar_no_validationAnnotation() {
+        produto = Fixture.from(Produto.class).gimme("nomeNull");
+        assertNull(produto.getNome());
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(produto, Constante.VALOR_ESTA_NULLO));
+    }
+
+    /**
+     * Nao deve aceitar nome vazio.
+     */
+    @Test
+    public void nao_deve_aceitar_nome_vazio() {
+        produto = Fixture.from(Produto.class).gimme("nomeEmpty");
+        assertTrue(produto.getNome().trim().isEmpty());
+    }
+
+    /**
+     * Deve aceitar nome com espaco em branco.
+     */
+    @Test
+    public void deve_aceitar_nome_com_espaco_em_branco() {
+        produto = Fixture.from(Produto.class).gimme("nomeBlankSpace");
+        assertTrue(produto.getNome().trim().isEmpty());
+
+    }
+
+    /**
+     * Deve retornar mensagem caso preco seja null.
+     */
+    @Test
+    public void deve_retornar_mensagem_caso_preco_seja_null() {
+        produto = Fixture.from(Produto.class).gimme("precoNull");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(produto, Constante.VALOR_ESTA_NULLO));
+    }
+
+    /**
+     * Deve retornar mensagem caso estoque seja menor que um.
+     */
+    @Test
+    public void deve_retornar_mensagem_caso_estoque_seja_menor_que_um() {
+        produto = Fixture.from(Produto.class).gimme("precoLess1");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(produto, Constante.PRECISA_SER_UM_VALOR_MAIOR));
+    }
+
+    /**
+     * Deve aceitar estoque que nao seja negativo.
+     */
+    @Test
+    public void deve_aceitar_estoque_que_nao_seja_negativo() {
+        produto.setEstoque(5);
+        assertThat(produto.getEstoque(), is(5));
+    }
+
+    /**
+     * Nao deve aceitar produtos iguais.
+     */
+    @Test()
+    public void nao_deve_aceitar_produtos_iguais() {
+        produto2 = Fixture.from(Produto.class).gimme("valid");
+        produto2.setNome(produto.getNome());
+        produto2.setPreco(produto.getPreco());
+        assertTrue("Os produtos são iguais", produto.equals(produto2));
+    }
+    
+    @Test()
+    public void deve_retornar_false_caso_compare_com_um_valor_null() {
+        assertFalse("Os produtos são iguais", produto.equals(null));
+    }
+
+    /**
+     * Deve ser iguais caso possua mesmo hashcode.
+     */
+    @Test()
+    public void deve_ser_iguais_caso_possua_mesmo_hashcode() {
+        produto2 = Fixture.from(Produto.class).gimme("valid");
+        produto2.setNome(produto.getNome());
+        produto2.setPreco(produto.getPreco());
+        assertEquals("Os produtos são iguais", produto.hashCode(), produto.hashCode());
+    }
+
+    /**
+     * Mostrar dados.
+     */
+    @AfterClass
+    public static void mostrarDados() {
+        System.out.println(produto);
+    }
 
 }

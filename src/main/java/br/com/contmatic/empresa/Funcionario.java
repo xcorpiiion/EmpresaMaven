@@ -1,8 +1,12 @@
 package br.com.contmatic.empresa;
 
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
+import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
+
 import java.math.BigDecimal;
 import java.util.Set;
-
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -15,130 +19,217 @@ import br.com.contmatic.constantes.Constante;
 import br.com.contmatic.enums.Cargo;
 import br.com.contmatic.enums.TipoContrato;
 
+/**
+ * The Class Funcionario.
+ */
 public class Funcionario {
 
-    @NotBlank(message = Constante.NOME_NAO_PODE_ESTA_VAZIO)
-    @NotNull(message = "")
-    @NotEmpty(message = Constante.NOME_NAO_PODE_ESTA_VAZIO)
+    /** The nome. */
+    @NotBlank(message = Constante.VALOR_ESTA_VAZIO)
+    @NotNull(message = Constante.VALOR_ESTA_NULLO)
+    @NotEmpty(message = Constante.VALOR_ESTA_VAZIO)
+    @Min(value = 2, message = Constante.NOME_E_MUITO_GRANDE)
+    @Max(value = 60, message = Constante.NOME_E_MUITO_PEQUENO)
     private String nome;
 
-    @NotNull(message = Constante.EMAIL_INVALIDO)
-    @NotBlank(message = Constante.VALIDATION_EMAIL)
-    @NotEmpty(message = Constante.EMAIL_NAO_PODE_ESTA_VAZIO)
+    /** The email. */
+    @Email(message = Constante.VALOR_NAO_E_VALIDO)
     private String email;
-    
-    @NotEmpty(message = "O cpf está vazio")
-    @NotBlank(message = "O cpf está com um espaço em branco")
-    @CPF(message = "O cpf é invalido")
+
+    /** The cpf. */
+    @CPF(message = Constante.VALOR_NAO_E_VALIDO)
     private String cpf;
 
-    @NotNull(message = "A data de nascimento não pode esta nullo")
+    /** The data nascimento. */
+    @NotNull(message = Constante.VALOR_ESTA_NULLO)
     private DateTime dataNascimento;
 
-    @NotNull(message = "O cargo não pode esta vazio")
+    /** The cargo. */
+    @NotNull(message = Constante.VALOR_ESTA_NULLO)
     private Cargo cargo;
 
-    @NotNull(message = "O salario não pode esta nullo")
-    @Min(value = 1000, message = "O valor precisa ser um salario minimo")
+    /** The salario. */
+    @NotNull(message = Constante.VALOR_ESTA_NULLO)
+    @Min(value = 1000, message = Constante.PRECISA_SER_UM_VALOR_MAIOR)
     private BigDecimal salario;
 
-    @NotNull(message = "O endereco não pode ser nullo")
+    /** The endereco. */
+    @NotNull(message = Constante.VALOR_ESTA_NULLO)
     private Endereco endereco;
 
-    @NotNull(message = "O tipo de contrato não pode ser nullo")
+    /** The tipo contrato. */
+    @NotNull(message = Constante.VALOR_ESTA_NULLO)
     private TipoContrato tipoContrato;
 
-    @NotNull(message = Constante.O_TELEFONE_NAO_PODE_FICAR_VAZIO)
+    /** The telefones. */
+    @NotNull(message = Constante.VALOR_ESTA_NULLO)
     private Set<Telefone> telefones;
-    
-    public Funcionario(String nome, String email, BigDecimal salario, Cargo cargo, DateTime dataNascimento, TipoContrato tipoContrato, Endereco endereco, String cpf) {
-        this.nome = nome;
-        this.email = email;
-        this.dataNascimento = dataNascimento;
-        this.cargo = cargo;
-        this.salario = salario;
-        this.endereco = endereco;
-        this.tipoContrato = tipoContrato;
-        this.cpf = cpf;
-    }
 
-    public Funcionario() {
-    }
-
+    /**
+     * Gets the endereco.
+     *
+     * @return the endereco
+     */
     public Endereco getEndereco() {
         return endereco;
     }
 
+    /**
+     * Sets the endereco.
+     *
+     * @param endereco the new endereco
+     */
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
 
+    /**
+     * Gets the cargo.
+     *
+     * @return the cargo
+     */
     public Cargo getCargo() {
         return cargo;
     }
 
+    /**
+     * Sets the cargo.
+     *
+     * @param cargo the new cargo
+     */
     public void setCargo(Cargo cargo) {
         this.cargo = cargo;
     }
 
+    /**
+     * Gets the salario.
+     *
+     * @return the salario
+     */
     public BigDecimal getSalario() {
         return salario;
     }
 
+    /**
+     * Sets the salario.
+     *
+     * @param salario the new salario
+     */
     public void setSalario(BigDecimal salario) {
         this.salario = salario;
     }
 
+    /**
+     * Gets the tipo contrato.
+     *
+     * @return the tipo contrato
+     */
     public TipoContrato getTipoContrato() {
         return tipoContrato;
     }
 
+    /**
+     * Gets the nome.
+     *
+     * @return the nome
+     */
     public String getNome() {
         return nome;
     }
 
+    /**
+     * Sets the nome.
+     *
+     * @param nome the new nome
+     */
     public void setNome(String nome) {
         this.nome = nome;
     }
 
+    /**
+     * Gets the email.
+     *
+     * @return the email
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Sets the email.
+     *
+     * @param email the new email
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     * Gets the data nascimento.
+     *
+     * @return the data nascimento
+     */
     public DateTime getDataNascimento() {
         return dataNascimento;
     }
 
+    /**
+     * Gets the cpf.
+     *
+     * @return the cpf
+     */
     public String getCpf() {
         return cpf;
     }
 
+    /**
+     * Sets the cpf.
+     *
+     * @param cpf the new cpf
+     */
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
-    
+
+    /**
+     * Gets the telefones.
+     *
+     * @return the telefones
+     */
     public Set<Telefone> getTelefones() {
         return telefones;
     }
 
+    /**
+     * Sets the telefones.
+     *
+     * @param telefones the new telefones
+     */
     public void setTelefones(Set<Telefone> telefones) {
         this.telefones = telefones;
     }
 
+    /**
+     * Hash code.
+     *
+     * @return the int
+     */
     @Override
     public int hashCode() {
         return new HashCodeBuilder().append(cpf).toHashCode();
     }
 
+    /**
+     * Equals.
+     *
+     * @param obj the obj
+     * @return true, if successful
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (!super.equals(obj))
+        if (obj == null)
             return false;
         if (getClass() != obj.getClass())
             return false;
@@ -146,13 +237,14 @@ public class Funcionario {
         return new EqualsBuilder().append(cpf, other.cpf).isEquals();
     }
 
+    /**
+     * To string.
+     *
+     * @return the string
+     */
     @Override
     public String toString() {
-        return new StringBuilder().append("------Dados do funcionario------").append("\nNome: ").append(getNome()).append("\nCPF: ").append(getCpf()).append("\nEmail: ").append(getEmail()).append("\nData de nascimento: ")
-                .append(getDataNascimento()).append("\nCargo: ").append(getCargo()).append("\nTipo de contrato: ").append(getTipoContrato()).append("\nSalario: ").append(getSalario())
-                .append("\n------Endereço------").append("\nRua: ").append(getEndereco().getRua()).append("\nNúmero residência: ").append(getEndereco().getNumeroResidencia()).append("\nBairro: ")
-                .append(getEndereco().getBairro()).append("\nCep: ").append(getEndereco().getCep()).append("\nCidade: ").append(getEndereco().getCidade()).append("\nEstado: ")
-                .append(getEndereco().getEstado()).toString();
+        return reflectionToString(this, JSON_STYLE);
     }
 
 }

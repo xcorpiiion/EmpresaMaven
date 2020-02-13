@@ -1,5 +1,12 @@
 package br.com.contmatic.enums;
 
+/**
+ * The Enum TipoContrato.
+ */
 public enum TipoContrato {
-	CLT, PJ;
+	
+	/** The clt. */
+	CLT, 
+ /** The pj. */
+ PJ;
 }

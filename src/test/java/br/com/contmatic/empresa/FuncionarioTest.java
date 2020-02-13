@@ -1,10 +1,8 @@
 package br.com.contmatic.empresa;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,89 +13,101 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import br.com.contmatic.controller.AddTelefone;
-import br.com.contmatic.enums.TipoTelefone;
-import br.com.contmatic.fixture.factory.GeradorTelefone;
+import br.com.contmatic.constantes.Constante;
 import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
+/**
+ * The Class FuncionarioTest.
+ */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FuncionarioTest {
 
+    /** The produtos. */
     private static List<Produto> produtos;
 
+    /** The funcionarios. */
     private List<Funcionario> funcionarios;
 
+    /** The loja. */
     private static Empresa loja;
 
+    /**
+     * Add dados iniciais.
+     */
     @BeforeClass
     public static void addDadosIniciais() {
         FixtureFactoryLoader.loadTemplates("br.com.contmatic.fixture.factory");
         produtos = new ArrayList<>();
-        produtos.add(new Produto("Tablet", new BigDecimal(2500.00), 50));
-        produtos.add(new Produto("Smartphone", new BigDecimal(2500.00), 150));
-        produtos.add(new Produto("Fone de Ouvido", new BigDecimal(50.00), 200));
-        produtos.add(new Produto("Computador", new BigDecimal(3500.00), 70));
+        produtos.add(Fixture.from(Produto.class).gimme("valid"));
         loja = Fixture.from(Empresa.class).gimme("valid");
         loja.setCliente(new ArrayList<>());
         loja.setFuncionario(new ArrayList<>());
     }
 
+    /**
+     * Add dados funcionario.
+     */
     @Before
     public void add_dados_funcionario() {
         funcionarios = new ArrayList<>();
-
         funcionarios.add(Fixture.from(Funcionario.class).gimme("valid"));
         funcionarios.add(Fixture.from(Funcionario.class).gimme("valid"));
         funcionarios.add(Fixture.from(Funcionario.class).gimme("valid"));
-
     }
 
-    @Test
-    public void deve_add_novo_telefone_movel_para_cliente() {
-        String telefone = GeradorTelefone.geradorCellPhone();
-        AddTelefone.addTelefoneFuncionario(funcionarios.get(0), new Telefone(telefone, TipoTelefone.MOVEL));
-        assertTrue(funcionarios.get(0).getTelefones().stream().anyMatch(phone -> phone.getPhones().equals(telefone)));
-    }
-    
-    @Test
-    public void deve_add_novo_telefone_fixo_para_cliente() {
-        String telefone = GeradorTelefone.geradorPhone();
-        AddTelefone.addTelefoneFuncionario(funcionarios.get(0), new Telefone(telefone, TipoTelefone.FIXO));
-        assertTrue(funcionarios.get(0).getTelefones().stream().anyMatch(phone -> phone.getPhones().equals(telefone)));
-    }
-    
+    /**
+     * Deve ter salario maior do que zero.
+     */
     @Test
     public void deve_ter_salario_maior_do_que_zero() {
         funcionarios.add(Fixture.from(Funcionario.class).gimme("salarioLess1"));
         funcionarios.get(3).setSalario(funcionarios.get(3).getSalario());
-        assertEquals("O valor precisa ser um salario minimo", ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionarios.get(3), "O valor precisa ser um salario minimo"));
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionarios.get(3), Constante.PRECISA_SER_UM_VALOR_MAIOR));
     }
 
+    /**
+     * Nao deve existir funcionarios iguais.
+     */
     @Test
     public void nao_deve_existir_funcionarios_iguais() {
-        assertTrue("Os funcionarios são iguais", funcionarios.get(0).equals(funcionarios.get(0)));
+        String cpf = funcionarios.get(1).getCpf();
+        funcionarios.get(0).setCpf(cpf);
+        assertEquals(cpf, funcionarios.get(0).getCpf());
+    }
+
+    /**
+     * Deve ser igual caso tenha mesmo hashcode.
+     */
+    @Test
+    public void deve_ser_igual_caso_tenha_mesmo_hashcode() {
+        funcionarios.get(0).setCpf(funcionarios.get(1).getCpf());
+        assertEquals("Os funcionarios são iguais", funcionarios.get(0).hashCode(), funcionarios.get(1).hashCode());
     }
 
     @Test
-    public void nao_deve_existir_funcionarios_iguais_2() {
-        assertFalse("Os funcionarios são iguais", funcionarios.get(0).equals(funcionarios.get(1)));
+    public void deve_ser_igual_caso_tenha_mesmo_equals() {
+        funcionarios.get(0).setCpf(funcionarios.get(1).getCpf());
+        System.out.println(funcionarios.get(1).getCpf());
+        System.out.println(funcionarios.get(0).getCpf());
+        assertTrue(funcionarios.get(0).equals(funcionarios.get(1)));
     }
 
-    @Test
-    public void nao_deve_existir_funcionarios_iguais_3() {
-        assertEquals("Os funcionarios são iguais", funcionarios.get(0).hashCode(), funcionarios.get(0).hashCode());
+    /**
+     * Mostrar endereco.
+     */
+    @After
+    public void mostrarEndereco() {
+        System.out.println(funcionarios.get(0).getEndereco());
     }
 
-     @After
-     public void mostrarEndereco() {
-     System.out.println(funcionarios.get(0).getEndereco());
-     }
-    
-     @After
-     public void mostrarDados() {
-     System.out.println(funcionarios.get(0));
-     }
+    /**
+     * Mostrar dados.
+     */
+    @After
+    public void mostrarDados() {
+        System.out.println(funcionarios.get(0));
+    }
 
 }

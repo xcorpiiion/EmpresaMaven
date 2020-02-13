@@ -12,8 +12,14 @@ import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
 
+/**
+ * The Class FixtureFactoryCliente.
+ */
 public class FixtureFactoryCliente implements TemplateLoader {
 
+    /**
+     * Load.
+     */
     @Override
     public void load() {
         
@@ -80,7 +86,6 @@ public class FixtureFactoryCliente implements TemplateLoader {
                 add("telefones", null);
             }
         });
-
     }
 
 }

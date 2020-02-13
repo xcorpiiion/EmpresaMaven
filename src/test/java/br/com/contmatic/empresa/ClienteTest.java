@@ -1,6 +1,5 @@
 package br.com.contmatic.empresa;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -11,6 +10,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import org.junit.After;
@@ -21,24 +21,28 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import br.com.contmatic.constantes.Constante;
-import br.com.contmatic.controller.AddTelefone;
-import br.com.contmatic.controller.CarrinhoCliente;
-import br.com.contmatic.controller.CompraProduto;
-import br.com.contmatic.enums.TipoTelefone;
-import br.com.contmatic.fixture.factory.GeradorTelefone;
 import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
+/**
+ * The Class ClienteTest.
+ */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ClienteTest {
 
+    /** The produtos. */
     private static List<Produto> produtos;
 
+    /** The clientes. */
     private List<Cliente> clientes;
 
+    /** The loja. */
     private static Empresa loja;
 
+    /**
+     * Add dados iniciais.
+     */
     @BeforeClass
     public static void addDadosIniciais() {
         FixtureFactoryLoader.loadTemplates("br.com.contmatic.fixture.factory");
@@ -50,6 +54,9 @@ public class ClienteTest {
         loja.setFuncionario(new ArrayList<>());
     }
 
+    /**
+     * Add dados cliente.
+     */
     @Before
     public void addDadosCliente() {
         clientes = new ArrayList<>();
@@ -57,45 +64,31 @@ public class ClienteTest {
         Set<Telefone> telefone = new HashSet<>();
         telefone.add(Fixture.from(Telefone.class).gimme("valid"));
         clientes.get(0).setTelefones(telefone);
-        CarrinhoCliente.addItensCarrinho(clientes.get(0), loja, loja.getProduto().get(0).getNome(), 5);
     }
 
-    @Test
-    public void nao_deve_aceitar_nome_null_error() {
-        Cliente clienteInvalid = Fixture.from(Cliente.class).gimme("nomeNull");
-        clientes.get(0).setNome(clienteInvalid.getNome());
-        ValidadorAnnotionsMsgErro.returnAnnotationMsgError(clientes.get(0), Constante.NOME_NAO_PODE_ESTA_VAZIO);
-        assertNull(clientes.get(0).getNome());
-    }
-    
-    @Test
-    public void deve_add_novo_telefone_movel_para_cliente() {
-        String telefone = GeradorTelefone.geradorCellPhone();
-        AddTelefone.addTelefoneCliente(clientes.get(0), new Telefone(telefone, TipoTelefone.MOVEL));
-        assertTrue(clientes.get(0).getTelefones().stream().anyMatch(phone -> phone.getPhones().equals(telefone)));
-    }
-    
-    @Test
-    public void deve_add_novo_telefone_fixo_para_cliente() {
-        String telefone = GeradorTelefone.geradorPhone();
-        AddTelefone.addTelefoneCliente(clientes.get(0), new Telefone(telefone, TipoTelefone.FIXO));
-        assertTrue(clientes.get(0).getTelefones().stream().anyMatch(phone -> phone.getPhones().equals(telefone)));
-    }
-
+    /**
+     * Nao deve aceitar nome vazio.
+     */
     @Test
     public void nao_deve_aceitar_nome_vazio() {
         Cliente clienteInvalid = Fixture.from(Cliente.class).gimme("nomeEmpty");
         clientes.get(0).setNome(clienteInvalid.getNome());
-        assertEquals(Constante.NOME_NAO_PODE_ESTA_VAZIO, ValidadorAnnotionsMsgErro.returnAnnotationMsgError(clientes.get(0), Constante.NOME_NAO_PODE_ESTA_VAZIO));
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(clientes.get(0), Constante.VALOR_ESTA_VAZIO));
     }
 
+    /**
+     * Nao deve aceitar nome com espaco em branco.
+     */
     @Test
     public void nao_deve_aceitar_nome_com_espaco_em_branco() {
         Cliente clienteInvalid = Fixture.from(Cliente.class).gimme("nomeBlankSpace");
         clientes.get(0).setNome(clienteInvalid.getNome());
-        assertEquals(Constante.NOME_NAO_PODE_ESTA_VAZIO, ValidadorAnnotionsMsgErro.returnAnnotationMsgError(clientes.get(0), Constante.NOME_NAO_PODE_ESTA_VAZIO));
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(clientes.get(0), Constante.VALOR_ESTA_VAZIO));
     }
 
+    /**
+     * Nao deve aceitar email null.
+     */
     @Test
     public void nao_deve_aceitar_email_null() {
         Cliente clienteInvalid = Fixture.from(Cliente.class).gimme("emailNull");
@@ -103,21 +96,30 @@ public class ClienteTest {
         assertNotNull(clientes.get(0).getEmail());
     }
 
+    /**
+     * Nao deve aceitar email vazio.
+     */
     @Test
     public void nao_deve_aceitar_email_vazio() {
         Cliente clienteInvalid = Fixture.from(Cliente.class).gimme("emailEmpty");
         clientes.get(0).setEmail(clienteInvalid.getEmail());
-        assertEquals(Constante.EMAIL_NAO_PODE_ESTA_VAZIO, ValidadorAnnotionsMsgErro.returnAnnotationMsgError(clientes.get(0), Constante.EMAIL_NAO_PODE_ESTA_VAZIO));
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(clientes.get(0), Constante.VALOR_ESTA_VAZIO));
     }
 
+    /**
+     * Nao deve aceitar email com espaco em branco.
+     */
     @Test
     public void nao_deve_aceitar_email_com_espaco_em_branco() {
         Cliente clienteInvalid = Fixture.from(Cliente.class).gimme("emailBlankSpace");
         clientes.get(0).setEmail(clienteInvalid.getEmail());
         System.out.println(clientes.get(0).getEmail());
-        assertEquals(Constante.EMAIL_NAO_PODE_ESTA_VAZIO, ValidadorAnnotionsMsgErro.returnAnnotationMsgError(clientes.get(0), Constante.EMAIL_NAO_PODE_ESTA_VAZIO));
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(clientes.get(0), Constante.VALOR_ESTA_VAZIO));
     }
 
+    /**
+     * Nao deve aceitar endereco null.
+     */
     @Test
     public void nao_deve_aceitar_endereco_null() {
         Cliente clienteInvalid = Fixture.from(Cliente.class).gimme("enderecoNull");
@@ -125,69 +127,39 @@ public class ClienteTest {
         assertNull(clientes.get(0).getEndereco());
     }
 
+    /**
+     * Data nascimento nao deve ser null exception.
+     *
+     * @throws ParseException the parse exception
+     */
     @Test
-    public void dataNascimento_nao_deve_ser_null_exception() throws ParseException {
+    public void dataNascimento_nao_deve_ser_null_exception(){
         Cliente clienteValid = Fixture.from(Cliente.class).gimme("dataNascimentoNull");
         assertNotNull(clienteValid);
     }
-
-    @Test()
-    public void deve_add_produto_no_carrinho() {
-        CarrinhoCliente.addItensCarrinho(clientes.get(0), loja, loja.getProduto().get(0).getNome(), 2);
-        assertTrue("O produto não exite no carrinho", clientes.get(0).getCarrinhoProdutos().get(0).getNome().equalsIgnoreCase(loja.getProduto().get(0).getNome()));
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void nao_deve_pode_add_zero_produtos_no_carrinho() {
-        String nomeProduto = loja.getProduto().get(0).getNome();
-        int qtdProdutoAddCarrinho = 0;
-        CarrinhoCliente.addItensCarrinho(clientes.get(0), loja, nomeProduto, qtdProdutoAddCarrinho);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void nao_deve_aceitar_produto_sem_nome() {
-        String nomeProduto = "";
-        int qtdProdutoAddCarrinho = 0;
-        CarrinhoCliente.addItensCarrinho(clientes.get(0), loja, nomeProduto, qtdProdutoAddCarrinho);
-    }
-
+    
+    /**
+     * Deve add dinheiro carteira.
+     */
     @Test
     public void deve_add_dinheiro_carteira() {
         BigDecimal dinheiro = new BigDecimal(2500);
         BigDecimal dinheiroAnterior = clientes.get(0).getDinheiroCarteira();
         clientes.get(0).setDinheiroCarteira(clientes.get(0).getDinheiroCarteira().add(dinheiro));
         assertTrue(clientes.get(0).getDinheiroCarteira().compareTo(dinheiroAnterior) > 0);
-
     }
 
     @Test
-    public void deve_comprar() {
-        String nomeProduto = loja.getProduto().get(0).getNome();
-        int qtdProdutosCompra = 2;
-        clientes.get(0).setDinheiroCarteira(new BigDecimal(950));
-        System.out.println(clientes.get(0).getDinheiroCarteira());
-        CarrinhoCliente.addItensCarrinho(clientes.get(0), loja, nomeProduto, qtdProdutosCompra);
-        CompraProduto.compraProduto(clientes.get(0), nomeProduto, 1);
+    public void deve_retornar_true_caso_cpf_nao_seja_valido() {
+        StringBuilder cpf = new StringBuilder();
+        cpf.append(new Random().nextInt(888888888) + 111111111);
+        clientes.get(0).setCpf(cpf.toString());
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(clientes.get(0), Constante.VALOR_NAO_E_VALIDO));
     }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void deve_ter_dinheiro_suficiente_para_comprar() {
-        String nomeProduto = loja.getProduto().get(0).getNome();
-        int qtdProdutosCompra = 0;
-        clientes.get(0).setDinheiroCarteira(new BigDecimal(1));
-        CarrinhoCliente.addItensCarrinho(clientes.get(0), loja, nomeProduto, qtdProdutosCompra);
-        CompraProduto.compraProduto(clientes.get(0), nomeProduto, qtdProdutosCompra);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void deve_ter_quantidade_de_itens_para_compra_menor_ou_igual_a_quantidade_estoque() {
-        String nomeProduto = loja.getProduto().get(0).getNome();
-        int qtdProdutosCompra = 100;
-        clientes.get(0).setDinheiroCarteira(new BigDecimal(250));
-        CarrinhoCliente.addItensCarrinho(clientes.get(0), loja, nomeProduto, qtdProdutosCompra);
-        CompraProduto.compraProduto(clientes.get(0), nomeProduto, qtdProdutosCompra);
-    }
-
+    
+    /**
+     * Deve retornar true no equals para serem iguais.
+     */
     @Test()
     public void deve_retornar_true_no_equals_para_serem_iguais() {
         clientes.add(Fixture.from(Cliente.class).gimme("valid"));
@@ -195,6 +167,9 @@ public class ClienteTest {
         assertTrue("Os cliente são iguais", clientes.get(0).equals(clientes.get(1)));
     }
 
+    /**
+     * Deve ter hash code iguais para serem clientes iguais.
+     */
     @Test()
     public void deve_ter_hashCode_iguais_para_serem_clientes_iguais() {
         clientes.add(Fixture.from(Cliente.class).gimme("valid"));
@@ -202,11 +177,17 @@ public class ClienteTest {
         assertTrue(clientes.get(0).hashCode() == clientes.get(1).hashCode());
     }
 
+    /**
+     * Nao deve ter equals null para comparar clientes.
+     */
     @Test()
     public void nao_deve_ter_equals_null_para_comparar_clientes() {
         assertFalse("Os clientes são igauis", clientes.get(0).equals(null));
     }
 
+    /**
+     * Deve conter to string.
+     */
     @After
     public void deve_conter_toString() {
          System.out.println(clientes.get(0));

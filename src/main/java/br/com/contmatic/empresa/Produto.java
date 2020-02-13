@@ -1,8 +1,10 @@
 package br.com.contmatic.empresa;
 
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
+import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
+
 import java.math.BigDecimal;
 
-import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -14,58 +16,97 @@ import org.hibernate.validator.constraints.Length;
 
 import br.com.contmatic.constantes.Constante;
 
+/**
+ * The Class Produto.
+ */
 public class Produto {
 
-    @NotBlank(message = Constante.NOME_NAO_PODE_ESTA_VAZIO)
-    @NotEmpty(message = Constante.NOME_NAO_PODE_ESTA_VAZIO)
+    /** The nome. */
+    @NotBlank(message = Constante.VALOR_ESTA_VAZIO)
+    @NotNull(message = Constante.VALOR_ESTA_NULLO)
+    @NotEmpty(message = Constante.VALOR_ESTA_VAZIO)
     @Length(min = 3, max = 50)
     private String nome;
 
-    @NotNull(message = Constante.O_VALOR_ESTA_NULLO)
-    @DecimalMin(value = "1.00", message = Constante.O_VALOR_NAO_E_VALIDO)
+    /** The preco. */
+    @NotNull(message = Constante.VALOR_ESTA_NULLO)
+    @Min(value = 1, message = Constante.PRECISA_SER_UM_VALOR_MAIOR)
     private BigDecimal preco;
 
-    @Min(value = 1)
+    /** The estoque. */
+    @Min(value = 1, message = Constante.VALOR_NAO_E_VALIDO)
     private Integer estoque;
 
-    public Produto(String nome, BigDecimal preco, Integer estoque) {
-        this.nome = nome;
-        this.preco = preco;
-        this.estoque = estoque;
-    }
-    
-    public Produto() { 
-    }
-
+    /**
+     * Gets the nome.
+     *
+     * @return the nome
+     */
     public String getNome() {
         return nome;
     }
 
+    /**
+     * Sets the nome.
+     *
+     * @param nome the new nome
+     */
     public void setNome(String nome) {
         this.nome = nome;
     }
 
+    /**
+     * Gets the preco.
+     *
+     * @return the preco
+     */
     public BigDecimal getPreco() {
         return preco;
     }
 
+    /**
+     * Sets the preco.
+     *
+     * @param preco the new preco
+     */
     public void setPreco(BigDecimal preco) {
         this.preco = preco;
     }
 
+    /**
+     * Gets the estoque.
+     *
+     * @return the estoque
+     */
     public Integer getEstoque() {
         return estoque;
     }
 
+    /**
+     * Sets the estoque.
+     *
+     * @param estoque the new estoque
+     */
     public void setEstoque(Integer estoque) {
         this.estoque = estoque;
     }
 
+    /**
+     * Hash code.
+     *
+     * @return the int
+     */
     @Override
     public int hashCode() {
         return new HashCodeBuilder().append(nome).append(preco).toHashCode();
     }
 
+    /**
+     * Equals.
+     *
+     * @param obj the obj
+     * @return true, if successful
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -78,8 +119,13 @@ public class Produto {
         return new EqualsBuilder().append(nome, other.nome).append(preco, other.preco).isEquals();
     }
 
+    /**
+     * To string.
+     *
+     * @return the string
+     */
     @Override
     public String toString() {
-        return new StringBuilder().append("Nome: ").append(getNome()).append(", R$: ").append(getPreco()).append(", Quantidade em estoque: ").append(getEstoque()).toString();
+        return reflectionToString(this, JSON_STYLE);
     }
 }

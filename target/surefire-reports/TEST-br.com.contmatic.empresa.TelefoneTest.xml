@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="14" failures="0" name="br.com.contmatic.empresa.ClienteTest" time="0.681" errors="0" skipped="0">
+<testsuite tests="2" failures="0" name="br.com.contmatic.empresa.TelefoneTest" time="0" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_191\jre\bin"/>
@@ -64,18 +64,6 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="dataNascimento_nao_deve_ser_null_exception" time="0.013"/>
-  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_add_dinheiro_carteira" time="0"/>
-  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_add_novo_telefone_fixo_para_cliente" time="0.035"/>
-  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_add_novo_telefone_movel_para_cliente" time="0.001"/>
-  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_no_equals_para_serem_iguais" time="0.002"/>
-  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_ter_hashCode_iguais_para_serem_clientes_iguais" time="0.001"/>
-  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_aceitar_email_com_espaco_em_branco" time="0.503"/>
-  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_aceitar_email_null" time="0.001"/>
-  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_aceitar_email_vazio" time="0.034"/>
-  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_aceitar_endereco_null" time="0.001"/>
-  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_aceitar_nome_com_espaco_em_branco" time="0.041"/>
-  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_aceitar_nome_null_error" time="0.025"/>
-  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_aceitar_nome_vazio" time="0.023"/>
-  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_ter_equals_null_para_comparar_clientes" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.TelefoneTest" name="deve_ter_mesmo_telefone_para_ser_igual" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.TelefoneTest" name="deve_ter_mesmo_telefone_para_ser_igua" time="0"/>
 </testsuite>

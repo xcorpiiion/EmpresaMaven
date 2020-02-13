@@ -1,6 +1,9 @@
 package br.com.contmatic.empresa;
 
-import static br.com.contmatic.constantes.Constante.NOME_NAO_PODE_ESTA_VAZIO;
+import static br.com.contmatic.constantes.Constante.VALOR_ESTA_NULLO;
+import static br.com.contmatic.constantes.Constante.VALOR_ESTA_VAZIO;
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
+import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -22,150 +25,228 @@ import org.joda.time.DateTime;
 
 import br.com.contmatic.constantes.Constante;
 
+/**
+ * The Class Cliente.
+ */
 public class Cliente {
 
-    @CPF(message = Constante.O_CPF_ESTA_INVALIDO)
-    @NotEmpty(message = Constante.O_CPF_ESTA_VAZIO)
-    @NotBlank(message = Constante.O_CPF_ESTA_COM_UM_ESPACO_EM_BRANCO)
+    /** The cpf. */
+    @CPF(message = Constante.VALOR_NAO_E_VALIDO)
     private String cpf;
-    
-    @NotBlank(message = NOME_NAO_PODE_ESTA_VAZIO)
-    @NotEmpty(message = Constante.NOME_NAO_PODE_ESTA_VAZIO)
+
+    /** The nome. */
+    @NotEmpty(message = Constante.VALOR_ESTA_VAZIO)
+    @NotBlank(message = Constante.VALOR_ESTA_VAZIO)
     @Length(min = 3, max = 50)
     private String nome;
-    
-    @NotBlank(message = Constante.EMAIL_NAO_PODE_ESTA_VAZIO)
-    @Email(message = Constante.EMAIL_INVALIDO)
-//    @Pattern(regexp = Constante.VALIDATION_EMAIL, message = Constante.EMAIL_INVALIDO)
-    @NotEmpty(message = Constante.EMAIL_NAO_PODE_ESTA_VAZIO)
+
+    /** The email. */
+    @Email(message = Constante.VALOR_NAO_E_VALIDO)
     @Range(min = 5, max = 500, message = "Não foi possivel criar o email")
     private String email;
 
-    @NotNull(message = Constante.DATA_DE_NASCIMENTO_NAO_PODE_SER_NULLA)
+    /** The data nascimento. */
+    @NotNull(message = Constante.VALOR_ESTA_NULLO)
     private DateTime dataNascimento;
 
-    @Min(value = 0, message = "O valor é invalido")
+    /** The dinheiro carteira. */
+    @Min(value = 0, message = Constante.VALOR_NAO_E_VALIDO)
     private BigDecimal dinheiroCarteira;
 
-    @NotNull(message = Constante.O_ENDERECO_ESTA_NULL)
+    /** The endereco. */
+    @NotNull(message = VALOR_ESTA_NULLO)
     private Endereco endereco;
-    
-    @NotNull(message = Constante.O_TELEFONE_NAO_PODE_FICAR_VAZIO)
+
+    /** The telefones. */
+    @NotNull(message = VALOR_ESTA_VAZIO)
     private Set<Telefone> telefones;
-    
+
+    /** The carrinho produtos. */
     @Valid
     private List<Produto> carrinhoProdutos;
 
+    /** The produtos comprados. */
     @Valid
     private List<Produto> produtosComprados;
 
-    public Cliente(String nome, String email, DateTime dataNascimento, Endereco endereco, String cpf, Telefone telefone) {
-        this.nome = nome;
-        this.email = email;
-        this.dataNascimento = dataNascimento;
-        this.endereco = endereco;
-        this.cpf = cpf;
-        this.telefones.add(telefone);
-    }
-    
-    public Cliente(String nome, String email, DateTime dataNascimento, Endereco endereco, String cpf, Set<Telefone> telefones) {
-        this.nome = nome;
-        this.email = email;
-        this.dataNascimento = dataNascimento;
-        this.endereco = endereco;
-        this.cpf = cpf;     
-        this.telefones = telefones;
-    }
-    
-    public Cliente(String nome, String email, DateTime dataNascimento, Endereco endereco, String cpf) {
-        this.nome = nome;
-        this.email = email;
-        this.dataNascimento = dataNascimento;
-        this.endereco = endereco;
-        this.cpf = cpf;
-    }
-
-    public Cliente() {
-        
-    }
-    
+    /**
+     * Gets the cpf.
+     *
+     * @return the cpf
+     */
     public String getCpf() {
         return cpf;
     }
 
+    /**
+     * Sets the cpf.
+     *
+     * @param cpf the new cpf
+     */
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 
+    /**
+     * Gets the nome.
+     *
+     * @return the nome
+     */
     public String getNome() {
         return nome;
     }
 
+    /**
+     * Sets the nome.
+     *
+     * @param nome the new nome
+     */
     public void setNome(String nome) {
         this.nome = nome;
     }
 
+    /**
+     * Gets the email.
+     *
+     * @return the email
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Sets the email.
+     *
+     * @param email the new email
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     * Gets the data nascimento.
+     *
+     * @return the data nascimento
+     */
     public DateTime getDataNascimento() {
         return dataNascimento;
     }
 
+    /**
+     * Sets the data nascimento.
+     *
+     * @param dataNascimento the new data nascimento
+     */
     public void setDataNascimento(DateTime dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 
+    /**
+     * Gets the dinheiro carteira.
+     *
+     * @return the dinheiro carteira
+     */
     public BigDecimal getDinheiroCarteira() {
         return dinheiroCarteira;
     }
 
+    /**
+     * Sets the dinheiro carteira.
+     *
+     * @param dinheiroCarteira the new dinheiro carteira
+     */
     public void setDinheiroCarteira(BigDecimal dinheiroCarteira) {
         this.dinheiroCarteira = new BigDecimal(0).add(dinheiroCarteira);
     }
 
+    /**
+     * Gets the endereco.
+     *
+     * @return the endereco
+     */
     public Endereco getEndereco() {
         return endereco;
     }
 
+    /**
+     * Sets the endereco.
+     *
+     * @param endereco the new endereco
+     */
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
-    
+
+    /**
+     * Gets the telefones.
+     *
+     * @return the telefones
+     */
     public Set<Telefone> getTelefones() {
         return telefones;
     }
 
+    /**
+     * Sets the telefones.
+     *
+     * @param telefones the new telefones
+     */
     public void setTelefones(Set<Telefone> telefones) {
         this.telefones = telefones;
     }
 
+    /**
+     * Gets the carrinho produtos.
+     *
+     * @return the carrinho produtos
+     */
     public List<Produto> getCarrinhoProdutos() {
         return carrinhoProdutos;
     }
 
+    /**
+     * Sets the carrinho produtos.
+     *
+     * @param carrinhoProdutos the new carrinho produtos
+     */
     public void setCarrinhoProdutos(List<Produto> carrinhoProdutos) {
         this.carrinhoProdutos = carrinhoProdutos;
     }
 
+    /**
+     * Gets the produtos comprados.
+     *
+     * @return the produtos comprados
+     */
     public List<Produto> getProdutosComprados() {
         return produtosComprados;
     }
 
+    /**
+     * Sets the produtos comprados.
+     *
+     * @param produtosComprados the new produtos comprados
+     */
     public void setProdutosComprados(List<Produto> produtosComprados) {
         this.produtosComprados = produtosComprados;
     }
 
+    /**
+     * Hash code.
+     *
+     * @return the int
+     */
     @Override
     public int hashCode() {
         return new HashCodeBuilder().append(cpf).toHashCode();
     }
 
+    /**
+     * Equals.
+     *
+     * @param obj the obj
+     * @return true, if successful
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -178,11 +259,14 @@ public class Cliente {
         return new EqualsBuilder().append(cpf, other.cpf).isEquals();
     }
 
+    /**
+     * To string.
+     *
+     * @return the string
+     */
     @Override
     public String toString() {
-        return new StringBuilder().append("Cliente: ").append(getNome()).append(", email: ").append(getEmail()).append(", data de nascimento: ").
-        append(getDataNascimento()).append(", dinheiro: ").append(getDinheiroCarteira()).append(", produtos no carrinho: ").
-        append(getCarrinhoProdutos()).append(", produtos comprados: ").append(getProdutosComprados()).toString();        
+        return reflectionToString(this, JSON_STYLE);
     }
 
 }
