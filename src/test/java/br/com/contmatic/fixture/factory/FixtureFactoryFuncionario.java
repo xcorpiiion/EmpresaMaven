@@ -122,5 +122,10 @@ public class FixtureFactoryFuncionario implements TemplateLoader {
                 add("telefones", null);
             }
         });
+        Fixture.of(Funcionario.class).addTemplate("dataNascimentoNull").inherits("valid", new Rule() {
+            {
+                add("dataNascimento", null);
+            }
+        });
     }
 }

@@ -11,7 +11,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import br.com.contmatic.fixture.factory.FixtureFactoryEndereco;
+import br.com.contmatic.constantes.Constante;
+import br.com.contmatic.enums.EstadosBrasil;
+import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
@@ -39,8 +41,8 @@ public class EnderecoTest {
 	 */
 	@Before
 	public void addEndereco() {
-		endereco = FixtureFactoryEndereco.enderecoValido();
-		endereco2 = FixtureFactoryEndereco.enderecoValido();
+		endereco = Fixture.from(Endereco.class).gimme("valid");
+		endereco2 = Fixture.from(Endereco.class).gimme("valid");
 	}
 	
 	/**
@@ -60,6 +62,12 @@ public class EnderecoTest {
 	    endereco = Fixture.from(Endereco.class).gimme("valid");
 		assertNotNull(endereco.getCidade());
 	}
+	
+	@Test
+    public void deve_retornar_true_caso_cidade_esteja_com_menos_de_5_caracteres() {
+        endereco.setCidade("nike");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Constante.PRECISA_SER_UM_VALOR_MAIOR));
+    }
 	
 	/**
 	 * Nao deve aceitar cidade vazia.
@@ -88,6 +96,13 @@ public class EnderecoTest {
 		assertNotNull(endereco.getEstado());
 	}
 	
+	@Test
+    public void deve_mudar_nome_estado() {
+        endereco = Fixture.from(Endereco.class).gimme("valid");
+        endereco.setEstado(EstadosBrasil.ACRE);
+        assertTrue(endereco.getEstado() == EstadosBrasil.ACRE);
+    }
+	
 	/**
 	 * Nao deve aceitar rua null.
 	 */
@@ -97,22 +112,34 @@ public class EnderecoTest {
 		assertNotNull(endereco.getRua());
 	}
 	
+	@Test
+    public void deve_retornar_true_caso_rua_esteja_com_menos_de_5_caracteres() {
+        endereco.setRua("nike");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Constante.PRECISA_SER_UM_VALOR_MAIOR));
+    }
+	
 	/**
 	 * Nao deve aceitar rua vazia.
 	 */
 	@Test
-	public void nao_deve_aceitar_rua_vazia() {
-	    endereco = Fixture.from(Endereco.class).gimme("valid");
-		assertFalse(StringUtils.isEmpty(endereco.getRua()));
+	public void deve_retornar_true_caso_rua_esteja_com_espaco_em_branco() {
+	    endereco = Fixture.from(Endereco.class).gimme("ruaBlankSpace");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Constante.VALOR_ESTA_VAZIO));
 	}
+	
+	@Test
+    public void deve_retornar_true_caso_rua_esteja_vazia() {
+        endereco = Fixture.from(Endereco.class).gimme("ruaEmpty");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Constante.VALOR_ESTA_VAZIO));
+    }
 	
 	/**
 	 * Nao deve aceitar cep null.
 	 */
 	@Test
 	public void nao_deve_aceitar_cep_null() {
-	    endereco = Fixture.from(Endereco.class).gimme("valid");
-		assertNotNull(endereco.getCep());
+	    endereco = Fixture.from(Endereco.class).gimme("cepNull");
+	    assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Constante.VALOR_ESTA_NULLO));
 	}
 	
 	/**
@@ -120,26 +147,26 @@ public class EnderecoTest {
 	 */
 	@Test
 	public void nao_deve_aceitar_cep_vazio() {
-	    endereco = Fixture.from(Endereco.class).gimme("valid");
+	    endereco = Fixture.from(Endereco.class).gimme("cepEmpty");
 	    endereco.setCep(endereco.getCep());
-		assertFalse(StringUtils.isEmpty(endereco.getCep()));
+	    assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Constante.VALOR_ESTA_VAZIO));
 	}
 	
 	/**
 	 * Nao deve aceitar tamanho de cep diferente oito.
 	 */
 	@Test
-	public void nao_deve_aceitar_tamanho_de_cep_diferente_oito() {
+	public void deve_retornar_true_caso_cep_contenha_tamanho_diferente_de_8() {
 	    endereco = Fixture.from(Endereco.class).gimme("valid");
 		endereco.setCep(endereco.getCep());
-		assertEquals("O endereço não possui 8 digitos", 8, endereco.getCep().length());
+		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Constante.VALOR_NAO_E_VALIDO));
 	}
 	
 	/**
 	 * Nao deve aceitar letras no cep.
 	 */
 	@Test
-	public void nao_deve_aceitar_letras_no_cep() {
+	public void deve_retornar_true_caso_contenha_alguma_letra_no_cep() {
 		endereco = Fixture.from(Endereco.class).gimme("valid");
 		assertTrue(StringUtils.isNumeric(endereco.getCep()));
 	}
@@ -154,12 +181,42 @@ public class EnderecoTest {
 		assertNotNull(endereco.getBairro());
 	}
 	
+	@Test
+    public void deve_retornar_true_caso_bairro_esteja_com_espaco_em_branco() {
+        endereco = Fixture.from(Endereco.class).gimme("bairroBlankSpace");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Constante.VALOR_ESTA_VAZIO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_bairro_esteja_vazio() {
+        endereco = Fixture.from(Endereco.class).gimme("bairroEmpty");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Constante.VALOR_ESTA_VAZIO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_bairro_esteja_com_tamanho_menor_5_caracteres() {
+        endereco.setBairro("nike");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Constante.PRECISA_SER_UM_VALOR_MAIOR));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_estado_for_igual_getNome_do_enum_estadoBrasil() {
+        endereco.setEstado(EstadosBrasil.ACRE);
+        assertTrue(endereco.getEstado().getNome().equalsIgnoreCase("acre"));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_estado_for_igual_getSigla_do_enum_estadoBrasil() {
+        endereco.setEstado(EstadosBrasil.ACRE);
+        assertTrue(endereco.getEstado().getSigla().equalsIgnoreCase("ac"));
+    }
+	
 	/**
 	 * Nao deve conter enderecos iguais.
 	 */
 	@Test
-	public void nao_deve_conter_enderecos_iguais() {
-		assertFalse(endereco.equals(endereco2));
+	public void deve_retornar_false_caso_compare_com_classe_diferente() {
+		assertFalse(endereco.equals(new Object()));
 	}
 	
 	/**
@@ -174,9 +231,8 @@ public class EnderecoTest {
 	 * Endereco deve conter endereco o mesmo cep para serem iguais.
 	 */
 	@Test
-	public void endereco_deve_conter_endereco_o_mesmo_cep_para_serem_iguais() {
-		endereco2.setCep(endereco.getCep());
-		assertFalse(endereco.equals(endereco2));
+	public void deve_retornar_true_caso_compare_com_mesmo_objeto() {
+		assertTrue(endereco.equals(endereco));
 	}
 	
 	/**

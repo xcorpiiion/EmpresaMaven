@@ -26,7 +26,7 @@ public class FixtureFactoryEndereco implements TemplateLoader{
                 add("rua", name());
                 add("bairro", name());
                 add("cep", cepRandom.toString());
-                add("numeroResidencia", random(Integer.class, range(1, 10000)));
+                add("numeroResidencia", new Random().nextInt(100000) + 1);
                 add("cidade", firstName());
                 add("estado", EstadosBrasil.values()[new Random().nextInt(EstadosBrasil.values().length)]);
                 

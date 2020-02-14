@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="14" failures="0" name="br.com.contmatic.empresa.ClienteTest" time="0.681" errors="0" skipped="0">
+<testsuite tests="17" failures="0" name="br.com.contmatic.empresa.ClienteTest" time="0.664" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_191\jre\bin"/>
@@ -27,7 +27,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="user.variant" value=""/>
     <property name="os.name" value="Windows 10"/>
-    <property name="classworlds.conf" value="C:\Users\vinicius.cruz\Documents\workspace-spring-tool-suite-4-4.5.0.RELEASE\.metadata\.plugins\org.eclipse.m2e.launching\launches\m2conf3788768124001357325.tmp"/>
+    <property name="classworlds.conf" value="C:\Users\vinicius.cruz\Documents\workspace-spring-tool-suite-4-4.5.0.RELEASE\.metadata\.plugins\org.eclipse.m2e.launching\launches\m2conf5107585279453432782.tmp"/>
     <property name="jansi.force" value="true"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
     <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_191\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Python38\Scripts\;C:\Python38\;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Git\cmd;C:\vini\nvm;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;C:\Users\vinicius.cruz\AppData\Local\Programs\Microsoft VS Code\bin;C:\vini\nvm;C:\Program Files\nodejs;C:\Users\vinicius.cruz\AppData\Local\GitHubDesktop\bin;."/>
@@ -64,18 +64,21 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="dataNascimento_nao_deve_ser_null_exception" time="0.013"/>
-  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_add_dinheiro_carteira" time="0"/>
-  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_add_novo_telefone_fixo_para_cliente" time="0.035"/>
-  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_add_novo_telefone_movel_para_cliente" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_add_dinheiro_carteira" time="0.028"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_add_produto_na_lista_de_produtos_comprados" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_add_produto_no_carrinho" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_add_telefone_na_lista_telefones" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_alterar_dataNascimento" time="0.002"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_false_quando_compara_com_classe_diferente" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_caso_cpf_nao_seja_valido" time="0.511"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_caso_email_contenha_espaco_em_branco" time="0.035"/>
   <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_no_equals_para_serem_iguais" time="0.002"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_quando_compara_com_mesmo_objeto" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_se_dataNascimento_for_null" time="0.029"/>
   <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_ter_hashCode_iguais_para_serem_clientes_iguais" time="0.001"/>
-  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_aceitar_email_com_espaco_em_branco" time="0.503"/>
-  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_aceitar_email_null" time="0.001"/>
-  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_aceitar_email_vazio" time="0.034"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_aceitar_email_null" time="0.002"/>
   <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_aceitar_endereco_null" time="0.001"/>
-  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_aceitar_nome_com_espaco_em_branco" time="0.041"/>
-  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_aceitar_nome_null_error" time="0.025"/>
-  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_aceitar_nome_vazio" time="0.023"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_aceitar_nome_com_espaco_em_branco" time="0.026"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_aceitar_nome_vazio" time="0.021"/>
   <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_ter_equals_null_para_comparar_clientes" time="0.001"/>
 </testsuite>

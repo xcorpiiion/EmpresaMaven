@@ -19,9 +19,9 @@ import br.com.contmatic.enums.EstadosBrasil;
 public class Endereco {
 
     /** The rua. */
+    @NotNull(message = Constante.VALOR_ESTA_NULLO)
     @NotEmpty(message = Constante.VALOR_ESTA_VAZIO)
     @NotBlank(message = Constante.VALOR_ESTA_VAZIO)
-    @NotNull(message = Constante.VALOR_ESTA_NULLO)
     @Min(value = 5, message = Constante.PRECISA_SER_UM_VALOR_MAIOR)
     private String rua;
 
@@ -40,17 +40,15 @@ public class Endereco {
     private String cep;
 
     /** The numero residencia. */
-    @NotEmpty(message = Constante.VALOR_ESTA_VAZIO)
-    @NotBlank(message = Constante.VALOR_ESTA_VAZIO)
     @Min(value = 1)
     private int numeroResidencia;
 
     /** The cidade. */
+    @NotNull(message = Constante.VALOR_ESTA_NULLO)
     @NotEmpty(message = Constante.VALOR_ESTA_VAZIO)
     @NotBlank(message = Constante.VALOR_ESTA_VAZIO)
-    @NotNull(message = Constante.VALOR_ESTA_NULLO)
-    @Pattern(regexp = Constante.ILLEGAL_NUMBER, message = Constante.VALOR_NAO_E_VALIDO)
     @Min(value = 5, message = Constante.PRECISA_SER_UM_VALOR_MAIOR)
+    @Pattern(regexp = Constante.ILLEGAL_NUMBER, message = Constante.VALOR_NAO_E_VALIDO)
     private String cidade;
 
     /** The estado. */

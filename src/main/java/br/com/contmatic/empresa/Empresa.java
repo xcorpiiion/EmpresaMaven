@@ -10,6 +10,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -27,7 +28,8 @@ public class Empresa {
     @NotEmpty(message = Constante.VALOR_ESTA_VAZIO)
     @NotBlank(message = Constante.VALOR_ESTA_VAZIO)
     @NotNull(message = Constante.VALOR_ESTA_NULLO)
-    @Size(min = 3, max = 100, message = "O nome não é valido")
+    @Size(min = 3, max = 100, message = "O nome não é valido {max}")
+    @Pattern(regexp = Constante.ILLEGAL_NUMBER, message = Constante.VALOR_NAO_E_VALIDO)
     private String nome;
 
     /** The email. */

@@ -2,6 +2,7 @@ package br.com.contmatic.empresa;
 
 import static br.com.contmatic.constantes.Constante.VALOR_ESTA_NULLO;
 import static br.com.contmatic.constantes.Constante.VALOR_ESTA_VAZIO;
+import static br.com.contmatic.constantes.Constante.VALOR_NAO_E_VALIDO;
 import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
@@ -19,7 +20,6 @@ import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.br.CPF;
 import org.joda.time.DateTime;
 
@@ -31,18 +31,17 @@ import br.com.contmatic.constantes.Constante;
 public class Cliente {
 
     /** The cpf. */
-    @CPF(message = Constante.VALOR_NAO_E_VALIDO)
+    @CPF(message = VALOR_NAO_E_VALIDO)
     private String cpf;
 
     /** The nome. */
     @NotEmpty(message = Constante.VALOR_ESTA_VAZIO)
     @NotBlank(message = Constante.VALOR_ESTA_VAZIO)
-    @Length(min = 3, max = 50)
+    @Length(min = 3, max = 50, message = Constante.VALOR_NAO_E_VALIDO)
     private String nome;
 
     /** The email. */
     @Email(message = Constante.VALOR_NAO_E_VALIDO)
-    @Range(min = 5, max = 500, message = "Não foi possivel criar o email")
     private String email;
 
     /** The data nascimento. */

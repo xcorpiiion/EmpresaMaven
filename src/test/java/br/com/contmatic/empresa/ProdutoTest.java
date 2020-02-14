@@ -106,6 +106,16 @@ public class ProdutoTest {
     public void deve_retornar_false_caso_compare_com_um_valor_null() {
         assertFalse("Os produtos são iguais", produto.equals(null));
     }
+    
+    @Test()
+    public void deve_retornar_true_caso_compare_com_mesmo_objeto() {
+        assertTrue("Os produtos são iguais", produto.equals(produto));
+    }
+    
+    @Test()
+    public void deve_retornar_false_caso_compare_com_classe_diferente() {
+        assertFalse("Os produtos são iguais", produto.equals(new Object()));
+    }
 
     /**
      * Deve ser iguais caso possua mesmo hashcode.

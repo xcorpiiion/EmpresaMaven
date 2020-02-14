@@ -48,7 +48,12 @@ public class FixtureFactoryTelefone implements TemplateLoader {
         });
         Fixture.of(Telefone.class).addTemplate("phoneDDDInvalid").inherits("valid", new Rule() {
             {
-                add("phone", "10958004508");
+                add("phone", GeradorTelefone.geradorPhoneInvalido());
+            }
+        });
+        Fixture.of(Telefone.class).addTemplate("cellphoneDDDInvalid").inherits("valid", new Rule() {
+            {
+                add("phone", GeradorTelefone.geradorCellPhoneInvalido());
             }
         });
         Fixture.of(Telefone.class).addTemplate("tipoTelefoneNull").inherits("valid", new Rule() {

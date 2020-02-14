@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="2" failures="0" name="br.com.contmatic.empresa.TelefoneTest" time="0" errors="0" skipped="0">
+<testsuite tests="16" failures="0" name="br.com.contmatic.empresa.TelefoneTest" time="0.027" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_191\jre\bin"/>
@@ -27,7 +27,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="user.variant" value=""/>
     <property name="os.name" value="Windows 10"/>
-    <property name="classworlds.conf" value="C:\Users\vinicius.cruz\Documents\workspace-spring-tool-suite-4-4.5.0.RELEASE\.metadata\.plugins\org.eclipse.m2e.launching\launches\m2conf3788768124001357325.tmp"/>
+    <property name="classworlds.conf" value="C:\Users\vinicius.cruz\Documents\workspace-spring-tool-suite-4-4.5.0.RELEASE\.metadata\.plugins\org.eclipse.m2e.launching\launches\m2conf5107585279453432782.tmp"/>
     <property name="jansi.force" value="true"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
     <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_191\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Python38\Scripts\;C:\Python38\;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Git\cmd;C:\vini\nvm;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;C:\Users\vinicius.cruz\AppData\Local\Programs\Microsoft VS Code\bin;C:\vini\nvm;C:\Program Files\nodejs;C:\Users\vinicius.cruz\AppData\Local\GitHubDesktop\bin;."/>
@@ -64,6 +64,20 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="br.com.contmatic.empresa.TelefoneTest" name="deve_ter_mesmo_telefone_para_ser_igual" time="0"/>
-  <testcase classname="br.com.contmatic.empresa.TelefoneTest" name="deve_ter_mesmo_telefone_para_ser_igua" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.TelefoneTest" name="deve_retornar_true_caso_sejam_mesmo_objeto" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.TelefoneTest" name="deve_retornar_true_caso_tipoTelefone_seja_movel" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.TelefoneTest" name="deve_retornar_true_caso_equals_sejam_iguais" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.TelefoneTest" name="deve_retornar_false_caso_hashCode_sejam_diferentes" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.TelefoneTest" name="deve_retornar_true_caso_celular_esteja_com_ddd_errado" time="0.005"/>
+  <testcase classname="br.com.contmatic.empresa.TelefoneTest" name="deve_retornar_true_caso_telefone_seja_null" time="0.003"/>
+  <testcase classname="br.com.contmatic.empresa.TelefoneTest" name="deve_retornar_true_caso_telefone_tenha_apenas_espacos_em_branco" time="0.004"/>
+  <testcase classname="br.com.contmatic.empresa.TelefoneTest" name="deve_ter_mesmo_hashcode_para_ser_igual" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.TelefoneTest" name="deve_retornar_true_caso_telefone_esteja_vazio" time="0.003"/>
+  <testcase classname="br.com.contmatic.empresa.TelefoneTest" name="deve_retornar_false_caso_compare_com_null" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.TelefoneTest" name="deve_retornar_true_caso_telefone_esteja_com_ddd_errado" time="0.003"/>
+  <testcase classname="br.com.contmatic.empresa.TelefoneTest" name="deve_retornar_true_caso_tipoTelefone_esteja_null" time="0.005"/>
+  <testcase classname="br.com.contmatic.empresa.TelefoneTest" name="deve_retornar_true_caso_tipoTelefone_seja_fixo" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.TelefoneTest" name="deve_retornar_true_caso_telefone_seja_valido" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.TelefoneTest" name="deve_retornar_true_caso_telefone_esteja_com_tamanho_invalido" time="0.003"/>
+  <testcase classname="br.com.contmatic.empresa.TelefoneTest" name="deve_retornar_false_caso_compare_com_object" time="0"/>
 </testsuite>

@@ -1,5 +1,6 @@
 package br.com.contmatic.empresa;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -39,6 +41,8 @@ public class ClienteTest {
 
     /** The loja. */
     private static Empresa loja;
+    
+    Set<Telefone> telefone;
 
     /**
      * Add dados iniciais.
@@ -61,11 +65,17 @@ public class ClienteTest {
     public void addDadosCliente() {
         clientes = new ArrayList<>();
         clientes.add(Fixture.from(Cliente.class).gimme("valid"));
-        Set<Telefone> telefone = new HashSet<>();
+        telefone = new HashSet<>();
         telefone.add(Fixture.from(Telefone.class).gimme("valid"));
         clientes.get(0).setTelefones(telefone);
     }
 
+    @Test
+    public void deve_add_telefone_na_lista_telefones() {
+        clientes.get(0).setTelefones(telefone);
+        assertTrue(clientes.get(0).getTelefones().size() > 0);
+    }
+    
     /**
      * Nao deve aceitar nome vazio.
      */
@@ -95,26 +105,15 @@ public class ClienteTest {
         clientes.get(0).setNome(clienteInvalid.getEmail());
         assertNotNull(clientes.get(0).getEmail());
     }
-
-    /**
-     * Nao deve aceitar email vazio.
-     */
-    @Test
-    public void nao_deve_aceitar_email_vazio() {
-        Cliente clienteInvalid = Fixture.from(Cliente.class).gimme("emailEmpty");
-        clientes.get(0).setEmail(clienteInvalid.getEmail());
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(clientes.get(0), Constante.VALOR_ESTA_VAZIO));
-    }
-
     /**
      * Nao deve aceitar email com espaco em branco.
      */
     @Test
-    public void nao_deve_aceitar_email_com_espaco_em_branco() {
+    public void deve_retornar_true_caso_email_contenha_espaco_em_branco() {
         Cliente clienteInvalid = Fixture.from(Cliente.class).gimme("emailBlankSpace");
         clientes.get(0).setEmail(clienteInvalid.getEmail());
         System.out.println(clientes.get(0).getEmail());
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(clientes.get(0), Constante.VALOR_ESTA_VAZIO));
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(clientes.get(0), Constante.VALOR_NAO_E_VALIDO));
     }
 
     /**
@@ -133,9 +132,15 @@ public class ClienteTest {
      * @throws ParseException the parse exception
      */
     @Test
-    public void dataNascimento_nao_deve_ser_null_exception(){
+    public void deve_retornar_true_se_dataNascimento_for_null(){
         Cliente clienteValid = Fixture.from(Cliente.class).gimme("dataNascimentoNull");
-        assertNotNull(clienteValid);
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(clienteValid, Constante.VALOR_ESTA_NULLO));
+    }
+    
+    @Test
+    public void deve_alterar_dataNascimento(){
+        clientes.get(0).setDataNascimento(new DateTime());
+        assertEquals(new DateTime(), clientes.get(0).getDataNascimento());
     }
     
     /**
@@ -160,13 +165,35 @@ public class ClienteTest {
     /**
      * Deve retornar true no equals para serem iguais.
      */
+    
+    @Test
+    public void deve_add_produto_no_carrinho() {
+        clientes.get(0).setCarrinhoProdutos(produtos);
+        assertTrue(clientes.get(0).getCarrinhoProdutos().size() > 0);
+    }
+    
+    @Test
+    public void deve_add_produto_na_lista_de_produtos_comprados() {
+        clientes.get(0).setProdutosComprados(produtos);
+        assertTrue(clientes.get(0).getProdutosComprados().size() > 0);
+    }
+    
     @Test()
     public void deve_retornar_true_no_equals_para_serem_iguais() {
         clientes.add(Fixture.from(Cliente.class).gimme("valid"));
         clientes.get(1).setCpf(clientes.get(0).getCpf());
         assertTrue("Os cliente são iguais", clientes.get(0).equals(clientes.get(1)));
     }
+    
+    @Test()
+    public void deve_retornar_true_quando_compara_com_mesmo_objeto() {
+        assertTrue(clientes.get(0).equals(clientes.get(0)));
+    }
 
+    @Test()
+    public void deve_retornar_false_quando_compara_com_classe_diferente() {
+        assertFalse(clientes.get(0).equals(new Object()));
+    }
     /**
      * Deve ter hash code iguais para serem clientes iguais.
      */

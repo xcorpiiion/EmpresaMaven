@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="8" failures="0" name="br.com.contmatic.empresa.ProdutoTest" time="0.017" errors="0" skipped="0">
+<testsuite tests="11" failures="0" name="br.com.contmatic.empresa.ProdutoTest" time="0.017" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_191\jre\bin"/>
@@ -27,7 +27,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="user.variant" value=""/>
     <property name="os.name" value="Windows 10"/>
-    <property name="classworlds.conf" value="C:\Users\vinicius.cruz\Documents\workspace-spring-tool-suite-4-4.5.0.RELEASE\.metadata\.plugins\org.eclipse.m2e.launching\launches\m2conf3788768124001357325.tmp"/>
+    <property name="classworlds.conf" value="C:\Users\vinicius.cruz\Documents\workspace-spring-tool-suite-4-4.5.0.RELEASE\.metadata\.plugins\org.eclipse.m2e.launching\launches\m2conf5107585279453432782.tmp"/>
     <property name="jansi.force" value="true"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
     <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_191\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Python38\Scripts\;C:\Python38\;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Git\cmd;C:\vini\nvm;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;C:\Users\vinicius.cruz\AppData\Local\Programs\Microsoft VS Code\bin;C:\vini\nvm;C:\Program Files\nodejs;C:\Users\vinicius.cruz\AppData\Local\GitHubDesktop\bin;."/>
@@ -64,12 +64,15 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_retornar_mensagem_caso_preco_seja_null" time="0.005"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_retornar_mensagem_caso_preco_seja_null" time="0.006"/>
   <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="nao_deve_aceitar_nome_vazio" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_retornar_true_caso_compare_com_mesmo_objeto" time="0"/>
   <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="nao_deve_aceitar_produtos_iguais" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_retornar_false_caso_compare_com_classe_diferente" time="0"/>
   <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_aceitar_estoque_que_nao_seja_negativo" time="0.002"/>
   <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_aceitar_nome_com_espaco_em_branco" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_retornar_false_caso_compare_com_um_valor_null" time="0"/>
   <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_ser_iguais_caso_possua_mesmo_hashcode" time="0"/>
   <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_armazenar_nome_null_e_armazenar_no_validationAnnotation" time="0.004"/>
-  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_retornar_mensagem_caso_estoque_seja_menor_que_um" time="0.006"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_retornar_mensagem_caso_estoque_seja_menor_que_um" time="0.005"/>
 </testsuite>

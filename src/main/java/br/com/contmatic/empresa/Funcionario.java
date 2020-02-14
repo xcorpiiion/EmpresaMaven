@@ -33,6 +33,8 @@ public class Funcionario {
     private String nome;
 
     /** The email. */
+    @NotNull(message = Constante.VALOR_ESTA_NULLO)
+    @NotEmpty(message = Constante.VALOR_ESTA_VAZIO)
     @Email(message = Constante.VALOR_NAO_E_VALIDO)
     private String email;
 
@@ -123,9 +125,13 @@ public class Funcionario {
      * Gets the tipo contrato.
      *
      * @return the tipo contrato
-     */
+     */    
     public TipoContrato getTipoContrato() {
         return tipoContrato;
+    }
+
+    public void setTipoContrato(TipoContrato tipoContrato) {
+        this.tipoContrato = tipoContrato;
     }
 
     /**
@@ -168,9 +174,13 @@ public class Funcionario {
      * Gets the data nascimento.
      *
      * @return the data nascimento
-     */
+     */   
     public DateTime getDataNascimento() {
         return dataNascimento;
+    }
+
+    public void setDataNascimento(DateTime dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 
     /**

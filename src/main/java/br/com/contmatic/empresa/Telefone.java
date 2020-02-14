@@ -2,22 +2,19 @@ package br.com.contmatic.empresa;
 
 import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-
 import br.com.contmatic.constantes.Constante;
 import br.com.contmatic.enums.TipoTelefone;
 
 /**
  * The Class Telefone.
  */
-public class Telefone {
+public final class Telefone {
 
     /** The phone. */
     @NotBlank(message = Constante.VALOR_ESTA_VAZIO)
