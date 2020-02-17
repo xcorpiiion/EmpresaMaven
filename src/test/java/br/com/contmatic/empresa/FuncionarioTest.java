@@ -10,16 +10,16 @@ import java.util.List;
 import java.util.Set;
 
 import org.joda.time.DateTime;
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import br.com.contmatic.constantes.Constante;
-import br.com.contmatic.enums.Cargo;
-import br.com.contmatic.enums.TipoContrato;
+import br.com.contmatic.constantes.Mensagem;
+import br.com.contmatic.telefone.Telefone;
+import br.com.contmatic.telefone.TipoContrato;
 import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
@@ -34,7 +34,9 @@ public class FuncionarioTest {
     private static List<Produto> produtos;
 
     /** The funcionarios. */
-    private List<Funcionario> funcionarios;
+    private static Funcionario funcionario;
+    
+    private Funcionario funcionario2;
 
     /** The loja. */
     private static Empresa loja;
@@ -50,8 +52,6 @@ public class FuncionarioTest {
         produtos = new ArrayList<>();
         produtos.add(Fixture.from(Produto.class).gimme("valid"));
         loja = Fixture.from(Empresa.class).gimme("valid");
-        loja.setFuncionario(new ArrayList<>());
-        loja.setFuncionario(new ArrayList<>());
     }
 
     /**
@@ -59,10 +59,8 @@ public class FuncionarioTest {
      */
     @Before
     public void add_dados_funcionario() {
-        funcionarios = new ArrayList<>();
-        funcionarios.add(Fixture.from(Funcionario.class).gimme("valid"));
-        funcionarios.add(Fixture.from(Funcionario.class).gimme("valid"));
-        funcionarios.add(Fixture.from(Funcionario.class).gimme("valid"));
+        funcionario = (Fixture.from(Funcionario.class).gimme("valid"));
+        funcionario2 = (Fixture.from(Funcionario.class).gimme("valid"));
     }
     
     @Before
@@ -75,116 +73,176 @@ public class FuncionarioTest {
 
     @Test
     public void deve_mudar_nome_funcionario() {
-        funcionarios.get(0).setNome("kratos");
-        assertEquals("kratos", funcionarios.get(0).getNome());
+        funcionario.setNome("kratos");
+        assertEquals("kratos", funcionario.getNome());
     }
     
     @Test
     public void deve_retornar_true_caso_nome_seja_null() {
-        funcionarios.set(0, Fixture.from(Funcionario.class).gimme("nomeNull"));
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionarios.get(0), Constante.VALOR_ESTA_NULLO));
+        funcionario= Fixture.from(Funcionario.class).gimme("nomeNull");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_ESTA_NULLO));
     }
     
     @Test
     public void deve_retornar_true_caso_nome_seja_vazio() {
-        funcionarios.set(0, Fixture.from(Funcionario.class).gimme("nomeEmpty"));
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionarios.get(0), Constante.VALOR_ESTA_VAZIO));
+        funcionario = Fixture.from(Funcionario.class).gimme("nomeEmpty");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_ESTA_VAZIO));
     }
     
     @Test
     public void deve_retornar_true_caso_nome_esteja_com_espaco_em_branco() {
-        funcionarios.set(0, Fixture.from(Funcionario.class).gimme("nomeBlankSpace"));
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionarios.get(0), Constante.VALOR_ESTA_VAZIO));
+        funcionario = Fixture.from(Funcionario.class).gimme("nomeBlankSpace");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_ESTA_VAZIO));
     }
     
     @Test
-    public void deve_mudar_email_funcionario() {
-        loja.setEmail("kratos@gmail.com");
-        assertEquals("kratos@gmail.com", loja.getEmail());
+    public void deve_retornar_true_caso_nome_seja_possua_menos_3_caracter() {
+        funcionario = Fixture.from(Funcionario.class).gimme("nomeLess3Caracter");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_nome_seja_possua_mais_50_caracter() {
+        funcionario = Fixture.from(Funcionario.class).gimme("nomeGreaterCaracter");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_nome_seja_possua_caracteres_especiais() {
+        funcionario = Fixture.from(Funcionario.class).gimme("nomeWithSpecialCaracter");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_email_seja_null() {
-        funcionarios.set(0, Fixture.from(Funcionario.class).gimme("emailNull"));
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionarios.get(0), Constante.VALOR_ESTA_NULLO));
+        funcionario = Fixture.from(Funcionario.class).gimme("emailNull");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_ESTA_NULLO));
     }
     
     @Test
     public void deve_retornar_true_caso_email_seja_vazio() {
-        funcionarios.set(0, Fixture.from(Funcionario.class).gimme("emailEmpty"));
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionarios.get(0), Constante.VALOR_ESTA_VAZIO));
+        funcionario = Fixture.from(Funcionario.class).gimme("emailEmpty");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_ESTA_VAZIO));
     }
     
     @Test
     public void deve_retornar_true_caso_email_esteja_com_espaco_em_branco() {
-        funcionarios.set(0, Fixture.from(Funcionario.class).gimme("emailBlankSpace"));
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionarios.get(0), Constante.VALOR_NAO_E_VALIDO));
+        funcionario = Fixture.from(Funcionario.class).gimme("emailBlankSpace");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_alterar_email() {
-        funcionarios.get(0).setEmail("kratos@gmail.com");
-        assertEquals("kratos@gmail.com", funcionarios.get(0).getEmail());
+        funcionario.setEmail("kratos@gmail.com");
+        assertEquals("kratos@gmail.com", funcionario.getEmail());
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_email_esteja_com_menos_10_caracteres() {
+        funcionario = Fixture.from(Funcionario.class).gimme("emailLess10Caracteres");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_email_esteja_com_mais_100_caracteres() {
+        funcionario = Fixture.from(Funcionario.class).gimme("emailGreater100Caracteres");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_email_esteja_com_espaco_em_branco_entre_o_email() {
+        funcionario = Fixture.from(Funcionario.class).gimme("emailWithBlankSpaceInWord");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_email_esteja_com_numero_depois_do_arroba() {
+        funcionario = Fixture.from(Funcionario.class).gimme("emailWithNumberAfterArroba");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_email_esteja_sem_arroba() {
+        funcionario = Fixture.from(Funcionario.class).gimme("emailWithoutArroba");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_email_esteja_sem_ponto_com() {
+        funcionario = Fixture.from(Funcionario.class).gimme("emailWithoutPontoCom");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_email_esteja_sem_com() {
+        funcionario = Fixture.from(Funcionario.class).gimme("emailWithoutCom");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_email_esteja_com_caracteres_especiais() {
+        funcionario = Fixture.from(Funcionario.class).gimme("emailWithSpecialCaracter");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_retornar_true_se_cargo_for_null() {
-        funcionarios.set(0, Fixture.from(Funcionario.class).gimme("cargoNull"));
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionarios.get(0), Constante.VALOR_ESTA_NULLO));
+        funcionario = Fixture.from(Funcionario.class).gimme("cargoNull");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_ESTA_NULLO));
     }
     
     @Test
     public void deve_alterar_cargo_para_repositor() {
-        funcionarios.get(0).setCargo(Cargo.REPOSITOR);
-        assertTrue(funcionarios.get(0).getCargo() == Cargo.REPOSITOR);
+        funcionario.setCargo(Cargo.REPOSITOR);
+        assertTrue(funcionario.getCargo() == Cargo.REPOSITOR);
     }
     
     @Test
     public void deve_alterar_cargo_para_rh() {
-        funcionarios.get(0).setCargo(Cargo.RH);
-        assertTrue(funcionarios.get(0).getCargo() == Cargo.RH);
+        funcionario.setCargo(Cargo.RH);
+        assertTrue(funcionario.getCargo() == Cargo.RH);
     }
     
     @Test
     public void deve_retornar_true_se_tipoContrato_for_null() {
-        funcionarios.set(0, Fixture.from(Funcionario.class).gimme("tipoContratoNull"));
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionarios.get(0), Constante.VALOR_ESTA_NULLO));
+        funcionario = Fixture.from(Funcionario.class).gimme("tipoContratoNull");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_ESTA_NULLO));
     }
     
     @Test
     public void deve_alterar_tipoContrato_para_clt() {
-        funcionarios.get(0).setTipoContrato(TipoContrato.CLT);
-        assertTrue(funcionarios.get(0).getTipoContrato() == TipoContrato.CLT);
+        funcionario.setTipoContrato(TipoContrato.CLT);
+        assertTrue(funcionario.getTipoContrato() == TipoContrato.CLT);
     }
     
     @Test
     public void deve_alterar_tipoContrato_para_pj() {
-        funcionarios.get(0).setTipoContrato(TipoContrato.PJ);
-        assertTrue(funcionarios.get(0).getTipoContrato() == TipoContrato.PJ);
+        funcionario.setTipoContrato(TipoContrato.PJ);
+        assertTrue(funcionario.getTipoContrato() == TipoContrato.PJ);
     }
     
     @Test
     public void deve_retornar_true_se_dataNascimento_for_null() {
-        funcionarios.set(0, Fixture.from(Funcionario.class).gimme("dataNascimentoNull"));
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionarios.get(0), Constante.VALOR_ESTA_NULLO));
+        funcionario = Fixture.from(Funcionario.class).gimme("dataNascimentoNull");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_ESTA_NULLO));
     }
     
     @Test
     public void deve_alterar_dataNascimento() {
-        funcionarios.get(0).setDataNascimento(new DateTime());
-        assertEquals(new DateTime(), funcionarios.get(0).getDataNascimento());
+        funcionario.setDataNascimento(new DateTime());
+        assertEquals(new DateTime(), funcionario.getDataNascimento());
     }
     
     @Test
     public void deve_add_telefone_na_lista_telefones() {
-        funcionarios.get(0).setTelefones(telefones);
-        assertTrue(funcionarios.get(0).getTelefones().size() > 0);
+        funcionario.setTelefones(telefones);
+        assertTrue(funcionario.getTelefones().size() > 0);
     }
     
     @Test
     public void deve_mudar_endereco() {
-        funcionarios.get(0).setEndereco(funcionarios.get(1).getEndereco());
-        assertEquals(funcionarios.get(1).getEndereco(), funcionarios.get(0).getEndereco());   
+        funcionario.setEndereco(funcionario2.getEndereco());
+        assertEquals(funcionario2.getEndereco(), funcionario.getEndereco());   
     }
     
     /**
@@ -192,35 +250,35 @@ public class FuncionarioTest {
      */
     @Test
     public void deve_ter_salario_maior_do_que_zero() {
-        funcionarios.add(Fixture.from(Funcionario.class).gimme("salarioLess1"));
-        funcionarios.get(3).setSalario(funcionarios.get(3).getSalario());
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionarios.get(3), Constante.PRECISA_SER_UM_VALOR_MAIOR));
+        funcionario = (Fixture.from(Funcionario.class).gimme("salarioLess1"));
+        funcionario2.setSalario(funcionario.getSalario());
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario2, Mensagem.PRECISA_SER_UM_VALOR_MAIOR));
     }
 
     @Test()
     public void deve_retornar_true_no_equals_para_serem_iguais() {
-        funcionarios.add(Fixture.from(Funcionario.class).gimme("valid"));
-        funcionarios.get(1).setCpf(funcionarios.get(0).getCpf());
-        assertTrue("Os Funcionario são iguais", funcionarios.get(0).equals(funcionarios.get(1)));
+        funcionario = (Fixture.from(Funcionario.class).gimme("valid"));
+        funcionario2.setCpf(funcionario.getCpf());
+        assertTrue("Os Funcionario são iguais", funcionario.equals(funcionario2));
     }
     
     @Test()
     public void deve_retornar_true_quando_compara_com_mesmo_objeto() {
-        assertTrue(funcionarios.get(0).equals(funcionarios.get(0)));
+        assertTrue(funcionario.equals(funcionario));
     }
 
     @Test()
     public void deve_retornar_false_quando_compara_com_classe_diferente() {
-        assertFalse(funcionarios.get(0).equals(new Object()));
+        assertFalse(funcionario.equals(new Object()));
     }
     /**
      * Deve ter hash code iguais para serem funcionarios iguais.
      */
     @Test()
     public void deve_ter_hashCode_iguais_para_serem_funcionarios_iguais() {
-        funcionarios.add(Fixture.from(Funcionario.class).gimme("valid"));
-        funcionarios.get(1).setCpf(funcionarios.get(0).getCpf());
-        assertTrue(funcionarios.get(0).hashCode() == funcionarios.get(1).hashCode());
+        funcionario = (Fixture.from(Funcionario.class).gimme("valid"));
+        funcionario2.setCpf(funcionario.getCpf());
+        assertTrue(funcionario.hashCode() == funcionario2.hashCode());
     }
 
     /**
@@ -228,15 +286,15 @@ public class FuncionarioTest {
      */
     @Test()
     public void nao_deve_ter_equals_null_para_comparar_funcionarios() {
-        assertFalse("Os funcionarios são igauis", funcionarios.get(0).equals(null));
+        assertFalse("Os funcionarios são igauis", funcionario.equals(null));
     }
 
     /**
      * Mostrar dados.
      */
-    @After
-    public void mostrarDados() {
-        System.out.println(funcionarios.get(0));
+    @AfterClass
+    public static void mostrarDados() {
+        System.out.println(funcionario);
     }
 
 }

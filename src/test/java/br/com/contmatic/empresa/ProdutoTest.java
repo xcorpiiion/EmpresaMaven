@@ -6,12 +6,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import br.com.contmatic.constantes.Constante;
+import br.com.contmatic.constantes.Mensagem;
 import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
@@ -42,7 +41,7 @@ public class ProdutoTest {
     public void deve_armazenar_nome_null_e_armazenar_no_validationAnnotation() {
         produto = Fixture.from(Produto.class).gimme("nomeNull");
         assertNull(produto.getNome());
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(produto, Constante.VALOR_ESTA_NULLO));
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(produto, Mensagem.VALOR_ESTA_NULLO));
     }
 
     /**
@@ -64,13 +63,30 @@ public class ProdutoTest {
 
     }
 
+    @Test
+    public void deve_retornar_true_caso_nome_seja_possua_menos_3_caracter() {
+        produto = Fixture.from(Produto.class).gimme("nomeLess3Caracter");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(produto, Mensagem.VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_nome_seja_possua_mais_50_caracter() {
+        produto = Fixture.from(Produto.class).gimme("nomeGreaterCaracter");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(produto, Mensagem.VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_nome_seja_possua_caracteres_especiais() {
+        produto = Fixture.from(Produto.class).gimme("nomeWithSpecialCaracter");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(produto, Mensagem.VALOR_NAO_E_VALIDO));
+    }
     /**
      * Deve retornar mensagem caso preco seja null.
      */
     @Test
     public void deve_retornar_mensagem_caso_preco_seja_null() {
         produto = Fixture.from(Produto.class).gimme("precoNull");
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(produto, Constante.VALOR_ESTA_NULLO));
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(produto, Mensagem.VALOR_ESTA_NULLO));
     }
 
     /**
@@ -79,7 +95,7 @@ public class ProdutoTest {
     @Test
     public void deve_retornar_mensagem_caso_estoque_seja_menor_que_um() {
         produto = Fixture.from(Produto.class).gimme("precoLess1");
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(produto, Constante.PRECISA_SER_UM_VALOR_MAIOR));
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(produto, Mensagem.PRECISA_SER_UM_VALOR_MAIOR));
     }
 
     /**

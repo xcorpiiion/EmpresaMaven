@@ -1,17 +1,18 @@
-package br.com.contmatic.empresa;
+package br.com.contmatic.endereco;
 
 import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
-
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import br.com.contmatic.constantes.Constante;
-import br.com.contmatic.enums.EstadosBrasil;
+import br.com.contmatic.constantes.Mensagem;
 
 /**
  * The Class Endereco.
@@ -19,24 +20,25 @@ import br.com.contmatic.enums.EstadosBrasil;
 public class Endereco {
 
     /** The rua. */
-    @NotNull(message = Constante.VALOR_ESTA_NULLO)
-    @NotEmpty(message = Constante.VALOR_ESTA_VAZIO)
-    @NotBlank(message = Constante.VALOR_ESTA_VAZIO)
-    @Min(value = 5, message = Constante.PRECISA_SER_UM_VALOR_MAIOR)
+    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    @NotEmpty(message = Mensagem.VALOR_ESTA_VAZIO)
+    @NotBlank(message = Mensagem.VALOR_ESTA_VAZIO)
+    @Size(min = 3, max = 50, message = Mensagem.VALOR_NAO_E_VALIDO)
     private String rua;
 
     /** The bairro. */
-    @NotEmpty(message = Constante.VALOR_ESTA_VAZIO)
-    @NotBlank(message = Constante.VALOR_ESTA_VAZIO)
-    @NotNull(message = Constante.VALOR_ESTA_NULLO)
-    @Min(value = 5, message = Constante.PRECISA_SER_UM_VALOR_MAIOR)
+    @NotEmpty(message = Mensagem.VALOR_ESTA_VAZIO)
+    @NotBlank(message = Mensagem.VALOR_ESTA_VAZIO)
+    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    @Size(min = 3, max = 50, message = Mensagem.VALOR_NAO_E_VALIDO)
+    @Pattern(regexp = Constante.ILLEGAL_WORD, message = Mensagem.VALOR_NAO_E_VALIDO)
     private String bairro;
 
     /** The cep. */
-    @NotEmpty(message = Constante.VALOR_ESTA_VAZIO)
-    @NotBlank(message = Constante.VALOR_ESTA_VAZIO)
-    @NotNull(message = Constante.VALOR_ESTA_NULLO)
-    @Pattern(regexp = Constante.ILLEGAL_WORD, message = Constante.VALOR_NAO_E_VALIDO)
+    @NotEmpty(message = Mensagem.VALOR_ESTA_VAZIO)
+    @NotBlank(message = Mensagem.VALOR_ESTA_VAZIO)
+    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    @Pattern(regexp = Constante.ILLEGAL_WORD, message = Mensagem.VALOR_NAO_E_VALIDO)
     private String cep;
 
     /** The numero residencia. */
@@ -44,15 +46,15 @@ public class Endereco {
     private int numeroResidencia;
 
     /** The cidade. */
-    @NotNull(message = Constante.VALOR_ESTA_NULLO)
-    @NotEmpty(message = Constante.VALOR_ESTA_VAZIO)
-    @NotBlank(message = Constante.VALOR_ESTA_VAZIO)
-    @Min(value = 5, message = Constante.PRECISA_SER_UM_VALOR_MAIOR)
-    @Pattern(regexp = Constante.ILLEGAL_NUMBER, message = Constante.VALOR_NAO_E_VALIDO)
+    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    @NotEmpty(message = Mensagem.VALOR_ESTA_VAZIO)
+    @NotBlank(message = Mensagem.VALOR_ESTA_VAZIO)
+    @Min(value = 5, message = Mensagem.PRECISA_SER_UM_VALOR_MAIOR)
+    @Pattern(regexp = Constante.ILLEGAL_NUMBER, message = Mensagem.VALOR_NAO_E_VALIDO)
     private String cidade;
 
     /** The estado. */
-    @NotNull(message = Constante.VALOR_ESTA_NULLO)
+    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
     private EstadosBrasil estado;
 
     /**

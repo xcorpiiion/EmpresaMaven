@@ -2,9 +2,10 @@ package br.com.contmatic.fixture.factory;
 
 import java.util.Random;
 
-import br.com.contmatic.empresa.Telefone;
-import br.com.contmatic.enums.TipoContrato;
-import br.com.contmatic.enums.TipoTelefone;
+import br.com.contmatic.telefone.DddBrasil;
+import br.com.contmatic.telefone.Telefone;
+import br.com.contmatic.telefone.TipoContrato;
+import br.com.contmatic.telefone.TipoTelefone;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
@@ -24,6 +25,7 @@ public class FixtureFactoryTelefone implements TemplateLoader {
             {
                 add("phone", GeradorTelefone.geradorPhone());
                 add("tipoTelefone", TipoTelefone.values()[new Random().nextInt(TipoContrato.values().length)]);
+                add("dddTelefone", DddBrasil.values()[new Random().nextInt(DddBrasil.values().length)]);
             }
         });
         Fixture.of(Telefone.class).addTemplate("phoneNull").inherits("valid", new Rule() {
@@ -46,19 +48,14 @@ public class FixtureFactoryTelefone implements TemplateLoader {
                 add("phone", "1");
             }
         });
-        Fixture.of(Telefone.class).addTemplate("phoneDDDInvalid").inherits("valid", new Rule() {
-            {
-                add("phone", GeradorTelefone.geradorPhoneInvalido());
-            }
-        });
-        Fixture.of(Telefone.class).addTemplate("cellphoneDDDInvalid").inherits("valid", new Rule() {
-            {
-                add("phone", GeradorTelefone.geradorCellPhoneInvalido());
-            }
-        });
         Fixture.of(Telefone.class).addTemplate("tipoTelefoneNull").inherits("valid", new Rule() {
             {
                 add("tipoTelefone", null);
+            }
+        });
+        Fixture.of(Telefone.class).addTemplate("dddNull").inherits("valid", new Rule() {
+            {
+                add("dddTelefone", null);
             }
         });
     }

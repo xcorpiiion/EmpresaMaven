@@ -24,7 +24,6 @@ public class ValidadorAnnotionsMsgErro {
         Set<ConstraintViolation<Object>> erros = validador.validate(yourObject);
         List<String> errosMsg = new ArrayList<>();
         erros.stream().forEach(t1 -> errosMsg.add(t1.getMessage()));
-        System.out.println(errosMsg);
         for(String erros1 : errosMsg) {
             if(msgErroEsperada.equalsIgnoreCase(erros1)) {
                 return true;

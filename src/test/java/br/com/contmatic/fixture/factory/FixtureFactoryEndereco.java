@@ -1,8 +1,9 @@
 package br.com.contmatic.fixture.factory;
 
 import java.util.Random;
-import br.com.contmatic.empresa.Endereco;
-import br.com.contmatic.enums.EstadosBrasil;
+
+import br.com.contmatic.endereco.Endereco;
+import br.com.contmatic.endereco.EstadosBrasil;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
@@ -75,6 +76,21 @@ public class FixtureFactoryEndereco implements TemplateLoader{
                 add("cidade", random(Integer.class, range(1, 100)).toString());
             }
         });
+        Fixture.of(Endereco.class).addTemplate("cidadeLess3Caracter").inherits("valid", new Rule() {
+            {
+                add("cidade", regex(GeradorNome.NOME_LESS_3_CARACTER));
+            }
+        });
+        Fixture.of(Endereco.class).addTemplate("cidadeGreater50Caracter").inherits("valid", new Rule() {
+            {
+                add("cidade", regex(GeradorNome.NOME_GREATER_50_CARACTER));
+            }
+        });
+        Fixture.of(Endereco.class).addTemplate("cidadeWithSpecialCaracter").inherits("valid", new Rule() {
+            {
+                add("cidade", regex(GeradorNome.NOME_WITH_SPECIAL_CARACTER));
+            }
+        });
         Fixture.of(Endereco.class).addTemplate("estadoNull").inherits("valid", new Rule() {
             {
                 add("estado", null);
@@ -98,6 +114,21 @@ public class FixtureFactoryEndereco implements TemplateLoader{
         Fixture.of(Endereco.class).addTemplate("ruaBlankSpace").inherits("valid", new Rule() {
             {
                 add("rua", " ");
+            }
+        });
+        Fixture.of(Endereco.class).addTemplate("ruaLess3Caracter").inherits("valid", new Rule() {
+            {
+                add("rua", regex(GeradorNome.NOME_LESS_3_CARACTER));
+            }
+        });
+        Fixture.of(Endereco.class).addTemplate("ruaGreater50Caracter").inherits("valid", new Rule() {
+            {
+                add("rua", regex(GeradorNome.NOME_GREATER_50_CARACTER));
+            }
+        });
+        Fixture.of(Endereco.class).addTemplate("ruaWithSpecialCaracter").inherits("valid", new Rule() {
+            {
+                add("rua", regex(GeradorNome.NOME_WITH_SPECIAL_CARACTER));
             }
         });
         Fixture.of(Endereco.class).addTemplate("cepNull").inherits("valid", new Rule() {
@@ -138,6 +169,21 @@ public class FixtureFactoryEndereco implements TemplateLoader{
         Fixture.of(Endereco.class).addTemplate("bairroBlankSpace").inherits("valid", new Rule() {
             {
                 add("bairro", " ");
+            }
+        });
+        Fixture.of(Endereco.class).addTemplate("bairroLess3Caracter").inherits("valid", new Rule() {
+            {
+                add("bairro", regex(GeradorNome.NOME_LESS_3_CARACTER));
+            }
+        });
+        Fixture.of(Endereco.class).addTemplate("bairroGreater50Caracter").inherits("valid", new Rule() {
+            {
+                add("bairro", regex(GeradorNome.NOME_GREATER_50_CARACTER));
+            }
+        });
+        Fixture.of(Endereco.class).addTemplate("bairroWithSpecialCaracter").inherits("valid", new Rule() {
+            {
+                add("bairro", regex(GeradorNome.NOME_WITH_SPECIAL_CARACTER));
             }
         });
     }  

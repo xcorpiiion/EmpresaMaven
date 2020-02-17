@@ -21,7 +21,7 @@ public class FixtureFactoryEmpresa implements TemplateLoader {
         Fixture.of(Empresa.class).addTemplate("valid", new Rule() {
             {
                 add("nome", name());
-                add("email", "teste@gmail.com");
+                add("email", regex("[a-z]{10}@gmail.com|@hotmail.com"));
                 add("cnpj", cnpj());
                 add("enderecos", new HashSet<>());
                 add("telefones", new HashSet<>());
@@ -45,6 +45,21 @@ public class FixtureFactoryEmpresa implements TemplateLoader {
                 add("nome", " ");
             }
         });
+        Fixture.of(Empresa.class).addTemplate("nomeLess3Caracter").inherits("valid", new Rule() {
+            {
+                add("nome", regex(GeradorNome.NOME_LESS_3_CARACTER));
+            }
+        });
+        Fixture.of(Empresa.class).addTemplate("nomeGreaterCaracter").inherits("valid", new Rule() {
+            {
+                add("nome", regex(GeradorNome.NOME_GREATER_50_CARACTER));
+            }
+        });
+        Fixture.of(Empresa.class).addTemplate("nomeWithSpecialCaracter").inherits("valid", new Rule() {
+            {
+                add("nome", regex(GeradorNome.NOME_WITH_SPECIAL_CARACTER));
+            }
+        });
         Fixture.of(Empresa.class).addTemplate("emailNull").inherits("valid", new Rule() {
             {
                 add("email", null);
@@ -63,6 +78,46 @@ public class FixtureFactoryEmpresa implements TemplateLoader {
         Fixture.of(Empresa.class).addTemplate("emailInvalid").inherits("valid", new Rule() {
             {
                 add("email", null);
+            }
+        });
+        Fixture.of(Empresa.class).addTemplate("emailLess10Caracteres").inherits("valid", new Rule() {
+            {
+                add("email", regex(GeradorEmail.EMAIL_LESS_10_CARACTER));
+            }
+        });
+        Fixture.of(Empresa.class).addTemplate("emailGreater100Caracteres").inherits("valid", new Rule() {
+            {
+                add("email", regex(GeradorEmail.EMAIL_GREATER_100_CARACTER));
+            }
+        });
+        Fixture.of(Empresa.class).addTemplate("emailWithBlankSpaceInWord").inherits("valid", new Rule() {
+            {
+                add("email", regex(GeradorEmail.EMAIL_WITH_BLANK_SPACE));
+            }
+        });
+        Fixture.of(Empresa.class).addTemplate("emailWithNumberAfterArroba").inherits("valid", new Rule() {
+            {
+                add("email", regex(GeradorEmail.EMAIL_WITH_NUMBER_AFTER_ARROBA));
+            }
+        });
+        Fixture.of(Empresa.class).addTemplate("emailWithoutArroba").inherits("valid", new Rule() {
+            {
+                add("email", regex(GeradorEmail.EMAIL_WITHOUT_ARROBA_CARACTER));
+            }
+        });
+        Fixture.of(Empresa.class).addTemplate("emailWithoutPontoCom").inherits("valid", new Rule() {
+            {
+                add("email", regex(GeradorEmail.EMAIL_WITHOUT_PONTO_COM));
+            }
+        });
+        Fixture.of(Empresa.class).addTemplate("emailWithoutCom").inherits("valid", new Rule() {
+            {
+                add("email", regex(GeradorEmail.EMAIL_WITHOUT_COM));
+            }
+        });
+        Fixture.of(Empresa.class).addTemplate("emailWithSpecialCaracter").inherits("valid", new Rule() {
+            {
+                add("email", regex(GeradorEmail.EMAIL_WITH_SPECIAL_CARACTER));
             }
         });
         Fixture.of(Empresa.class).addTemplate("cnpjNull").inherits("valid", new Rule() {

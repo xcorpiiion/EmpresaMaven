@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite tests="220" failures="0" name="br.com.contmatic.testeAllClasses.TestAllClasses" time="0.849" errors="0" skipped="0">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_191\jre\bin"/>
+    <property name="java.vm.version" value="25.191-b12"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="maven.multiModuleProjectDirectory" value="C:\Users\vinicius.cruz\Documents\workspace-spring-tool-suite-4-4.5.0.RELEASE\empresa-maven"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="path.separator" value=";"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="user.script" value=""/>
+    <property name="user.country" value="BR"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="C:\Users\vinicius.cruz\Documents\workspace-spring-tool-suite-4-4.5.0.RELEASE\empresa-maven"/>
+    <property name="java.runtime.version" value="1.8.0_191-b12"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.8.0_191\jre\lib\endorsed"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.io.tmpdir" value="C:\Users\VINICI~1.CRU\AppData\Local\Temp\"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.variant" value=""/>
+    <property name="os.name" value="Windows 10"/>
+    <property name="classworlds.conf" value="C:\Users\vinicius.cruz\Documents\workspace-spring-tool-suite-4-4.5.0.RELEASE\.metadata\.plugins\org.eclipse.m2e.launching\launches\m2conf3033274417188332331.tmp"/>
+    <property name="jansi.force" value="true"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_191\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Python38\Scripts\;C:\Python38\;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Git\cmd;C:\vini\nvm;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;C:\Users\vinicius.cruz\AppData\Local\Programs\Microsoft VS Code\bin;C:\vini\nvm;C:\Program Files\nodejs;C:\Users\vinicius.cruz\AppData\Local\GitHubDesktop\bin;."/>
+    <property name="jansi.passthrough" value="true"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.class.version" value="52.0"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="10.0"/>
+    <property name="user.home" value="C:\Users\vinicius.cruz"/>
+    <property name="user.timezone" value="GMT-03:00"/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="java.specification.version" value="1.8"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="user.name" value="vinicius.cruz"/>
+    <property name="java.class.path" value="C:\Users\vinicius.cruz\Downloads\spring-tool-suite-4-4.5.0.RELEASE-e4.14.0-win32.win32.x86_64.self-extracting\contents\sts-4.5.0.RELEASE\plugins\org.eclipse.m2e.maven.runtime_1.14.0.20191209-1923\jars\plexus-classworlds-2.6.0.jar"/>
+    <property name="java.vm.specification.version" value="1.8"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.home" value="C:\Program Files\Java\jdk1.8.0_191\jre"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -B install -Dstyle.color=always"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.language" value="pt"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="1.8.0_191"/>
+    <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.8.0_191\jre\lib\ext;C:\Windows\Sun\Java\lib\ext"/>
+    <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.8.0_191\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_191\jre\lib\rt.jar;C:\Program Files\Java\jdk1.8.0_191\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.8.0_191\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_191\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_191\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_191\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_191\jre\classes"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="maven.home" value="C:\Users\vinicius.cruz\Documents\workspace-spring-tool-suite-4-4.5.0.RELEASE\empresa-maven\EMBEDDED"/>
+    <property name="style.color" value="always"/>
+    <property name="file.separator" value="\"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.desktop" value="windows"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+  </properties>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_add_cliente_na_empresa" time="0.005"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_add_endereco_empresa" time="0.005"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_add_funcionario_na_empresa" time="0.005"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_add_produto_na_loja" time="0.005"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_add_telefone_na_lista_telefones" time="0.004"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_mudar_email_empresa" time="0.004"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_mudar_nome_empresa" time="0.003"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_false_caso_compare_com_mesmo_objeto" time="0.003"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_false_caso_compare_getClass_for_diferente" time="0.002"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_false_caso_compare_loja_com_null_usando_equals" time="0.002"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_true_caso_cliente_seja_null" time="0.009"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_true_caso_contenha_a_palavra_clientes_no_toString" time="0.003"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_true_caso_contenha_a_palavra_cnpj_no_toString" time="0.004"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_true_caso_contenha_a_palavra_email_no_toString" time="0.003"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_true_caso_contenha_a_palavra_enderecos_no_toString" time="0.002"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_true_caso_contenha_a_palavra_funcionarios_no_toString" time="0.003"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_true_caso_contenha_a_palavra_nome_no_toString" time="0.003"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_true_caso_contenha_a_palavra_produtos_no_toString" time="0.003"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_true_caso_contenha_a_palavra_telefones_no_toString" time="0.002"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_true_caso_email_esteja_com_caracteres_especiais" time="0.009"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_true_caso_email_esteja_com_espaco_em_branco" time="0.007"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_true_caso_email_esteja_com_espaco_em_branco_entre_o_email" time="0.007"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_true_caso_email_esteja_com_mais_100_caracteres" time="0.007"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_true_caso_email_esteja_com_menos_10_caracteres" time="0.007"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_true_caso_email_esteja_com_numero_depois_do_arroba" time="0.006"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_true_caso_email_esteja_sem_arroba" time="0.007"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_true_caso_email_esteja_sem_com" time="0.008"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_true_caso_email_esteja_sem_ponto_com" time="0.007"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_true_caso_email_seja_null" time="0.007"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_true_caso_email_seja_vazio" time="0.013"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_true_caso_funcionario_seja_null" time="0.01"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_true_caso_nome_esteja_com_espaco_em_branco" time="0.01"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_true_caso_nome_seja_null" time="0.01"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_true_caso_nome_seja_possua_caracteres_especiais" time="0.01"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_true_caso_nome_seja_possua_mais_50_caracter" time="0.01"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_true_caso_nome_seja_possua_menos_3_caracter" time="0.01"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_true_caso_nome_seja_vazio" time="0.01"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_true_caso_tenham_mesmo_cnpj" time="0.005"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_ter_o_mesmo_hashCode_para_serem_iguais" time="0.003"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nao_deve_aceitar_cnpj_com_letras" time="0.006"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nao_deve_aceitar_cnpj_null" time="0.004"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nao_deve_aceitar_cnpj_null_com_menos_14_numeros" time="0.006"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nao_deve_aceitar_endereco_null" time="0.004"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nao_deve_aceitar_produto_null" time="0.002"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_add_telefone_na_lista_telefones" time="0.003"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_alterar_cargo_para_repositor" time="0.002"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_alterar_cargo_para_rh" time="0.003"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_alterar_dataNascimento" time="0.003"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_alterar_email" time="0.003"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_alterar_tipoContrato_para_clt" time="0.002"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_alterar_tipoContrato_para_pj" time="0.004"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_mudar_endereco" time="0.003"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_mudar_nome_funcionario" time="0.003"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_false_quando_compara_com_classe_diferente" time="0.002"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_true_caso_email_esteja_com_caracteres_especiais" time="0.007"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_true_caso_email_esteja_com_espaco_em_branco" time="0.006"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_true_caso_email_esteja_com_espaco_em_branco_entre_o_email" time="0.007"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_true_caso_email_esteja_com_mais_100_caracteres" time="0.008"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_true_caso_email_esteja_com_menos_10_caracteres" time="0.006"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_true_caso_email_esteja_com_numero_depois_do_arroba" time="0.009"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_true_caso_email_esteja_sem_arroba" time="0.01"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_true_caso_email_esteja_sem_com" time="0.01"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_true_caso_email_esteja_sem_ponto_com" time="0.009"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_true_caso_email_seja_null" time="0.01"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_true_caso_email_seja_vazio" time="0.007"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_true_caso_nome_esteja_com_espaco_em_branco" time="0.008"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_true_caso_nome_seja_null" time="0.006"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_true_caso_nome_seja_possua_caracteres_especiais" time="0.007"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_true_caso_nome_seja_possua_mais_50_caracter" time="0.007"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_true_caso_nome_seja_possua_menos_3_caracter" time="0.009"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_true_caso_nome_seja_vazio" time="0.016"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_true_no_equals_para_serem_iguais" time="0.003"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_true_quando_compara_com_mesmo_objeto" time="0.002"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_true_se_cargo_for_null" time="0.008"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_true_se_dataNascimento_for_null" time="0.01"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_true_se_tipoContrato_for_null" time="0.011"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_ter_hashCode_iguais_para_serem_funcionarios_iguais" time="0.005"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_ter_salario_maior_do_que_zero" time="0.01"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="nao_deve_ter_equals_null_para_comparar_funcionarios" time="0.005"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_add_dinheiro_carteira" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_add_produto_na_lista_de_produtos_comprados" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_add_produto_no_carrinho" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_add_telefone_na_lista_telefones" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_alterar_dataNascimento" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_false_quando_compara_com_classe_diferente" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_caso_contenha_a_palavra_carrinhoProdutos_no_toString" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_caso_contenha_a_palavra_dataNascimento_no_toString" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_caso_contenha_a_palavra_dinheiroCarteira_no_toString" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_caso_contenha_a_palavra_email_no_toString" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_caso_contenha_a_palavra_endereco_no_toString" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_caso_contenha_a_palavra_nome_no_toString" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_caso_contenha_a_palavra_produtosComprados_no_toString" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_caso_contenha_a_palavra_telefones_no_toString" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_caso_cpf_nao_seja_valido" time="0.012"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_caso_email_contenha_espaco_em_branco" time="0.01"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_caso_email_esteja_com_caracteres_especiais" time="0.004"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_caso_email_esteja_com_espaco_em_branco_entre_o_email" time="0.006"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_caso_email_esteja_com_mais_100_caracteres" time="0.006"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_caso_email_esteja_com_menos_10_caracteres" time="0.007"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_caso_email_esteja_com_numero_depois_do_arroba" time="0.006"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_caso_email_esteja_sem_arroba" time="0.006"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_caso_email_esteja_sem_com" time="0.004"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_caso_email_esteja_sem_ponto_com" time="0.004"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_caso_nome_esteja_vazio" time="0.009"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_caso_nome_seja_null" time="0.01"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_caso_nome_seja_possua_caracteres_especiais" time="0.01"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_caso_nome_seja_possua_mais_50_caracter" time="0.014"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_caso_nome_seja_possua_menos_3_caracter" time="0.015"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_caso_nome_tenha_apenas_espacos_em_branco" time="0.015"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_no_equals_para_serem_iguais" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_quando_compara_com_mesmo_objeto" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_retornar_true_se_dataNascimento_for_null" time="0.011"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="deve_ter_hashCode_iguais_para_serem_clientes_iguais" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_aceitar_email_null" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_aceitar_endereco_null" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ClienteTest" name="nao_deve_ter_equals_null_para_comparar_clientes" time="0"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_rua_esteja_vazia" time="0.003"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="nao_deve_aceitar_cidade_vazia" time="0"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_bairro_esteja_com_espaco_em_branco" time="0.005"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="nao_deve_aceitar_cep_null" time="0.003"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_compare_com_mesmo_objeto" time="0"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="nao_deve_conter_enderecos_null" time="0"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="nao_deve_aceitar_cidade_null" time="0"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_rua_seja_possua_menos_3_caracter" time="0.003"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_rua_seja_possua_mais_50_caracter" time="0.003"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="nao_deve_aceitar_estado_null" time="0"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_cidade_seja_possua_caracteres_especiais" time="0.004"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_cidade_esteja_com_menos_de_5_caracteres" time="0.003"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_mudar_nome_estado" time="0.001"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_cidade_seja_possua_menos_3_caracter" time="0.003"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_cidade_seja_possua_mais_50_caracter" time="0.004"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="nao_deve_aceitar_rua_null" time="0"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_estado_for_igual_getSigla_do_enum_estadoBrasil" time="0"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_rua_seja_possua_caracteres_especiais" time="0.004"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_conter_numeros_positivos" time="0.001"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="nao_deve_aceitar_cep_vazio" time="0.005"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_rua_esteja_com_menos_de_5_caracteres" time="0.005"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_cep_contenha_tamanho_diferente_de_8" time="0.003"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_false_caso_compare_com_classe_diferente" time="0"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_conter_numero_residencia_iguais_para_serem_igausi" time="0"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_bairro_seja_possua_caracteres_especiais" time="0.003"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_bairro_seja_possua_menos_3_caracter" time="0.005"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_estado_for_igual_getNome_do_enum_estadoBrasil" time="0"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_bairro_seja_possua_mais_50_caracter" time="0.005"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="nao_deve_aceitar_bairro_null" time="0.001"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_contenha_alguma_letra_no_cep" time="0"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="nao_deve_aceitar_numero_em_nome_cidade" time="0"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_bairro_esteja_vazio" time="0.005"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_rua_esteja_com_espaco_em_branco" time="0.005"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="devem_ter_os_mesmos_hashCode_para_serem_iguais" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_retornar_mensagem_caso_preco_seja_null" time="0.004"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="nao_deve_aceitar_nome_vazio" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_retornar_true_caso_compare_com_mesmo_objeto" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_retornar_true_caso_nome_seja_possua_menos_3_caracter" time="0.004"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_retornar_true_caso_nome_seja_possua_mais_50_caracter" time="0.005"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="nao_deve_aceitar_produtos_iguais" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_retornar_false_caso_compare_com_classe_diferente" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_aceitar_estoque_que_nao_seja_negativo" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_aceitar_nome_com_espaco_em_branco" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_retornar_false_caso_compare_com_um_valor_null" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_ser_iguais_caso_possua_mesmo_hashcode" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_retornar_true_caso_nome_seja_possua_caracteres_especiais" time="0.004"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_armazenar_nome_null_e_armazenar_no_validationAnnotation" time="0.005"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_retornar_mensagem_caso_estoque_seja_menor_que_um" time="0.004"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_rua_esteja_vazia" time="0.005"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="nao_deve_aceitar_cidade_vazia" time="0"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_bairro_esteja_com_espaco_em_branco" time="0.005"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="nao_deve_aceitar_cep_null" time="0.005"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_compare_com_mesmo_objeto" time="0"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="nao_deve_conter_enderecos_null" time="0"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="nao_deve_aceitar_cidade_null" time="0.001"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_rua_seja_possua_menos_3_caracter" time="0.005"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_rua_seja_possua_mais_50_caracter" time="0.005"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="nao_deve_aceitar_estado_null" time="0"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_cidade_seja_possua_caracteres_especiais" time="0.005"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_cidade_esteja_com_menos_de_5_caracteres" time="0.005"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_mudar_nome_estado" time="0"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_cidade_seja_possua_menos_3_caracter" time="0.005"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_cidade_seja_possua_mais_50_caracter" time="0.005"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="nao_deve_aceitar_rua_null" time="0"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_estado_for_igual_getSigla_do_enum_estadoBrasil" time="0"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_rua_seja_possua_caracteres_especiais" time="0.005"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_conter_numeros_positivos" time="0"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="nao_deve_aceitar_cep_vazio" time="0.006"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_rua_esteja_com_menos_de_5_caracteres" time="0.005"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_cep_contenha_tamanho_diferente_de_8" time="0.006"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_false_caso_compare_com_classe_diferente" time="0"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_conter_numero_residencia_iguais_para_serem_igausi" time="0"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_bairro_seja_possua_caracteres_especiais" time="0.006"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_bairro_seja_possua_menos_3_caracter" time="0.007"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_estado_for_igual_getNome_do_enum_estadoBrasil" time="0"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_bairro_seja_possua_mais_50_caracter" time="0.004"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="nao_deve_aceitar_bairro_null" time="0.001"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_contenha_alguma_letra_no_cep" time="0"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="nao_deve_aceitar_numero_em_nome_cidade" time="0"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_bairro_esteja_vazio" time="0.003"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_rua_esteja_com_espaco_em_branco" time="0.003"/>
+  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="devem_ter_os_mesmos_hashCode_para_serem_iguais" time="0"/>
+  <testcase classname="br.com.contmatic.telefone.TelefoneTest" name="deve_retornar_true_caso_sejam_mesmo_objeto" time="0"/>
+  <testcase classname="br.com.contmatic.telefone.TelefoneTest" name="deve_retornar_true_caso_tipoTelefone_seja_movel" time="0"/>
+  <testcase classname="br.com.contmatic.telefone.TelefoneTest" name="deve_retornar_true_caso_ddd_seja_null" time="0.003"/>
+  <testcase classname="br.com.contmatic.telefone.TelefoneTest" name="deve_retornar_true_caso_equals_sejam_iguais" time="0"/>
+  <testcase classname="br.com.contmatic.telefone.TelefoneTest" name="deve_retornar_false_caso_hashCode_sejam_diferentes" time="0"/>
+  <testcase classname="br.com.contmatic.telefone.TelefoneTest" name="deve_retornar_true_caso_contenha_a_palavra_tipoTelefone_no_toString" time="0"/>
+  <testcase classname="br.com.contmatic.telefone.TelefoneTest" name="deve_retornar_true_caso_contenha_a_palavra_dddTelefone_no_toString" time="0.001"/>
+  <testcase classname="br.com.contmatic.telefone.TelefoneTest" name="deve_retornar_true_caso_telefone_seja_null" time="0.003"/>
+  <testcase classname="br.com.contmatic.telefone.TelefoneTest" name="deve_retornar_true_caso_telefone_tenha_apenas_espacos_em_branco" time="0.004"/>
+  <testcase classname="br.com.contmatic.telefone.TelefoneTest" name="deve_ter_mesmo_hashcode_para_ser_igual" time="0"/>
+  <testcase classname="br.com.contmatic.telefone.TelefoneTest" name="deve_retornar_true_caso_telefone_esteja_vazio" time="0.002"/>
+  <testcase classname="br.com.contmatic.telefone.TelefoneTest" name="deve_retornar_false_caso_compare_com_null" time="0"/>
+  <testcase classname="br.com.contmatic.telefone.TelefoneTest" name="deve_possuir_o_mesmo_ddd" time="0"/>
+  <testcase classname="br.com.contmatic.telefone.TelefoneTest" name="deve_retornar_true_caso_tipoTelefone_esteja_null" time="0.003"/>
+  <testcase classname="br.com.contmatic.telefone.TelefoneTest" name="deve_retornar_true_caso_tipoTelefone_seja_fixo" time="0"/>
+  <testcase classname="br.com.contmatic.telefone.TelefoneTest" name="deve_retornar_true_caso_contenha_a_palavra_phone_no_toString" time="0"/>
+  <testcase classname="br.com.contmatic.telefone.TelefoneTest" name="deve_retornar_true_caso_sigla_sejam_iguais" time="0"/>
+  <testcase classname="br.com.contmatic.telefone.TelefoneTest" name="deve_retornar_true_caso_telefone_seja_valido" time="0.001"/>
+  <testcase classname="br.com.contmatic.telefone.TelefoneTest" name="deve_retornar_true_caso_telefone_esteja_com_tamanho_invalido" time="0.003"/>
+  <testcase classname="br.com.contmatic.telefone.TelefoneTest" name="deve_retornar_false_caso_compare_com_object" time="0"/>
+  <testcase classname="br.com.contmatic.telefone.TelefoneTest" name="deve_retornar_false_caso_sigla_seja_diferente" time="0.004"/>
+  <testcase classname="br.com.contmatic.telefone.TelefoneTest" name="deve_retornar_false_caso_ddd_seja_diferente" time="0"/>
+</testsuite>

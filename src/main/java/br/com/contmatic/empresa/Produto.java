@@ -2,19 +2,15 @@ package br.com.contmatic.empresa;
 
 import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
-
 import java.math.BigDecimal;
-
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.Length;
-
-import br.com.contmatic.constantes.Constante;
+import br.com.contmatic.constantes.Mensagem;
 
 /**
  * The Class Produto.
@@ -22,19 +18,19 @@ import br.com.contmatic.constantes.Constante;
 public class Produto {
 
     /** The nome. */
-    @NotBlank(message = Constante.VALOR_ESTA_VAZIO)
-    @NotNull(message = Constante.VALOR_ESTA_NULLO)
-    @NotEmpty(message = Constante.VALOR_ESTA_VAZIO)
-    @Length(min = 3, max = 50)
+    @NotBlank(message = Mensagem.VALOR_ESTA_VAZIO)
+    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    @NotEmpty(message = Mensagem.VALOR_ESTA_VAZIO)
+    @Length(min = 3, max = 50, message = Mensagem.VALOR_NAO_E_VALIDO)
     private String nome;
 
     /** The preco. */
-    @NotNull(message = Constante.VALOR_ESTA_NULLO)
-    @Min(value = 1, message = Constante.PRECISA_SER_UM_VALOR_MAIOR)
+    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    @Min(value = 1, message = Mensagem.PRECISA_SER_UM_VALOR_MAIOR)
     private BigDecimal preco;
 
     /** The estoque. */
-    @Min(value = 1, message = Constante.VALOR_NAO_E_VALIDO)
+    @Min(value = 1, message = Mensagem.VALOR_NAO_E_VALIDO)
     private Integer estoque;
 
     /**

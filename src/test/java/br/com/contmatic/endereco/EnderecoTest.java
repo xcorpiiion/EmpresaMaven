@@ -1,4 +1,4 @@
-package br.com.contmatic.empresa;
+package br.com.contmatic.endereco;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -6,13 +6,12 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.lang3.StringUtils;
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import br.com.contmatic.constantes.Constante;
-import br.com.contmatic.enums.EstadosBrasil;
+import br.com.contmatic.constantes.Mensagem;
 import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
@@ -23,10 +22,10 @@ import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 public class EnderecoTest {
 	
 	/** The endereco. */
-	private Endereco endereco;
+	private static Endereco endereco;
 	
 	/** The endereco 2. */
-	private Endereco endereco2;
+	private static Endereco endereco2;
 	
 	/**
 	 * Fixture factory dados.
@@ -50,7 +49,6 @@ public class EnderecoTest {
 	 */
 	@Test
 	public void deve_conter_numeros_positivos() {
-	    System.out.println(endereco.getNumeroResidencia());
 		assertTrue(endereco.getNumeroResidencia() >= 0);
 	}
 	
@@ -66,7 +64,7 @@ public class EnderecoTest {
 	@Test
     public void deve_retornar_true_caso_cidade_esteja_com_menos_de_5_caracteres() {
         endereco.setCidade("nike");
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Constante.PRECISA_SER_UM_VALOR_MAIOR));
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.PRECISA_SER_UM_VALOR_MAIOR));
     }
 	
 	/**
@@ -86,6 +84,24 @@ public class EnderecoTest {
 		endereco.setCidade(endereco.getCidade());
 		assertTrue(!StringUtils.isNumeric(endereco.getCidade()));
 	}
+	
+	@Test
+    public void deve_retornar_true_caso_cidade_seja_possua_menos_3_caracter() {
+        endereco = Fixture.from(Endereco.class).gimme("cidadeLess3Caracter");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_cidade_seja_possua_mais_50_caracter() {
+        endereco = Fixture.from(Endereco.class).gimme("cidadeGreater50Caracter");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_cidade_seja_possua_caracteres_especiais() {
+        endereco = Fixture.from(Endereco.class).gimme("cidadeWithSpecialCaracter");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_NAO_E_VALIDO));
+    }
 	
 	/**
 	 * Nao deve aceitar estado null.
@@ -115,7 +131,7 @@ public class EnderecoTest {
 	@Test
     public void deve_retornar_true_caso_rua_esteja_com_menos_de_5_caracteres() {
         endereco.setRua("nike");
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Constante.PRECISA_SER_UM_VALOR_MAIOR));
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.PRECISA_SER_UM_VALOR_MAIOR));
     }
 	
 	/**
@@ -124,13 +140,31 @@ public class EnderecoTest {
 	@Test
 	public void deve_retornar_true_caso_rua_esteja_com_espaco_em_branco() {
 	    endereco = Fixture.from(Endereco.class).gimme("ruaBlankSpace");
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Constante.VALOR_ESTA_VAZIO));
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_ESTA_VAZIO));
 	}
 	
 	@Test
     public void deve_retornar_true_caso_rua_esteja_vazia() {
         endereco = Fixture.from(Endereco.class).gimme("ruaEmpty");
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Constante.VALOR_ESTA_VAZIO));
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_ESTA_VAZIO));
+    }
+	
+	@Test
+    public void deve_retornar_true_caso_rua_seja_possua_menos_3_caracter() {
+        endereco = Fixture.from(Endereco.class).gimme("ruaLess3Caracter");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_rua_seja_possua_mais_50_caracter() {
+        endereco = Fixture.from(Endereco.class).gimme("ruaGreater50Caracter");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_rua_seja_possua_caracteres_especiais() {
+        endereco = Fixture.from(Endereco.class).gimme("ruaWithSpecialCaracter");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_NAO_E_VALIDO));
     }
 	
 	/**
@@ -139,7 +173,7 @@ public class EnderecoTest {
 	@Test
 	public void nao_deve_aceitar_cep_null() {
 	    endereco = Fixture.from(Endereco.class).gimme("cepNull");
-	    assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Constante.VALOR_ESTA_NULLO));
+	    assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_ESTA_NULLO));
 	}
 	
 	/**
@@ -149,7 +183,7 @@ public class EnderecoTest {
 	public void nao_deve_aceitar_cep_vazio() {
 	    endereco = Fixture.from(Endereco.class).gimme("cepEmpty");
 	    endereco.setCep(endereco.getCep());
-	    assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Constante.VALOR_ESTA_VAZIO));
+	    assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_ESTA_VAZIO));
 	}
 	
 	/**
@@ -159,7 +193,7 @@ public class EnderecoTest {
 	public void deve_retornar_true_caso_cep_contenha_tamanho_diferente_de_8() {
 	    endereco = Fixture.from(Endereco.class).gimme("valid");
 		endereco.setCep(endereco.getCep());
-		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Constante.VALOR_NAO_E_VALIDO));
+		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_NAO_E_VALIDO));
 	}
 	
 	/**
@@ -184,19 +218,31 @@ public class EnderecoTest {
 	@Test
     public void deve_retornar_true_caso_bairro_esteja_com_espaco_em_branco() {
         endereco = Fixture.from(Endereco.class).gimme("bairroBlankSpace");
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Constante.VALOR_ESTA_VAZIO));
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_ESTA_VAZIO));
     }
     
     @Test
     public void deve_retornar_true_caso_bairro_esteja_vazio() {
         endereco = Fixture.from(Endereco.class).gimme("bairroEmpty");
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Constante.VALOR_ESTA_VAZIO));
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_ESTA_VAZIO));
     }
     
     @Test
-    public void deve_retornar_true_caso_bairro_esteja_com_tamanho_menor_5_caracteres() {
-        endereco.setBairro("nike");
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Constante.PRECISA_SER_UM_VALOR_MAIOR));
+    public void deve_retornar_true_caso_bairro_seja_possua_menos_3_caracter() {
+        endereco = Fixture.from(Endereco.class).gimme("bairroLess3Caracter");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_bairro_seja_possua_mais_50_caracter() {
+        endereco = Fixture.from(Endereco.class).gimme("bairroGreater50Caracter");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_bairro_seja_possua_caracteres_especiais() {
+        endereco = Fixture.from(Endereco.class).gimme("bairroWithSpecialCaracter");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_NAO_E_VALIDO));
     }
     
     @Test
@@ -258,8 +304,8 @@ public class EnderecoTest {
 	/**
 	 * Mostrar dados.
 	 */
-	@After
-	public void mostrarDados() {
+	@AfterClass
+	public static void mostrarDados() {
 		System.out.println(endereco);
 	}
 }

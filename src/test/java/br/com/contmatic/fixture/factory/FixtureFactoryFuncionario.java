@@ -6,9 +6,9 @@ import java.util.Random;
 
 import org.joda.time.DateTime;
 
+import br.com.contmatic.empresa.Cargo;
 import br.com.contmatic.empresa.Funcionario;
-import br.com.contmatic.enums.Cargo;
-import br.com.contmatic.enums.TipoContrato;
+import br.com.contmatic.telefone.TipoContrato;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
@@ -26,7 +26,7 @@ public class FixtureFactoryFuncionario implements TemplateLoader {
         Fixture.of(Funcionario.class).addTemplate("valid", new Rule() {
             {
                 add("nome", name());
-                add("email", "teste@gmail.com");
+                add("email", regex("[a-z]{10}@gmail.com|@hotmail.com"));
                 add("dataNascimento", new DateTime());
                 add("cargo", Cargo.values()[new Random().nextInt(Cargo.values().length)]);
                 add("salario", new BigDecimal(1000.00 + (new Random().nextDouble() * (5000 - 8500))));
@@ -51,6 +51,21 @@ public class FixtureFactoryFuncionario implements TemplateLoader {
                 add("nome", " ");
             }
         });
+        Fixture.of(Funcionario.class).addTemplate("nomeLess3Caracter").inherits("valid", new Rule() {
+            {
+                add("nome", regex(GeradorNome.NOME_LESS_3_CARACTER));
+            }
+        });
+        Fixture.of(Funcionario.class).addTemplate("nomeGreaterCaracter").inherits("valid", new Rule() {
+            {
+                add("nome", regex(GeradorNome.NOME_GREATER_50_CARACTER));
+            }
+        });
+        Fixture.of(Funcionario.class).addTemplate("nomeWithSpecialCaracter").inherits("valid", new Rule() {
+            {
+                add("nome", regex(GeradorNome.NOME_WITH_SPECIAL_CARACTER));
+            }
+        });
         Fixture.of(Funcionario.class).addTemplate("emailNull").inherits("valid", new Rule() {
             {
                 add("email", null);
@@ -69,6 +84,46 @@ public class FixtureFactoryFuncionario implements TemplateLoader {
         Fixture.of(Funcionario.class).addTemplate("emailInvalid").inherits("valid", new Rule() {
             {
                 add("email", firstName());
+            }
+        });
+        Fixture.of(Funcionario.class).addTemplate("emailLess10Caracteres").inherits("valid", new Rule() {
+            {
+                add("email", regex(GeradorEmail.EMAIL_LESS_10_CARACTER));
+            }
+        });
+        Fixture.of(Funcionario.class).addTemplate("emailGreater100Caracteres").inherits("valid", new Rule() {
+            {
+                add("email", regex(GeradorEmail.EMAIL_GREATER_100_CARACTER));
+            }
+        });
+        Fixture.of(Funcionario.class).addTemplate("emailWithBlankSpaceInWord").inherits("valid", new Rule() {
+            {
+                add("email", regex(GeradorEmail.EMAIL_WITH_BLANK_SPACE));
+            }
+        });
+        Fixture.of(Funcionario.class).addTemplate("emailWithNumberAfterArroba").inherits("valid", new Rule() {
+            {
+                add("email", regex(GeradorEmail.EMAIL_WITH_NUMBER_AFTER_ARROBA));
+            }
+        });
+        Fixture.of(Funcionario.class).addTemplate("emailWithoutArroba").inherits("valid", new Rule() {
+            {
+                add("email", regex(GeradorEmail.EMAIL_WITHOUT_ARROBA_CARACTER));
+            }
+        });
+        Fixture.of(Funcionario.class).addTemplate("emailWithoutPontoCom").inherits("valid", new Rule() {
+            {
+                add("email", regex(GeradorEmail.EMAIL_WITHOUT_PONTO_COM));
+            }
+        });
+        Fixture.of(Funcionario.class).addTemplate("emailWithoutCom").inherits("valid", new Rule() {
+            {
+                add("email", regex(GeradorEmail.EMAIL_WITHOUT_COM));
+            }
+        });
+        Fixture.of(Funcionario.class).addTemplate("emailWithSpecialCaracter").inherits("valid", new Rule() {
+            {
+                add("email", regex(GeradorEmail.EMAIL_WITH_SPECIAL_CARACTER));
             }
         });
         Fixture.of(Funcionario.class).addTemplate("enderecoNull").inherits("valid", new Rule() {

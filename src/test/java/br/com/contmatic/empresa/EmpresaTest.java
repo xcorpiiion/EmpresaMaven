@@ -17,7 +17,9 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import br.com.contmatic.constantes.Constante;
+import br.com.contmatic.constantes.Mensagem;
+import br.com.contmatic.endereco.Endereco;
+import br.com.contmatic.telefone.Telefone;
 import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
@@ -87,19 +89,37 @@ public class EmpresaTest {
     @Test
     public void deve_retornar_true_caso_nome_seja_null() {
         loja = Fixture.from(Empresa.class).gimme("nomeNull");
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Constante.VALOR_ESTA_NULLO));
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_ESTA_NULLO));
     }
     
     @Test
     public void deve_retornar_true_caso_nome_seja_vazio() {
         loja = Fixture.from(Empresa.class).gimme("nomeEmpty");
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Constante.VALOR_ESTA_VAZIO));
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_ESTA_VAZIO));
     }
     
     @Test
     public void deve_retornar_true_caso_nome_esteja_com_espaco_em_branco() {
         loja = Fixture.from(Empresa.class).gimme("nomeBlankSpace");
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Constante.VALOR_ESTA_VAZIO));
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_ESTA_VAZIO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_nome_seja_possua_menos_3_caracter() {
+        loja = Fixture.from(Empresa.class).gimme("nomeLess3Caracter");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_nome_seja_possua_mais_50_caracter() {
+        loja = Fixture.from(Empresa.class).gimme("nomeGreaterCaracter");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_nome_seja_possua_caracteres_especiais() {
+        loja = Fixture.from(Empresa.class).gimme("nomeWithSpecialCaracter");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
     }
     
     @Test
@@ -111,19 +131,67 @@ public class EmpresaTest {
     @Test
     public void deve_retornar_true_caso_email_seja_null() {
         loja = Fixture.from(Empresa.class).gimme("emailNull");
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Constante.VALOR_NAO_E_VALIDO));
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_email_seja_vazio() {
         loja = Fixture.from(Empresa.class).gimme("emailEmpty");
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Constante.VALOR_NAO_E_VALIDO));
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_email_esteja_com_espaco_em_branco() {
         loja = Fixture.from(Empresa.class).gimme("emailBlankSpace");
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Constante.VALOR_NAO_E_VALIDO));
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_email_esteja_com_menos_10_caracteres() {
+        loja = Fixture.from(Empresa.class).gimme("emailLess10Caracteres");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_email_esteja_com_mais_100_caracteres() {
+        loja = Fixture.from(Empresa.class).gimme("emailGreater100Caracteres");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_email_esteja_com_espaco_em_branco_entre_o_email() {
+        loja = Fixture.from(Empresa.class).gimme("emailWithBlankSpaceInWord");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_email_esteja_com_numero_depois_do_arroba() {
+        loja = Fixture.from(Empresa.class).gimme("emailWithNumberAfterArroba");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_email_esteja_sem_arroba() {
+        loja = Fixture.from(Empresa.class).gimme("emailWithoutArroba");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_email_esteja_sem_ponto_com() {
+        loja = Fixture.from(Empresa.class).gimme("emailWithoutPontoCom");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_email_esteja_sem_com() {
+        loja = Fixture.from(Empresa.class).gimme("emailWithoutCom");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_email_esteja_com_caracteres_especiais() {
+        loja = Fixture.from(Empresa.class).gimme("emailWithSpecialCaracter");
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
     }
     
     @Test
@@ -161,7 +229,7 @@ public class EmpresaTest {
     @Test
     public void nao_deve_aceitar_cnpj_com_letras() {
         loja = Fixture.from(Empresa.class).gimme("cnpjContainsWord");
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, "CNPJ não é valido"));
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
     }
 
     /**
@@ -170,7 +238,7 @@ public class EmpresaTest {
     @Test
     public void nao_deve_aceitar_cnpj_null_com_menos_14_numeros() {
         loja = Fixture.from(Empresa.class).gimme("cnpjWrongSize");
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, "CNPJ não é valido"));
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
     }
 
     /**
@@ -179,7 +247,7 @@ public class EmpresaTest {
     @Test
     public void deve_retornar_true_caso_funcionario_seja_null() {
         loja = Fixture.from(Empresa.class).gimme("funcionarioNull");
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Constante.VALOR_ESTA_NULLO));
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_ESTA_NULLO));
     }
     
     @Test
@@ -191,7 +259,7 @@ public class EmpresaTest {
     @Test
     public void deve_retornar_true_caso_cliente_seja_null() {
         loja = Fixture.from(Empresa.class).gimme("clienteNull");
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Constante.VALOR_ESTA_NULLO));
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_ESTA_NULLO));
     }
     
     @Test
@@ -252,6 +320,46 @@ public class EmpresaTest {
         assertEquals(loja.hashCode(), loja2.hashCode());
     }
 
+    @Test
+    public void deve_retornar_true_caso_contenha_a_palavra_nome_no_toString() {
+        assertTrue(loja.toString().contains("nome"));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_contenha_a_palavra_email_no_toString() {
+        assertTrue(loja.toString().contains("email"));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_contenha_a_palavra_cnpj_no_toString() {
+        assertTrue(loja.toString().contains("cnpj"));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_contenha_a_palavra_telefones_no_toString() {
+        assertTrue(loja.toString().contains("telefones"));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_contenha_a_palavra_enderecos_no_toString() {
+        assertTrue(loja.toString().contains("enderecos"));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_contenha_a_palavra_produtos_no_toString() {
+        assertTrue(loja.toString().contains("produtos"));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_contenha_a_palavra_funcionarios_no_toString() {
+        assertTrue(loja.toString().contains("funcionarios"));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_contenha_a_palavra_clientes_no_toString() {
+        assertTrue(loja.toString().contains("clientes"));
+    }
+    
     /**
      * Mostrar dados empresa.
      */

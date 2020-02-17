@@ -1,4 +1,4 @@
-package br.com.contmatic.empresa;
+package br.com.contmatic.telefone;
 
 import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
@@ -9,7 +9,7 @@ import javax.validation.constraints.Pattern;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import br.com.contmatic.constantes.Constante;
-import br.com.contmatic.enums.TipoTelefone;
+import br.com.contmatic.constantes.Mensagem;
 
 /**
  * The Class Telefone.
@@ -17,33 +17,36 @@ import br.com.contmatic.enums.TipoTelefone;
 public final class Telefone {
 
     /** The phone. */
-    @NotBlank(message = Constante.VALOR_ESTA_VAZIO)
-    @NotNull(message = Constante.VALOR_ESTA_NULLO)
-    @NotEmpty(message = Constante.VALOR_ESTA_VAZIO)
-    @Pattern(regexp = Constante.PHONE_VALIDATION, message = Constante.VALOR_NAO_E_VALIDO)
+    @NotBlank(message = Mensagem.VALOR_ESTA_VAZIO)
+    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    @NotEmpty(message = Mensagem.VALOR_ESTA_VAZIO)
+    @Pattern(regexp = Constante.PHONE_VALIDATION, message = Mensagem.VALOR_NAO_E_VALIDO)
     private String phone;
 
     /** The tipo telefone. */
-    @NotNull(message = Constante.VALOR_ESTA_NULLO)
+    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
     private TipoTelefone tipoTelefone;
 
+    /** The ddd telefone. */
+    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    private DddBrasil dddTelefone;
+
     /**
-     * Gets the phones.
+     * Gets the phone.
      *
-     * @return the phones
+     * @return the phone
      */
-    public String getPhones() {
+    public String getPhone() {
         return phone;
     }
 
     /**
-     * Sets the phones.
+     * Sets the phone.
      *
-     * @param phones the new phones
+     * @param phone the new phone
      */
-    public void setPhones(String phones) {
-
-        this.phone = phones;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     /**
@@ -65,13 +68,31 @@ public final class Telefone {
     }
 
     /**
+     * Gets the ddd telefone.
+     *
+     * @return the ddd telefone
+     */
+    public DddBrasil getDddTelefone() {
+        return dddTelefone;
+    }
+
+    /**
+     * Sets the ddd telefone.
+     *
+     * @param dddTelefone the new ddd telefone
+     */
+    public void setDddTelefone(DddBrasil dddTelefone) {
+        this.dddTelefone = dddTelefone;
+    }
+
+    /**
      * Hash code.
      *
      * @return the int
      */
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(phone).toHashCode();
+        return new HashCodeBuilder().append(phone).append(dddTelefone).toHashCode();
     }
 
     /**
@@ -89,7 +110,7 @@ public final class Telefone {
         if (getClass() != obj.getClass())
             return false;
         Telefone other = (Telefone) obj;
-        return new EqualsBuilder().append(phone, other.phone).isEquals();
+        return new EqualsBuilder().append(phone, other.phone).append(dddTelefone, other.dddTelefone).isEquals();
     }
 
     /**

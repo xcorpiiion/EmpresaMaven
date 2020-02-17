@@ -2,22 +2,20 @@ package br.com.contmatic.empresa;
 
 import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
-
 import java.util.List;
 import java.util.Set;
-
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.br.CNPJ;
-
 import br.com.contmatic.constantes.Constante;
+import br.com.contmatic.constantes.Mensagem;
+import br.com.contmatic.endereco.Endereco;
+import br.com.contmatic.telefone.Telefone;
 
 /**
  * The Class Empresa.
@@ -25,41 +23,45 @@ import br.com.contmatic.constantes.Constante;
 public class Empresa {
 
     /** The nome. */
-    @NotEmpty(message = Constante.VALOR_ESTA_VAZIO)
-    @NotBlank(message = Constante.VALOR_ESTA_VAZIO)
-    @NotNull(message = Constante.VALOR_ESTA_NULLO)
-    @Size(min = 3, max = 100, message = "O nome não é valido {max}")
-    @Pattern(regexp = Constante.ILLEGAL_NUMBER, message = Constante.VALOR_NAO_E_VALIDO)
+    @NotEmpty(message = Mensagem.VALOR_ESTA_VAZIO)
+    @NotBlank(message = Mensagem.VALOR_ESTA_VAZIO)
+    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    @Size(min = 3, max = 100, message = Mensagem.VALOR_NAO_E_VALIDO)
+    @Pattern(regexp = Constante.ILLEGAL_NUMBER, message = Mensagem.VALOR_NAO_E_VALIDO)
     private String nome;
 
     /** The email. */
-    @Email(message = Constante.VALOR_NAO_E_VALIDO)
+    @NotEmpty(message = Mensagem.VALOR_ESTA_VAZIO)
+    @NotBlank(message = Mensagem.VALOR_ESTA_VAZIO)
+    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    @Size(min = 10, max = 100, message = Mensagem.VALOR_NAO_E_VALIDO)
+    @Pattern(regexp = Constante.VALIDATION_EMAIL, message = Mensagem.VALOR_NAO_E_VALIDO)
     private String email;
 
     /** The cnpj. */
-    @CNPJ(message = "CNPJ não é valido")
+    @CNPJ(message = Mensagem.VALOR_NAO_E_VALIDO)
     private String cnpj;
-    
+
     /** The telefones. */
-    @NotNull(message = Constante.VALOR_ESTA_NULLO)
+    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
     private Set<Telefone> telefones;
 
     /** The enderecos. */
-    @NotNull(message = Constante.VALOR_ESTA_NULLO)
+    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
     private Set<Endereco> enderecos;
 
     /** The produtos. */
-    @NotNull(message = Constante.VALOR_ESTA_NULLO)
+    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
     private List<Produto> produtos;
 
     /** The funcionarios. */
-    @NotNull(message = Constante.VALOR_ESTA_NULLO)
+    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
     private List<Funcionario> funcionarios;
 
     /** The clientes. */
-    @NotNull(message = Constante.VALOR_ESTA_NULLO)
+    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
     private List<Cliente> clientes;
-    
+
     /**
      * Gets the endereco.
      *
