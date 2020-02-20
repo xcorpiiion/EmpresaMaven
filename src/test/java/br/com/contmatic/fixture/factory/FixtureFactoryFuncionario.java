@@ -8,7 +8,7 @@ import org.joda.time.DateTime;
 
 import br.com.contmatic.empresa.Cargo;
 import br.com.contmatic.empresa.Funcionario;
-import br.com.contmatic.telefone.TipoContrato;
+import br.com.contmatic.empresa.TipoContrato;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;

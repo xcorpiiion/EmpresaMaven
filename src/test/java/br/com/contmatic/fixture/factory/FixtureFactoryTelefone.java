@@ -2,9 +2,9 @@ package br.com.contmatic.fixture.factory;
 
 import java.util.Random;
 
+import br.com.contmatic.empresa.TipoContrato;
 import br.com.contmatic.telefone.DddBrasil;
 import br.com.contmatic.telefone.Telefone;
-import br.com.contmatic.telefone.TipoContrato;
 import br.com.contmatic.telefone.TipoTelefone;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;

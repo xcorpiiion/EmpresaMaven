@@ -19,7 +19,6 @@ import org.junit.runners.MethodSorters;
 
 import br.com.contmatic.constantes.Mensagem;
 import br.com.contmatic.telefone.Telefone;
-import br.com.contmatic.telefone.TipoContrato;
 import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;

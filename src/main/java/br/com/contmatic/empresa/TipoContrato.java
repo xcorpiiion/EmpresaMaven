@@ -1,4 +1,4 @@
-package br.com.contmatic.telefone;
+package br.com.contmatic.empresa;
 /**
  * The Enum TipoContrato.
  */

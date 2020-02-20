@@ -20,7 +20,6 @@ import br.com.contmatic.constantes.Constante;
 import br.com.contmatic.constantes.Mensagem;
 import br.com.contmatic.endereco.Endereco;
 import br.com.contmatic.telefone.Telefone;
-import br.com.contmatic.telefone.TipoContrato;
 
 /**
  * The Class Funcionario.
