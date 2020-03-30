@@ -42,14 +42,14 @@ public class Endereco {
     private String cep;
 
     /** The numero residencia. */
-    @Min(value = 1)
+    @Min(value = 1, message = Mensagem.PRECISA_SER_UM_VALOR_MAIOR)
     private int numeroResidencia;
 
     /** The cidade. */
     @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
     @NotEmpty(message = Mensagem.VALOR_ESTA_VAZIO)
     @NotBlank(message = Mensagem.VALOR_ESTA_VAZIO)
-    @Min(value = 5, message = Mensagem.PRECISA_SER_UM_VALOR_MAIOR)
+    @Min(value = 3, message = Mensagem.PRECISA_SER_UM_VALOR_MAIOR)
     @Pattern(regexp = Constante.ILLEGAL_NUMBER, message = Mensagem.VALOR_NAO_E_VALIDO)
     private String cidade;
 

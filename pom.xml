@@ -6,6 +6,7 @@
 	<artifactId>empresa-maven</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>EmpresaMaven</name>
+	<packaging>pom</packaging>
 	<!-- https://mvnrepository.com/artifact/junit/junit -->
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
@@ -93,10 +94,50 @@
 			<artifactId>guava</artifactId>
 			<version>28.1-jre</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.mongodb/mongodb-driver -->
 		<dependency>
 			<groupId>org.mongodb</groupId>
-			<artifactId>mongo-java-driver</artifactId>
-			<version>3.11.0</version>
+			<artifactId>mongodb-driver</artifactId>
+			<version>3.12.1</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.jeasy/easy-random-core -->
+		<dependency>
+			<groupId>org.jeasy</groupId>
+			<artifactId>easy-random-core</artifactId>
+			<version>4.0.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.jeasy/easy-random-randomizers -->
+		<dependency>
+			<groupId>org.jeasy</groupId>
+			<artifactId>easy-random-randomizers</artifactId>
+			<version>4.1.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.10</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/io.github.benas/random-beans -->
+		<dependency>
+			<groupId>io.github.benas</groupId>
+			<artifactId>random-beans</artifactId>
+			<version>3.9.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.javafaker</groupId>
+			<artifactId>javafaker</artifactId>
+			<version>0.12</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/nl.jqno.equalsverifier/equalsverifier -->
+		<dependency>
+			<groupId>nl.jqno.equalsverifier</groupId>
+			<artifactId>equalsverifier</artifactId>
+			<version>3.1.9</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 </project>

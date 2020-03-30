@@ -2,15 +2,17 @@ package br.com.contmatic.empresa;
 
 import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
+
 import java.math.BigDecimal;
 import java.util.Set;
-import javax.validation.constraints.Max;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.br.CPF;
@@ -30,8 +32,7 @@ public class Funcionario {
     @NotBlank(message = Mensagem.VALOR_ESTA_VAZIO)
     @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
     @NotEmpty(message = Mensagem.VALOR_ESTA_VAZIO)
-    @Min(value = 2, message = Mensagem.NOME_E_MUITO_GRANDE)
-    @Max(value = 60, message = Mensagem.NOME_E_MUITO_PEQUENO)
+    @Size(min = 2, max = 50, message = Mensagem.VALOR_NAO_E_VALIDO)
     private String nome;
 
     /** The email. */
