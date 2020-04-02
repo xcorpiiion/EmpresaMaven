@@ -11,13 +11,15 @@ import org.jeasy.random.api.Randomizer;
 
 import com.github.javafaker.Faker;
 
+import br.com.contmatic.empresa.Produto;
+
 public final class EasyRandomProduto {
 
 	private EasyRandomProduto() {
 
 	}
 
-	public static EasyRandom validadorEasyRandomProduto(TipoDadoParaTesteProduto tipoDadoParaTeste) {
+	public static Produto validadorEasyRandomProduto(TipoDadoParaTesteProduto tipoDadoParaTeste) {
 		Faker faker = new Faker();
 		EasyRandomParameters parameters = new EasyRandomParameters();
 		switch (tipoDadoParaTeste) {
@@ -43,7 +45,7 @@ public final class EasyRandomProduto {
 			nome(parameters, null);
 			break;
 		case NOME__WITH_SPECIAL_CARACTER:
-			nome(parameters, "*&*(¨(¨*");
+			nome(parameters, "*&*(ï¿½(ï¿½*");
 			break;
 		case PRECO_INVALIDO:
 			preco(parameters, new BigDecimal(new Random().nextDouble() * -1));
@@ -53,7 +55,7 @@ public final class EasyRandomProduto {
 			break;
 		}
 		EasyRandom generator = new EasyRandom(parameters);
-		return generator;
+		return generator.nextObject(Produto.class);
 	}
 
 	private static void dadosEnderecoValidos(EasyRandomParameters parameters, Faker faker) {

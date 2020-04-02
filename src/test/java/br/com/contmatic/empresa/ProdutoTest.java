@@ -24,7 +24,7 @@ public class ProdutoTest {
      */
     @BeforeClass
     public static void dadosProdutos() {
-        produto = EasyRandomProduto.validadorEasyRandomProduto(TipoDadoParaTesteProduto.VALIDO).nextObject(Produto.class);
+        produto = EasyRandomProduto.validadorEasyRandomProduto(TipoDadoParaTesteProduto.VALIDO);
     }
 
     /**
@@ -32,7 +32,7 @@ public class ProdutoTest {
      */
     @Test
     public void deve_armazenar_nome_null_e_armazenar_no_validationAnnotation() {
-        produto = EasyRandomProduto.validadorEasyRandomProduto(TipoDadoParaTesteProduto.NOME_NULL).nextObject(Produto.class);
+        produto = EasyRandomProduto.validadorEasyRandomProduto(TipoDadoParaTesteProduto.NOME_NULL);
         assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(produto, Mensagem.VALOR_ESTA_NULLO));
     }
 
@@ -41,7 +41,7 @@ public class ProdutoTest {
      */
     @Test
     public void nao_deve_aceitar_nome_vazio() {
-        produto = EasyRandomProduto.validadorEasyRandomProduto(TipoDadoParaTesteProduto.NOME_EMPTY).nextObject(Produto.class);
+        produto = EasyRandomProduto.validadorEasyRandomProduto(TipoDadoParaTesteProduto.NOME_EMPTY);
         assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(produto, Mensagem.VALOR_ESTA_VAZIO));
     }
 
@@ -50,20 +50,20 @@ public class ProdutoTest {
      */
     @Test
     public void deve_aceitar_nome_com_espaco_em_branco() {
-    	produto = EasyRandomProduto.validadorEasyRandomProduto(TipoDadoParaTesteProduto.NOME_BLANK_SPACE).nextObject(Produto.class);
+    	produto = EasyRandomProduto.validadorEasyRandomProduto(TipoDadoParaTesteProduto.NOME_BLANK_SPACE);
         assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(produto, Mensagem.VALOR_ESTA_VAZIO));
 
     }
 
     @Test
     public void deve_retornar_true_caso_nome_seja_possua_menos_3_caracter() {
-    	produto = EasyRandomProduto.validadorEasyRandomProduto(TipoDadoParaTesteProduto.NOME_INVALID_SIZE).nextObject(Produto.class);
+    	produto = EasyRandomProduto.validadorEasyRandomProduto(TipoDadoParaTesteProduto.NOME_INVALID_SIZE);
         assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(produto, Mensagem.NOME_E_MUITO_PEQUENO));
     }
     
     @Test
     public void deve_retornar_true_caso_nome_seja_possua_caracteres_especiais() {
-    	produto = EasyRandomProduto.validadorEasyRandomProduto(TipoDadoParaTesteProduto.NOME__WITH_SPECIAL_CARACTER).nextObject(Produto.class);
+    	produto = EasyRandomProduto.validadorEasyRandomProduto(TipoDadoParaTesteProduto.NOME__WITH_SPECIAL_CARACTER);
         assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(produto, Mensagem.VALOR_NAO_E_VALIDO));
     }
     /**
@@ -71,7 +71,7 @@ public class ProdutoTest {
      */
     @Test
     public void deve_retornar_true_caso_preco_seja_null() {
-    	produto = EasyRandomProduto.validadorEasyRandomProduto(TipoDadoParaTesteProduto.PRECO_NULL).nextObject(Produto.class);
+    	produto = EasyRandomProduto.validadorEasyRandomProduto(TipoDadoParaTesteProduto.PRECO_NULL);
         assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(produto, Mensagem.VALOR_ESTA_NULLO));
     }
 
@@ -80,19 +80,19 @@ public class ProdutoTest {
      */
     @Test
     public void deve_retornar_true_caso_estoque_seja_menor_que_um() {
-    	produto = EasyRandomProduto.validadorEasyRandomProduto(TipoDadoParaTesteProduto.PRECO_INVALIDO).nextObject(Produto.class);
+    	produto = EasyRandomProduto.validadorEasyRandomProduto(TipoDadoParaTesteProduto.PRECO_INVALIDO);
         assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(produto, Mensagem.PRECISA_SER_UM_VALOR_MAIOR));
     }
     
     @Test
     public void deve_retornar_true_estoque_seja_null() {
-    	produto = EasyRandomProduto.validadorEasyRandomProduto(TipoDadoParaTesteProduto.ESTOQUE_NULL).nextObject(Produto.class);
+    	produto = EasyRandomProduto.validadorEasyRandomProduto(TipoDadoParaTesteProduto.ESTOQUE_NULL);
         assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(produto, Mensagem.VALOR_ESTA_NULLO));
     }
     
     @Test
     public void deve_retornar_true_estoque_seja_invalido() {
-    	produto = EasyRandomProduto.validadorEasyRandomProduto(TipoDadoParaTesteProduto.ESTOQUE_INVALIDO).nextObject(Produto.class);
+    	produto = EasyRandomProduto.validadorEasyRandomProduto(TipoDadoParaTesteProduto.ESTOQUE_INVALIDO);
         assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(produto, Mensagem.VALOR_NAO_E_VALIDO));
     }
     

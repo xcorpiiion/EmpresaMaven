@@ -12,30 +12,23 @@ import org.joda.time.DateTime;
 
 import com.github.javafaker.Faker;
 
-import br.com.contmatic.empresa.Cargo;
-import br.com.contmatic.empresa.Funcionario;
-import br.com.contmatic.empresa.TipoContrato;
+import br.com.contmatic.empresa.Cliente;
 import br.com.contmatic.endereco.Endereco;
 import br.com.contmatic.fixture.factory.GeradorCpf;
-import br.com.contmatic.fixture.factory.GeradorEmail;
 import br.com.contmatic.fixture.factory.GeradorNome;
 
-public final class EasyRandomFuncionario {
+public final class EasyRandomCliente {
 
-	private EasyRandomFuncionario() {
+	private EasyRandomCliente() {
 
 	}
 
-	public static Funcionario validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario tipoDadoParaTeste) {
+	public static Cliente validadorEasyRandomCliente(TipoDadoParaTesteCliente tipoDadoParaTeste) {
 		Faker faker = new Faker();
 		EasyRandomParameters parameters = new EasyRandomParameters();
 		switch (tipoDadoParaTeste) {
 		case VALIDO:
 			dadosFuncionarioValidos(parameters, faker, "todos");
-			break;
-		case CARGO_NULL:
-			dadosFuncionarioValidos(parameters, faker, "cargo");
-			cargo(parameters, null);
 			break;
 		case CPF_BLANK_SPACE:
 			dadosFuncionarioValidos(parameters, faker, "cpf");
@@ -57,9 +50,9 @@ public final class EasyRandomFuncionario {
 			dadosFuncionarioValidos(parameters, faker, "dataNascimento");
 			dataNascimento(parameters, null);
 			break;
-		case EMAIL__WITH_SPECIAL_CARACTER:
+		case EMAIL_WITH_SPECIAL_CARACTER:
 			dadosFuncionarioValidos(parameters, faker, "email");
-			email(parameters, "%$�$%");
+			email(parameters, "%$�¨*daksjdhja$%@gmail.com");
 			break;
 		case EMAIL_BLANK_SPACE:
 			dadosFuncionarioValidos(parameters, faker, "email");
@@ -71,7 +64,7 @@ public final class EasyRandomFuncionario {
 			break;
 		case EMAIL_INVALID_SIZE:
 			dadosFuncionarioValidos(parameters, faker, "email");
-			email(parameters, GeradorEmail.EMAIL_LESS_10_CARACTER);
+			email(parameters, "aaa" + "gmail.com");
 			break;
 		case EMAIL_NULL:
 			dadosFuncionarioValidos(parameters, faker, "email");
@@ -101,21 +94,17 @@ public final class EasyRandomFuncionario {
 			dadosFuncionarioValidos(parameters, faker, "nome");
 			nome(parameters, null);
 			break;
-		case SALARIO_NULL:
-			dadosFuncionarioValidos(parameters, faker, "salario");
-			salario(parameters, null);
+		case DINHEIRO_CARTEIRA_NULL:
+			dadosFuncionarioValidos(parameters, faker, "dinheiroCarteira");
+			dinheiroCarteira(parameters, null);
 			break;
-		case SALARIO_PRECIA_SER_VALOR_MAIOR:
-			dadosFuncionarioValidos(parameters, faker, "salario");
-			salario(parameters, new BigDecimal(new Random().nextDouble() * -1));
-			break;
-		case TIPO_CONTRATO_NULL:
-			dadosFuncionarioValidos(parameters, faker, "tipoContrato");
-			tipoContrato(parameters, null);
+		case DINHEIRO_CARTEIRA_PRECIA_SER_VALOR_MAIOR:
+			dadosFuncionarioValidos(parameters, faker, "dinheiroCarteira");
+			dinheiroCarteira(parameters, new BigDecimal(new Random().nextDouble() * -1));
 			break;
 		}
 		EasyRandom generator = new EasyRandom(parameters);
-		return generator.nextObject(Funcionario.class);
+		return generator.nextObject(Cliente.class);
 	}
 
 	private static void dadosFuncionarioValidos(EasyRandomParameters parameters, Faker faker, String nomeCampoUsado) {
@@ -127,15 +116,11 @@ public final class EasyRandomFuncionario {
 			cpf(parameters, GeradorCpf.gerardorRandomCpf());
 		if (!nomeCampoUsado.equalsIgnoreCase("dataNascimento"))
 			dataNascimento(parameters, new DateTime());
-		if (!nomeCampoUsado.equalsIgnoreCase("cargo"))
-			cargo(parameters, Cargo.values()[new Random().nextInt(Cargo.values().length)]);
 		if (!nomeCampoUsado.equalsIgnoreCase("endereco"))
 			endereco(parameters, EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.VALIDO)
 					.nextObject(Endereco.class));
-		if (!nomeCampoUsado.equalsIgnoreCase("tipoContrato"))
-			tipoContrato(parameters, TipoContrato.values()[new Random().nextInt(TipoContrato.values().length)]);
-		if (!nomeCampoUsado.equalsIgnoreCase("salario"))
-			salario(parameters, new BigDecimal(new Random().nextDouble() + 1 * 5000));
+		if (!nomeCampoUsado.equalsIgnoreCase("dinheiroCarteira"))
+			dinheiroCarteira(parameters, new BigDecimal(new Random().nextDouble() + 1 * 5000));
 	}
 
 	private static void nome(EasyRandomParameters parameters, String nomeFuncionario) {
@@ -178,16 +163,6 @@ public final class EasyRandomFuncionario {
 		parameters.randomize(FieldPredicates.named("dataNascimento"), dataNascimento);
 	}
 
-	private static void cargo(EasyRandomParameters parameters, Cargo cargoFuncionario) {
-		Randomizer<Cargo> cargo = new Randomizer<Cargo>() {
-			@Override
-			public Cargo getRandomValue() {
-				return cargoFuncionario;
-			}
-		};
-		parameters.randomize(FieldPredicates.named("cargo"), cargo);
-	}
-
 	private static void endereco(EasyRandomParameters parameters, Endereco enderecoFuncionario) {
 		Randomizer<Endereco> endereco = new Randomizer<Endereco>() {
 			@Override
@@ -198,23 +173,13 @@ public final class EasyRandomFuncionario {
 		parameters.randomize(FieldPredicates.named("endereco"), endereco);
 	}
 
-	private static void tipoContrato(EasyRandomParameters parameters, TipoContrato tipoContratoFuncionario) {
-		Randomizer<TipoContrato> tipoContrato = new Randomizer<TipoContrato>() {
-			@Override
-			public TipoContrato getRandomValue() {
-				return tipoContratoFuncionario;
-			}
-		};
-		parameters.randomize(FieldPredicates.named("tipoContrato"), tipoContrato);
-	}
-
-	private static void salario(EasyRandomParameters parameters, BigDecimal precoProduto) {
-		Randomizer<BigDecimal> salario = new Randomizer<BigDecimal>() {
+	private static void dinheiroCarteira(EasyRandomParameters parameters, BigDecimal dinheiroCarteiraCliente) {
+		Randomizer<BigDecimal> dinheiroCarteira = new Randomizer<BigDecimal>() {
 			@Override
 			public BigDecimal getRandomValue() {
-				return precoProduto;
+				return dinheiroCarteiraCliente;
 			}
 		};
-		parameters.randomize(FieldPredicates.named("salario"), salario);
+		parameters.randomize(FieldPredicates.named("dinheiroCarteira"), dinheiroCarteira);
 	}
 }

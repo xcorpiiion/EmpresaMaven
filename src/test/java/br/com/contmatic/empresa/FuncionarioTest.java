@@ -3,6 +3,7 @@ package br.com.contmatic.empresa;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -41,11 +42,9 @@ public class FuncionarioTest {
 	 */
 	@BeforeClass
 	public static void addDadosIniciais() {
-		funcionario = EasyRandomFuncionario.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.VALIDO)
-				.nextObject(Funcionario.class);
+		funcionario = EasyRandomFuncionario.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.VALIDO);
 		telefones = new HashSet<>();
-		telefones.add(EasyRandomTelefone.validadorEasyRandomTelefone(TipoDadoParaTesteTelefone.VALIDO)
-				.nextObject(Telefone.class));
+		telefones.add(EasyRandomTelefone.validadorEasyRandomTelefone(TipoDadoParaTesteTelefone.VALIDO));
 	}
 
 	@Test
@@ -56,62 +55,80 @@ public class FuncionarioTest {
 
 	@Test
 	public void deve_retornar_true_caso_nome_seja_null() {
-		funcionario = EasyRandomFuncionario.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.NOME_NULL)
-				.nextObject(Funcionario.class);
+		funcionario = EasyRandomFuncionario.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.NOME_NULL);
 		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_ESTA_NULLO));
 	}
 
 	@Test
 	public void deve_retornar_true_caso_nome_seja_vazio() {
-		funcionario = EasyRandomFuncionario.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.NOME_EMPTY)
-				.nextObject(Funcionario.class);
-		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_ESTA_VAZIO));
+		funcionario = EasyRandomFuncionario.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.NOME_EMPTY);
+		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_NAO_E_VALIDO));
 	}
 
 	@Test
 	public void deve_retornar_true_caso_nome_esteja_com_espaco_em_branco() {
 		funcionario = EasyRandomFuncionario
-				.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.NOME_BLANK_SPACE)
-				.nextObject(Funcionario.class);
-		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_ESTA_VAZIO));
+				.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.NOME_BLANK_SPACE);
+		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_NAO_E_VALIDO));
 	}
 
 	@Test
 	public void deve_retornar_true_caso_nome_seja_possua_menos_3_caracter() {
 		funcionario = EasyRandomFuncionario
-				.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.NOME_INVALID_SIZE)
-				.nextObject(Funcionario.class);
+				.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.NOME_INVALID_SIZE);
 		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_NAO_E_VALIDO));
 	}
 
 	@Test
 	public void deve_retornar_true_caso_nome_seja_possua_caracteres_especiais() {
 		funcionario = EasyRandomFuncionario
-				.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.NOME__WITH_SPECIAL_CARACTER)
-				.nextObject(Funcionario.class);
+				.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.NOME__WITH_SPECIAL_CARACTER);
+		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_NAO_E_VALIDO));
+	}
+
+	@Test
+	public void deve_retornar_true_caso_cpf_seja_possua_caracteres_especiais() {
+		funcionario = EasyRandomFuncionario
+				.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.CPF_WITH_SPECIAL_CARACTER);
+		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_NAO_E_VALIDO));
+	}
+
+	@Test
+	public void deve_retornar_true_caso_cpf_seja_null() {
+		funcionario = EasyRandomFuncionario.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.CPF_NULL);
+		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_ESTA_NULLO));
+	}
+
+	@Test
+	public void deve_retornar_true_caso_cpf_esteja_vazio() {
+		funcionario = EasyRandomFuncionario.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.CPF_EMPTY);
+		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_NAO_E_VALIDO));
+	}
+
+	@Test
+	public void deve_retornar_true_caso_cpf_esteja_espaco_em_branco() {
+		funcionario = EasyRandomFuncionario
+				.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.CPF_BLANK_SPACE);
 		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_NAO_E_VALIDO));
 	}
 
 	@Test
 	public void deve_retornar_true_caso_email_seja_null() {
-		funcionario = EasyRandomFuncionario.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.EMAIL_NULL)
-				.nextObject(Funcionario.class);
+		funcionario = EasyRandomFuncionario.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.EMAIL_NULL);
 		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_ESTA_NULLO));
 	}
 
 	@Test
 	public void deve_retornar_true_caso_email_seja_vazio() {
-		funcionario = EasyRandomFuncionario.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.EMAIL_EMPTY)
-				.nextObject(Funcionario.class);
-		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_ESTA_VAZIO));
+		funcionario = EasyRandomFuncionario.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.EMAIL_EMPTY);
+		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_NAO_E_VALIDO));
 	}
 
 	@Test
 	public void deve_retornar_true_caso_email_esteja_com_espaco_em_branco() {
 		funcionario = EasyRandomFuncionario
-				.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.EMAIL_BLANK_SPACE)
-				.nextObject(Funcionario.class);
-		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_ESTA_VAZIO));
+				.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.EMAIL_BLANK_SPACE);
+		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_NAO_E_VALIDO));
 	}
 
 	@Test
@@ -123,8 +140,7 @@ public class FuncionarioTest {
 	@Test
 	public void deve_retornar_true_caso_email_esteja_com_menos_10_caracteres() {
 		funcionario = EasyRandomFuncionario
-				.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.EMAIL_INVALID_SIZE)
-				.nextObject(Funcionario.class);
+				.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.EMAIL_INVALID_SIZE);
 		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_NAO_E_VALIDO));
 	}
 
@@ -161,15 +177,13 @@ public class FuncionarioTest {
 	@Test
 	public void deve_retornar_true_caso_email_esteja_com_caracteres_especiais() {
 		funcionario = EasyRandomFuncionario
-				.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.EMAIL__WITH_SPECIAL_CARACTER)
-				.nextObject(Funcionario.class);
+				.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.EMAIL__WITH_SPECIAL_CARACTER);
 		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_NAO_E_VALIDO));
 	}
 
 	@Test
 	public void deve_retornar_true_se_cargo_for_null() {
-		funcionario = EasyRandomFuncionario.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.CARGO_NULL)
-				.nextObject(Funcionario.class);
+		funcionario = EasyRandomFuncionario.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.CARGO_NULL);
 		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_ESTA_NULLO));
 	}
 
@@ -188,8 +202,7 @@ public class FuncionarioTest {
 	@Test
 	public void deve_retornar_true_se_tipoContrato_for_null() {
 		funcionario = EasyRandomFuncionario
-				.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.TIPO_CONTRATO_NULL)
-				.nextObject(Funcionario.class);
+				.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.TIPO_CONTRATO_NULL);
 		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_ESTA_NULLO));
 	}
 
@@ -208,8 +221,7 @@ public class FuncionarioTest {
 	@Test
 	public void deve_retornar_true_se_dataNascimento_for_null() {
 		funcionario = EasyRandomFuncionario
-				.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.DATA_NASCIMENTO_NULL)
-				.nextObject(Funcionario.class);
+				.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.DATA_NASCIMENTO_NULL);
 		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_ESTA_NULLO));
 	}
 
@@ -227,8 +239,7 @@ public class FuncionarioTest {
 
 	@Test
 	public void deve_mudar_endereco() {
-		funcionario2 = EasyRandomFuncionario.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.VALIDO)
-				.nextObject(Funcionario.class);
+		funcionario2 = EasyRandomFuncionario.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.VALIDO);
 		funcionario.setEndereco(funcionario2.getEndereco());
 		assertEquals(funcionario2.getEndereco(), funcionario.getEndereco());
 	}
@@ -239,8 +250,33 @@ public class FuncionarioTest {
 	@Test
 	public void deve_ter_salario_maior_do_que_zero() {
 		funcionario2.setSalario(funcionario.getSalario());
+		assertTrue(funcionario2.getSalario().compareTo(BigDecimal.ZERO) > 0);
+	}
+
+	@Test
+	public void deve_retornar_true_caso_salario_seja_menor_do_que_1000() {
+		funcionario = EasyRandomFuncionario
+				.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.SALARIO_PRECIA_SER_VALOR_MAIOR);
 		assertTrue(
-				ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario2, Mensagem.PRECISA_SER_UM_VALOR_MAIOR));
+				ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.PRECISA_SER_UM_VALOR_MAIOR));
+	}
+
+	@Test
+	public void deve_retornar_true_caso_salario_seja_null() {
+		funcionario = EasyRandomFuncionario.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.SALARIO_NULL);
+		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_ESTA_NULLO));
+	}
+
+	@Test
+	public void deve_retornar_true_caso_endereco_seja_null() {
+		funcionario = EasyRandomFuncionario.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.ENDERECO_NULL);
+		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_ESTA_NULLO));
+	}
+
+	@Test
+	public void deve_retornar_true_caso_telefone_seja_null() {
+		funcionario.setTelefones(null);
+		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_ESTA_NULLO));
 	}
 
 	@Test()

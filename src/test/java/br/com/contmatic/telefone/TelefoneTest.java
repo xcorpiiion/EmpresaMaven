@@ -34,8 +34,8 @@ public class TelefoneTest {
 	 */
 	@BeforeClass
 	public static void addDadosTelefone() {
-		telefone = EasyRandomTelefone.validadorEasyRandomTelefone(TipoDadoParaTesteTelefone.VALIDO).nextObject(Telefone.class);
-		telefone2 = EasyRandomTelefone.validadorEasyRandomTelefone(TipoDadoParaTesteTelefone.VALIDO).nextObject(Telefone.class);
+		telefone = EasyRandomTelefone.validadorEasyRandomTelefone(TipoDadoParaTesteTelefone.VALIDO);
+		telefone2 = EasyRandomTelefone.validadorEasyRandomTelefone(TipoDadoParaTesteTelefone.VALIDO);
 	}
 
 	/**
@@ -46,37 +46,37 @@ public class TelefoneTest {
 	public void deve_retornar_true_caso_telefone_seja_valido() {
 		Faker faker = new Faker();
 		System.out.println(faker.address().firstName());
-		telefone = EasyRandomTelefone.validadorEasyRandomTelefone(TipoDadoParaTesteTelefone.VALIDO).nextObject(Telefone.class);
+		telefone = EasyRandomTelefone.validadorEasyRandomTelefone(TipoDadoParaTesteTelefone.VALIDO);
 		assertTrue(telefone.getPhone().matches(Constante.PHONE_VALIDATION));
 	}
 
 	@Test
 	public void deve_retornar_true_caso_telefone_seja_null() {
-		telefone = EasyRandomTelefone.validadorEasyRandomTelefone(TipoDadoParaTesteTelefone.PHONE_NULL).nextObject(Telefone.class);
+		telefone = EasyRandomTelefone.validadorEasyRandomTelefone(TipoDadoParaTesteTelefone.PHONE_NULL);
 		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(telefone, Mensagem.VALOR_ESTA_NULLO));
 	}
 
 	@Test
 	public void deve_retornar_true_caso_telefone_esteja_vazio() {
-		telefone = EasyRandomTelefone.validadorEasyRandomTelefone(TipoDadoParaTesteTelefone.PHONE_EMPTY).nextObject(Telefone.class);
+		telefone = EasyRandomTelefone.validadorEasyRandomTelefone(TipoDadoParaTesteTelefone.PHONE_EMPTY);
 		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(telefone, Mensagem.VALOR_ESTA_VAZIO));
 	}
 
 	@Test
 	public void deve_retornar_true_caso_telefone_tenha_apenas_espacos_em_branco() {
-		telefone = EasyRandomTelefone.validadorEasyRandomTelefone(TipoDadoParaTesteTelefone.PHONE_BLANK_SPACE).nextObject(Telefone.class);
+		telefone = EasyRandomTelefone.validadorEasyRandomTelefone(TipoDadoParaTesteTelefone.PHONE_BLANK_SPACE);
 		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(telefone, Mensagem.VALOR_ESTA_VAZIO));
 	}
 
 	@Test
 	public void deve_retornar_true_caso_telefone_esteja_com_tamanho_invalido() {
-		telefone = EasyRandomTelefone.validadorEasyRandomTelefone(TipoDadoParaTesteTelefone.PHONE_INVALID_SIZE).nextObject(Telefone.class);
+		telefone = EasyRandomTelefone.validadorEasyRandomTelefone(TipoDadoParaTesteTelefone.PHONE_INVALID_SIZE);
 		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(telefone, Mensagem.VALOR_NAO_E_VALIDO));
 	}
 
 	@Test
 	public void deve_retornar_true_caso_ddd_seja_null() {
-		telefone = EasyRandomTelefone.validadorEasyRandomTelefone(TipoDadoParaTesteTelefone.DDD_NULL).nextObject(Telefone.class);
+		telefone = EasyRandomTelefone.validadorEasyRandomTelefone(TipoDadoParaTesteTelefone.DDD_NULL);
 		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(telefone, Mensagem.VALOR_ESTA_NULLO));
 	}
 
@@ -102,14 +102,14 @@ public class TelefoneTest {
 
 	@Test
 	public void deve_retornar_false_caso_sigla_seja_diferente() {
-		telefone2 = EasyRandomTelefone.validadorEasyRandomTelefone(TipoDadoParaTesteTelefone.VALIDO).nextObject(Telefone.class);
+		telefone2 = EasyRandomTelefone.validadorEasyRandomTelefone(TipoDadoParaTesteTelefone.VALIDO);
 		assertFalse(telefone.getDddTelefone().getSigla() == telefone2.getDddTelefone().getSigla());
 	}
 
 	@Test
 	public void deve_retornar_true_caso_tipoTelefone_esteja_null() {
 		
-		telefone = EasyRandomTelefone.validadorEasyRandomTelefone(TipoDadoParaTesteTelefone.TIPO_TELEFONE_NULL).nextObject(Telefone.class);
+		telefone = EasyRandomTelefone.validadorEasyRandomTelefone(TipoDadoParaTesteTelefone.TIPO_TELEFONE_NULL);
 		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(telefone, Mensagem.VALOR_ESTA_NULLO));
 	}
 

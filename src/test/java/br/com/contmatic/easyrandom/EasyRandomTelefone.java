@@ -11,6 +11,7 @@ import org.jeasy.random.api.Randomizer;
 import br.com.contmatic.empresa.TipoContrato;
 import br.com.contmatic.fixture.factory.GeradorTelefone;
 import br.com.contmatic.telefone.DddBrasil;
+import br.com.contmatic.telefone.Telefone;
 import br.com.contmatic.telefone.TipoTelefone;
 
 public final class EasyRandomTelefone {
@@ -19,7 +20,7 @@ public final class EasyRandomTelefone {
 
 	}
 
-	public static EasyRandom validadorEasyRandomTelefone(TipoDadoParaTesteTelefone tipoDadoParaTeste) {
+	public static Telefone validadorEasyRandomTelefone(TipoDadoParaTesteTelefone tipoDadoParaTeste) {
 		EasyRandomParameters parameters = new EasyRandomParameters();
 		switch (tipoDadoParaTeste) {
 		case VALIDO:
@@ -45,7 +46,7 @@ public final class EasyRandomTelefone {
 			break;
 		}
 		EasyRandom generator = new EasyRandom(parameters);
-		return generator;
+		return generator.nextObject(Telefone.class);
 	}
 
 	private static void dadosTelefoneValidos(EasyRandomParameters parameters) {
