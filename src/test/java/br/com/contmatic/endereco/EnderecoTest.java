@@ -28,7 +28,7 @@ public class EnderecoTest {
 	 */
 	@Before
 	public void addEndereco() {
-		endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.VALIDO).nextObject(Endereco.class);
+		endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.VALIDO);
 	}
 	
 	/**
@@ -36,7 +36,7 @@ public class EnderecoTest {
 	 */
 	@Test
     public void deve_retornar_true_caso_numeroEndereco_seja_menor_do_que_zero() {
-        endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.NUMERO_RESIDENCIA_LESS_THAN_ZERO).nextObject(Endereco.class);
+        endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.NUMERO_RESIDENCIA_LESS_THAN_ZERO);
         assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.PRECISA_SER_UM_VALOR_MAIOR));
     }
 	
@@ -45,13 +45,13 @@ public class EnderecoTest {
 	 */
 	@Test
 	public void deve_retornar_true_caso_cidade_seja_null() {
-	    endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.CIDADE_NULL).nextObject(Endereco.class);
+	    endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.CIDADE_NULL);
 	    assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_ESTA_NULLO));
 	}
 	
 	@Test
     public void deve_retornar_true_caso_cidade_esteja_com_menos_de_3_caracteres() {
-        endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.CIDADE_LESS_3_CARACTER).nextObject(Endereco.class);
+        endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.CIDADE_LESS_3_CARACTER);
         assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.PRECISA_SER_UM_VALOR_MAIOR));
     }
 	
@@ -60,7 +60,7 @@ public class EnderecoTest {
 	 */
 	@Test
 	public void nao_deve_aceitar_cidade_vazia() {
-		endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.CIDADE_EMPTY).nextObject(Endereco.class);
+		endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.CIDADE_EMPTY);
 		assertFalse(StringUtils.isEmpty(endereco.getCidade()));
 	}
 	
@@ -69,19 +69,19 @@ public class EnderecoTest {
 	 */
 	@Test
 	public void nao_deve_aceitar_numero_em_nome_cidade() {
-	    endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.CIDADE_CONTAINS_NUMBER).nextObject(Endereco.class);
+	    endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.CIDADE_CONTAINS_NUMBER);
 		assertTrue(!StringUtils.isNumeric(endereco.getCidade()));
 	}
     
     @Test
     public void deve_retornar_true_caso_cidade_seja_possua_mais_50_caracter() {
-        endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.CIDADE_GREATER_50_CARACTER).nextObject(Endereco.class);
+        endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.CIDADE_GREATER_50_CARACTER);
         assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_cidade_seja_possua_caracteres_especiais() {
-        endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.CIDADE_WITH_SPECIAL_CARACTER).nextObject(Endereco.class);
+        endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.CIDADE_WITH_SPECIAL_CARACTER);
         assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_NAO_E_VALIDO));
     }
 	
@@ -90,7 +90,7 @@ public class EnderecoTest {
 	 */
 	@Test
 	public void deve_retornar_true_caso_estado_seja_null() {
-	    endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.ESTADO_NULL).nextObject(Endereco.class);
+	    endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.ESTADO_NULL);
 	    assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_ESTA_NULLO));
 	}
 	
@@ -105,13 +105,13 @@ public class EnderecoTest {
 	 */
 	@Test
 	public void deve_retornar_true_caso_rua_seja_null() {
-		endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.RUA_NULL).nextObject(Endereco.class);
+		endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.RUA_NULL);
 		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_ESTA_NULLO));
 	}
 	
 	@Test
     public void deve_retornar_true_caso_rua_esteja_com_menos_de_5_caracteres() {
-        endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.RUA_LESS_3_CARACTER).nextObject(Endereco.class);
+        endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.RUA_LESS_3_CARACTER);
         assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.PRECISA_SER_UM_VALOR_MAIOR));
     }
 	
@@ -120,25 +120,25 @@ public class EnderecoTest {
 	 */
 	@Test
 	public void deve_retornar_true_caso_rua_esteja_com_espaco_em_branco() {
-	    endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.RUA_EMPTY).nextObject(Endereco.class);
+	    endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.RUA_EMPTY);
         assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_ESTA_VAZIO));
 	}
 	
 	@Test
     public void deve_retornar_true_caso_rua_esteja_vazia() {
-        endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.RUA_EMPTY).nextObject(Endereco.class);
+        endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.RUA_EMPTY);
         assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_ESTA_VAZIO));
     }
     
     @Test
     public void deve_retornar_true_caso_rua_seja_possua_mais_50_caracter() {
-        endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.RUA_GREATER_50_CARACTER).nextObject(Endereco.class);
+        endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.RUA_GREATER_50_CARACTER);
         assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_rua_seja_possua_caracteres_especiais() {
-        endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.RUA_WITH_SPECIAL_CARACTER).nextObject(Endereco.class);
+        endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.RUA_WITH_SPECIAL_CARACTER);
         assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_NAO_E_VALIDO));
     }
 	
@@ -147,7 +147,7 @@ public class EnderecoTest {
 	 */
 	@Test
 	public void nao_deve_aceitar_cep_null() {
-	    endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.CEP_NULL).nextObject(Endereco.class);
+	    endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.CEP_NULL);
 	    assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_ESTA_NULLO));
 	}
 	
@@ -156,7 +156,7 @@ public class EnderecoTest {
 	 */
 	@Test
 	public void nao_deve_aceitar_cep_vazio() {
-	    endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.CEP_EMPTY).nextObject(Endereco.class);
+	    endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.CEP_EMPTY);
 	    assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_ESTA_VAZIO));
 	}
 	
@@ -165,7 +165,7 @@ public class EnderecoTest {
 	 */
 	@Test
 	public void deve_retornar_true_caso_cep_contenha_tamanho_diferente_de_8() {
-	    endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.CEP_LENGTH_DIFFERENCE_8).nextObject(Endereco.class);
+	    endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.CEP_LENGTH_DIFFERENCE_8);
 		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_NAO_E_VALIDO));
 	}
 	
@@ -174,7 +174,7 @@ public class EnderecoTest {
 	 */
 	@Test
 	public void deve_retornar_false_caso_contenha_alguma_letra_no_cep() {
-		endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.CEP_CONTAINS_WORD).nextObject(Endereco.class);
+		endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.CEP_CONTAINS_WORD);
 		assertFalse(StringUtils.isNumeric(endereco.getCep()));
 	}
 	
@@ -183,37 +183,37 @@ public class EnderecoTest {
 	 */
 	@Test
 	public void deve_retornar_true_caso_bairro_seja_null() {
-	    endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.BAIRRO_NULL).nextObject(Endereco.class);
+	    endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.BAIRRO_NULL);
 	    assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_ESTA_NULLO));
 	}
 	
 	@Test
     public void deve_retornar_true_caso_bairro_esteja_com_espaco_em_branco() {
-        endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.BAIRRO_EMPTY).nextObject(Endereco.class);
+        endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.BAIRRO_EMPTY);
         assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_ESTA_VAZIO));
     }
     
     @Test
     public void deve_retornar_true_caso_bairro_esteja_vazio() {
-        endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.BAIRRO_EMPTY).nextObject(Endereco.class);
+        endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.BAIRRO_EMPTY);
         assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_ESTA_VAZIO));
     }
     
     @Test
     public void deve_retornar_true_caso_bairro_seja_possua_menos_3_caracter() {
-        endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.BAIRRO_LESS_3_CARACTER).nextObject(Endereco.class);
+        endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.BAIRRO_LESS_3_CARACTER);
         assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_bairro_seja_possua_mais_50_caracter() {
-        endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.BAIRRO_GREATER_50_CARACTER).nextObject(Endereco.class);
+        endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.BAIRRO_GREATER_50_CARACTER);
         assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_bairro_seja_possua_caracteres_especiais() {
-        endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.BAIRRO_WITH_SPECIAL_CARACTER).nextObject(Endereco.class);
+        endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.BAIRRO_WITH_SPECIAL_CARACTER);
         assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_NAO_E_VALIDO));
     }
     

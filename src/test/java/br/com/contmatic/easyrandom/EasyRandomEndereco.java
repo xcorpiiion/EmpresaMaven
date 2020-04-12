@@ -9,6 +9,7 @@ import org.jeasy.random.api.Randomizer;
 
 import com.github.javafaker.Faker;
 
+import br.com.contmatic.endereco.Endereco;
 import br.com.contmatic.endereco.EstadosBrasil;
 
 public final class EasyRandomEndereco {
@@ -17,7 +18,7 @@ public final class EasyRandomEndereco {
 
 	}
 
-	public static EasyRandom validadorEasyRandomEndereco(TipoDadoParaTesteEndereco tipoDadoParaTeste) {
+	public static Endereco validadorEasyRandomEndereco(TipoDadoParaTesteEndereco tipoDadoParaTeste) {
 		Faker faker = new Faker();
 		EasyRandomParameters parameters = new EasyRandomParameters();
 		switch (tipoDadoParaTeste) {
@@ -95,7 +96,7 @@ public final class EasyRandomEndereco {
 			break;
 		}
 		EasyRandom generator = new EasyRandom(parameters);
-		return generator;
+		return generator.nextObject(Endereco.class);
 	}
 
 	private static void dadosEnderecoValidos(EasyRandomParameters parameters, Faker faker) {

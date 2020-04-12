@@ -140,4 +140,7 @@
 		</dependency>
 
 	</dependencies>
+	<modules>
+		<module>empresa-model</module>
+	</modules>
 </project>

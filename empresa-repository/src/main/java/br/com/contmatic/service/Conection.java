@@ -18,19 +18,17 @@ public class Conection {
     private static final String DB_NAME = "etapa3";
 
     private static MongoClient mongoClient;
-    
-    private MongoDatabase database;
 
-    public void openDatabaseConection() {
+    public static MongoDatabase getMongoDatabase() {
         mongoClient = new MongoClient(HOST);
-        database = mongoClient.getDatabase(DB_NAME);
+        return mongoClient.getDatabase(DB_NAME);
     }
 
     public static void main(String[] args) {
+        MongoDatabase database = Conection.getMongoDatabase();
         MongoCollection<Document> collection = database.getCollection("loja");
         FindIterable<Document> find = collection.find();
 		MongoCursor<Document> cursor =  find.cursor();
-		database.createCollection("a");
         int i = 1;
         List<String> topics = new ArrayList<>();
         topics.add("Business");
@@ -38,15 +36,11 @@ public class Conection {
         topics.add("Sports");
         topics.add("Career");
         collection.insertOne(new Document("nome", topics));
-//        while (cursor.hasNext()) { 
-//            System.out.println("Documento inserido: " + i); 
-//            System.out.println(cursor.next()); 
-//            i++;
-//         }
-    }
-    
-    public void createCollection() {
-    	database.createCollection("a");
+        while (cursor.hasNext()) { 
+            System.out.println("Documento inserido: " + i); 
+            System.out.println(cursor.next()); 
+            i++;
+         }
     }
     
     

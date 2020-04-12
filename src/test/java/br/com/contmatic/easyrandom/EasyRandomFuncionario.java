@@ -130,8 +130,7 @@ public final class EasyRandomFuncionario {
 		if (!nomeCampoUsado.equalsIgnoreCase("cargo"))
 			cargo(parameters, Cargo.values()[new Random().nextInt(Cargo.values().length)]);
 		if (!nomeCampoUsado.equalsIgnoreCase("endereco"))
-			endereco(parameters, EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.VALIDO)
-					.nextObject(Endereco.class));
+			endereco(parameters, EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.VALIDO));
 		if (!nomeCampoUsado.equalsIgnoreCase("tipoContrato"))
 			tipoContrato(parameters, TipoContrato.values()[new Random().nextInt(TipoContrato.values().length)]);
 		if (!nomeCampoUsado.equalsIgnoreCase("salario"))

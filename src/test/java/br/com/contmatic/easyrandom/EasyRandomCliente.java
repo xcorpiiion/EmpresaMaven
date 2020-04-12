@@ -117,8 +117,7 @@ public final class EasyRandomCliente {
 		if (!nomeCampoUsado.equalsIgnoreCase("dataNascimento"))
 			dataNascimento(parameters, new DateTime());
 		if (!nomeCampoUsado.equalsIgnoreCase("endereco"))
-			endereco(parameters, EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.VALIDO)
-					.nextObject(Endereco.class));
+			endereco(parameters, EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.VALIDO));
 		if (!nomeCampoUsado.equalsIgnoreCase("dinheiroCarteira"))
 			dinheiroCarteira(parameters, new BigDecimal(new Random().nextDouble() + 1 * 5000));
 	}
