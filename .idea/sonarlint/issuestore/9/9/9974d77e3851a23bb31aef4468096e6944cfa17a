@@ -1,0 +1,83 @@
+
+c	java:S100E"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‰µ£Í
+d	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(àã“
+i	java:S100‰"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(áâˆİıÿÿÿÿ
+R
+java:S2696‚"6Make the enclosing method "static" or remove this set.(ı÷àşÿÿÿÿ
+i	java:S100Ë"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ï¬™åùÿÿÿÿ
+Q
+java:S2696M"6Make the enclosing method "static" or remove this set.(ı÷àşÿÿÿÿ
+c	java:S100m"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(”Ğó­
+i	java:S100ë"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Èò¢Åøÿÿÿÿ
+Q
+java:S2696h"6Make the enclosing method "static" or remove this set.(©Ş¿‹ùÿÿÿÿ
+K
+java:S2696u"6Make the enclosing method "static" or remove this set.(éÁì
+c	java:S100?"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ĞÍ³†
+h	java:S100t"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(µ×³×ÿÿÿÿÿ
+R
+java:S2696Š"6Make the enclosing method "static" or remove this set.(¢¿Åãüÿÿÿÿ
+Q
+java:S2696{"6Make the enclosing method "static" or remove this set.(ÀÄºæûÿÿÿÿ
+i	java:S100Å"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Æ÷õôøÿÿÿÿ
+h	java:S1009"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ªü½şÿÿÿÿ
+i	java:S100Ş"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ú©ÀÔùÿÿÿÿ
+i	java:S100¿"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‰æ˜Çùÿÿÿÿ
+d	java:S100¹"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ë¸ŠÀ
+R
+java:S2696³"6Make the enclosing method "static" or remove this set.(ı÷àşÿÿÿÿ
+d	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Æ„Š½
+O	java:S106¥"9Replace this use of System.out or System.err by a logger.(ŠÀš¿
+M
+java:S2696"6Make the enclosing method "static" or remove this set.(æ­×
+d	java:S100å"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¢·««
+Q	java:S125š"<This block of commented-out lines of code should be removed.(Šì}
+W	java:S125 "<This block of commented-out lines of code should be removed.(Ï’™ñüÿÿÿÿ
+U
+java:S1155í">Use isEmpty() to check whether the collection is empty or not.(˜•Ù
+R
+java:S2696"6Make the enclosing method "static" or remove this set.(ı÷àşÿÿÿÿ
+R
+java:S2696ß"6Make the enclosing method "static" or remove this set.(ı÷àşÿÿÿÿ
+d	java:S100ñ"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(÷¢Ü¡
+i	java:S100‡"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ŞĞÿÅıÿÿÿÿ
+Q
+java:S2696["6Make the enclosing method "static" or remove this set.(ı÷àşÿÿÿÿ
+i	java:S100Ò"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ìÊÇƒıÿÿÿÿ
+R
+java:S2696º"6Make the enclosing method "static" or remove this set.(ë¢–ùÿÿÿÿ
+i	java:S100Ø"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¤û¨Ìÿÿÿÿÿ
+Q
+java:S2696@"6Make the enclosing method "static" or remove this set.(ñØ¬´ÿÿÿÿÿ
+Q
+java:S2696F"6Make the enclosing method "static" or remove this set.(ı÷àşÿÿÿÿ
+Q
+java:S2696b"6Make the enclosing method "static" or remove this set.(‰Å©àıÿÿÿÿ
+h	java:S100z"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¾ç®ûÿÿÿÿ
+R	java:S125”"<This block of commented-out lines of code should be removed.(Îó–
+h	java:S100a"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(üäÓùÿÿÿÿ
+R	java:S125¬"<This block of commented-out lines of code should be removed.(Øüÿ’
+i	java:S100²"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³½êşÿÿÿÿ
+i	java:S100›"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÂÆñÃÿÿÿÿÿ
+Q
+java:S2696T"6Make the enclosing method "static" or remove this set.(ı÷àşÿÿÿÿ
+L
+java:S2696:"6Make the enclosing method "static" or remove this set.(óŸª¨
+R
+java:S2696"6Make the enclosing method "static" or remove this set.(ı÷àşÿÿÿÿ
+d	java:S100€"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ıå®
+i	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ö÷çœşÿÿÿÿ
+h	java:S100g"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(À„ááüÿÿÿÿ
+Q
+java:S2696n"6Make the enclosing method "static" or remove this set.(ı÷àşÿÿÿÿ
+h	java:S100S"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ª“½ ÿÿÿÿÿ
+c	java:S100Z"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(áğüÂ
+R
+java:S2696ò"6Make the enclosing method "static" or remove this set.(©ªñüÿÿÿÿ
+c	java:S100L"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ı°šú
+d	java:S100û"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Üœº
+R
+java:S2696Ì"6Make the enclosing method "static" or remove this set.(ı÷àşÿÿÿÿ
+d	java:S100•"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(×’òø
+R	java:S125¦"<This block of commented-out lines of code should be removed.(Â‹ûø
+h	java:S1003"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¶ğßœşÿÿÿÿ

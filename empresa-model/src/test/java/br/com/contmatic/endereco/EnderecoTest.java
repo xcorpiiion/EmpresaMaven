@@ -23,6 +23,7 @@ public class EnderecoTest {
 	/** The endereco. */
 	private static Endereco endereco;
 
+
 	/**
 	 * Add endereco.
 	 */

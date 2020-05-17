@@ -259,8 +259,6 @@ public class EmpresaTest {
 		DateTime parseDateTime = parser.parseDateTime("2013-01-19T15:28:58.851Z");
 		clientes.get(0).setDataNascimento(parseDateTime.toDate());
 		loja.setCliente(clientes);
-		Conection.openDatabaseConection();
-		Conection.saveEmpresa(loja);
 		assertTrue(loja.getCliente().size() > 0);
 	}
 
@@ -363,8 +361,6 @@ public class EmpresaTest {
 			System.out.println("O I vale: " + i);
 			
 		}
-		Conection.openDatabaseConection();
-		Conection.saveEmpresa(loja);
 	}
 
 }

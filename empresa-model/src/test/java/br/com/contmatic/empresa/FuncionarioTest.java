@@ -227,7 +227,7 @@ public class FuncionarioTest {
 
 	@Test
 	public void deve_alterar_dataNascimento() {
-		funcionario.setDataNascimento(new DateTime().toDate());
+		funcionario.setDataNascimento(new DateTime());
 		assertEquals(new DateTime(), funcionario.getDataNascimento());
 	}
 
