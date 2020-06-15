@@ -157,7 +157,7 @@
 		</dependency>
 	</dependencies>
 	<modules>
+		<module>repository</module>
 		<module>empresa-model</module>
-		<module>empresa-repository</module>
 	</modules>
 </project>

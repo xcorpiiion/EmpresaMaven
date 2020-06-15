@@ -12,8 +12,8 @@ import com.github.javafaker.Faker;
 
 import br.com.contmatic.constantes.Constante;
 import br.com.contmatic.constantes.Mensagem;
-import br.com.contmatic.easyrandom.EasyRandomTelefone;
-import br.com.contmatic.easyrandom.TipoDadoParaTesteTelefone;
+import br.com.contmatic.constantes.easyrandom.EasyRandomTelefone;
+import br.com.contmatic.constantes.easyrandom.TipoDadoParaTesteTelefone;
 import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;

@@ -19,20 +19,19 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import br.com.contmatic.constantes.Mensagem;
-import br.com.contmatic.easyrandom.EasyRandomCliente;
-import br.com.contmatic.easyrandom.EasyRandomEmpresa;
-import br.com.contmatic.easyrandom.EasyRandomEndereco;
-import br.com.contmatic.easyrandom.EasyRandomFuncionario;
-import br.com.contmatic.easyrandom.EasyRandomProduto;
-import br.com.contmatic.easyrandom.EasyRandomTelefone;
-import br.com.contmatic.easyrandom.TipoDadoParaTesteCliente;
-import br.com.contmatic.easyrandom.TipoDadoParaTesteEmpresa;
-import br.com.contmatic.easyrandom.TipoDadoParaTesteEndereco;
-import br.com.contmatic.easyrandom.TipoDadoParaTesteFuncionario;
-import br.com.contmatic.easyrandom.TipoDadoParaTesteProduto;
-import br.com.contmatic.easyrandom.TipoDadoParaTesteTelefone;
+import br.com.contmatic.constantes.easyrandom.EasyRandomCliente;
+import br.com.contmatic.constantes.easyrandom.EasyRandomEmpresa;
+import br.com.contmatic.constantes.easyrandom.EasyRandomEndereco;
+import br.com.contmatic.constantes.easyrandom.EasyRandomFuncionario;
+import br.com.contmatic.constantes.easyrandom.EasyRandomProduto;
+import br.com.contmatic.constantes.easyrandom.EasyRandomTelefone;
+import br.com.contmatic.constantes.easyrandom.TipoDadoParaTesteCliente;
+import br.com.contmatic.constantes.easyrandom.TipoDadoParaTesteEmpresa;
+import br.com.contmatic.constantes.easyrandom.TipoDadoParaTesteEndereco;
+import br.com.contmatic.constantes.easyrandom.TipoDadoParaTesteFuncionario;
+import br.com.contmatic.constantes.easyrandom.TipoDadoParaTesteProduto;
+import br.com.contmatic.constantes.easyrandom.TipoDadoParaTesteTelefone;
 import br.com.contmatic.endereco.Endereco;
-import br.com.contmatic.service.Conection;
 import br.com.contmatic.telefone.Telefone;
 import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
 import nl.jqno.equalsverifier.EqualsVerifier;
@@ -339,28 +338,6 @@ public class EmpresaTest {
 		produtos = new ArrayList<>();
 		List<Cliente> clientes = new ArrayList<>();
 		List<Empresa> empresas = new ArrayList<>();
-		while(i < 200000) {
-			DateTimeFormatter parser = ISODateTimeFormat.dateTime();
-			endereco.add(EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.VALIDO));
-			loja = EasyRandomEmpresa.validadorEasyRandomEmpresa(TipoDadoParaTesteEmpresa.VALIDO);
-			telefones.add(EasyRandomTelefone.validadorEasyRandomTelefone(TipoDadoParaTesteTelefone.VALIDO));
-			funcionarios.add(EasyRandomFuncionario.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.VALIDO));
-			funcionarios.get(0).setTelefones(telefones);
-			produtos.add(EasyRandomProduto.validadorEasyRandomProduto(TipoDadoParaTesteProduto.VALIDO));
-			clientes.add(EasyRandomCliente.validadorEasyRandomCliente(TipoDadoParaTesteCliente.VALIDO));
-			clientes.get(0).setTelefones(telefones);
-			DateTime parseDateTime = parser.parseDateTime(new DateTime().toString());
-			clientes.get(0).setDataNascimento(parseDateTime.toDate());
-			loja.setEndereco(endereco);
-			loja.setFuncionario(funcionarios);
-			loja.setProduto(produtos);
-			loja.setTelefones(telefones);
-			loja.setCliente(clientes);
-			empresas.add(loja);
-			i++;
-			System.out.println("O I vale: " + i);
-			
-		}
 	}
 
 }

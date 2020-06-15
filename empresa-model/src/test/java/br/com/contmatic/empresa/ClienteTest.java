@@ -17,12 +17,12 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import br.com.contmatic.constantes.Mensagem;
-import br.com.contmatic.easyrandom.EasyRandomCliente;
-import br.com.contmatic.easyrandom.EasyRandomProduto;
-import br.com.contmatic.easyrandom.EasyRandomTelefone;
-import br.com.contmatic.easyrandom.TipoDadoParaTesteCliente;
-import br.com.contmatic.easyrandom.TipoDadoParaTesteProduto;
-import br.com.contmatic.easyrandom.TipoDadoParaTesteTelefone;
+import br.com.contmatic.constantes.easyrandom.EasyRandomCliente;
+import br.com.contmatic.constantes.easyrandom.EasyRandomProduto;
+import br.com.contmatic.constantes.easyrandom.EasyRandomTelefone;
+import br.com.contmatic.constantes.easyrandom.TipoDadoParaTesteCliente;
+import br.com.contmatic.constantes.easyrandom.TipoDadoParaTesteProduto;
+import br.com.contmatic.constantes.easyrandom.TipoDadoParaTesteTelefone;
 import br.com.contmatic.telefone.Telefone;
 import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
 import nl.jqno.equalsverifier.EqualsVerifier;
