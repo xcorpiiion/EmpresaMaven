@@ -4,6 +4,7 @@ import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToStrin
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Set;
 
 import javax.validation.constraints.Min;
@@ -44,7 +45,7 @@ public class Funcionario {
 
     /** The data nascimento. */
     @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
-    private DateTime dataNascimento;
+    private Date dataNascimento;
 
     /** The cargo. */
     @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
@@ -180,7 +181,7 @@ public class Funcionario {
      *
      * @return the data nascimento
      */
-    public DateTime getDataNascimento() {
+    public Date getDataNascimento() {
         return dataNascimento;
     }
 
@@ -189,7 +190,7 @@ public class Funcionario {
      *
      * @param dataNascimento the new data nascimento
      */
-    public void setDataNascimento(DateTime dataNascimento) {
+    public void setDataNascimento(Date dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 

@@ -22,7 +22,7 @@ public final class EasyRandomProduto {
 		EasyRandomParameters parameters = new EasyRandomParameters();
 		switch (tipoDadoParaTeste) {
 		case VALIDO:
-			dadosEnderecoValidos(parameters, faker);
+			dadosProdutosValidos(parameters, faker);
 			break;
 		case ESTOQUE_INVALIDO:
 			estoque(parameters, faker.number().numberBetween(-10, 0));
@@ -46,7 +46,7 @@ public final class EasyRandomProduto {
 			nome(parameters, "*&*(�(�*");
 			break;
 		case PRECO_INVALIDO:
-			preco(parameters, new BigDecimal(new Random().nextDouble() * -1));
+			preco(parameters, new BigDecimal(new Random().nextInt(5000 - (100 - 1)) * -1));
 			break;
 		case PRECO_NULL:
 			preco(parameters, null);
@@ -56,10 +56,10 @@ public final class EasyRandomProduto {
 		return generator.nextObject(Produto.class);
 	}
 
-	private static void dadosEnderecoValidos(EasyRandomParameters parameters, Faker faker) {
+	private static void dadosProdutosValidos(EasyRandomParameters parameters, Faker faker) {
 		nome(parameters, faker.pokemon().name());
-		preco(parameters, new BigDecimal(new Random().nextDouble() * 5000));
-		estoque(parameters, faker.number().numberBetween(1, 1000));
+		preco(parameters, new BigDecimal(new Random().nextInt(5000 - (100 - 1)) + 100));
+		estoque(parameters, new Random().nextInt(5000 - (100 - 1)) + 100);
 	}
 
 	private static void nome(EasyRandomParameters parameters, String nomeProduto) {

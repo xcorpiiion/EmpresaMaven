@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -227,7 +228,7 @@ public class FuncionarioTest {
 
 	@Test
 	public void deve_alterar_dataNascimento() {
-		funcionario.setDataNascimento(new DateTime());
+		funcionario.setDataNascimento(new Date());
 		assertEquals(new DateTime(), funcionario.getDataNascimento());
 	}
 

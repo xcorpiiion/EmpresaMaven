@@ -1,27 +1,31 @@
 
-w
-java:S1450"ZRemove the "mongoClient" field and declare it as a local variable in the relevant methods.(ÙÆÆ8ºÔˆ§.
-
-java:S1130L"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(ûª€õùÿÿÿÿ8ôÆ¥«.
-d
-java:S11921"HDefine a constant instead of duplicating this literal "empresa" 6 times.(ÈÊùY8Ê«õİª.
-V
-java:S1128"4Remove this unused import 'org.bson.types.ObjectId'.(Ü¡‰çıÿÿÿÿ8Ê«õİª.
-p	java:S116"ORename this field "HOST" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ù¦³˜ÿÿÿÿÿ8–Úœˆ§.
+U
+java:S1128"3Remove this unused import 'org.joda.time.DateTime'.(×¥…©úÿÿÿÿ8—ŸÈÓ«.
+j
+java:S11927"HDefine a constant instead of duplicating this literal "empresa" 6 times.(Ìõ—×şÿÿÿÿ8¼êüÑ«.
+[
+java:S1128"?Remove this unused import 'br.com.contmatic.telefone.Telefone'.(­—v8µŒ·Ñ«.
+Q
+java:S1128"4Remove this unused import 'java.lang.reflect.Field'.(„‡Áú8Õ¾ÉÓ«.
 ^
-java:S1128"<Remove this unused import 'com.mongodb.client.FindIterable'.(½İ˜¢üÿÿÿÿ8ò·ƒ¯«.
-C
-java:S1170"!Make this final field static too.(ù¦³˜ÿÿÿÿÿ8–Úœˆ§.
-E
-java:S1148E"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8µÙ«.
-R
-java:S1144 "5Remove this unused private "getMongoDatabase" method.(ıüÂ€8»·ı‹§.
-_
-java:S1128"=Remove this unused import 'com.mongodb.client.model.Indexes'.(Òç‘ÿÿÿÿÿ8ÕîŒ«.
-Š
-java:S1130+"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(¼Úî¼8ØìÅ¥«.
+java:S1128"<Remove this unused import 'com.mongodb.client.FindIterable'.(½İ˜¢üÿÿÿÿ8ò·ƒ¯«.
 t
-java:S1450"WRemove the "database" field and declare it as a local variable in the relevant methods.(ø³ØÎ8É¨¦ˆ§.
-n	java:S116"RRename this field "DB_NAME" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ÿ¿õƒ8–Úœˆ§.
+java:S1450""WRemove the "database" field and declare it as a local variable in the relevant methods.(ø³ØÎ8É¨¦ˆ§.
+p	java:S116"ORename this field "HOST" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ù¦³˜ÿÿÿÿÿ8–Úœˆ§.
+Š
+java:S11301"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(¼Úî¼8ØìÅ¥«.
+w
+java:S1450 "ZRemove the "mongoClient" field and declare it as a local variable in the relevant methods.(ÙÆÆ8ºÔˆ§.
+C
+java:S1170"!Make this final field static too.(ù¦³˜ÿÿÿÿÿ8–Úœˆ§.
+†
+java:S1130J"iRemove the declaration of thrown exception 'java.lang.NullPointerException' which is a runtime exception.(•Å¯…8¯«úÑ«.
+V
+java:S1128"4Remove this unused import 'org.bson.types.ObjectId'.(Ü¡‰çıÿÿÿÿ8Ê«õİª.
 >
-java:S1170"!Make this final field static too.(Ÿ¿õƒ8–Úœˆ§.
+java:S1170"!Make this final field static too.(Ÿ¿õƒ8–Úœˆ§.
+R
+java:S1144&"5Remove this unused private "getMongoDatabase" method.(ıüÂ€8»·ı‹§.
+n	java:S116"RRename this field "DB_NAME" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ÿ¿õƒ8–Úœˆ§.
+_
+java:S1128"=Remove this unused import 'com.mongodb.client.model.Indexes'.(Òç‘ÿÿÿÿÿ8ÕîŒ«.

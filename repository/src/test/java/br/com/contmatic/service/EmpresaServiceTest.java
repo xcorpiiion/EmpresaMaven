@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -23,7 +24,13 @@ public class EmpresaServiceTest {
         empresaService = new EmpresaService();
         empresa = EasyRandomEmpresa.validadorEasyRandomEmpresa(TipoDadoParaTesteEmpresa.VALIDO);
         empresa.setFuncionario(Arrays.asList(EasyRandomFuncionario.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.VALIDO)));
+        empresa.getFuncionario().get(0).setTelefones(new HashSet<>());
+        empresa.getFuncionario().get(0).getTelefones().add(EasyRandomTelefone.validadorEasyRandomTelefone(TipoDadoParaTesteTelefone.VALIDO));
         empresa.setCliente(Arrays.asList(EasyRandomCliente.validadorEasyRandomCliente(TipoDadoParaTesteCliente.VALIDO)));
+        empresa.getCliente().get(0).setProdutosComprados(Arrays.asList(EasyRandomProduto.validadorEasyRandomProduto(TipoDadoParaTesteProduto.VALIDO)));
+        empresa.getCliente().get(0).setCarrinhoProdutos(Arrays.asList(EasyRandomProduto.validadorEasyRandomProduto(TipoDadoParaTesteProduto.VALIDO)));
+        empresa.getCliente().get(0).setTelefones(new HashSet<>());
+        empresa.getCliente().get(0).getTelefones().add(EasyRandomTelefone.validadorEasyRandomTelefone(TipoDadoParaTesteTelefone.VALIDO));
         empresa.setProduto(Arrays.asList(EasyRandomProduto.validadorEasyRandomProduto(TipoDadoParaTesteProduto.VALIDO)));
         empresa.setTelefones(new HashSet<>());
         empresa.getTelefones().add(EasyRandomTelefone.validadorEasyRandomTelefone(TipoDadoParaTesteTelefone.VALIDO));
@@ -52,7 +59,7 @@ public class EmpresaServiceTest {
         Assert.assertNotNull(empresaDocument);
     }
 
-    @Test()
+    @Test
     public void deve_retornar_null_ao_procurar_empresa_pelo_cnpj() {
         Document empresaDocument = empresaService.findById("1234567890123456");
         Assert.assertNull(empresaDocument);
@@ -60,7 +67,8 @@ public class EmpresaServiceTest {
 
     @Test()
     public void deve_retornar_todas_as_empresa() {
-        List<Document> empresaDocument = empresaService.findAll();
+        List<Document> empresaDocument = new ArrayList<>();
+        empresaDocument= empresaService.findAll();
         Assert.assertNotNull(empresaDocument);
     }
 

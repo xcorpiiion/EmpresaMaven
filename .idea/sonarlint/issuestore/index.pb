@@ -37,3 +37,13 @@ Aempresa-model/src/main/java/br/com/contmatic/empresa/Empresa.java,0\f\0f461520
 `empresa-model/src/main/java/br/com/contmatic/constantes/easyrandom/TipoDadoParaTesteEmpresa.java,3\c\3c61cde124a696b3deb46345db5a6dfcd065683d
 â
 Yempresa-model/src/main/java/br/com/contmatic/constantes/easyrandom/EasyRandomEmpresa.java,9\9\993334db123b177150ef4a56931f10f5ea3bdcf6
+q
+Aempresa-model/src/main/java/br/com/contmatic/empresa/Cliente.java,5\7\5780588fdef419405e4fa90ff6148983128fb454
+â
+Yempresa-model/src/main/java/br/com/contmatic/constantes/easyrandom/EasyRandomCliente.java,9\2\929e7fb0a82416c9dd1d9eaaef8eaac45b3de232
+ä
+Zempresa-model/src/main/java/br/com/contmatic/constantes/easyrandom/EasyRandomTelefone.java,3\f\3f3147b04045c71a150ed1ea7bd53f72714cd4d2
+â
+Yempresa-model/src/main/java/br/com/contmatic/constantes/easyrandom/EasyRandomProduto.java,b\2\b228a237eff40ecf37f249bcf98212d0e42e7799
+ç
+]empresa-model/src/main/java/br/com/contmatic/constantes/easyrandom/EasyRandomFuncionario.java,0\2\02c79d331f8efe583f183b74937cbc6827677fe7

@@ -97,7 +97,7 @@ public final class EasyRandomCliente {
 			break;
 		case DINHEIRO_CARTEIRA_PRECIA_SER_VALOR_MAIOR:
 			dadosClienteValidos(parameters, faker, "dinheiroCarteira");
-			dinheiroCarteira(parameters, new BigDecimal(new Random().nextDouble() * -1));
+			dinheiroCarteira(parameters, new BigDecimal(new Random().nextInt(5000 - (100 - 1)) * 1));
 			break;
 		}
 		EasyRandom generator = new EasyRandom(parameters);
@@ -116,7 +116,7 @@ public final class EasyRandomCliente {
 		if (!nomeCampoUsado.equalsIgnoreCase("endereco"))
 			endereco(parameters, EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.VALIDO));
 		if (!nomeCampoUsado.equalsIgnoreCase("dinheiroCarteira"))
-			dinheiroCarteira(parameters, new BigDecimal(new Random().nextDouble() + 1 * 5000));
+			dinheiroCarteira(parameters, new BigDecimal(new Random().nextInt() + 500));
 	}
 
 	private static void nome(EasyRandomParameters parameters, String nomeFuncionario) {

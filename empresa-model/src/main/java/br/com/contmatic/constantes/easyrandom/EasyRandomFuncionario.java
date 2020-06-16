@@ -13,6 +13,7 @@ import org.jeasy.random.api.Randomizer;
 import org.joda.time.DateTime;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Random;
 
 public final class EasyRandomFuncionario {
@@ -102,7 +103,7 @@ public final class EasyRandomFuncionario {
 			break;
 		case SALARIO_PRECIA_SER_VALOR_MAIOR:
 			dadosFuncionarioValidos(parameters, faker, "salario");
-			salario(parameters, new BigDecimal(new Random().nextDouble() * -1));
+			salario(parameters, new BigDecimal(new Random().nextInt(5000 - (100 - 1)) * 1));
 			break;
 		case TIPO_CONTRATO_NULL:
 			dadosFuncionarioValidos(parameters, faker, "tipoContrato");
@@ -121,15 +122,17 @@ public final class EasyRandomFuncionario {
 		if (!nomeCampoUsado.equalsIgnoreCase("cpf"))
 			cpf(parameters, "45071341883");
 		if (!nomeCampoUsado.equalsIgnoreCase("dataNascimento"))
-			dataNascimento(parameters, new DateTime());
+			dataNascimento(parameters, new Date());
 		if (!nomeCampoUsado.equalsIgnoreCase("cargo"))
 			cargo(parameters, Cargo.values()[new Random().nextInt(Cargo.values().length)]);
 		if (!nomeCampoUsado.equalsIgnoreCase("endereco"))
 			endereco(parameters, EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.VALIDO));
 		if (!nomeCampoUsado.equalsIgnoreCase("tipoContrato"))
 			tipoContrato(parameters, TipoContrato.values()[new Random().nextInt(TipoContrato.values().length)]);
-		if (!nomeCampoUsado.equalsIgnoreCase("salario"))
-			salario(parameters, new BigDecimal(new Random().nextDouble() + 1 * 5000));
+		if (!nomeCampoUsado.equalsIgnoreCase("salario")) {
+			int val = new Random().nextInt(5000 - (100 - 1)) + 100;
+			salario(parameters, new BigDecimal(val));
+		}
 	}
 
 	private static void nome(EasyRandomParameters parameters, String nomeFuncionario) {
@@ -162,10 +165,10 @@ public final class EasyRandomFuncionario {
 		parameters.randomize(FieldPredicates.named("cpf"), cpf);
 	}
 
-	private static void dataNascimento(EasyRandomParameters parameters, DateTime dataNascimentoFuncionario) {
-		Randomizer<DateTime> dataNascimento = new Randomizer<DateTime>() {
+	private static void dataNascimento(EasyRandomParameters parameters, Date dataNascimentoFuncionario) {
+		Randomizer<Date> dataNascimento = new Randomizer<Date>() {
 			@Override
-			public DateTime getRandomValue() {
+			public Date getRandomValue() {
 				return dataNascimentoFuncionario;
 			}
 		};
