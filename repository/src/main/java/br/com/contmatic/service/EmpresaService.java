@@ -2,26 +2,21 @@ package br.com.contmatic.service;
 
 import br.com.contmatic.empresa.Empresa;
 import br.com.contmatic.repository.IEmpresaRespository;
-import br.com.contmatic.telefone.Telefone;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.Indexes;
 import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.conversions.Bson;
-import org.bson.types.ObjectId;
-import br.com.contmatic.telefone.Telefone.*;
-import org.joda.time.DateTime;
 
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.List;
 
 public class EmpresaService implements IEmpresaRespository {
 
@@ -33,16 +28,19 @@ public class EmpresaService implements IEmpresaRespository {
 
     private MongoDatabase database;
 
-    private MongoCollection<Document> collection;
+    private MongoCollection<Empresa> collection;
 
     private MongoDatabase getMongoDatabase() {
-        mongoClient = new MongoClient(HOST);
-        return mongoClient.getDatabase(DB_NAME);
+        MongoClientSettings settings = MongoClientSettings.builder()
+                .codecRegistry(createCodecRegistry())
+                .build();
+        mongoClient = new MongoClient(HOST, MongoClientOptions.builder().codecRegistry(createCodecRegistry()).build());
+        return mongoClient.getDatabase(DB_NAME).withCodecRegistry(createCodecRegistry());
     }
 
     private void connectAndGetCollection() {
-        database = Conection.getMongoDatabase();
-        collection = database.getCollection("loja");
+        database = Conection.getMongoDatabase().withCodecRegistry(createCodecRegistry());
+        collection = database.getCollection("loja", Empresa.class).withCodecRegistry(createCodecRegistry());
     }
 
     @Override
@@ -52,14 +50,13 @@ public class EmpresaService implements IEmpresaRespository {
         if (findById(empresa.getCnpj()) != null) {
             throw new IllegalArgumentException("Empresa já cadastrada");
         }
-        Document document = new Document("empresa", empresa);
-        collection.withCodecRegistry(codecRegistry).insertOne(document);
+        collection.withCodecRegistry(codecRegistry).insertOne(empresa);
     }
 
     private CodecRegistry createCodecRegistry() {
         return CodecRegistries.fromRegistries(
-                    MongoClientSettings.getDefaultCodecRegistry(),
-                    CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build()));
+                MongoClientSettings.getDefaultCodecRegistry(),
+                CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build()));
     }
 
     @Override
@@ -67,7 +64,7 @@ public class EmpresaService implements IEmpresaRespository {
         connectAndGetCollection();
         CodecRegistry codecRegistry = createCodecRegistry();
         Bson findByCnpj = Filters.eq("empresa", empresa.getCnpj());
-        collection.withCodecRegistry(codecRegistry).replaceOne(findByCnpj, new Document("empresa", empresa));
+        collection.withCodecRegistry(codecRegistry).replaceOne(findByCnpj, empresa);
     }
 
     @Override
@@ -81,25 +78,36 @@ public class EmpresaService implements IEmpresaRespository {
     }
 
     @Override
-    public Document findById(String cnpj) {
+    public Empresa findById(String cnpj) {
         connectAndGetCollection();
-        Bson findByCnpj = Filters.eq("empresa", cnpj);
+        Bson findByCnpj = Filters.eq("cnpj", cnpj);
         return collection.find(findByCnpj).first();
     }
 
     @Override
-    public List<Document> findAll() {
+    public Empresa findByFilter(Bson filter) {
         connectAndGetCollection();
-        MongoCursor<Document> cursor = collection.find().iterator();
-        List<Document> empresas = new ArrayList<>();
+        return collection.find(filter).first();
+    }
 
-        try {
-            while (cursor.hasNext()) {
-                empresas.add(cursor.next());
+    @Override
+    public List<Empresa> findAll() {
+        connectAndGetCollection();
+        FindIterable<Empresa> empresas = collection.find();
+        return (List<Empresa>) empresas;
+    }
+
+    private Document putValuesInFields(Empresa empresa) {
+        Field[] declaredFields = empresa.getClass().getDeclaredFields();
+        Document empresaDocument = new Document();
+        for (Field campo : declaredFields) {
+            try {
+                campo.setAccessible(true);
+                empresaDocument.append(campo.getName(), campo);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } finally {
-            cursor.close();
         }
-        return empresas;
+        return empresaDocument;
     }
 }

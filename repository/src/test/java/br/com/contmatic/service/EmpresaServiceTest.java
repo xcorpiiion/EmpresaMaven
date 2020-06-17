@@ -1,6 +1,7 @@
 package br.com.contmatic.service;
 
 import br.com.contmatic.constantes.easyrandom.*;
+import br.com.contmatic.empresa.Cliente;
 import br.com.contmatic.empresa.Empresa;
 import org.bson.Document;
 import org.junit.Assert;
@@ -55,21 +56,28 @@ public class EmpresaServiceTest {
 
     @Test()
     public void deve_retornar_empresa_pelo_cnpj() {
-        Document empresaDocument = empresaService.findById(empresa.getCnpj());
-        Assert.assertNotNull(empresaDocument);
+        Empresa empresa = empresaService.findById("49240.790/1515-33");
+        System.out.println(empresa);
+        Assert.assertNotNull(empresa);
+    }
+
+    @Test()
+    public void deve_retornar_empresa_pelo() {
+        Empresa empresa = empresaService.findById(this.empresa.getCnpj());
+        Assert.assertNotNull(empresa);
     }
 
     @Test
     public void deve_retornar_null_ao_procurar_empresa_pelo_cnpj() {
-        Document empresaDocument = empresaService.findById("1234567890123456");
-        Assert.assertNull(empresaDocument);
+        Empresa empresa = empresaService.findById("1234567890123456");
+        Assert.assertNull(empresa);
     }
 
     @Test()
     public void deve_retornar_todas_as_empresa() {
-        List<Document> empresaDocument = new ArrayList<>();
-        empresaDocument= empresaService.findAll();
-        Assert.assertNotNull(empresaDocument);
+        List<Empresa> empresas = new ArrayList<>();
+        empresas = empresaService.findAll();
+        Assert.assertNotNull(empresas);
     }
 
     @Test()
