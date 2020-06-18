@@ -1,20 +1,21 @@
 package br.com.contmatic.constantes.easyrandom;
 
-import br.com.contmatic.empresa.Cargo;
-import br.com.contmatic.empresa.Funcionario;
-import br.com.contmatic.empresa.TipoContrato;
-import br.com.contmatic.endereco.Endereco;
-import com.github.javafaker.Faker;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.Random;
+
 import org.apache.commons.lang3.StringUtils;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
 import org.jeasy.random.FieldPredicates;
 import org.jeasy.random.api.Randomizer;
-import org.joda.time.DateTime;
 
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.Random;
+import com.github.javafaker.Faker;
+
+import br.com.contmatic.empresa.Cargo;
+import br.com.contmatic.empresa.Funcionario;
+import br.com.contmatic.empresa.TipoContrato;
+import br.com.contmatic.endereco.Endereco;
 
 public final class EasyRandomFuncionario {
 

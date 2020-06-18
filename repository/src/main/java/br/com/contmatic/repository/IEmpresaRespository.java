@@ -1,10 +1,10 @@
 package br.com.contmatic.repository;
 
-import br.com.contmatic.empresa.Empresa;
-import org.bson.Document;
+import java.util.List;
+
 import org.bson.conversions.Bson;
 
-import java.util.List;
+import br.com.contmatic.empresa.Empresa;
 
 public interface IEmpresaRespository {
 

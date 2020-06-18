@@ -15,7 +15,6 @@ import javax.validation.constraints.Size;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.br.CPF;
-import org.joda.time.DateTime;
 
 import br.com.contmatic.constantes.Constante;
 import br.com.contmatic.constantes.Mensagem;

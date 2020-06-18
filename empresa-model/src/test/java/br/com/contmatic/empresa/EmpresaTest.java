@@ -12,7 +12,6 @@ import java.util.Set;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
-import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -154,12 +153,6 @@ public class EmpresaTest {
 	@Test
 	public void deve_retornar_true_caso_email_esteja_com_numero_depois_do_arroba() {
 		loja = EasyRandomEmpresa.validadorEasyRandomEmpresa(TipoDadoParaTesteEmpresa.EMAIL_WITH_NUMBER_AFTER_ARROBA);
-		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
-	}
-
-	@Test
-	public void deve_retornar_true_caso_email_esteja_sem_arroba() {
-		loja = EasyRandomEmpresa.validadorEasyRandomEmpresa(TipoDadoParaTesteEmpresa.NOME_INVALID_SIZE.EMAIL_WITHOU_ARROBA);
 		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
 	}
 
@@ -321,17 +314,4 @@ public class EmpresaTest {
 	public void deve_retornar_true_caso_contenha_a_palavra_clientes_no_toString() {
 		assertTrue(loja.toString().contains("clientes"));
 	}
-
-	@AfterClass
-	public static void mostrar_toString() {
-		System.out.println(loja);
-		long i = 0;
-		Set<Endereco> endereco = new HashSet<>();
-		telefones = new HashSet<>();
-		funcionarios = new ArrayList<>();
-		produtos = new ArrayList<>();
-		List<Cliente> clientes = new ArrayList<>();
-		List<Empresa> empresas = new ArrayList<>();
-	}
-
 }
