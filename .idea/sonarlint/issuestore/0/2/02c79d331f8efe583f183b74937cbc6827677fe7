@@ -1,31 +1,31 @@
 
-a
-java:S11929"FDefine a constant instead of duplicating this literal "email" 7 times.(Ï¨ŒÉÿÿÿÿÿ
-D
-java:S1604Ç"(Make this anonymous inner class a lambda(··²ƒøÿÿÿÿ
-?
-java:S1604‹"(Make this anonymous inner class a lambda(êáÇÊ
-d
-java:S1192M"IDefine a constant instead of duplicating this literal "endereco" 3 times.(Çãã´ıÿÿÿÿ
-c
-java:S1192m"MDefine a constant instead of duplicating this literal "tipoContrato" 3 times.(¯¯øÌ
 ^
-java:S1192e"HDefine a constant instead of duplicating this literal "salario" 4 times.(Üêá
-?
-java:S1604½"(Make this anonymous inner class a lambda(Ğı˜´
-?
-java:S1604Ñ"(Make this anonymous inner class a lambda(½†õ
+java:S1192r"HDefine a constant instead of duplicating this literal "salario" 4 times.(Üêá
 D
-java:S1604Ÿ"(Make this anonymous inner class a lambda(ÀĞ øùÿÿÿÿ
+java:S1604Ô"(Make this anonymous inner class a lambda(··²ƒøÿÿÿÿ
+?
+java:S1604Ş"(Make this anonymous inner class a lambda(½†õ
+D
+java:S1604À"(Make this anonymous inner class a lambda(©Ä™øÿÿÿÿ
+?
+java:S1604˜"(Make this anonymous inner class a lambda(êáÇÊ
+D
+java:S1604¬"(Make this anonymous inner class a lambda(ÀĞ øùÿÿÿÿ
+c
+java:S1192z"MDefine a constant instead of duplicating this literal "tipoContrato" 3 times.(¯¯øÌ
+\
+java:S1192!"FDefine a constant instead of duplicating this literal "cargo" 3 times.(ĞÇ
+?
+java:S1604Ê"(Make this anonymous inner class a lambda(Ğı˜´
 >
-java:S1604•"(Make this anonymous inner class a lambda(ùÄ­:
+java:S1604¢"(Make this anonymous inner class a lambda(ùÄ­:
 U
 java:S1128"3Remove this unused import 'org.joda.time.DateTime'.(×¥…©úÿÿÿÿ8’ÃÑĞ«.
 D
-java:S1604©"(Make this anonymous inner class a lambda(öËù’øÿÿÿÿ
+java:S1604¶"(Make this anonymous inner class a lambda(öËù’øÿÿÿÿ
+b
+java:S1192:"GDefine a constant instead of duplicating this literal "email" 11 times.(Ï¨ŒÉÿÿÿÿÿ
+d
+java:S1192^"IDefine a constant instead of duplicating this literal "endereco" 3 times.(Çãã´ıÿÿÿÿ
 j
-java:S11925"ODefine a constant instead of duplicating this literal "dataNascimento" 3 times.(ç¹¯äüÿÿÿÿ
-D
-java:S1604³"(Make this anonymous inner class a lambda(©Ä™øÿÿÿÿ
-\
-java:S1192!"FDefine a constant instead of duplicating this literal "cargo" 3 times.(ĞÇ
+java:S11926"ODefine a constant instead of duplicating this literal "dataNascimento" 3 times.(ç¹¯äüÿÿÿÿ

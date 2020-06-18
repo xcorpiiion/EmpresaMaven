@@ -1,29 +1,29 @@
 
+^
+java:S1854$"<Remove this useless assignment to local variable "settings".(şÊ¬‚øÿÿÿÿ8‘Õ»¬.
+>
+java:S1170"!Make this final field static too.(Ÿ¿õƒ8‘Õ»¬.
+X
+java:S1144p"6Remove this unused private "putValuesInFields" method.(¾ê·æÿÿÿÿÿ8‘Õ»¬.
+E
+java:S1148i"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Á×œ¬.
+^
+java:S1128"<Remove this unused import 'com.mongodb.client.FindIterable'.(½İ˜¢üÿÿÿÿ8íşÖœ¬.
+C
+java:S1170"!Make this final field static too.(ù¦³˜ÿÿÿÿÿ8‘Õ»¬.
+R
+java:S1144#"5Remove this unused private "getMongoDatabase" method.(ıüÂ€8‘Õ»¬.
+Š
+java:S11301"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(¼Úî¼8‘Õ»¬.
+E
+java:S1148x"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8‘Õ»¬.
 t
 java:S1450"WRemove the "database" field and declare it as a local variable in the relevant methods.(ø³ØÎ8‘Õ»¬.
 †
 java:S1130I"iRemove the declaration of thrown exception 'java.lang.NullPointerException' which is a runtime exception.(•Å¯…8‘Õ»¬.
-p	java:S116"ORename this field "HOST" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ù¦³˜ÿÿÿÿÿ8‘Õ»¬.
-O
-java:S1481$"-Remove this unused "settings" local variable.(şÊ¬‚øÿÿÿÿ8‘Õ»¬.
-^
-java:S1128"<Remove this unused import 'com.mongodb.client.FindIterable'.(½İ˜¢üÿÿÿÿ8íşÖœ¬.
-R
-java:S1144#"5Remove this unused private "getMongoDatabase" method.(ıüÂ€8‘Õ»¬.
-X
-java:S1144p"6Remove this unused private "putValuesInFields" method.(¾ê·æÿÿÿÿÿ8‘Õ»¬.
-n	java:S116"RRename this field "DB_NAME" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ÿ¿õƒ8‘Õ»¬.
->
-java:S1170"!Make this final field static too.(Ÿ¿õƒ8‘Õ»¬.
 w
 java:S1450"ZRemove the "mongoClient" field and declare it as a local variable in the relevant methods.(ÙÆÆ8‘Õ»¬.
-C
-java:S1170"!Make this final field static too.(ù¦³˜ÿÿÿÿÿ8‘Õ»¬.
-^
-java:S1854$"<Remove this useless assignment to local variable "settings".(şÊ¬‚øÿÿÿÿ8‘Õ»¬.
-E
-java:S1148x"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8‘Õ»¬.
-E
-java:S1148i"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Á×œ¬.
-Š
-java:S11301"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(¼Úî¼8‘Õ»¬.
+O
+java:S1481$"-Remove this unused "settings" local variable.(şÊ¬‚øÿÿÿÿ8‘Õ»¬.
+n	java:S116"RRename this field "DB_NAME" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ÿ¿õƒ8‘Õ»¬.
+p	java:S116"ORename this field "HOST" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ù¦³˜ÿÿÿÿÿ8‘Õ»¬.

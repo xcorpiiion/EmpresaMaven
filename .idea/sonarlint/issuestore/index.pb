@@ -47,3 +47,11 @@ Zempresa-model/src/main/java/br/com/contmatic/constantes/easyrandom/EasyRandomTe
 Yempresa-model/src/main/java/br/com/contmatic/constantes/easyrandom/EasyRandomProduto.java,b\2\b228a237eff40ecf37f249bcf98212d0e42e7799
 ç
 ]empresa-model/src/main/java/br/com/contmatic/constantes/easyrandom/EasyRandomFuncionario.java,0\2\02c79d331f8efe583f183b74937cbc6827677fe7
+Ä
+Pempresa-model/src/test/java/br/com/contmatic/testeAllClasses/TestAllClasses.java,1\2\12ef0251e7b766036868d2c3c7434d58ef23c845
+î
+dempresa-model/src/main/java/br/com/contmatic/constantes/easyrandom/TipoDadoParaTesteFuncionario.java,3\9\39a5ac2ea6f2b59aebd0221eef1da76982d9da1d
+ê
+`empresa-model/src/main/java/br/com/contmatic/constantes/easyrandom/TipoDadoParaTesteCliente.java,f\3\f3ae5418fce421c7013a9e4455425ea14d6afec1
+Ö
+Uempresa-model/src/test/java/br/com/contmatic/validator/ValidadorAnnotionsMsgErro.java,4\e\4edd6f13966d515dd4a0038e9e3fea6b2063b6bf

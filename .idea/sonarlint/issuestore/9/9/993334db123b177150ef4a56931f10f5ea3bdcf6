@@ -1,9 +1,9 @@
 
-a
-java:S1192*"FDefine a constant instead of duplicating this literal "email" 7 times.(ªõ½ºşÿÿÿÿ
->
-java:S1604`"(Make this anonymous inner class a lambda(êáÇÊ
->
-java:S1604t"(Make this anonymous inner class a lambda(ÿÂâ
 =
-java:S1604j"(Make this anonymous inner class a lambda(ùÄ­:
+java:S1604z"(Make this anonymous inner class a lambda(ùÄ­:
+b
+java:S1192*"GDefine a constant instead of duplicating this literal "email" 11 times.(ªõ½ºşÿÿÿÿ
+?
+java:S1604„"(Make this anonymous inner class a lambda(ÿÂâ
+>
+java:S1604p"(Make this anonymous inner class a lambda(êáÇÊ
