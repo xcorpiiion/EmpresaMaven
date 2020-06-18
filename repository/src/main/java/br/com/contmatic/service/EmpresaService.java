@@ -7,6 +7,7 @@ import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import org.bson.Document;
@@ -16,6 +17,7 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.conversions.Bson;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EmpresaService implements IEmpresaRespository {
@@ -63,7 +65,7 @@ public class EmpresaService implements IEmpresaRespository {
     public void update(Empresa empresa) {
         connectAndGetCollection();
         CodecRegistry codecRegistry = createCodecRegistry();
-        Bson findByCnpj = Filters.eq("empresa", empresa.getCnpj());
+        Bson findByCnpj = Filters.eq("cnpj", empresa.getCnpj());
         collection.withCodecRegistry(codecRegistry).replaceOne(findByCnpj, empresa);
     }
 
@@ -93,8 +95,18 @@ public class EmpresaService implements IEmpresaRespository {
     @Override
     public List<Empresa> findAll() {
         connectAndGetCollection();
-        FindIterable<Empresa> empresas = collection.find();
-        return (List<Empresa>) empresas;
+        MongoCursor<Empresa> cursor = collection.find().iterator();
+        List<Empresa> empresas = new ArrayList<>();
+        try {
+            while (cursor.hasNext()) {
+                empresas.add(cursor.next());
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            cursor.close();
+        }
+        return empresas;
     }
 
     private Document putValuesInFields(Empresa empresa) {
@@ -110,4 +122,6 @@ public class EmpresaService implements IEmpresaRespository {
         }
         return empresaDocument;
     }
+
 }
+

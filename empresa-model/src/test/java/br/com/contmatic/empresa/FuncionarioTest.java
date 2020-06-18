@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import br.com.contmatic.constantes.easyrandom.*;
 import org.joda.time.DateTime;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -16,10 +17,6 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import br.com.contmatic.constantes.Mensagem;
-import br.com.contmatic.constantes.easyrandom.EasyRandomFuncionario;
-import br.com.contmatic.constantes.easyrandom.EasyRandomTelefone;
-import br.com.contmatic.constantes.easyrandom.TipoDadoParaTesteFuncionario;
-import br.com.contmatic.constantes.easyrandom.TipoDadoParaTesteTelefone;
 import br.com.contmatic.telefone.Telefone;
 import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
 import nl.jqno.equalsverifier.EqualsVerifier;
@@ -81,13 +78,6 @@ public class FuncionarioTest {
 	}
 
 	@Test
-	public void deve_retornar_true_caso_nome_seja_possua_caracteres_especiais() {
-		funcionario = EasyRandomFuncionario
-				.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.NOME__WITH_SPECIAL_CARACTER);
-		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_NAO_E_VALIDO));
-	}
-
-	@Test
 	public void deve_retornar_true_caso_cpf_seja_possua_caracteres_especiais() {
 		funcionario = EasyRandomFuncionario
 				.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.CPF_WITH_SPECIAL_CARACTER);
@@ -145,40 +135,38 @@ public class FuncionarioTest {
 		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_NAO_E_VALIDO));
 	}
 
-//	@Test
-//	public void deve_retornar_true_caso_email_esteja_com_espaco_em_branco_entre_o_email() {
-//		funcionario = Fixture.from(Funcionario.class).gimme("emailWithBlankSpaceInWord");
-//		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
-//	}
-//
-//	@Test
-//	public void deve_retornar_true_caso_email_esteja_com_numero_depois_do_arroba() {
-//		funcionario = Fixture.from(Funcionario.class).gimme("emailWithNumberAfterArroba");
-//		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
-//	}
-//
-//	@Test
-//	public void deve_retornar_true_caso_email_esteja_sem_arroba() {
-//		funcionario = Fixture.from(Funcionario.class).gimme("emailWithoutArroba");
-//		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
-//	}
-//
-//	@Test
-//	public void deve_retornar_true_caso_email_esteja_sem_ponto_com() {
-//		funcionario = Fixture.from(Funcionario.class).gimme("emailWithoutPontoCom");
-//		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
-//	}
-//
-//	@Test
-//	public void deve_retornar_true_caso_email_esteja_sem_com() {
-//		funcionario = Fixture.from(Funcionario.class).gimme("emailWithoutCom");
-//		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
-//	}
+	@Test
+	public void deve_retornar_true_caso_email_esteja_com_espaco_em_branco_entre_o_email() {
+		funcionario = EasyRandomFuncionario
+				.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.EMAIL_WITH_BLANK_SPACE);
+		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_NAO_E_VALIDO));
+	}
+
+	@Test
+	public void deve_retornar_true_caso_email_esteja_com_numero_depois_do_arroba() {
+		funcionario = EasyRandomFuncionario
+				.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.EMAIL_WITH_NUMBER_AFTER_ARROBA);
+		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_NAO_E_VALIDO));
+	}
+
+	@Test
+	public void deve_retornar_true_caso_email_esteja_sem_arroba() {
+		funcionario = EasyRandomFuncionario
+				.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.EMAIL_WITHOU_ARROBA);
+		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_NAO_E_VALIDO));
+	}
+
+	@Test
+	public void deve_retornar_true_caso_email_esteja_sem_ponto_com() {
+		funcionario = EasyRandomFuncionario
+				.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.EMAIL_WITHOUT_DOT);
+		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_NAO_E_VALIDO));
+	}
 
 	@Test
 	public void deve_retornar_true_caso_email_esteja_com_caracteres_especiais() {
 		funcionario = EasyRandomFuncionario
-				.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.EMAIL__WITH_SPECIAL_CARACTER);
+				.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.EMAIL_WITH_SPECIAL_CARACTER);
 		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_NAO_E_VALIDO));
 	}
 

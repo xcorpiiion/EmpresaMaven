@@ -145,35 +145,29 @@ public class EmpresaTest {
 
 	}
 
-//    @Test
-//    public void deve_retornar_true_caso_email_esteja_com_espaco_em_branco_entre_o_email() {
-//        loja = Fixture.from(Empresa.class).gimme("emailWithBlankSpaceInWord");
-//        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
-//    }
-//    
-//    @Test
-//    public void deve_retornar_true_caso_email_esteja_com_numero_depois_do_arroba() {
-//        loja = Fixture.from(Empresa.class).gimme("emailWithNumberAfterArroba");
-//        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
-//    }
-//    
-//    @Test
-//    public void deve_retornar_true_caso_email_esteja_sem_arroba() {
-//        loja = Fixture.from(Empresa.class).gimme("emailWithoutArroba");
-//        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
-//    }
-//    
-//    @Test
-//    public void deve_retornar_true_caso_email_esteja_sem_ponto_com() {
-//        loja = Fixture.from(Empresa.class).gimme("emailWithoutPontoCom");
-//        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
-//    }
-//    
-//    @Test
-//    public void deve_retornar_true_caso_email_esteja_sem_com() {
-//        loja = Fixture.from(Empresa.class).gimme("emailWithoutCom");
-//        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
-//    }
+	@Test
+	public void deve_retornar_true_caso_email_esteja_com_espaco_em_branco_entre_o_email() {
+		loja = EasyRandomEmpresa.validadorEasyRandomEmpresa(TipoDadoParaTesteEmpresa.EMAIL_WITH_BLANK_SPACE);
+		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
+	}
+
+	@Test
+	public void deve_retornar_true_caso_email_esteja_com_numero_depois_do_arroba() {
+		loja = EasyRandomEmpresa.validadorEasyRandomEmpresa(TipoDadoParaTesteEmpresa.EMAIL_WITH_NUMBER_AFTER_ARROBA);
+		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
+	}
+
+	@Test
+	public void deve_retornar_true_caso_email_esteja_sem_arroba() {
+		loja = EasyRandomEmpresa.validadorEasyRandomEmpresa(TipoDadoParaTesteEmpresa.NOME_INVALID_SIZE.EMAIL_WITHOU_ARROBA);
+		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
+	}
+
+	@Test
+	public void deve_retornar_true_caso_email_esteja_sem_ponto_com() {
+		loja = EasyRandomEmpresa.validadorEasyRandomEmpresa(TipoDadoParaTesteEmpresa.EMAIL_WITHOUT_DOT);
+		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
+	}
 
 	@Test
 	public void deve_retornar_true_caso_email_esteja_com_caracteres_especiais() {

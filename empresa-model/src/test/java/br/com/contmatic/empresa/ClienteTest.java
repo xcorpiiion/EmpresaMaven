@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.joda.time.DateTime;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -121,35 +122,29 @@ public class ClienteTest {
         assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(cliente, Mensagem.VALOR_NAO_E_VALIDO));
     }
 
-//    @Test
-//    public void deve_retornar_true_caso_email_esteja_com_espaco_em_branco_entre_o_email() {
-//        cliente = Fixture.from(Cliente.class).gimme("emailWithBlankSpaceInWord");
-//        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(cliente, Mensagem.VALOR_NAO_E_VALIDO));
-//    }
-//
-//    @Test
-//    public void deve_retornar_true_caso_email_esteja_com_numero_depois_do_arroba() {
-//        cliente = Fixture.from(Cliente.class).gimme("emailWithNumberAfterArroba");
-//        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(cliente, Mensagem.VALOR_NAO_E_VALIDO));
-//    }
-//
-//    @Test
-//    public void deve_retornar_true_caso_email_esteja_sem_arroba() {
-//        cliente = Fixture.from(Cliente.class).gimme("emailWithoutArroba");
-//        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(cliente, Mensagem.VALOR_NAO_E_VALIDO));
-//    }
-//
-//    @Test
-//    public void deve_retornar_true_caso_email_esteja_sem_ponto_com() {
-//        cliente = Fixture.from(Cliente.class).gimme("emailWithoutPontoCom");
-//        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(cliente, Mensagem.VALOR_NAO_E_VALIDO));
-//    }
-//
-//    @Test
-//    public void deve_retornar_true_caso_email_esteja_sem_com() {
-//        cliente = Fixture.from(Cliente.class).gimme("emailWithoutCom");
-//        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(cliente, Mensagem.VALOR_NAO_E_VALIDO));
-//    }
+    @Test
+    public void deve_retornar_true_caso_email_esteja_com_espaco_em_branco_entre_o_email() {
+        cliente = EasyRandomCliente.validadorEasyRandomCliente(TipoDadoParaTesteCliente.EMAIL_WITH_BLANK_SPACE);
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(cliente, Mensagem.VALOR_NAO_E_VALIDO));
+    }
+
+    @Test
+    public void deve_retornar_true_caso_email_esteja_com_numero_depois_do_arroba() {
+        cliente = EasyRandomCliente.validadorEasyRandomCliente(TipoDadoParaTesteCliente.EMAIL_WITH_NUMBER_AFTER_ARROBA);
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(cliente, Mensagem.VALOR_NAO_E_VALIDO));
+    }
+
+    @Test
+    public void deve_retornar_true_caso_email_esteja_sem_arroba() {
+        cliente = EasyRandomCliente.validadorEasyRandomCliente(TipoDadoParaTesteCliente.EMAIL_WITHOU_ARROBA);
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(cliente, Mensagem.VALOR_NAO_E_VALIDO));
+    }
+
+    @Test
+    public void deve_retornar_true_caso_email_esteja_sem_ponto_com() {
+        cliente = EasyRandomCliente.validadorEasyRandomCliente(TipoDadoParaTesteCliente.EMAIL_WITHOUT_DOT);
+        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(cliente, Mensagem.VALOR_NAO_E_VALIDO));
+    }
 
     @Test
     public void deve_retornar_true_caso_email_esteja_com_caracteres_especiais() {
@@ -183,11 +178,7 @@ public class ClienteTest {
         assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(cliente, Mensagem.VALOR_ESTA_NULLO));
     }
 
-    @Test
-    public void deve_alterar_dataNascimento() {
-        cliente.setDataNascimento(new DateTime().toDate());
-        assertEquals(new DateTime(), cliente.getDataNascimento());
-    }
+
 
     /**
      * Deve add dinheiro carteira.
