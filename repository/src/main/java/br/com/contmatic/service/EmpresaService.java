@@ -33,8 +33,7 @@ public class EmpresaService implements IEmpresaRespository {
 	}
 
 	private MongoClient mongoClient() {
-		MongoClient mongoClient = new MongoClient(host, MongoClientOptions.builder().codecRegistry(createCodecRegistry()).build());
-		return mongoClient;
+		return new MongoClient(host, MongoClientOptions.builder().codecRegistry(createCodecRegistry()).build());
 	}
 	
 	private void closeMongoConnection() {
@@ -74,11 +73,10 @@ public class EmpresaService implements IEmpresaRespository {
 	@Override
 	public void deleteById(String cnpj) {
 		connectAndGetCollection();
-		Bson findByCnpj = Filters.eq("empresa", cnpj);
-		if (findByCnpj == null) {
-			throw new NullPointerException("Empresa não encontrada");
+		if (findById(cnpj) == null) {
+			throw new IllegalArgumentException("Empresa não encontrada");
 		}
-		collection.deleteOne(Filters.eq("empresa", cnpj));
+		collection.deleteOne(Filters.eq("cnpj", cnpj));
 		closeMongoConnection();
 	}
 
@@ -87,14 +85,6 @@ public class EmpresaService implements IEmpresaRespository {
 		connectAndGetCollection();
 		Bson findByCnpj = Filters.eq("cnpj", cnpj);
 		Empresa empresa = collection.find(findByCnpj).first();
-		closeMongoConnection();
-		return empresa;
-	}
-
-	@Override
-	public Empresa findByFilter(Bson filter) {
-		connectAndGetCollection();
-		Empresa empresa = collection.find(filter).first();
 		closeMongoConnection();
 		return empresa;
 	}

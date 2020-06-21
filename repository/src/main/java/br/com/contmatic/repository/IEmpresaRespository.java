@@ -2,8 +2,6 @@ package br.com.contmatic.repository;
 
 import java.util.List;
 
-import org.bson.conversions.Bson;
-
 import br.com.contmatic.empresa.Empresa;
 
 public interface IEmpresaRespository {
@@ -15,8 +13,6 @@ public interface IEmpresaRespository {
     public void deleteById(String cnpj) throws IllegalAccessException;
 
     public Empresa findById(String cnpj);
-
-    public Empresa findByFilter(Bson filter);
 
     public List<Empresa> findAll();
 

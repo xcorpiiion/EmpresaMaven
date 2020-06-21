@@ -1,21 +1,29 @@
 package br.com.contmatic.constantes.easyrandom;
 
-import br.com.contmatic.empresa.Cliente;
-import br.com.contmatic.endereco.Endereco;
-import com.github.javafaker.Faker;
-import org.apache.commons.lang3.StringUtils;
-import org.jeasy.random.EasyRandom;
-import org.jeasy.random.EasyRandomParameters;
-import org.jeasy.random.FieldPredicates;
-import org.jeasy.random.api.Randomizer;
-import org.joda.time.DateTime;
-
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Random;
 
-public final class EasyRandomCliente {
+import org.apache.commons.lang3.StringUtils;
+import org.jeasy.random.EasyRandom;
+import org.jeasy.random.EasyRandomParameters;
+import org.joda.time.DateTime;
 
+import com.github.javafaker.Faker;
+
+import br.com.contmatic.empresa.Cliente;
+import br.com.contmatic.endereco.Endereco;
+
+public final class EasyRandomCliente {
+	
+	private static final String DATA_NASCIMENTO = "dataNascimento";
+	
+	private static final String EMAIL = "email";
+	
+	private static final String ENDERECO = "endereco";
+	
+	private static final String DINHEIRO_CARTEIRA = "dinheiroCarteira";
+	
     private EasyRandomCliente() {
 
     }
@@ -44,47 +52,47 @@ public final class EasyRandomCliente {
                 cpf(parameters, "%$#%");
                 break;
             case DATA_NASCIMENTO_NULL:
-                dadosClienteValidos(parameters, faker, "dataNascimento");
+                dadosClienteValidos(parameters, faker, DATA_NASCIMENTO);
                 dataNascimento(parameters, null);
                 break;
             case EMAIL_WITH_SPECIAL_CARACTER:
-                dadosClienteValidos(parameters, faker, "email");
+                dadosClienteValidos(parameters, faker, EMAIL);
                 email(parameters, "%$�¨*daksjdhja$%@gmail.com");
                 break;
             case EMAIL_BLANK_SPACE:
-                dadosClienteValidos(parameters, faker, "email");
+                dadosClienteValidos(parameters, faker, EMAIL);
                 email(parameters, StringUtils.SPACE);
                 break;
             case EMAIL_EMPTY:
-                dadosClienteValidos(parameters, faker, "email");
+                dadosClienteValidos(parameters, faker, EMAIL);
                 email(parameters, StringUtils.EMPTY);
                 break;
             case EMAIL_INVALID_SIZE:
-                dadosClienteValidos(parameters, faker, "email");
+                dadosClienteValidos(parameters, faker, EMAIL);
                 email(parameters, "aaa" + "gmail.com");
                 break;
             case EMAIL_NULL:
-                dadosClienteValidos(parameters, faker, "email");
+                dadosClienteValidos(parameters, faker, EMAIL);
                 email(parameters, null);
                 break;
             case EMAIL_WITH_BLANK_SPACE:
-                dadosClienteValidos(parameters, faker, "email");
+                dadosClienteValidos(parameters, faker, EMAIL);
                 email(parameters, "aaaaa @gmail.com");
                 break;
             case EMAIL_WITH_NUMBER_AFTER_ARROBA:
-                dadosClienteValidos(parameters, faker, "email");
+                dadosClienteValidos(parameters, faker, EMAIL);
                 email(parameters, "aaaaa@45gmail.com");
                 break;
             case EMAIL_WITHOU_ARROBA:
-                dadosClienteValidos(parameters, faker, "email");
+                dadosClienteValidos(parameters, faker, EMAIL);
                 email(parameters, "");
                 break;
             case EMAIL_WITHOUT_DOT:
-                dadosClienteValidos(parameters, faker, "email");
+                dadosClienteValidos(parameters, faker, EMAIL);
                 email(parameters, "aaaaa@gmailcom");
                 break;
             case ENDERECO_NULL:
-                dadosClienteValidos(parameters, faker, "endereco");
+                dadosClienteValidos(parameters, faker, ENDERECO);
                 endereco(parameters, null);
                 break;
             case NOME__WITH_SPECIAL_CARACTER:
@@ -108,11 +116,11 @@ public final class EasyRandomCliente {
                 nome(parameters, null);
                 break;
             case DINHEIRO_CARTEIRA_NULL:
-                dadosClienteValidos(parameters, faker, "dinheiroCarteira");
+                dadosClienteValidos(parameters, faker, DINHEIRO_CARTEIRA);
                 dinheiroCarteira(parameters, null);
                 break;
             case DINHEIRO_CARTEIRA_PRECIA_SER_VALOR_MAIOR:
-                dadosClienteValidos(parameters, faker, "dinheiroCarteira");
+                dadosClienteValidos(parameters, faker, DINHEIRO_CARTEIRA);
                 dinheiroCarteira(parameters, new BigDecimal(new Random().nextInt(5000 - (100 - 1)) * 1));
                 break;
         }
@@ -123,75 +131,39 @@ public final class EasyRandomCliente {
     private static void dadosClienteValidos(EasyRandomParameters parameters, Faker faker, String nomeCampoUsado) {
         if (!nomeCampoUsado.equalsIgnoreCase("nome"))
             nome(parameters, faker.pokemon().name());
-        if (!nomeCampoUsado.equalsIgnoreCase("email"))
+        if (!nomeCampoUsado.equalsIgnoreCase(EMAIL))
             email(parameters, faker.pokemon().name() + "@gmail.com");
         if (!nomeCampoUsado.equalsIgnoreCase("cpf"))
             cpf(parameters, "45071341883");
-        if (!nomeCampoUsado.equalsIgnoreCase("dataNascimento"))
+        if (!nomeCampoUsado.equalsIgnoreCase(DATA_NASCIMENTO))
             dataNascimento(parameters, new DateTime().toDate());
-        if (!nomeCampoUsado.equalsIgnoreCase("endereco"))
+        if (!nomeCampoUsado.equalsIgnoreCase(ENDERECO))
             endereco(parameters, EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.VALIDO));
-        if (!nomeCampoUsado.equalsIgnoreCase("dinheiroCarteira"))
+        if (!nomeCampoUsado.equalsIgnoreCase(DINHEIRO_CARTEIRA))
             dinheiroCarteira(parameters, new BigDecimal(new Random().nextInt() + 500));
     }
 
     private static void nome(EasyRandomParameters parameters, String nomeFuncionario) {
-        Randomizer<String> nome = new Randomizer<String>() {
-            @Override
-            public String getRandomValue() {
-                return nomeFuncionario;
-            }
-        };
-        parameters.randomize(FieldPredicates.named("nome"), nome);
+        parameters.randomize(String.class, () -> nomeFuncionario);
     }
 
     private static void email(EasyRandomParameters parameters, String emailFuncionario) {
-        Randomizer<String> email = new Randomizer<String>() {
-            @Override
-            public String getRandomValue() {
-                return emailFuncionario;
-            }
-        };
-        parameters.randomize(FieldPredicates.named("email"), email);
+    	parameters.randomize(String.class, () -> emailFuncionario);
     }
 
     private static void cpf(EasyRandomParameters parameters, String cpfFuncionario) {
-        Randomizer<String> cpf = new Randomizer<String>() {
-            @Override
-            public String getRandomValue() {
-                return cpfFuncionario;
-            }
-        };
-        parameters.randomize(FieldPredicates.named("cpf"), cpf);
+    	parameters.randomize(String.class, () -> cpfFuncionario);
     }
 
     private static void dataNascimento(EasyRandomParameters parameters, Date dataNascimentoFuncionario) {
-        Randomizer<Date> dataNascimento = new Randomizer<Date>() {
-            @Override
-            public Date getRandomValue() {
-                return dataNascimentoFuncionario;
-            }
-        };
-        parameters.randomize(FieldPredicates.named("dataNascimento"), dataNascimento);
+    	parameters.randomize(Date.class, () -> dataNascimentoFuncionario);
     }
 
     private static void endereco(EasyRandomParameters parameters, Endereco enderecoFuncionario) {
-        Randomizer<Endereco> endereco = new Randomizer<Endereco>() {
-            @Override
-            public Endereco getRandomValue() {
-                return enderecoFuncionario;
-            }
-        };
-        parameters.randomize(FieldPredicates.named("endereco"), endereco);
+    	parameters.randomize(Endereco.class, () -> enderecoFuncionario);
     }
 
     private static void dinheiroCarteira(EasyRandomParameters parameters, BigDecimal dinheiroCarteiraCliente) {
-        Randomizer<BigDecimal> dinheiroCarteira = new Randomizer<BigDecimal>() {
-            @Override
-            public BigDecimal getRandomValue() {
-                return dinheiroCarteiraCliente;
-            }
-        };
-        parameters.randomize(FieldPredicates.named("dinheiroCarteira"), dinheiroCarteira);
+    	parameters.randomize(BigDecimal.class, () -> dinheiroCarteiraCliente);
     }
 }

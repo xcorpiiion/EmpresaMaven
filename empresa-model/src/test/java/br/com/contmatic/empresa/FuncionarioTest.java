@@ -1,6 +1,7 @@
 package br.com.contmatic.empresa;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.util.HashSet;
@@ -172,13 +173,13 @@ public class FuncionarioTest {
 	@Test
 	public void deve_alterar_cargo_para_repositor() {
 		funcionario.setCargo(Cargo.REPOSITOR);
-		assertTrue(funcionario.getCargo() == Cargo.REPOSITOR);
+		assertSame(Cargo.REPOSITOR, funcionario.getCargo());
 	}
 
 	@Test
 	public void deve_alterar_cargo_para_rh() {
 		funcionario.setCargo(Cargo.RH);
-		assertTrue(funcionario.getCargo() == Cargo.RH);
+		assertSame(Cargo.RH, funcionario.getCargo());
 	}
 
 	@Test
@@ -191,13 +192,13 @@ public class FuncionarioTest {
 	@Test
 	public void deve_alterar_tipoContrato_para_clt() {
 		funcionario.setTipoContrato(TipoContrato.CLT);
-		assertTrue(funcionario.getTipoContrato() == TipoContrato.CLT);
+		assertSame(TipoContrato.CLT, funcionario.getTipoContrato());
 	}
 
 	@Test
 	public void deve_alterar_tipoContrato_para_pj() {
 		funcionario.setTipoContrato(TipoContrato.PJ);
-		assertTrue(funcionario.getTipoContrato() == TipoContrato.PJ);
+		assertSame(TipoContrato.PJ, funcionario.getTipoContrato());
 	}
 
 	@Test
@@ -206,7 +207,7 @@ public class FuncionarioTest {
 				.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.DATA_NASCIMENTO_NULL);
 		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_ESTA_NULLO));
 	}
-	
+
 	@Test
 	public void deve_add_telefone_na_lista_telefones() {
 		funcionario.setTelefones(telefones);

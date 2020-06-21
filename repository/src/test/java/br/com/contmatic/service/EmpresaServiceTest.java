@@ -1,5 +1,7 @@
 package br.com.contmatic.service;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Arrays;
 import java.util.HashSet;
 
@@ -54,12 +56,13 @@ public class EmpresaServiceTest {
         staticEmpresa.setEndereco(new HashSet<>());
         staticEmpresa.getEndereco().add(EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.VALIDO));
     }
-
+	
     @Test
     public void deve_salvar_empresa() {
         try {
             dadosEmpresa();
             empresaService.save(staticEmpresa);
+            assertEquals(staticEmpresa, empresaService.findById(staticEmpresa.getCnpj()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -68,6 +71,13 @@ public class EmpresaServiceTest {
     @Test(expected = NullPointerException.class)
     public void deve_retornar_null_ao_salvar_empresa() {
         empresaService.save(null);
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void deve_dar_exception_ao_tentar_cadastrar_empresa_com_mesmo_cnpj() {
+    	dadosEmpresa();
+    	empresaService.save(staticEmpresa);
+    	empresaService.save(staticEmpresa);
     }
 
     @Test()
@@ -247,7 +257,21 @@ public class EmpresaServiceTest {
     public void deve_atualizar_empresa() {
         staticEmpresa.setNome("Teste");
         empresaService.update(staticEmpresa);
-        Assert.assertEquals(empresaService.findById(staticEmpresa.getCnpj()).getNome(), "Teste");
+        assertEquals(empresaService.findById(staticEmpresa.getCnpj()).getNome(), staticEmpresa.getNome());
+    }
+    
+    @Test()
+    public void deve_deletar_empresa() {
+    	dadosEmpresa();
+    	empresaService.save(staticEmpresa);
+    	empresaService.deleteById(staticEmpresa.getCnpj());
+    	assertEquals(null, empresaService.findById(staticEmpresa.getCnpj()));
+    	empresaService.save(staticEmpresa);
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void deve_retornar_exception_ao_tentar_deletar_empresa_que_nao_existe() {
+    	empresaService.deleteById("1");
     }
 
 }

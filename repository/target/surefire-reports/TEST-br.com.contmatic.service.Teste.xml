@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="28" failures="0" name="br.com.contmatic.endereco.EnderecoTest" time="3.786" errors="0" skipped="0">
+<testsuite tests="1" failures="0" name="br.com.contmatic.service.Teste" time="1.979" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_251\jre\bin"/>
@@ -64,32 +64,5 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_rua_esteja_vazia" time="0.155"/>
-  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_estado_seja_null" time="0.129"/>
-  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="nao_deve_aceitar_cidade_vazia" time="0.124"/>
-  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_bairro_esteja_com_espaco_em_branco" time="0.159"/>
-  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="nao_deve_aceitar_cep_null" time="0.156"/>
-  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_verificar_todos_os_campos_de_equals_hashcode" time="0.32"/>
-  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_rua_seja_possua_mais_50_caracter" time="0.106"/>
-  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_cidade_esteja_com_menos_de_3_caracteres" time="0.137"/>
-  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_cidade_seja_possua_caracteres_especiais" time="0.146"/>
-  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_mudar_nome_estado" time="0.058"/>
-  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_cidade_seja_possua_mais_50_caracter" time="0.199"/>
-  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_estado_for_igual_getSigla_do_enum_estadoBrasil" time="0.061"/>
-  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_rua_seja_possua_caracteres_especiais" time="0.121"/>
-  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="nao_deve_aceitar_cep_vazio" time="0.144"/>
-  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_rua_esteja_com_menos_de_5_caracteres" time="0.144"/>
-  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_cep_contenha_tamanho_diferente_de_8" time="0.114"/>
-  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_bairro_seja_possua_caracteres_especiais" time="0.138"/>
-  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_bairro_seja_null" time="0.147"/>
-  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_bairro_seja_possua_menos_3_caracter" time="0.145"/>
-  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_estado_for_igual_getNome_do_enum_estadoBrasil" time="0.064"/>
-  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_bairro_seja_possua_mais_50_caracter" time="0.146"/>
-  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_cidade_seja_null" time="0.126"/>
-  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_false_caso_contenha_alguma_letra_no_cep" time="0.115"/>
-  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_numeroEndereco_seja_menor_do_que_zero" time="0.147"/>
-  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="nao_deve_aceitar_numero_em_nome_cidade" time="0.119"/>
-  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_bairro_esteja_vazio" time="0.133"/>
-  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_rua_esteja_com_espaco_em_branco" time="0.124"/>
-  <testcase classname="br.com.contmatic.endereco.EnderecoTest" name="deve_retornar_true_caso_rua_seja_null" time="0.109"/>
+  <testcase classname="br.com.contmatic.service.Teste" name="deve_criar_um_novo_objeto_embedded_mongo_db" time="1.979"/>
 </testsuite>

@@ -1,7 +1,7 @@
 package br.com.contmatic.telefone;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
@@ -91,7 +91,7 @@ public class TelefoneTest {
 	public void deve_retornar_false_caso_ddd_seja_diferente() {
 		telefone2.setDddTelefone(DddBrasil.SAO_JOSE_DOS_CAMPOS);
 		telefone.setDddTelefone(DddBrasil.ARACAJU);
-		assertFalse(telefone.getDddTelefone().getDdd() == telefone2.getDddTelefone().getDdd());
+		assertNotEquals(telefone.getDddTelefone().getDdd(), telefone2.getDddTelefone().getDdd());
 	}
 
 	@Test
@@ -104,7 +104,7 @@ public class TelefoneTest {
 	@Test
 	public void deve_retornar_false_caso_sigla_seja_diferente() {
 		telefone2 = EasyRandomTelefone.validadorEasyRandomTelefone(TipoDadoParaTesteTelefone.VALIDO);
-		assertFalse(telefone.getDddTelefone().getSigla() == telefone2.getDddTelefone().getSigla());
+		assertNotEquals(telefone.getDddTelefone().getSigla(), telefone2.getDddTelefone().getSigla());
 	}
 
 	@Test
@@ -117,13 +117,13 @@ public class TelefoneTest {
 	@Test
 	public void deve_retornar_true_caso_tipoTelefone_seja_fixo() {
 		telefone.setTipoTelefone(TipoTelefone.FIXO);
-		assertTrue(telefone.getTipoTelefone() == TipoTelefone.FIXO);
+		assertSame(TipoTelefone.FIXO, telefone.getTipoTelefone());
 	}
 
 	@Test
 	public void deve_retornar_true_caso_tipoTelefone_seja_movel() {
 		telefone.setTipoTelefone(TipoTelefone.MOVEL);
-		assertTrue(telefone.getTipoTelefone() == TipoTelefone.MOVEL);
+		assertSame(TipoTelefone.MOVEL, telefone.getTipoTelefone());
 	}
 
 	@Test

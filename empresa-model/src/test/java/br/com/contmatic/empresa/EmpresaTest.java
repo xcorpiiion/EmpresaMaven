@@ -193,7 +193,8 @@ public class EmpresaTest {
 	 */
 	@Test
 	public void nao_deve_aceitar_cnpj_null() {
-		loja = EasyRandomEmpresa.validadorEasyRandomEmpresa(TipoDadoParaTesteEmpresa.CNPJ_NULL);
+		Empresa empresa =  EasyRandomEmpresa.validadorEasyRandomEmpresa(TipoDadoParaTesteEmpresa.CNPJ_NULL);
+		loja.setCnpj(empresa.getCnpj());
 		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
 	}
 
@@ -246,11 +247,6 @@ public class EmpresaTest {
 		clientes.get(0).setDataNascimento(parseDateTime.toDate());
 		loja.setCliente(clientes);
 		assertTrue(loja.getCliente().size() > 0);
-	}
-
-	@Test
-	public void incluir_bando_de_dados() {
-		
 	}
 
 	@Test

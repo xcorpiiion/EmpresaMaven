@@ -1,18 +1,18 @@
 package br.com.contmatic.constantes.easyrandom;
 
+import java.util.Random;
+
+import org.apache.commons.lang3.StringUtils;
+import org.jeasy.random.EasyRandom;
+import org.jeasy.random.EasyRandomParameters;
+
+import com.mifmif.common.regex.Generex;
+
 import br.com.contmatic.constantes.Constante;
 import br.com.contmatic.empresa.TipoContrato;
 import br.com.contmatic.telefone.DddBrasil;
 import br.com.contmatic.telefone.Telefone;
 import br.com.contmatic.telefone.TipoTelefone;
-import com.mifmif.common.regex.Generex;
-import org.apache.commons.lang3.StringUtils;
-import org.jeasy.random.EasyRandom;
-import org.jeasy.random.EasyRandomParameters;
-import org.jeasy.random.FieldPredicates;
-import org.jeasy.random.api.Randomizer;
-
-import java.util.Random;
 
 public final class EasyRandomTelefone {
 
@@ -102,13 +102,6 @@ public final class EasyRandomTelefone {
 	}
 
 	private static void numeroTelefone(EasyRandomParameters parameters, String numeroTelefone) {
-		Randomizer<String> telefone = new Randomizer<String>() {
-			@Override
-			public String getRandomValue() {
-				String digits = numeroTelefone;
-				return digits;
-			}
-		};
-		parameters.randomize(FieldPredicates.named("phone"), telefone);
+		parameters.randomize(String.class, () -> numeroTelefone);
 	}
 }

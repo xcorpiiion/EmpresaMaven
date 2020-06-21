@@ -7,8 +7,6 @@ import java.util.Random;
 import org.apache.commons.lang3.StringUtils;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
-import org.jeasy.random.FieldPredicates;
-import org.jeasy.random.api.Randomizer;
 
 import com.github.javafaker.Faker;
 
@@ -26,6 +24,10 @@ public final class EasyRandomFuncionario {
 	private static final String EMAIL = "email";
 	
 	private static final String ENDERECO = "endereco";
+	
+	private static final String SALARIO = "salario";
+	
+	private static final String TIPO_CONTRATO = "tipoContrato";
 	
     private EasyRandomFuncionario() {
 
@@ -116,15 +118,15 @@ public final class EasyRandomFuncionario {
                 nome(parameters, null);
                 break;
             case SALARIO_NULL:
-                dadosFuncionarioValidos(parameters, faker, "salario");
+                dadosFuncionarioValidos(parameters, faker, SALARIO);
                 salario(parameters, null);
                 break;
             case SALARIO_PRECIA_SER_VALOR_MAIOR:
-                dadosFuncionarioValidos(parameters, faker, "salario");
+                dadosFuncionarioValidos(parameters, faker, SALARIO);
                 salario(parameters, new BigDecimal(new Random().nextInt(500 - (100 - 1)) * 1));
                 break;
             case TIPO_CONTRATO_NULL:
-                dadosFuncionarioValidos(parameters, faker, "tipoContrato");
+                dadosFuncionarioValidos(parameters, faker, TIPO_CONTRATO);
                 tipoContrato(parameters, null);
                 break;
         }
@@ -145,91 +147,43 @@ public final class EasyRandomFuncionario {
             cargo(parameters, Cargo.values()[new Random().nextInt(Cargo.values().length)]);
         if (!nomeCampoUsado.equalsIgnoreCase(ENDERECO))
             endereco(parameters, EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.VALIDO));
-        if (!nomeCampoUsado.equalsIgnoreCase("tipoContrato"))
+        if (!nomeCampoUsado.equalsIgnoreCase(TIPO_CONTRATO))
             tipoContrato(parameters, TipoContrato.values()[new Random().nextInt(TipoContrato.values().length)]);
-        if (!nomeCampoUsado.equalsIgnoreCase("salario")) {
+        if (!nomeCampoUsado.equalsIgnoreCase(SALARIO)) {
             int val = new Random().nextInt(5000 - (100 - 1)) + 100;
             salario(parameters, new BigDecimal(val));
         }
     }
 
     private static void nome(EasyRandomParameters parameters, String nomeFuncionario) {
-        Randomizer<String> nome = new Randomizer<String>() {
-            @Override
-            public String getRandomValue() {
-                return nomeFuncionario;
-            }
-        };
-        parameters.randomize(FieldPredicates.named("nome"), nome);
+        parameters.randomize(String.class, () -> nomeFuncionario);
     }
 
     private static void email(EasyRandomParameters parameters, String emailFuncionario) {
-        Randomizer<String> email = new Randomizer<String>() {
-            @Override
-            public String getRandomValue() {
-                return emailFuncionario;
-            }
-        };
-        parameters.randomize(FieldPredicates.named(EMAIL), email);
+    	parameters.randomize(String.class, () -> emailFuncionario);
     }
 
     private static void cpf(EasyRandomParameters parameters, String cpfFuncionario) {
-        Randomizer<String> cpf = new Randomizer<String>() {
-            @Override
-            public String getRandomValue() {
-                return cpfFuncionario;
-            }
-        };
-        parameters.randomize(FieldPredicates.named("cpf"), cpf);
+    	parameters.randomize(String.class, () -> cpfFuncionario);
     }
 
     private static void dataNascimento(EasyRandomParameters parameters, Date dataNascimentoFuncionario) {
-        Randomizer<Date> dataNascimento = new Randomizer<Date>() {
-            @Override
-            public Date getRandomValue() {
-                return dataNascimentoFuncionario;
-            }
-        };
-        parameters.randomize(FieldPredicates.named(DATA_NASCIMENTO), dataNascimento);
+    	parameters.randomize(Date.class, () -> dataNascimentoFuncionario);
     }
 
     private static void cargo(EasyRandomParameters parameters, Cargo cargoFuncionario) {
-        Randomizer<Cargo> cargo = new Randomizer<Cargo>() {
-            @Override
-            public Cargo getRandomValue() {
-                return cargoFuncionario;
-            }
-        };
-        parameters.randomize(FieldPredicates.named(CARGO), cargo);
+    	parameters.randomize(Cargo.class, () -> cargoFuncionario);
     }
 
     private static void endereco(EasyRandomParameters parameters, Endereco enderecoFuncionario) {
-        Randomizer<Endereco> endereco = new Randomizer<Endereco>() {
-            @Override
-            public Endereco getRandomValue() {
-                return enderecoFuncionario;
-            }
-        };
-        parameters.randomize(FieldPredicates.named(ENDERECO), endereco);
+    	parameters.randomize(Endereco.class, () -> enderecoFuncionario);
     }
 
     private static void tipoContrato(EasyRandomParameters parameters, TipoContrato tipoContratoFuncionario) {
-        Randomizer<TipoContrato> tipoContrato = new Randomizer<TipoContrato>() {
-            @Override
-            public TipoContrato getRandomValue() {
-                return tipoContratoFuncionario;
-            }
-        };
-        parameters.randomize(FieldPredicates.named("tipoContrato"), tipoContrato);
+    	parameters.randomize(TipoContrato.class, () -> tipoContratoFuncionario);
     }
 
     private static void salario(EasyRandomParameters parameters, BigDecimal precoProduto) {
-        Randomizer<BigDecimal> salario = new Randomizer<BigDecimal>() {
-            @Override
-            public BigDecimal getRandomValue() {
-                return precoProduto;
-            }
-        };
-        parameters.randomize(FieldPredicates.named("salario"), salario);
+    	parameters.randomize(BigDecimal.class, () -> precoProduto);
     }
 }
