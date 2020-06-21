@@ -1,6 +1,7 @@
 package br.com.contmatic.endereco;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.lang3.StringUtils;
@@ -30,6 +31,7 @@ public class EnderecoTest {
 	@Before
 	public void addEndereco() {
 		endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.VALIDO);
+		System.out.println();
 	}
 	
 	/**
@@ -91,14 +93,15 @@ public class EnderecoTest {
 	 */
 	@Test
 	public void deve_retornar_true_caso_estado_seja_null() {
-	    endereco = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.ESTADO_NULL);
+	    Endereco enderecoTest = EasyRandomEndereco.validadorEasyRandomEndereco(TipoDadoParaTesteEndereco.ESTADO_NULL);
+	    endereco.setEstado(enderecoTest.getEstado());
 	    assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(endereco, Mensagem.VALOR_ESTA_NULLO));
 	}
 	
 	@Test
     public void deve_mudar_nome_estado() {
         endereco.setEstado(EstadosBrasil.ACRE);
-        assertTrue(endereco.getEstado() == EstadosBrasil.ACRE);
+        assertSame(EstadosBrasil.ACRE, endereco.getEstado());
     }
 	
 	/**

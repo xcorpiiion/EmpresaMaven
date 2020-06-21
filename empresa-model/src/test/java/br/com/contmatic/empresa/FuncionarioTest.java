@@ -3,13 +3,9 @@ package br.com.contmatic.empresa;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import br.com.contmatic.constantes.easyrandom.*;
-import org.joda.time.DateTime;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
@@ -17,6 +13,10 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import br.com.contmatic.constantes.Mensagem;
+import br.com.contmatic.constantes.easyrandom.EasyRandomFuncionario;
+import br.com.contmatic.constantes.easyrandom.EasyRandomTelefone;
+import br.com.contmatic.constantes.easyrandom.TipoDadoParaTesteFuncionario;
+import br.com.contmatic.constantes.easyrandom.TipoDadoParaTesteTelefone;
 import br.com.contmatic.telefone.Telefone;
 import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
 import nl.jqno.equalsverifier.EqualsVerifier;
@@ -143,13 +143,6 @@ public class FuncionarioTest {
 	}
 
 	@Test
-	public void deve_retornar_true_caso_email_esteja_com_numero_depois_do_arroba() {
-		funcionario = EasyRandomFuncionario
-				.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.EMAIL_WITH_NUMBER_AFTER_ARROBA);
-		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_NAO_E_VALIDO));
-	}
-
-	@Test
 	public void deve_retornar_true_caso_email_esteja_sem_arroba() {
 		funcionario = EasyRandomFuncionario
 				.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.EMAIL_WITHOU_ARROBA);
@@ -213,13 +206,7 @@ public class FuncionarioTest {
 				.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.DATA_NASCIMENTO_NULL);
 		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(funcionario, Mensagem.VALOR_ESTA_NULLO));
 	}
-
-	@Test
-	public void deve_alterar_dataNascimento() {
-		funcionario.setDataNascimento(new Date());
-		assertEquals(new DateTime(), funcionario.getDataNascimento());
-	}
-
+	
 	@Test
 	public void deve_add_telefone_na_lista_telefones() {
 		funcionario.setTelefones(telefones);
@@ -231,15 +218,6 @@ public class FuncionarioTest {
 		funcionario2 = EasyRandomFuncionario.validadorEasyRandomFuncionario(TipoDadoParaTesteFuncionario.VALIDO);
 		funcionario.setEndereco(funcionario2.getEndereco());
 		assertEquals(funcionario2.getEndereco(), funcionario.getEndereco());
-	}
-
-	/**
-	 * Deve ter salario maior do que zero.
-	 */
-	@Test
-	public void deve_ter_salario_maior_do_que_zero() {
-		funcionario2.setSalario(funcionario.getSalario());
-		assertTrue(funcionario2.getSalario().compareTo(BigDecimal.ZERO) > 0);
 	}
 
 	@Test

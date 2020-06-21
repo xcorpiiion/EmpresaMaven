@@ -78,9 +78,9 @@ public class EmpresaTest {
 	}
 
 	@Test
-	public void deve_retornar_true_caso_nome_seja_null() {
+	public void teste() {
 		loja = EasyRandomEmpresa.validadorEasyRandomEmpresa(TipoDadoParaTesteEmpresa.NOME_NULL);
-		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Mensagem.VALOR_NAO_E_VALIDO));
+		assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(loja, Post.class, Mensagem.VALOR_ESTA_NULLO));
 	}
 
 	@Test

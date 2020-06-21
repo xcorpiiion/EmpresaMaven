@@ -72,7 +72,7 @@ public final class EasyRandomEndereco {
 			cidade(parameters, faker.address().cityName() + "*/");
 			break;
 		case ESTADO_NULL:
-			cidade(parameters, faker.address().cityName());
+			estado(parameters, null);
 			break;
 		case NUMERO_RESIDENCIA_LESS_THAN_ZERO:
 			numeroResidencia(parameters, faker.number().numberBetween(-10000, -1));

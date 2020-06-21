@@ -23,7 +23,7 @@ import br.com.contmatic.telefone.Telefone;
 public class Empresa {
 
     /** The nome. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    @NotNull(message = Mensagem.VALOR_ESTA_NULLO, groups = Post.class)
     @Size(min = 3, max = 100, message = Mensagem.VALOR_NAO_E_VALIDO)
     @Pattern(regexp = Constante.ILLEGAL_NUMBER, message = Mensagem.VALOR_NAO_E_VALIDO)
     private String nome;

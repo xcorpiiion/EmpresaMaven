@@ -67,8 +67,7 @@ public class EmpresaServiceTest {
 
     @Test(expected = NullPointerException.class)
     public void deve_retornar_null_ao_salvar_empresa() {
-        staticEmpresa = null;
-        empresaService.save(staticEmpresa);
+        empresaService.save(null);
     }
 
     @Test()

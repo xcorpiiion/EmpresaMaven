@@ -18,7 +18,7 @@ public final class Mensagem {
     public static final String NOME_E_MUITO_GRANDE = "O nome é muito grande";
 
     /** The Constant PRECISA_SER_UM_VALOR_MAIOR. */
-    public static final String PRECISA_SER_UM_VALOR_MAIOR = "O precisa ser um valor maior";
+    public static final String PRECISA_SER_UM_VALOR_MAIOR = "Precisa ser um valor maior";
     
     /** The Constant VALOR_ESTA_NULLO. */
     public static final String VALOR_ESTA_NULLO = "O valor esta nullo";
