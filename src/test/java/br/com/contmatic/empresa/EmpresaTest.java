@@ -1,204 +1,209 @@
 package br.com.contmatic.empresa;
 
+import static br.com.contmatic.empresa.utils.InstanciaClasses.criaCliente;
+import static br.com.contmatic.empresa.utils.InstanciaClasses.criaEmpresa;
+import static br.com.contmatic.empresa.utils.InstanciaClasses.criaEndereco;
+import static br.com.contmatic.empresa.utils.InstanciaClasses.criaProduto;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
-import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.commons.lang3.StringUtils;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import br.com.contmatic.empresa.Empresa;
-import br.com.contmatic.empresa.Endereco;
-import br.com.contmatic.empresa.Funcionario;
-import br.com.contmatic.empresa.Produto;
-import br.com.contmatic.enums.Cargo;
-import br.com.contmatic.enums.TipoContrato;
+
+import com.github.javafaker.Faker;
+
 import br.com.contmatic.services.EmptyStringException;
-import br.com.contmatic.services.StringSizeException;
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class EmpresaTest {
 
-	private SimpleDateFormat nascimento;
+	private static Produto produto;
 
-	private Date data;
+	private Funcionario funcionario;
 
-	private static List<Produto> produtos;
+	private static Cliente cliente;
 
-	private List<Funcionario> funcionarios;
+	private static Endereco endereco;
 
-	private static Empresa loja, loja2;
+	private static Empresa empresa;
+
+	private static Faker faker;
 
 	@BeforeClass
-	public static void cadastrar_empresa() {
-		produtos = new ArrayList<>();
-		loja = new Empresa("Kratos games", "kratosgames@gmail.com", produtos, "01234567890123",
-				new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo", "São Paulo"));
-	}
-
-	@Before
-	public void add_dados_funcionario() {
-		funcionarios = new ArrayList<>();
-		try {
-			nascimento = new SimpleDateFormat("dd/MM/yyyy");
-			data = nascimento.parse("03/07/1992");
-			funcionarios.add(new Funcionario("Lucas", "lucas@gmail.com", new BigDecimal(2500.00), Cargo.RH, data,
-					TipoContrato.CLT,
-					new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", "São Paulo")));
-			nascimento.parse("09/04/1990");
-			funcionarios.add(new Funcionario("João", "joao@gmail.com", new BigDecimal(2500.00), Cargo.REPOSITOR, data,
-					TipoContrato.CLT,
-					new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", "São Paulo")));
-			nascimento.parse("03/02/1985");
-			funcionarios.add(new Funcionario("Weevil", "weevil@gmail.com", new BigDecimal(2500.00), Cargo.REPOSITOR,
-					data, TipoContrato.CLT,
-					new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", "São Paulo")));
-			nascimento.parse("26/01/1989");
-			funcionarios.add(new Funcionario("Dante", "dante@gmail.com", new BigDecimal(2500.00), Cargo.RH, data,
-					TipoContrato.CLT,
-					new Endereco("Rua casa verde", "Casa Verde", "02678100", "40", "São paulo", "São Paulo")));
-		} catch (Exception e) {
-			fail("Você informou uma data invalida");
-		}
-
-	}
-
-	@Before
-	public void add_dados_produto() {
-		produtos.add(new Produto("Tablet", new BigDecimal(2500.00), 50));
-		produtos.add(new Produto("Smartphone", new BigDecimal(2500.00), 150));
-		produtos.add(new Produto("Fone de Ouvido", new BigDecimal(50.00), 200));
-		produtos.add(new Produto("Computador", new BigDecimal(3500.00), 70));
-
-	}
-
-	@Before
-	public void deve_mostrar_endereco() {
-		System.out.println(loja.getEndereco());
-	}
-
-	@Before
-	public void ordena_os_produtos() {
-		loja.mostrarProdutos();
-	}
-
-	@Test()
-	public void nao_deve_aceitar_produto_null() {
-		assertNotNull("O produto esta null", produtos);
+	public static void cadastraEmpresa() {
+		faker = new Faker();
+		produto = criaProduto();
+		endereco = criaEndereco();
+		cliente = criaCliente(endereco);
+		empresa = criaEmpresa(endereco, false);
 	}
 	
-	@Test
-	public void deve_settar_o_funcionario() {
-		loja.setFuncionario(funcionarios);
+	@Test(expected = IllegalArgumentException.class)
+	public void deve_apenas_aceitar_nome_com_mais_3_caracteres(){
+		empresa.setNome("aa");
 	}
 	
-	@Test
-	public void deve_settar_o_cliente() {
-		List<Cliente> clientes = new ArrayList<>();
-		clientes.add(new Cliente("Matheus", "matheus@gmail.com", data,
-					new Endereco("Rua almeida", "Jardim santana", "02676000", "35-A", "São paulo", "São Paulo")));
-		loja.setCliente(clientes);
+	@Test(expected = IllegalArgumentException.class)
+	public void deve_apenas_aceitar_nome_com_menos_70_caracteres(){
+		empresa.setNome("aawwwwwwwertgfdswqafcvfgtdsyhtru"
+				+ "aawwwwwwwertgfdswqafcvfgtdsyhtruaawwwwwwwertgfdswqafcvfgtdsyhtru");
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void nao_deve_aceitar_nome_null(){
+		empresa.setNome(null);
+	}
+	
+	@Test(expected = EmptyStringException.class)
+	public void nao_deve_aceitar_nome_empty() {
+		empresa.setNome(StringUtils.EMPTY);
+	}
+	
+	@Test(expected = EmptyStringException.class)
+	public void nao_deve_aceitar_nome_vazio() {
+		empresa.setNome(StringUtils.SPACE);
 	}
 
-	@Test()
-	public void nao_deve_aceitar_produto_que_nao_exista_na_loja() {
-		String nomeProduto = "tablet";
-		assertTrue("O produto não existe", loja.produtoExiste(nomeProduto));
-	}
-
-	@Test
-	public void nao_deve_aceitar_cnpj_null_com_letras_com_espaco_menos_14_numeros() {
-		String cnpj = "12345678901234";
-		loja.setCnpj(cnpj);
-		assertEquals(loja.getCnpj(), cnpj);
+	@Test(expected = IllegalArgumentException.class)
+	public void nao_deve_aceitar_cnpj_invalido() {
+		empresa.setCnpj("1");
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void nao_deve_aceitar_cnpj_null() {
-		loja.setCnpj(null);
+		empresa.setCnpj(null);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void nao_deve_aceitar_cnpj_null_com_letras_com_espaco() {
+		StringBuilder cnpj = new StringBuilder();
+		cnpj.append(String.valueOf(faker.number().numberBetween(1, 10))).append(" ");
+		empresa.setCnpj(cnpj.toString());
 	}
 
 	@Test(expected = EmptyStringException.class)
 	public void nao_deve_aceitar_cnpj_vazio() {
 		String cnpj = "";
-		loja.setCnpj(cnpj);
+		empresa.setCnpj(cnpj);
 	}
 
 	@Test(expected = EmptyStringException.class)
 	public void nao_deve_aceitar_cnpj_com_espaco_em_branco() {
 		String cnpj = " ";
-		loja.setCnpj(cnpj);
+		empresa.setCnpj(cnpj);
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void nao_deve_aceitar_cnpj_com_letras() {
 		String cnpj = "a";
-		loja.setCnpj(cnpj);
+		empresa.setCnpj(cnpj);
 	}
 
 	@Test(expected = RuntimeException.class)
 	public void nao_deve_aceitar_cnpj_com_letras_e_numeros_juntos() {
 		String cnpj = "1234567890123a";
-		loja.setCnpj(cnpj);
+		empresa.setCnpj(cnpj);
 	}
 
-	@Test(expected = StringSizeException.class)
-	public void nao_deve_aceitar_cnpj_null_com_menos_14_numeros() {
+	@Test(expected = IllegalArgumentException.class)
+	public void nao_deve_aceitar_cnpj_com_menos_14_numeros() {
 		String cnpj = "1234567890123";
-		loja.setCnpj(cnpj);
+		empresa.setCnpj(cnpj);
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void nao_deve_aceitar_email_null() {
+		empresa.setEmail(null);
+	}
+	
+	@Test(expected = EmptyStringException.class)
+	public void nao_deve_aceitar_email_vazio_empty() {
+		empresa.setEmail(StringUtils.SPACE);
+	}
+	
+	@Test(expected = EmptyStringException.class)
+	public void nao_deve_aceitar_email_vazio() {
+		empresa.setEmail(StringUtils.EMPTY);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void nao_deve_aceitar_email_sem_arroba() {
+		empresa.setEmail(faker.name().firstName());
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void nao_deve_aceitar_email_com_caracteres_especiais() {
+		empresa.setEmail(faker.name().firstName() + "%$");
+	}
+
+	@Test
+	public void deve_criar_empresa_com_produtos() {
+		empresa = criaEmpresa(endereco, true);
+		assertFalse(empresa.getProduto().isEmpty());
+	}
+
+	@Test()
+	public void nao_deve_aceitar_produto_null() {
+		assertNotNull("O produto esta null", produto);
+	}
+
+	@Test
+	public void deve_settar_produto() {
+		empresa.setProduto(Arrays.asList(produto));
+		assertFalse(empresa.getProduto().isEmpty());
+	}
+
+	@Test
+	public void deve_settar_o_funcionario() {
+		empresa.setFuncionario(Arrays.asList(funcionario));
+		assertFalse(empresa.getFuncionario().isEmpty());
+	}
+
+	@Test
+	public void deve_settar_o_cliente() {
+		empresa.setCliente(Arrays.asList(cliente));
+		assertFalse(empresa.getCliente().isEmpty());
 	}
 
 	@Test
 	public void nao_deve_aceitar_endereco_null() {
-		assertNotNull(funcionarios.get(0).getEndereco());
+		assertNotNull(empresa.getEndereco());
 	}
 
-	@Test(expected = NullPointerException.class)
-	public void nao_deve_aceitar_endereco_null_exception() {
-		loja = new Empresa("Kratos games", "kratosgames@gmail.com", produtos, "01234567890123", null);
+	@Test
+	public void deve_settar_data_criacao() {
+		Date past = faker.date().past(1, TimeUnit.DAYS);
+		empresa.setDataCriacao(past);
+		assertEquals(past, empresa.getDataCriacao());
 	}
 
-	@Test()
-	public void deve_ter_o_mesmo_cnpj_para_serem_iguais() {
-		loja2 = new Empresa("Kratos games", "kratosgames@gmail.com", produtos, "11234567890123",
-				new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo", "São Paulo"));
-		assertFalse("As empresas são iguais", loja.equals(loja2));
-	}
-
-	@Test()
-	public void nao_deve_aceitar_null_para_comparar_lojas() {
-		loja2 = new Empresa("Kratos games", "kratosgames@gmail.com", produtos, "11234567890123",
-				new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo", "São Paulo"));
-		assertFalse("As empresas são iguais", loja.equals(null));
+	@Test
+	public void deve_settar_data_alteracao() {
+		Date past = faker.date().past(1, TimeUnit.DAYS);
+		empresa.setDataAlteracao(past);
+		assertEquals(past, empresa.getDataAlteracao());
 	}
 
 	@Test()
-	public void nao_deve_aceitar_cnpj_null_para_compara_lojas() {
-		loja2 = new Empresa("Kratos games", "kratosgames@gmail.com", produtos, "11234567890123",
-				new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo", "São Paulo"));
-		assertFalse("As empresas são iguais", loja.getCnpj().equals(null));
-	}
-
-	@Test()
-	public void deve_ter_o_mesmo_hashCode_para_serem_iguais() {
-		loja2 = new Empresa("Kratos games", "kratosgames@gmail.com", produtos, "01234567890123",
-				new Endereco("Rua limões", "Santa Maria", "02177120", "345", "São paulo", "São Paulo"));
-		assertEquals("As lojas são iguais", loja.hashCode(), loja2.hashCode());
+	public void deve_retornar_true_no_equals_para_serem_iguais() {
+		EqualsVerifier.forClass(Empresa.class).usingGetClass()
+				.suppress(Warning.NONFINAL_FIELDS, Warning.ALL_FIELDS_SHOULD_BE_USED).verify();
 	}
 
 	@AfterClass
 	public static void mostrar_dados_empresa() {
-		System.out.println(loja);
+		System.out.println(empresa);
 	}
 
 }

@@ -1,8 +1,11 @@
 package br.com.contmatic.empresa;
 
-import java.math.BigDecimal;
+import static br.com.contmatic.empresa.utils.FieldValidation.isNull;
+import static br.com.contmatic.empresa.utils.FieldValidation.isStringContaisWordAndNumber;
+import static br.com.contmatic.empresa.utils.FieldValidation.isStringEmpty;
+import static br.com.contmatic.empresa.utils.FieldValidation.minAndMaxValue;
 
-import br.com.contmatic.constantes.ValidationNullOrEmpty;
+import java.math.BigDecimal;
 
 public class Produto {
 	
@@ -13,9 +16,9 @@ public class Produto {
 	private Integer estoque;
 	
 	public Produto(String nome, BigDecimal preco, Integer estoque){
-		setNome(nome);
-		setPreco(preco);
-		setEstoque(estoque);
+		this.setNome(nome);
+		this.setPreco(preco);
+		this.setEstoque(estoque);
 	}
 
 	public String getNome() {
@@ -23,8 +26,10 @@ public class Produto {
 	}
 
 	public void setNome(String nome) {
-		ValidationNullOrEmpty.nomeIsNull(nome);
-		ValidationNullOrEmpty.nomeIsEmpty(nome);
+		isNull(nome);
+		isStringEmpty(nome);
+		minAndMaxValue(2, 30, nome);
+		isStringContaisWordAndNumber(nome);
 		this.nome = nome;
 	}
 
@@ -33,7 +38,8 @@ public class Produto {
 	}
 
 	public void setPreco(BigDecimal preco) {
-		precoIsNull(preco);
+		isNull(preco);
+		minAndMaxValue(BigDecimal.valueOf(1), BigDecimal.valueOf(300), preco);
 		this.preco = preco;
 	}
 
@@ -42,28 +48,11 @@ public class Produto {
 	}
 
 	public void setEstoque(Integer estoque) {
-		estoqueIsNull(estoque);
-		estoqueIsNegative(estoque);
+		isNull(estoque);
+		minAndMaxValue(1, 30, estoque);
 		this.estoque = estoque;
 	}
 	
-	private void precoIsNull(BigDecimal preco) {
-		if(preco == null) {
-			throw new NullPointerException("O preço ou null");
-		}
-	}
-	
-	private void estoqueIsNull(Integer estoque) {
-		if(estoque == null) {
-			throw new NullPointerException("O estoque está null");
-		}
-	}
-	
-	private void estoqueIsNegative(Integer estoque) {
-		if(estoque < 0) {
-			throw new IllegalArgumentException("O estoque não pode ser negativo");
-		}
-	}
 
 	@Override
 	public int hashCode() {

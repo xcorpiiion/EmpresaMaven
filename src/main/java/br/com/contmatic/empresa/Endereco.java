@@ -1,9 +1,11 @@
 package br.com.contmatic.empresa;
 
-import br.com.contmatic.constantes.Constante;
-import br.com.contmatic.services.EmptyStringException;
-import br.com.contmatic.services.StringFormatException;
-import br.com.contmatic.services.StringSizeException;
+import static br.com.contmatic.empresa.utils.FieldValidation.isNull;
+import static br.com.contmatic.empresa.utils.FieldValidation.isStringContaisJustNumber;
+import static br.com.contmatic.empresa.utils.FieldValidation.isStringContaisJustWord;
+import static br.com.contmatic.empresa.utils.FieldValidation.isStringContaisWordAndNumber;
+import static br.com.contmatic.empresa.utils.FieldValidation.isStringEmpty;
+import static br.com.contmatic.empresa.utils.FieldValidation.minAndMaxValue;
 
 public class Endereco {
 	
@@ -33,8 +35,10 @@ public class Endereco {
 	}
 
 	public void setRua(String rua) {
-		ruaIsNull(rua);
-		ruaIsEmpty(rua);
+		isNull(rua);
+		isStringEmpty(rua);
+		minAndMaxValue(3, 50, rua);
+		isStringContaisWordAndNumber(rua);
 		this.rua = rua;
 	}
 
@@ -43,8 +47,10 @@ public class Endereco {
 	}
 
 	public void setBairro(String bairro) {
-		bairroIsNull(bairro);
-		bairroIsEmpty(bairro);
+		isNull(bairro);
+		isStringEmpty(bairro);
+		minAndMaxValue(2, 50, bairro);
+		isStringContaisWordAndNumber(bairro);
 		this.bairro = bairro;
 	}
 
@@ -53,10 +59,9 @@ public class Endereco {
 	}
 
 	public void setCep(String cep) {
-		cepIsNull(cep);
-		cepIsEmpty(cep);
-		cepContainsWord(cep);
-		cepSizeValidation(cep);
+		isNull(cep);
+		isStringEmpty(cep);
+		isStringContaisJustNumber(cep);
 		this.cep = cep;
 	}
 
@@ -65,9 +70,10 @@ public class Endereco {
 	}
 
 	public void setCidade(String cidade) {
-		cidadeIsNull(cidade);
-		cidadeIsEmpty(cidade);
-		cidadeContainsNumber(cidade);
+		isNull(cidade);
+		isStringEmpty(cidade);
+		minAndMaxValue(2, 50, cidade);
+		isStringContaisJustWord(cidade);
 		this.cidade = cidade;
 	}
 
@@ -76,9 +82,10 @@ public class Endereco {
 	}
 
 	public void setEstado(String estado) {
-		estadoIsNull(estado);
-		estadoIsEmpty(estado);
-		estadoContainsNumber(estado);
+		isNull(estado);
+		isStringEmpty(estado);
+		minAndMaxValue(2, 50, estado);
+		isStringContaisJustWord(estado);
 		this.estado = estado;
 	}
 
@@ -87,105 +94,11 @@ public class Endereco {
 	}
 
 	public void setNumeroResidencia(String numeroResidencia) {
-		numeroResidenciaIsNull(numeroResidencia);
-		numeroResidenciaIsEmpty(numeroResidencia);
+		isNull(numeroResidencia);
+		isStringEmpty(numeroResidencia);
+		minAndMaxValue(1, 10000, numeroResidencia);
+		isStringContaisJustNumber(numeroResidencia);
 		this.numeroResidencia = numeroResidencia;
-	}
-
-	private void numeroResidenciaIsNull(String numeroResidencia) {
-		if (numeroResidencia == null) {
-			throw new NullPointerException("O número esta null");
-		}
-	}
-
-	private void numeroResidenciaIsEmpty(String numeroResidencia) {
-		if (numeroResidencia.isEmpty() || numeroResidencia.trim().equals("")) {
-			throw new EmptyStringException("O número esta vazio");
-		}
-	}
-
-	private void cidadeIsNull(String cidade) {
-		if (cidade == null) {
-			throw new NullPointerException("A cidade esta null");
-		}
-	}
-
-	private void cidadeIsEmpty(String cidade) {
-		if (cidade.isEmpty() || cidade.trim().equals("")) {
-			throw new EmptyStringException("A cidade esta vazia");
-		}
-	}
-
-	private void cidadeContainsNumber(String cidade) {
-		if (cidade.matches(Constante.ILLEGAL_NUMBER)) {
-			throw new StringFormatException("A cidade contém algum número");
-		}
-	}
-
-	private void estadoIsNull(String estado) {
-		if (estado == null) {
-			throw new NullPointerException("O estado esta null");
-		}
-	}
-
-	private void estadoIsEmpty(String estado) {
-		if (estado.isEmpty() || estado.trim().equals("")) {
-			throw new EmptyStringException("O estado esta vazio");
-		}
-	}
-
-	private void estadoContainsNumber(String estado) {
-		if (estado.matches(Constante.ILLEGAL_NUMBER)) {
-			throw new StringFormatException("O estado contém algum número");
-		}
-	}
-
-	private void ruaIsNull(String rua) {
-		if (rua == null) {
-			throw new NullPointerException("A rua está null");
-		}
-	}
-
-	private void ruaIsEmpty(String rua) {
-		if (rua.isEmpty() || rua.trim().equals("")) {
-			throw new EmptyStringException("A rua esta vazia");
-		}
-	}
-
-	private void cepIsNull(String cep) {
-		if (cep == null) {
-			throw new NullPointerException("O cep está null");
-		}
-	}
-
-	private void cepIsEmpty(String cep) {
-		if (cep.isEmpty() || cep.trim().equals("")) {
-			throw new EmptyStringException("O cep esta vazio");
-		}
-	}
-
-	private void cepSizeValidation(String cep) {
-		if (cep.length() != 8) {
-			throw new StringSizeException("O tamanho do cep é incorreto");
-		}
-	}
-
-	private void cepContainsWord(String cep) {
-		if (!cep.matches(Constante.ILLEGAL_NUMBER)) {
-			throw new StringFormatException("O cep contém letras e números");
-		}
-	}
-
-	private void bairroIsNull(String bairro) {
-		if (bairro == null) {
-			throw new NullPointerException("O bairro está null");
-		}
-	}
-
-	private void bairroIsEmpty(String bairro) {
-		if (bairro.isEmpty() || bairro.trim().equals("")) {
-			throw new EmptyStringException("O bairro esta vazio");
-		}
 	}
 
 	@Override

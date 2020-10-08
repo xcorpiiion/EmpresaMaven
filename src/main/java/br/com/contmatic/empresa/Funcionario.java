@@ -1,18 +1,24 @@
 package br.com.contmatic.empresa;
 
+import static br.com.contmatic.empresa.utils.FieldValidation.isCpfValido;
+import static br.com.contmatic.empresa.utils.FieldValidation.isEmailValido;
+import static br.com.contmatic.empresa.utils.FieldValidation.isNull;
+import static br.com.contmatic.empresa.utils.FieldValidation.isStringContaisJustWord;
+import static br.com.contmatic.empresa.utils.FieldValidation.isStringEmpty;
+import static br.com.contmatic.empresa.utils.FieldValidation.minAndMaxValue;
+
 import java.math.BigDecimal;
 import java.util.Date;
-import br.com.contmatic.constantes.ValidationNullOrEmpty;
+
 import br.com.contmatic.enums.Cargo;
-import br.com.contmatic.enums.TipoContrato;
 
 public class Funcionario {
-
-	private static final String APENAS_REPOSITORES_PODEM_ALTERAR_OS_DADOS_DO_PRODUTO = "Apenas repositores podem alterar os dados do produto";
 
 	private String nome;
 
 	private String email;
+	
+	private String cpf;
 
 	private Date dataNascimento;
 
@@ -22,22 +28,15 @@ public class Funcionario {
 
 	private Endereco endereco;
 
-	private TipoContrato tipoContrato;
-
 	public Funcionario(String nome, String email, BigDecimal salario, Cargo cargo, Date dataNascimento,
-			TipoContrato tipoContrato, Endereco endereco) {
-		setNome(nome);
-		setEmail(email);
-		ValidationNullOrEmpty.dataNascimentoIsNull(dataNascimento);
-		this.dataNascimento = dataNascimento;
-		setCargo(cargo);
-		salarioIsNull(salario);
-		salarioIsNegative(salario);
-		this.salario = salario;
-		ValidationNullOrEmpty.enderecoIsNull(endereco);
-		setEndereco(endereco);
-		contratoIsNull(tipoContrato);
-		this.tipoContrato = tipoContrato;
+			Endereco endereco, String cpf) {
+		this.setNome(nome);
+		this.setEmail(email);
+		this.setDataNascimento(dataNascimento);
+		this.setEndereco(endereco);
+		this.setSalario(salario);
+		this.setCargo(cargo);
+		this.setCpf(cpf);
 	}
 
 	public Endereco getEndereco() {
@@ -45,7 +44,7 @@ public class Funcionario {
 	}
 
 	public void setEndereco(Endereco endereco) {
-		ValidationNullOrEmpty.enderecoIsNull(endereco);
+		isNull(endereco);
 		this.endereco = endereco;
 	}
 
@@ -54,7 +53,7 @@ public class Funcionario {
 	}
 
 	public void setCargo(Cargo cargo) {
-		cargoIsNull(cargo);
+		isNull(cargo);
 		this.cargo = cargo;
 	}
 
@@ -62,17 +61,15 @@ public class Funcionario {
 		return salario;
 	}
 
-	public TipoContrato getTipoContrato() {
-		return tipoContrato;
-	}
-
 	public String getNome() {
 		return nome;
 	}
 
 	public void setNome(String nome) {
-		ValidationNullOrEmpty.nomeIsNull(nome);
-		ValidationNullOrEmpty.nomeIsEmpty(nome);
+		isNull(nome);
+		isStringEmpty(nome);
+		minAndMaxValue(3, 30, nome);
+		isStringContaisJustWord(nome);
 		this.nome = nome;
 	}
 
@@ -81,8 +78,8 @@ public class Funcionario {
 	}
 
 	public void setEmail(String email) {
-		ValidationNullOrEmpty.emailIsNull(email);
-		ValidationNullOrEmpty.emailIsEmpty(email);
+		isNull(email);
+		isEmailValido(email);
 		this.email = email;
 	}
 
@@ -90,167 +87,32 @@ public class Funcionario {
 		return dataNascimento;
 	}
 
-	private boolean isRH(Funcionario funcionario) {
-		return funcionario.getCargo() != Cargo.RH;
+	public void setDataNascimento(Date dataNascimento) {
+		isNull(dataNascimento);
+		this.dataNascimento = dataNascimento;
 	}
 
-	private boolean isRepositor(Funcionario funcionario) {
-		return funcionario.getCargo() != Cargo.REPOSITOR;
-
+	public void setSalario(BigDecimal salario) {
+		isNull(salario);
+		minAndMaxValue(BigDecimal.valueOf(500), BigDecimal.valueOf(1000), salario);
+		this.salario = salario;
 	}
 
-	private boolean funcinarioIsCadastrado(Empresa loja, String nome, String email) {
-		return loja.getFuncionario().stream()
-				.anyMatch(func -> func.getNome().equalsIgnoreCase(nome) && func.getEmail().equalsIgnoreCase(email));
+	public String getCpf() {
+		return cpf;
 	}
 
-	private boolean hasProdutoInList(Empresa loja, String nome, BigDecimal preco) {
-		return loja.getProduto().stream()
-				.anyMatch(prod -> prod.getNome().equalsIgnoreCase(nome) && prod.getPreco().equals(preco));
-	}
-
-	public void contratarFuncionario(String nome, String email, Cargo cargo, BigDecimal salario, Date dataNascimento,
-			Funcionario funcionario, Empresa loja, TipoContrato tipoContrato, Endereco endereco) {
-
-		if (isRH(funcionario)) {
-			throw new IllegalArgumentException("Apenas o RH pode contratar funcionarios");
-		}
-
-		if (funcinarioIsCadastrado(loja, nome, email)) {
-			throw new IllegalArgumentException("O funcionario já foi contratado");
-		}
-
-		loja.getFuncionario().add(new Funcionario(nome, email, salario, cargo, dataNascimento, tipoContrato, endereco));
-	}
-
-	public void demitirFuncionario(String nome, String email, Funcionario funcionario,
-			Empresa loja) {
-		funcionarioIsNull(funcionario);
-		if (isRH(funcionario)) {
-			throw new IllegalArgumentException("Apenas o RH pode contratar funcionarios");
-		}
-		if (!funcinarioIsCadastrado(loja, nome, email)) {
-			throw new IllegalArgumentException("Não existe o funcionario com os dados informados");
-		}
-		loja.getFuncionario().removeIf(
-				(func1 -> func1.getEmail().equalsIgnoreCase(email) && func1.getNome().equalsIgnoreCase(nome)));
-	}
-
-	public void alterarDadosProduto(Funcionario funcionario, int escolhaOpcoes, String nomeProduto,
-			String nomeNovoProduto, Empresa loja) {
-		funcionarioIsNull(funcionario);
-		if (isRepositor(funcionario)) {
-			throw new IllegalArgumentException(APENAS_REPOSITORES_PODEM_ALTERAR_OS_DADOS_DO_PRODUTO);
-		}
-		if (escolhaOpcoes == 1) {
-			for (Produto prod : loja.getProduto()) {
-				if (prod.getNome().equalsIgnoreCase(nomeProduto)) {
-					prod.setNome(nomeNovoProduto);
-				}
-			}
-		}
-	}
-
-	public void alterarDadosProduto(Funcionario funcionario, int escolhaOpcoes, String nomeProduto, BigDecimal preco,
-			Empresa loja) {
-		funcionarioIsNull(funcionario);
-
-		if (isRepositor(funcionario)) {
-			throw new IllegalArgumentException(APENAS_REPOSITORES_PODEM_ALTERAR_OS_DADOS_DO_PRODUTO);
-		}
-		if (escolhaOpcoes == 2) {
-			for (Produto prod : loja.getProduto()) {
-				if (prod.getNome().equals(nomeProduto)) {
-					prod.setPreco(preco);
-				}
-			}
-		}
-	}
-
-	public void alterarDadosProduto(Funcionario funcionario, int escolhaOpcoes, String nomeProduto, int estoque,
-			Empresa loja) {
-		funcionarioIsNull(funcionario);
-		if (isRepositor(funcionario)) {
-			throw new IllegalArgumentException(APENAS_REPOSITORES_PODEM_ALTERAR_OS_DADOS_DO_PRODUTO);
-		}
-		if (escolhaOpcoes == 3) {
-			for (Produto prod : loja.getProduto()) {
-				if (prod.getNome().equalsIgnoreCase(nomeProduto)) {
-					prod.setEstoque(estoque);
-				}
-			}
-		}
-	}
-
-	public void alterarDadosProduto(Funcionario funcionario, int escolhaOpcoes, String nomeProduto, BigDecimal preco,
-			int estoque, String nomeNovoProduto, Empresa loja) {
-		funcionarioIsNull(funcionario);
-		if (isRepositor(funcionario)) {
-			throw new IllegalArgumentException(APENAS_REPOSITORES_PODEM_ALTERAR_OS_DADOS_DO_PRODUTO);
-		}
-		if (escolhaOpcoes == 4) {
-			for (Produto prod : loja.getProduto()) {
-				if (prod.getNome().equalsIgnoreCase(nomeProduto)) {
-					prod.setNome(nomeNovoProduto);
-					prod.setPreco(preco);
-					prod.setEstoque(estoque);
-				}
-			}
-		}
-	}
-
-	public void cadastrarProduto(String nome, BigDecimal preco, int estoque, Funcionario funcionario, Empresa loja) {
-		funcionarioIsNull(funcionario);
-
-		if (isRepositor(funcionario)) {
-			throw new IllegalArgumentException("Apenas repositores podem cadastra os produtos");
-		}
-
-		if (hasProdutoInList(loja, nome, preco)) {
-			loja.getProduto().stream()
-					.filter(prod -> prod.getNome().equalsIgnoreCase(nome) && prod.getPreco().equals(preco))
-					.forEach(prod -> prod.setEstoque(prod.getEstoque() + estoque));
-		} else {
-			loja.getProduto().add(new Produto(nome, preco, estoque));
-		}
-	}
-
-	private void cargoIsNull(Cargo cargo) {
-		if (cargo == null) {
-			throw new NullPointerException("O cargo esta null");
-		}
-	}
-
-	private void salarioIsNull(BigDecimal salario) {
-		if (salario == null) {
-			throw new NullPointerException("O salario esta null");
-		}
-	}
-
-	private void salarioIsNegative(BigDecimal salario) {
-		if (salario.compareTo(BigDecimal.ZERO) < 0) {
-			throw new IllegalArgumentException("O salario não pode ser menor do que zero");
-		}
-	}
-
-	private void contratoIsNull(TipoContrato tipoContrato) {
-		if (tipoContrato == null) {
-			throw new NullPointerException("O contrato esta null");
-		}
-	}
-
-	private void funcionarioIsNull(Funcionario funcionario) {
-		if (funcionario == null) {
-			throw new NullPointerException("O funcionario esta null");
-		}
+	public void setCpf(String cpf) {
+		isNull(cpf);
+		isCpfValido(cpf);
+		this.cpf = cpf;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		int result = 1;
+		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
 		return result;
 	}
 
@@ -258,32 +120,42 @@ public class Funcionario {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
+		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		Funcionario other = (Funcionario) obj;
-		if (email == null) {
-			if (other.email != null)
+		if (cpf == null) {
+			if (other.cpf != null)
 				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		if (nome == null) {
-			if (other.nome != null)
-				return false;
-		} else if (!nome.equals(other.nome))
+		} else if (!cpf.equals(other.cpf))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "------Dados do funcionario------" + "\nNome: " + getNome() + "\nEmail: " + getEmail()
-				+ "\nData de nascimento: " + getDataNascimento() + "\nCargo: " + getCargo() + "\nTipo de contrato: "
-				+ getTipoContrato() + "\nSalario: " + getSalario() + "\n------Endereço------" + "\nRua: "
-				+ getEndereco().getRua() + "\nNúmero residência: " + getEndereco().getNumeroResidencia() + "\nBairro: "
-				+ getEndereco().getBairro() + "\nCep: " + getEndereco().getCep() + "\nCidade: "
-				+ getEndereco().getCidade() + "\nEstado: " + getEndereco().getEstado();
+		StringBuilder builder = new StringBuilder();
+		builder.append("Funcionario [getEndereco()=");
+		builder.append(this.getEndereco());
+		builder.append(", getCargo()=");
+		builder.append(this.getCargo());
+		builder.append(", getSalario()=");
+		builder.append(this.getSalario());
+		builder.append(", getNome()=");
+		builder.append(this.getNome());
+		builder.append(", getEmail()=");
+		builder.append(this.getEmail());
+		builder.append(", getDataNascimento()=");
+		builder.append(this.getDataNascimento());
+		builder.append(", getCpf()=");
+		builder.append(this.getCpf());
+		builder.append(", hashCode()=");
+		builder.append(hashCode());
+		builder.append("]");
+		return builder.toString();
 	}
+
+	
 
 }
