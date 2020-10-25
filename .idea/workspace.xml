@@ -23,17 +23,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3f501a32-781f-4820-a2b4-257e19230e06" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/empresa-model/empresa-model.iml" beforeDir="false" afterPath="$PROJECT_DIR$/empresa-model/empresa-model.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/repository/repository.iml" beforeDir="false" afterPath="$PROJECT_DIR$/repository/repository.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/repository/src/test/java/br/com/contmatic/service/EmpresaServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/repository/src/test/java/br/com/contmatic/service/EmpresaServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/repository/src/test/java/br/com/contmatic/service/Teste.java" beforeDir="false" afterPath="$PROJECT_DIR$/repository/src/test/java/br/com/contmatic/service/Teste.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.settings/org.eclipse.jdt.core.prefs" beforeDir="false" afterPath="$PROJECT_DIR$/.settings/org.eclipse.jdt.core.prefs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/contmatic/constantes/Constante.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/contmatic/constantes/Constante.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/contmatic/empresa/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/contmatic/empresa/Cliente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/contmatic/empresa/Empresa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/contmatic/empresa/Empresa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/contmatic/empresa/Endereco.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/contmatic/empresa/Endereco.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/contmatic/empresa/Funcionario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/contmatic/empresa/Funcionario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/contmatic/empresa/Produto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/contmatic/empresa/Produto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/contmatic/empresa/utils/FieldValidation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/contmatic/empresa/utils/FieldValidation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/contmatic/services/utils/GeradorCnpj.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/contmatic/services/utils/GeradorCnpj.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/contmatic/services/utils/GeradorCpf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/contmatic/services/utils/GeradorCpf.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/estudo/projetoweb/services/validation/utils/CpfValidation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/br/com/contmatic/empresa/ClienteTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/br/com/contmatic/empresa/ClienteTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/br/com/contmatic/empresa/EmpresaTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/br/com/contmatic/empresa/EmpresaTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/br/com/contmatic/empresa/utils/InstanciaClasses.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/br/com/contmatic/empresa/utils/InstanciaClasses.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/maven/br.com.contmatic/empresa-maven/pom.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/maven/br.com.contmatic/empresa-maven/pom.xml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageOptionsProvider">
+    <option name="myAddOrReplace" value="1" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -44,6 +60,11 @@
         <option name="mavenHome" value="C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.2\plugins\maven\lib\maven3" />
       </MavenGeneralSettings>
     </option>
+    <option name="enabledProfiles">
+      <list>
+        <option value="artifactory" />
+      </list>
+    </option>
   </component>
   <component name="ProjectId" id="1iWNFgMpkHsJIn1zft0UdVB0cQj" />
   <component name="ProjectViewState">
@@ -52,13 +73,14 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="SONARLINT_ISSUES_SPLIT_PROPORTION" value="0.38621444" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.EmpresaTest.nao_deve_aceitar_email_sem_ponto">
     <configuration name="All in EmpresaMaven" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="EmpresaMaven" />
       <option name="PACKAGE_NAME" value="" />
@@ -67,8 +89,75 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="EmpresaTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="EmpresaMaven" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="br.com.contmatic.empresa.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="br.com.contmatic.empresa" />
+      <option name="MAIN_CLASS_NAME" value="br.com.contmatic.empresa.EmpresaTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EmpresaTest.nao_deve_aceitar_cnpj_com_letras" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="EmpresaMaven" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="br.com.contmatic.empresa.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="br.com.contmatic.empresa" />
+      <option name="MAIN_CLASS_NAME" value="br.com.contmatic.empresa.EmpresaTest" />
+      <option name="METHOD_NAME" value="nao_deve_aceitar_cnpj_com_letras" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EmpresaTest.nao_deve_aceitar_email_com_espaco_entre_palavras" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="EmpresaMaven" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="br.com.contmatic.empresa.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="br.com.contmatic.empresa" />
+      <option name="MAIN_CLASS_NAME" value="br.com.contmatic.empresa.EmpresaTest" />
+      <option name="METHOD_NAME" value="nao_deve_aceitar_email_com_espaco_entre_palavras" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EmpresaTest.nao_deve_aceitar_email_sem_ponto" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="EmpresaMaven" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="br.com.contmatic.empresa.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="br.com.contmatic.empresa" />
+      <option name="MAIN_CLASS_NAME" value="br.com.contmatic.empresa.EmpresaTest" />
+      <option name="METHOD_NAME" value="nao_deve_aceitar_email_sem_ponto" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.EmpresaTest.nao_deve_aceitar_email_sem_ponto" />
+        <item itemvalue="JUnit.EmpresaTest.nao_deve_aceitar_email_com_espaco_entre_palavras" />
+        <item itemvalue="JUnit.EmpresaTest" />
+        <item itemvalue="JUnit.EmpresaTest.nao_deve_aceitar_cnpj_com_letras" />
         <item itemvalue="JUnit.All in EmpresaMaven" />
       </list>
     </recent_temporary>
@@ -94,31 +183,56 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="2232" y="0" key="#Project_Structure" timestamp="1602019323046">
+    <state x="2232" y="0" key="#Project_Structure" timestamp="1602371276663">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="2232" y="0" key="#Project_Structure/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602019323046" />
-    <state width="1865" height="266" key="GridCell.Tab.0.bottom" timestamp="1602019962266">
+    <state x="2232" y="0" key="#Project_Structure/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602371276663" />
+    <state width="1865" height="330" key="GridCell.Tab.0.bottom" timestamp="1602374096869">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state width="1865" height="266" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602019962266" />
-    <state width="1865" height="266" key="GridCell.Tab.0.center" timestamp="1602019962266">
+    <state width="1865" height="330" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602374096869" />
+    <state width="1865" height="330" key="GridCell.Tab.0.center" timestamp="1602374096869">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state width="1865" height="266" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602019962266" />
-    <state width="1865" height="266" key="GridCell.Tab.0.left" timestamp="1602019962266">
+    <state width="1865" height="330" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602374096869" />
+    <state width="1865" height="330" key="GridCell.Tab.0.left" timestamp="1602374096869">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state width="1865" height="266" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602019962266" />
-    <state width="1865" height="266" key="GridCell.Tab.0.right" timestamp="1602019962266">
+    <state width="1865" height="330" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602374096869" />
+    <state width="1865" height="330" key="GridCell.Tab.0.right" timestamp="1602374096869">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state width="1865" height="266" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602019962266" />
+    <state width="1865" height="330" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602374096869" />
+    <state width="1865" height="330" key="GridCell.Tab.1.bottom" timestamp="1602374096869">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1865" height="330" key="GridCell.Tab.1.bottom/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602374096869" />
+    <state width="1865" height="330" key="GridCell.Tab.1.center" timestamp="1602374096869">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1865" height="330" key="GridCell.Tab.1.center/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602374096869" />
+    <state width="1865" height="330" key="GridCell.Tab.1.left" timestamp="1602374096869">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1865" height="330" key="GridCell.Tab.1.left/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602374096869" />
+    <state width="1865" height="330" key="GridCell.Tab.1.right" timestamp="1602374096869">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1865" height="330" key="GridCell.Tab.1.right/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602374096869" />
     <state x="2256" y="77" key="SettingsEditor" timestamp="1602019518605">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2256" y="77" key="SettingsEditor/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602019518605" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/EmpresaMaven$EmpresaTest.ic" NAME="EmpresaTest Coverage Results" MODIFIED="1602371597848" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>br.com.contmatic.empresa.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/EmpresaMaven$EmpresaTest_nao_deve_aceitar_cnpj_com_letras.ic" NAME="EmpresaTest.nao_deve_aceitar_cnpj_com_letras Coverage Results" MODIFIED="1602371485183" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>br.com.contmatic.empresa.*</FILTER>
+    </SUITE>
   </component>
 </project>

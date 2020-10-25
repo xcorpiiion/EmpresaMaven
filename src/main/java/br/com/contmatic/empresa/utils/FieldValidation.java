@@ -1,17 +1,19 @@
 package br.com.contmatic.empresa.utils;
 
-import static br.com.contmatic.constantes.Constante.CNPJ_VALIDIDO;
-import static br.com.contmatic.constantes.Constante.VALOR_INVALIDO;
-import static br.com.contmatic.constantes.Constante.VALOR_MAXIMO_INCORRETOS;
-import static br.com.contmatic.constantes.Constante.VALOR_MINIMO_INCORRETOS;
+import static br.com.contmatic.constantes.Constante.EMAIL_VALIDO;
+import static br.com.estudo.projetoweb.services.validation.utils.CpfOrCnpjValidation.isCnpjValid;
+import static br.com.estudo.projetoweb.services.validation.utils.CpfOrCnpjValidation.isCpfValid;
+import static org.apache.commons.collections4.CollectionUtils.isEmpty;
+import static org.apache.commons.lang3.StringUtils.isAlphaSpace;
+import static org.apache.commons.lang3.StringUtils.isAlphanumericSpace;
+import static org.apache.commons.lang3.StringUtils.isBlank;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
+import static org.apache.commons.lang3.StringUtils.isNumericSpace;
 
 import java.math.BigDecimal;
+import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
-
-import br.com.contmatic.constantes.Constante;
-import br.com.contmatic.services.EmptyStringException;
-import br.com.estudo.projetoweb.services.validation.utils.CpfValidation;
+import org.joda.time.DateTime;
 
 public final class FieldValidation {
 
@@ -19,85 +21,116 @@ public final class FieldValidation {
 		super();
 	}
 
-	public static void isCnpjValido(String yourCnpj) {
-		if (!yourCnpj.matches(CNPJ_VALIDIDO)) {
-			campoInvalido("Cnpj invalido");
+	public static void isCnpjValido(String yourCnpj, String errorMenssage) {
+		if (!isCnpjValid(yourCnpj)) {
+			illegalArgument(errorMenssage);
 		}
 	}
 
-	public static void isCpfValido(String yourCpf) {
-		if (!CpfValidation.isCpfValid(yourCpf)) {
-			campoInvalido("Cpf invalido");
+	public static void isCpfValido(String yourCpf, String errorMenssage) {
+		if (!isCpfValid(yourCpf)) {
+			illegalArgument(errorMenssage);
 		}
 	}
 
-	public static void isStringContaisJustWord(String yourString) {
-		if (!StringUtils.isAlphaSpace(yourString)) {
-			campoInvalido(VALOR_INVALIDO);
+	public static void isStringContaisJustWord(String yourString, String errorMenssage) {
+		if (!isAlphaSpace(yourString)) {
+			illegalArgument(errorMenssage);
 		}
 	}
 
-	public static void isStringContaisJustNumber(String yourString) {
-		if (!StringUtils.isNumericSpace(yourString)) {
-			campoInvalido(VALOR_INVALIDO);
+	public static void isStringContaisJustNumber(String yourString, String errorMenssage) {
+		if (!isNumericSpace(yourString)) {
+			illegalArgument(errorMenssage);
 		}
 	}
 
-	public static void isStringContaisWordAndNumber(String yourString) {
-		if (!StringUtils.isAlphanumericSpace(yourString)) {
-			campoInvalido(VALOR_INVALIDO);
+	public static void isStringContaisWordAndNumber(String yourString, String errorMenssage) {
+		if (!isAlphanumericSpace(yourString)) {
+			illegalArgument(errorMenssage);
 		}
 	}
 
-	public static void isEmailValido(String yourEmail) {
-		if (!yourEmail.matches(Constante.EMAIL_VALIDO)) {
-			campoInvalido("Email invalido");
+	public static void isEmailValido(String yourEmail, String errorMenssage) {
+		if (!yourEmail.matches(EMAIL_VALIDO)) {
+			illegalState(errorMenssage);
 		}
 	}
 
-	public static void isNull(Object yourObject) {
+	public static void isNull(Object yourObject, String errorMenssage) {
 		if (yourObject == null) {
-			throw new NullPointerException("Object is null");
+			illegalArgument(errorMenssage);
 		}
 	}
 
-	public static void isStringEmpty(String yourString) {
-		if (StringUtils.isEmpty(yourString) || StringUtils.isBlank(yourString)) {
-			throw new EmptyStringException("String está vazia");
+	public static void isListEmpty(List<? extends Object> yourObjects, String errorMenssage) {
+		if (isEmpty(yourObjects)) {
+			illegalArgument(errorMenssage);
 		}
 	}
 
-	public static void minAndMaxValue(int min, int max, int yourValue) {
-		if (yourValue < min) {
-			campoInvalido(VALOR_MINIMO_INCORRETOS);
-		}
-		if (yourValue > max) {
-			campoInvalido(VALOR_MAXIMO_INCORRETOS);
+	public static void isStringEmpty(String yourString, String errorMenssage) {
+		if (isEmpty(yourString) || isBlank(yourString)) {
+			illegalArgument(errorMenssage);
 		}
 	}
 
-	public static void minAndMaxValue(int min, int max, String yourString) {
-		if (yourString.length() < min) {
-			campoInvalido(VALOR_MINIMO_INCORRETOS);
-		}
-
-		if (yourString.length() > max) {
-			campoInvalido(VALOR_MAXIMO_INCORRETOS);
+	public static void minAndMaxValue(int min, int max, int yourValue, String errorMenssage) {
+		if (yourValue < min || yourValue > max) {
+			illegalArgument(errorMenssage);
 		}
 	}
 
-	public static void minAndMaxValue(BigDecimal min, BigDecimal max, BigDecimal yourValue) {
-		if (yourValue.compareTo(min) < 0) {
-			campoInvalido(VALOR_MINIMO_INCORRETOS);
-		}
-
-		if (yourValue.compareTo(max) > 0) {
-			campoInvalido(VALOR_MAXIMO_INCORRETOS);
+	public static void minAndMaxValue(int min, int max, String yourString, String errorMenssage) {
+		if (yourString.length() < min || yourString.length() > max) {
+			illegalArgument(errorMenssage);
 		}
 	}
 
-	private static void campoInvalido(String message) {
+	public static void minAndMaxValue(BigDecimal min, BigDecimal max, BigDecimal yourValue, String errorMenssage) {
+		if (yourValue.compareTo(min) < 0 || yourValue.compareTo(max) > 0) {
+			illegalArgument(errorMenssage);
+		}
+	}
+
+	public static void isDataGreaterThanCurrent(DateTime yourDate, String errorMenssage) {
+		if (yourDate.isAfter(new DateTime().getMillis())) {
+			illegalState(errorMenssage);
+		}
+	}
+
+	public static void isLessThanCreateDate(DateTime createDate, DateTime yourDate, String errorMenssage) {
+		if (yourDate.isBefore(createDate.getMillis())) {
+			illegalState(errorMenssage);
+		}
+	}
+
+	public static void isDataLessThan1998(DateTime yourDate, String errorMenssage) {
+		DateTime date = new DateTime(1998, 07, 01, 0, 0);
+		if (yourDate.isBefore(date.getMillis())) {
+			illegalState(errorMenssage);
+		}
+	}
+
+	public static void isDataLessThan1920(DateTime yourDate, String errorMenssage) {
+		DateTime date = new DateTime(1920, 01, 01, 0, 0);
+		if (yourDate.isBefore(date.getMillis())) {
+			illegalState(errorMenssage);
+		}
+	}
+
+	public static void isGreaterThanEmpresaCreateDate(DateTime dataSaida, DateTime dataEntrada) {
+		if (dataSaida.isBefore(dataEntrada.getMillis())) {
+			throw new IllegalStateException("A data de saida da empresa precisa ser maior do que a data de entrada");
+		}
+	}
+
+	private static void illegalArgument(String message) {
 		throw new IllegalArgumentException(message);
+	}
+
+	private static void illegalState(String message) {
+		throw new IllegalStateException(message);
 	}
 
 }

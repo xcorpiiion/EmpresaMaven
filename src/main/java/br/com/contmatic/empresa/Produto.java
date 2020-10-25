@@ -1,21 +1,26 @@
 package br.com.contmatic.empresa;
 
+import static br.com.contmatic.constantes.Constante.PRODUTO;
+import static br.com.contmatic.constantes.Constante.campoVazioOrNullMensagemPadrao;
+import static br.com.contmatic.constantes.Constante.stringJustContainsWordMensagemPadrao;
+import static br.com.contmatic.constantes.Constante.tamanhoCamposMensagemPadrao;
 import static br.com.contmatic.empresa.utils.FieldValidation.isNull;
 import static br.com.contmatic.empresa.utils.FieldValidation.isStringContaisWordAndNumber;
 import static br.com.contmatic.empresa.utils.FieldValidation.isStringEmpty;
 import static br.com.contmatic.empresa.utils.FieldValidation.minAndMaxValue;
+import static java.math.BigDecimal.valueOf;
 
 import java.math.BigDecimal;
 
 public class Produto {
-	
+
 	private String nome;
-	
+
 	private BigDecimal preco;
-	
+
 	private Integer estoque;
-	
-	public Produto(String nome, BigDecimal preco, Integer estoque){
+
+	public Produto(String nome, BigDecimal preco, Integer estoque) {
 		this.setNome(nome);
 		this.setPreco(preco);
 		this.setEstoque(estoque);
@@ -26,10 +31,9 @@ public class Produto {
 	}
 
 	public void setNome(String nome) {
-		isNull(nome);
-		isStringEmpty(nome);
-		minAndMaxValue(2, 30, nome);
-		isStringContaisWordAndNumber(nome);
+		isStringEmpty(nome, campoVazioOrNullMensagemPadrao("nome", PRODUTO));
+		minAndMaxValue(2, 30, nome, tamanhoCamposMensagemPadrao(3, 30, "nome", PRODUTO));
+		isStringContaisWordAndNumber(nome, stringJustContainsWordMensagemPadrao("Nome", PRODUTO));
 		this.nome = nome;
 	}
 
@@ -38,8 +42,8 @@ public class Produto {
 	}
 
 	public void setPreco(BigDecimal preco) {
-		isNull(preco);
-		minAndMaxValue(BigDecimal.valueOf(1), BigDecimal.valueOf(300), preco);
+		isNull(preco, campoVazioOrNullMensagemPadrao("preço", PRODUTO));
+		minAndMaxValue(valueOf(1), valueOf(300), preco, tamanhoCamposMensagemPadrao(1, 300, "preço", PRODUTO));
 		this.preco = preco;
 	}
 
@@ -48,17 +52,17 @@ public class Produto {
 	}
 
 	public void setEstoque(Integer estoque) {
-		isNull(estoque);
-		minAndMaxValue(1, 30, estoque);
+		isNull(estoque, campoVazioOrNullMensagemPadrao("estoque", PRODUTO));
+		minAndMaxValue(1, 30, estoque, tamanhoCamposMensagemPadrao(1, 30, "estoque", PRODUTO));
 		this.estoque = estoque;
 	}
-	
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((preco == null) ? 0 : preco.hashCode());
 		return result;
 	}
 
@@ -76,11 +80,20 @@ public class Produto {
 				return false;
 		} else if (!nome.equals(other.nome))
 			return false;
+		if (preco == null) {
+			if (other.preco != null)
+				return false;
+		} else if (!preco.equals(other.preco))
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Nome: " + getNome() + ", R$: " + getPreco() + ", Quantidade em estoque: " + getEstoque();
+		StringBuilder builder = new StringBuilder();
+		builder.append("Produto [nome=").append(nome).append(", preco=").append(preco).append(", estoque=")
+				.append(estoque).append("]");
+		return builder.toString();
 	}
+
 }

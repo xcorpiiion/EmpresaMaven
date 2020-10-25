@@ -1,31 +1,44 @@
 package br.com.contmatic.empresa;
 
+import static br.com.contmatic.constantes.Constante.CLIENTE;
+import static br.com.contmatic.constantes.Constante.campoInvalidoMensagemPadrao;
+import static br.com.contmatic.constantes.Constante.campoVazioOrNullMensagemPadrao;
+import static br.com.contmatic.constantes.Constante.dataInvalidaMensagem;
+import static br.com.contmatic.constantes.Constante.isDataGreaterThanCurrent;
+import static br.com.contmatic.constantes.Constante.stringJustContainsWordMensagemPadrao;
+import static br.com.contmatic.constantes.Constante.tamanhoCamposMensagemPadrao;
 import static br.com.contmatic.empresa.utils.FieldValidation.isCpfValido;
+import static br.com.contmatic.empresa.utils.FieldValidation.isDataGreaterThanCurrent;
+import static br.com.contmatic.empresa.utils.FieldValidation.isDataLessThan1920;
+import static br.com.contmatic.empresa.utils.FieldValidation.isDataLessThan1998;
 import static br.com.contmatic.empresa.utils.FieldValidation.isEmailValido;
 import static br.com.contmatic.empresa.utils.FieldValidation.isNull;
 import static br.com.contmatic.empresa.utils.FieldValidation.isStringContaisJustWord;
 import static br.com.contmatic.empresa.utils.FieldValidation.isStringEmpty;
 import static br.com.contmatic.empresa.utils.FieldValidation.minAndMaxValue;
 
-import java.util.Date;
+import org.joda.time.DateTime;
 
 public class Cliente {
 
 	private String nome;
 
 	private String email;
-	
+
 	private String cpf;
 
-	private Date dataNascimento;
+	private DateTime dataNascimento;
+
+	private DateTime cadastro;
 
 	private Endereco endereco;
 
-	public Cliente(String nome, String email, Date dataNascimento, Endereco endereco, String cpf) {
+	public Cliente(String nome, String email, DateTime dataNascimento, Endereco endereco, String cpf) {
 		this.setNome(nome);
 		this.setEmail(email);
 		this.setDataNascimento(dataNascimento);
 		this.setEndereco(endereco);
+		this.cadastro = new DateTime();
 		this.setCpf(cpf);
 	}
 
@@ -34,7 +47,7 @@ public class Cliente {
 	}
 
 	public void setEndereco(Endereco endereco) {
-		isNull(endereco);
+		isNull(endereco, campoVazioOrNullMensagemPadrao("endereco", CLIENTE));
 		this.endereco = endereco;
 	}
 
@@ -43,10 +56,9 @@ public class Cliente {
 	}
 
 	public void setNome(String nome) {
-		isNull(nome);
-		isStringEmpty(nome);
-		minAndMaxValue(3, 30, nome);
-		isStringContaisJustWord(nome);
+		isStringEmpty(nome, campoVazioOrNullMensagemPadrao("nome", CLIENTE));
+		minAndMaxValue(3, 30, nome, tamanhoCamposMensagemPadrao(3, 30, "nome", CLIENTE));
+		isStringContaisJustWord(nome, stringJustContainsWordMensagemPadrao("Nome", CLIENTE));
 		this.nome = nome;
 	}
 
@@ -55,26 +67,44 @@ public class Cliente {
 	}
 
 	public void setEmail(String email) {
-		isEmailValido(email);
+		isStringEmpty(email, campoVazioOrNullMensagemPadrao("email", CLIENTE));
+		isEmailValido(email, campoInvalidoMensagemPadrao("email", CLIENTE));
 		this.email = email;
 	}
 
-	public Date getDataNascimento() {
+	public DateTime getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(Date dataNascimento) {
-		isNull(dataNascimento);
+	public void setDataNascimento(DateTime dataNascimento) {
+		isNull(dataNascimento, campoVazioOrNullMensagemPadrao("data de nascimento", CLIENTE));
+		isDataGreaterThanCurrent(dataNascimento,
+				isDataGreaterThanCurrent("data de nascimento", CLIENTE));
+		isDataLessThan1920(dataNascimento,
+				dataInvalidaMensagem("A data de cadastro do cliente não pode ser menor do que 1920"));
 		this.dataNascimento = dataNascimento;
 	}
-	
+
+	public DateTime getCadastro() {
+		return cadastro;
+	}
+
+	public void setCadastro(DateTime cadastro) {
+		isNull(cadastro, campoVazioOrNullMensagemPadrao("data de cadastro", "cliente"));
+		isDataGreaterThanCurrent(cadastro,
+				isDataGreaterThanCurrent("data de cadastro", CLIENTE));
+		isDataLessThan1998(cadastro,
+				dataInvalidaMensagem("A data de cadastro do cliente não pode ser menor do que 1998"));
+		this.cadastro = cadastro;
+	}
+
 	public String getCpf() {
 		return cpf;
 	}
 
 	public void setCpf(String cpf) {
-		isNull(cpf);
-		isCpfValido(cpf);
+		isStringEmpty(cpf, campoVazioOrNullMensagemPadrao("cpf", CLIENTE));
+		isCpfValido(cpf, campoInvalidoMensagemPadrao("cpf", CLIENTE));
 		this.cpf = cpf;
 	}
 
@@ -106,22 +136,10 @@ public class Cliente {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Cliente [getEndereco()=");
-		builder.append(this.getEndereco());
-		builder.append(", getNome()=");
-		builder.append(this.getNome());
-		builder.append(", getEmail()=");
-		builder.append(this.getEmail());
-		builder.append(", getDataNascimento()=");
-		builder.append(this.getDataNascimento());
-		builder.append(", getCpf()=");
-		builder.append(this.getCpf());
-		builder.append(", hashCode()=");
-		builder.append(hashCode());
-		builder.append("]");
+		builder.append("Cliente [nome=").append(nome).append(", email=").append(email).append(", cpf=").append(cpf)
+				.append(", dataNascimento=").append(dataNascimento).append(", cadastro=").append(cadastro)
+				.append(", endereco=").append(endereco).append("]");
 		return builder.toString();
 	}
-
-	
 
 }

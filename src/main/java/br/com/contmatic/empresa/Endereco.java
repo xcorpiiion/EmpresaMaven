@@ -1,33 +1,36 @@
 package br.com.contmatic.empresa;
 
+import static br.com.contmatic.constantes.Constante.ENDERECO;
+import static br.com.contmatic.constantes.Constante.campoVazioOrNullMensagemPadrao;
+import static br.com.contmatic.constantes.Constante.stringJustContainsWordAndNumberMensagemPadrao;
+import static br.com.contmatic.constantes.Constante.tamanhoCamposMensagemPadrao;
 import static br.com.contmatic.empresa.utils.FieldValidation.isNull;
 import static br.com.contmatic.empresa.utils.FieldValidation.isStringContaisJustNumber;
-import static br.com.contmatic.empresa.utils.FieldValidation.isStringContaisJustWord;
 import static br.com.contmatic.empresa.utils.FieldValidation.isStringContaisWordAndNumber;
 import static br.com.contmatic.empresa.utils.FieldValidation.isStringEmpty;
 import static br.com.contmatic.empresa.utils.FieldValidation.minAndMaxValue;
 
 public class Endereco {
-	
+
 	private String rua;
 
 	private String bairro;
 
 	private String cep;
 
-	private String numeroResidencia;
+	private Integer numeroResidencia;
 
 	private String cidade;
 
 	private String estado;
 
-	public Endereco(String rua, String bairro, String cep, String numeroResidencia, String cidade, String estado) {
-		setRua(rua);
-		setBairro(bairro);
-		setCep(cep);
-		setNumeroResidencia(numeroResidencia);
-		setCidade(cidade);
-		setEstado(estado);
+	public Endereco(String rua, String bairro, String cep, Integer numeroResidencia, String cidade, String estado) {
+		this.setRua(rua);
+		this.setBairro(bairro);
+		this.setCep(cep);
+		this.setNumeroResidencia(numeroResidencia);
+		this.setCidade(cidade);
+		this.setEstado(estado);
 	}
 
 	public String getRua() {
@@ -35,10 +38,9 @@ public class Endereco {
 	}
 
 	public void setRua(String rua) {
-		isNull(rua);
-		isStringEmpty(rua);
-		minAndMaxValue(3, 50, rua);
-		isStringContaisWordAndNumber(rua);
+		isStringEmpty(rua, campoVazioOrNullMensagemPadrao("rua", ENDERECO));
+		minAndMaxValue(3, 50, rua, tamanhoCamposMensagemPadrao(3, 50, "rua", ENDERECO));
+		isStringContaisWordAndNumber(rua, stringJustContainsWordAndNumberMensagemPadrao("rua", ENDERECO));
 		this.rua = rua;
 	}
 
@@ -47,10 +49,9 @@ public class Endereco {
 	}
 
 	public void setBairro(String bairro) {
-		isNull(bairro);
-		isStringEmpty(bairro);
-		minAndMaxValue(2, 50, bairro);
-		isStringContaisWordAndNumber(bairro);
+		isStringEmpty(bairro, campoVazioOrNullMensagemPadrao("Bairro", ENDERECO));
+		minAndMaxValue(2, 50, bairro, tamanhoCamposMensagemPadrao(2, 50, "bairro", ENDERECO));
+		isStringContaisWordAndNumber(bairro, stringJustContainsWordAndNumberMensagemPadrao("bairro", ENDERECO));
 		this.bairro = bairro;
 	}
 
@@ -59,9 +60,9 @@ public class Endereco {
 	}
 
 	public void setCep(String cep) {
-		isNull(cep);
-		isStringEmpty(cep);
-		isStringContaisJustNumber(cep);
+		isStringEmpty(cep, campoVazioOrNullMensagemPadrao("cep", ENDERECO));
+		minAndMaxValue(8, 8, cep, tamanhoCamposMensagemPadrao(8, 8, "cep", ENDERECO));
+		isStringContaisJustNumber(cep, stringJustContainsWordAndNumberMensagemPadrao("cep", ENDERECO));
 		this.cep = cep;
 	}
 
@@ -70,10 +71,9 @@ public class Endereco {
 	}
 
 	public void setCidade(String cidade) {
-		isNull(cidade);
-		isStringEmpty(cidade);
-		minAndMaxValue(2, 50, cidade);
-		isStringContaisJustWord(cidade);
+		isStringEmpty(cidade, campoVazioOrNullMensagemPadrao("cidade ", ENDERECO));
+		minAndMaxValue(2, 50, cidade, tamanhoCamposMensagemPadrao(2, 50, "cidade", ENDERECO));
+		isStringContaisWordAndNumber(cidade, stringJustContainsWordAndNumberMensagemPadrao("cidade", ENDERECO));
 		this.cidade = cidade;
 	}
 
@@ -82,22 +82,20 @@ public class Endereco {
 	}
 
 	public void setEstado(String estado) {
-		isNull(estado);
-		isStringEmpty(estado);
-		minAndMaxValue(2, 50, estado);
-		isStringContaisJustWord(estado);
+		isStringEmpty(estado, campoVazioOrNullMensagemPadrao("Estado", ENDERECO));
+		minAndMaxValue(2, 50, estado, tamanhoCamposMensagemPadrao(2, 50, "estado", ENDERECO));
+		isStringContaisWordAndNumber(estado, stringJustContainsWordAndNumberMensagemPadrao("estado", ENDERECO));
 		this.estado = estado;
 	}
 
-	public String getNumeroResidencia() {
+	public Integer getNumeroResidencia() {
 		return numeroResidencia;
 	}
 
-	public void setNumeroResidencia(String numeroResidencia) {
-		isNull(numeroResidencia);
-		isStringEmpty(numeroResidencia);
-		minAndMaxValue(1, 10000, numeroResidencia);
-		isStringContaisJustNumber(numeroResidencia);
+	public void setNumeroResidencia(Integer numeroResidencia) {
+		isNull(numeroResidencia, campoVazioOrNullMensagemPadrao("numero da residência", ENDERECO));
+		minAndMaxValue(1, 10000, numeroResidencia,
+				tamanhoCamposMensagemPadrao(1, 10000, "numero da residência", ENDERECO));
 		this.numeroResidencia = numeroResidencia;
 	}
 
@@ -134,8 +132,11 @@ public class Endereco {
 
 	@Override
 	public String toString() {
-		return "Endereco [rua=" + getRua() + ", bairro=" + getBairro() + ", cep=" + getCep() + ", numeroResidencia="
-				+ getNumeroResidencia() + ", cidade=" + getCidade() + ", estado=" + getEstado() + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("Endereco [rua=").append(rua).append(", bairro=").append(bairro).append(", cep=").append(cep)
+				.append(", numeroResidencia=").append(numeroResidencia).append(", cidade=").append(cidade)
+				.append(", estado=").append(estado).append("]");
+		return builder.toString();
 	}
 
 }

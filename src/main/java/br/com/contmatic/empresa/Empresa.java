@@ -1,14 +1,25 @@
 package br.com.contmatic.empresa;
 
+import static br.com.contmatic.constantes.Constante.EMPRESA;
+import static br.com.contmatic.constantes.Constante.campoInvalidoMensagemPadrao;
+import static br.com.contmatic.constantes.Constante.campoVazioOrNullMensagemPadrao;
+import static br.com.contmatic.constantes.Constante.dataInvalidaMensagem;
+import static br.com.contmatic.constantes.Constante.isDataGreaterThanCurrent;
+import static br.com.contmatic.constantes.Constante.stringJustContainsWordAndNumberMensagemPadrao;
+import static br.com.contmatic.constantes.Constante.tamanhoCamposMensagemPadrao;
 import static br.com.contmatic.empresa.utils.FieldValidation.isCnpjValido;
+import static br.com.contmatic.empresa.utils.FieldValidation.isDataGreaterThanCurrent;
+import static br.com.contmatic.empresa.utils.FieldValidation.isDataLessThan1998;
 import static br.com.contmatic.empresa.utils.FieldValidation.isEmailValido;
+import static br.com.contmatic.empresa.utils.FieldValidation.isListEmpty;
 import static br.com.contmatic.empresa.utils.FieldValidation.isNull;
 import static br.com.contmatic.empresa.utils.FieldValidation.isStringContaisWordAndNumber;
 import static br.com.contmatic.empresa.utils.FieldValidation.isStringEmpty;
 import static br.com.contmatic.empresa.utils.FieldValidation.minAndMaxValue;
 
-import java.util.Date;
 import java.util.List;
+
+import org.joda.time.DateTime;
 
 public class Empresa {
 
@@ -19,10 +30,10 @@ public class Empresa {
 	private String cnpj;
 
 	private Endereco endereco;
-	
-	private Date dataCriacao;
-	
-	private Date dataAlteracao;
+
+	private DateTime dataCriacao;
+
+	private DateTime dataAlteracao;
 
 	private List<Produto> produtos;
 
@@ -30,21 +41,23 @@ public class Empresa {
 
 	private List<Cliente> clientes;
 
-	public Empresa(String nome, String email, Date dataCriacao, List<Produto> produtos, String cnpj, Endereco endereco) {
+	public Empresa(String nome, String email, List<Produto> produtos, String cnpj, Endereco endereco) {
 		this.setNome(nome);
 		this.setEmail(email);
 		this.setProduto(produtos);
+		this.dataCriacao = new DateTime();
+		this.dataAlteracao = new DateTime();
 		this.setCnpj(cnpj);
 		this.setEndereco(endereco);
-		this.setDataCriacao(dataCriacao);
 	}
-	
-	public Empresa(String nome, String email, Date dataCriacao, String cnpj, Endereco endereco) {
+
+	public Empresa(String nome, String email, String cnpj, Endereco endereco) {
 		this.setNome(nome);
 		this.setEmail(email);
+		this.dataCriacao = new DateTime();
+		this.dataAlteracao = new DateTime();
 		this.setCnpj(cnpj);
 		this.setEndereco(endereco);
-		this.setDataCriacao(dataCriacao);
 	}
 
 	public Endereco getEndereco() {
@@ -52,7 +65,7 @@ public class Empresa {
 	}
 
 	public void setEndereco(Endereco endereco) {
-		isNull(endereco);
+		isNull(endereco, campoVazioOrNullMensagemPadrao("endereco", EMPRESA));
 		this.endereco = endereco;
 	}
 
@@ -65,17 +78,15 @@ public class Empresa {
 	}
 
 	public void setCnpj(String cnpj) {
-		isNull(cnpj);
-		isStringEmpty(cnpj);
-		isCnpjValido(cnpj);
+		isStringEmpty(cnpj, campoVazioOrNullMensagemPadrao("cnpj", EMPRESA));
+		isCnpjValido(cnpj, campoInvalidoMensagemPadrao("cnpj", EMPRESA));
 		this.cnpj = cnpj;
 	}
 
 	public void setNome(String nome) {
-		isNull(nome);
-		isStringEmpty(nome);
-		minAndMaxValue(3, 70, nome);
-		isStringContaisWordAndNumber(nome);
+		isStringEmpty(nome, campoVazioOrNullMensagemPadrao("nome", EMPRESA));
+		minAndMaxValue(3, 70, nome, tamanhoCamposMensagemPadrao(3, 70, "nome", EMPRESA));
+		isStringContaisWordAndNumber(nome, stringJustContainsWordAndNumberMensagemPadrao("nome", EMPRESA));
 		this.nome = nome;
 	}
 
@@ -84,14 +95,13 @@ public class Empresa {
 	}
 
 	public void setEmail(String email) {
-		isNull(email);
-		isStringEmpty(email);
-		isEmailValido(email);
+		isStringEmpty(email, campoVazioOrNullMensagemPadrao("email", EMPRESA));
+		isEmailValido(email, campoInvalidoMensagemPadrao("email", EMPRESA));
 		this.email = email;
 	}
 
 	public void setProduto(List<Produto> produtos) {
-		isNull(produtos);
+		isListEmpty(produtos, campoVazioOrNullMensagemPadrao("produtos", EMPRESA));
 		this.produtos = produtos;
 	}
 
@@ -100,7 +110,7 @@ public class Empresa {
 	}
 
 	public void setFuncionario(List<Funcionario> funcionarios) {
-		isNull(funcionarios);
+		isListEmpty(funcionarios, campoVazioOrNullMensagemPadrao("funcionarios", EMPRESA));
 		this.funcionarios = funcionarios;
 	}
 
@@ -109,29 +119,35 @@ public class Empresa {
 	}
 
 	public void setCliente(List<Cliente> clientes) {
-		isNull(clientes);
+		isListEmpty(clientes, campoVazioOrNullMensagemPadrao("clientes", EMPRESA));
 		this.clientes = clientes;
 	}
 
 	public List<Cliente> getCliente() {
 		return clientes;
 	}
-	
-	public Date getDataCriacao() {
+
+	public DateTime getDataCriacao() {
 		return dataCriacao;
 	}
 
-	public void setDataCriacao(Date dataCriacao) {
-		isNull(dataCriacao);
+	public void setDataCriacao(DateTime dataCriacao) {
+		isNull(dataCriacao, campoVazioOrNullMensagemPadrao("data de criação", EMPRESA));
+		isDataGreaterThanCurrent(dataCriacao, isDataGreaterThanCurrent("data criação", EMPRESA));
+		isDataLessThan1998(dataCriacao,
+				dataInvalidaMensagem("A data de criação da empresa não pode ser menor do que 1998"));
 		this.dataCriacao = dataCriacao;
 	}
-	
-	public Date getDataAlteracao() {
+
+	public DateTime getDataAlteracao() {
 		return dataAlteracao;
 	}
 
-	public void setDataAlteracao(Date dataAlteracao) {
-		isNull(dataAlteracao);
+	public void setDataAlteracao(DateTime dataAlteracao) {
+		isNull(dataAlteracao, campoVazioOrNullMensagemPadrao("data de alteração", EMPRESA));
+		isDataGreaterThanCurrent(dataAlteracao, isDataGreaterThanCurrent("data criação", EMPRESA));
+		isDataLessThan1998(dataAlteracao,
+				dataInvalidaMensagem("A data de criação da empresa não pode ser menor do que 1998"));
 		this.dataAlteracao = dataAlteracao;
 	}
 
@@ -163,30 +179,11 @@ public class Empresa {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Empresa [getEndereco()=");
-		builder.append(this.getEndereco());
-		builder.append(", getNome()=");
-		builder.append(this.getNome());
-		builder.append(", getCnpj()=");
-		builder.append(this.getCnpj());
-		builder.append(", getEmail()=");
-		builder.append(this.getEmail());
-		builder.append(", getProduto()=");
-		builder.append(this.getProduto());
-		builder.append(", getFuncionario()=");
-		builder.append(this.getFuncionario());
-		builder.append(", getCliente()=");
-		builder.append(this.getCliente());
-		builder.append(", getDataCriacao()=");
-		builder.append(this.getDataCriacao());
-		builder.append(", getDataAlteracao()=");
-		builder.append(this.getDataAlteracao());
-		builder.append(", hashCode()=");
-		builder.append(hashCode());
-		builder.append("]");
+		builder.append("Empresa [nome=").append(nome).append(", email=").append(email).append(", cnpj=").append(cnpj)
+				.append(", endereco=").append(endereco).append(", dataCriacao=").append(dataCriacao)
+				.append(", dataAlteracao=").append(dataAlteracao).append(", produtos=").append(produtos)
+				.append(", funcionarios=").append(funcionarios).append(", clientes=").append(clientes).append("]");
 		return builder.toString();
 	}
-
-	
 
 }

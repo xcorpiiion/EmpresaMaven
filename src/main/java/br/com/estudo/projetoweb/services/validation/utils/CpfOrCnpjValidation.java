@@ -1,19 +1,24 @@
 package br.com.estudo.projetoweb.services.validation.utils;
 
-public class CpfValidation {
+import static java.lang.Character.getNumericValue;
+
+public final class CpfOrCnpjValidation {
 	
-	private CpfValidation() {
+	private CpfOrCnpjValidation() {
 		
 	}
 
 	private static final int[] WEIGHT_SSN = { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
 
+	private static final int[] WEIGHT_TFN = { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
+
 	private static int recursiveSum(int[] weight, char[] chr, int number) {
-		if (number <= 0)
+		if (number <= 0) {
 			return 0;
+		}
 		final int chrIndex = number - 1;
 		final int weightIndex = weight.length > chr.length ? number : chrIndex;
-		return (recursiveSum(weight, chr, chrIndex) + Character.getNumericValue(chr[chrIndex]) * weight[weightIndex]);
+		return (recursiveSum(weight, chr, chrIndex) + getNumericValue(chr[chrIndex]) * weight[weightIndex]);
 	}
 
 	private static int calculate(final String str, final int[] weight) {
@@ -36,4 +41,9 @@ public class CpfValidation {
 		return checkEquals(cpf, 9, WEIGHT_SSN);
 	}
 
+	public static boolean isCnpjValid(String cnpj) {
+		if (cnpj == null || !cnpj.matches("\\d{14}") || cnpj.matches(cnpj.charAt(0) + "{14}"))
+			return false;
+		return checkEquals(cnpj, 12, WEIGHT_TFN);
+	}
 }
