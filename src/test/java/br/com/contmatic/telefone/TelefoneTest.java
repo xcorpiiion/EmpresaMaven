@@ -3,6 +3,7 @@ package br.com.contmatic.telefone;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -10,8 +11,6 @@ import org.junit.Test;
 import br.com.contmatic.constantes.Constante;
 import br.com.contmatic.constantes.Mensagem;
 import br.com.contmatic.fixture.factory.GeradorTelefone;
-import br.com.contmatic.telefone.Telefone;
-import br.com.contmatic.telefone.TipoTelefone;
 import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
