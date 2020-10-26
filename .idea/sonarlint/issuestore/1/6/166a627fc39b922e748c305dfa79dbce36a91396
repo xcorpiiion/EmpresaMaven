@@ -1,0 +1,25 @@
+
+.
+java:S5785à"Use assertSame instead.(«Šìí
+3
+java:S5785æ"Use assertSame instead.(¾‹äÊùÿÿÿÿ
+L
+java:S5976`"6Replace these 3 tests with a single Parameterized one.(ĞÍ³†
+5
+java:S5785"Use assertEquals instead.(èªß„ùÿÿÿÿ
+5
+java:S5785”"Use assertEquals instead.(šÂ¸çùÿÿÿÿ
+3
+java:S5785™"Use assertNotEquals instead.(ÔûÔ
+M
+java:S5976l"7Replace these 11 tests with a single Parameterized one.(ı°šú
+.
+java:S5785Î"Use assertSame instead.(ñÄ¸
+3
+java:S5785Ô"Use assertSame instead.(ÀÖÆÖıÿÿÿÿ
+8
+java:S5785ª"Use assertNotEquals instead.(¼¡ãĞÿÿÿÿÿ
+5
+java:S5785¢"Use assertEquals instead.(âÒõ‘ÿÿÿÿÿ
+Q
+java:S5976Z"6Replace these 5 tests with a single Parameterized one.(ªü½şÿÿÿÿ
