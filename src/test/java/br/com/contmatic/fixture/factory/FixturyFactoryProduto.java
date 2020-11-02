@@ -3,10 +3,13 @@ package br.com.contmatic.fixture.factory;
 import java.math.BigDecimal;
 import java.util.Random;
 
+import br.com.contmatic.constantes.Constante;
 import br.com.contmatic.empresa.Produto;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
+
+import static br.com.contmatic.constantes.Constante.*;
 
 /**
  * The Class FixturyFactoryProduto.
@@ -19,14 +22,18 @@ public class FixturyFactoryProduto implements TemplateLoader {
      * @return the produto
      */
     public static Produto produtoValido() {
-        Fixture.of(Produto.class).addTemplate("valid", new Rule() {
+        final String VALID = "valid";
+        Fixture.of(Produto.class).addTemplate(VALID, new Rule() {
             {
-                add("nome", name());
-                add("preco", new BigDecimal((50 + Math.random() * 250)));
-                add("estoque", 10 + (new Random().nextInt(50)));
+                final String NOME = "nome";
+                add(NOME, name());
+                final String PRECO = "preco";
+                add(PRECO, new BigDecimal((50 + Math.random() * 250)));
+                final String ESTOQUE = "estoque";
+                add(ESTOQUE, 10 + (new Random().nextInt(50)));
             }
         });
-        return Fixture.from(Produto.class).gimme("valid");
+        return Fixture.from(Produto.class).gimme(VALID);
     }
     
     /**
@@ -35,54 +42,57 @@ public class FixturyFactoryProduto implements TemplateLoader {
     @Override
     public void load() {
         FixturyFactoryProduto.produtoValido();
-        Fixture.of(Produto.class).addTemplate("nomeNull").inherits("valid", new Rule() {
+        final String VALID = "valid";
+        final String NOME = "nome";
+        Fixture.of(Produto.class).addTemplate(NOME_NULL).inherits(VALID, new Rule() {
             {
-                add("nome", null);
+                add(NOME, null);
             }
         });
-        Fixture.of(Produto.class).addTemplate("nomeEmpty").inherits("valid", new Rule() {
+        Fixture.of(Produto.class).addTemplate(NOME_EMPTY).inherits(VALID, new Rule() {
             {
-                add("nome", "");
+                add(NOME, "");
             }
         });
-        Fixture.of(Produto.class).addTemplate("nomeBlankSpace").inherits("valid", new Rule() {
+        Fixture.of(Produto.class).addTemplate(NOME_BLANK_SPACE).inherits(VALID, new Rule() {
             {
-                add("nome", " ");
+                add(NOME, " ");
             }
         });
-        Fixture.of(Produto.class).addTemplate("nomeBlankSpace").inherits("valid", new Rule() {
+        Fixture.of(Produto.class).addTemplate(NOME_EMPTY).inherits(VALID, new Rule() {
             {
-                add("nome", " ");
+                add(NOME, "");
             }
         });
-        Fixture.of(Produto.class).addTemplate("nomeLess3Caracter").inherits("valid", new Rule() {
+        Fixture.of(Produto.class).addTemplate(NOME_LESS_3_CARACTER).inherits(VALID, new Rule() {
             {
-                add("nome", regex(GeradorNome.NOME_LESS_3_CARACTER));
+                add(NOME, regex("AA"));
             }
         });
-        Fixture.of(Produto.class).addTemplate("nomeGreaterCaracter").inherits("valid", new Rule() {
+        Fixture.of(Produto.class).addTemplate(NOME_GREATER_CARACTER).inherits(VALID, new Rule() {
             {
-                add("nome", regex(GeradorNome.NOME_GREATER_50_CARACTER));
+                add(NOME, regex("JHDDFJKSHFLKHSDKJFHKSDHLFKJSDHLFKHSDKFHKSDHFLKJSDKLJFSDJKLL"));
             }
         });
-        Fixture.of(Produto.class).addTemplate("nomeWithSpecialCaracter").inherits("valid", new Rule() {
+        Fixture.of(Produto.class).addTemplate(NOME_WITH_SPECIAL_CARACTER).inherits(VALID, new Rule() {
             {
-                add("nome", regex(GeradorNome.NOME_WITH_SPECIAL_CARACTER));
+                add(NOME, regex("NO#¨%¨"));
             }
         });
-        Fixture.of(Produto.class).addTemplate("precoNull").inherits("valid", new Rule() {
+        final String PRECO = "preco";
+        Fixture.of(Produto.class).addTemplate(PRECO_NULL).inherits(VALID, new Rule() {
             {
-                add("preco", null);
+                add(PRECO, null);
             }
         });
-        Fixture.of(Produto.class).addTemplate("precoLess1").inherits("valid", new Rule() {
+        Fixture.of(Produto.class).addTemplate(PRECO_LESS_1).inherits(VALID, new Rule() {
             {
-                add("preco", new BigDecimal(( -1 * (50 + Math.random() * 250))));
+                add(PRECO, new BigDecimal(( -1 * (50 + Math.random() * 250))));
             }
         });
-        Fixture.of(Produto.class).addTemplate("estoqueLess0").inherits("valid", new Rule() {
+        Fixture.of(Produto.class).addTemplate(ESTOQUE_LESS_0).inherits(VALID, new Rule() {
             {
-                add("preco", new BigDecimal( -1 * (50 + (new Random().nextInt() * 100))));
+                add(PRECO, new BigDecimal( -1 * (50 + (new Random().nextInt() * 100))));
             }
         });
 

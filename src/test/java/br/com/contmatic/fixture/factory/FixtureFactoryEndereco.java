@@ -1,14 +1,15 @@
 package br.com.contmatic.fixture.factory;
 
-import java.util.Random;
-
+import br.com.contmatic.constantes.Constante;
 import br.com.contmatic.endereco.Endereco;
 import br.com.contmatic.endereco.EstadosBrasil;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
 
-import static br.com.contmatic.fixture.factory.GeradorNome.*;
+import java.util.Random;
+
+import static br.com.contmatic.constantes.Constante.*;
 import static br.com.six2six.fixturefactory.Fixture.of;
 
 
@@ -36,7 +37,7 @@ public class FixtureFactoryEndereco implements TemplateLoader{
                 
             }
         });
-        return Fixture.from(Endereco.class).gimme("valid");
+        return Fixture.from(Endereco.class).gimme(VALID);
     }
     
     /**
@@ -48,145 +49,152 @@ public class FixtureFactoryEndereco implements TemplateLoader{
         StringBuilder cepRandom = new StringBuilder();
         cepRandom.append(new Random().nextInt(90000000) + 10000000);
         int randomEstadoName = new Random().nextInt(EstadosBrasil.values().length);
-        of(Endereco.class).addTemplate("valid", new Rule() {
+        final String RUA = "rua";
+        final String BAIRRO = "bairro";
+        final String CEP = "cep";
+        final String NUMERO_RESIDENCIA = "numeroResidencia";
+        final String CIDADE = "cidade";
+        final String ESTADO = "estado";
+        of(Endereco.class).addTemplate(VALID, new Rule() {
             {
-                add("rua", name());
-                add("bairro", name());
-                add("cep", cepRandom.toString());
-                add("numeroResidencia", random(Integer.class, range(1, 10000)));
-                add("cidade", firstName());
-                add("estado", EstadosBrasil.values()[randomEstadoName]);
+                add(RUA, name());
+                add(BAIRRO, name());
+                add(CEP, cepRandom.toString());
+                add(NUMERO_RESIDENCIA, random(Integer.class, range(1, 10000)));
+                add(CIDADE, firstName());
+                add(ESTADO, EstadosBrasil.values()[randomEstadoName]);
                 
             }
         });
-        of(Endereco.class).addTemplate("cidadeNull").inherits("valid", new Rule() {
+        final String VALID = "valid";
+        of(Endereco.class).addTemplate(CIDADE_NULL).inherits(VALID, new Rule() {
             {
-                add("cidade", null);
+                add(CIDADE, null);
             }
         });
-        of(Endereco.class).addTemplate("cidadeEmpty").inherits("valid", new Rule() {
+        of(Endereco.class).addTemplate(CIDADE_EMPTY).inherits(VALID, new Rule() {
             {
-                add("cidade", "");
+                add(CIDADE, "");
             }
         });
-        of(Endereco.class).addTemplate("cidadeBlankSpace").inherits("valid", new Rule() {
+        of(Endereco.class).addTemplate(CIDADE_BLANK_SPACE).inherits(VALID, new Rule() {
             {
-                add("cidade", " ");
+                add(CIDADE, " ");
             }
         });
-        of(Endereco.class).addTemplate("cidadeContainsNumber").inherits("valid", new Rule() {
+        of(Endereco.class).addTemplate(CIDADE_CONTAINS_NUMBER).inherits(VALID, new Rule() {
             {
-                add("cidade", random(Integer.class, range(1, 100)).toString());
+                add(CIDADE, random(Integer.class, range(1, 100)).toString());
             }
         });
-        of(Endereco.class).addTemplate("cidadeLess3Caracter").inherits("valid", new Rule() {
+        of(Endereco.class).addTemplate(CIDADE_LESS_3_CARACTER).inherits(VALID, new Rule() {
             {
-                add("cidade", regex(NOME_LESS_3_CARACTER));
+                add(CIDADE, regex("SD"));
             }
         });
-        of(Endereco.class).addTemplate("cidadeGreater50Caracter").inherits("valid", new Rule() {
+        of(Endereco.class).addTemplate(CIDADE_GREATER_50_CARACTER).inherits(VALID, new Rule() {
             {
-                add("cidade", regex(NOME_GREATER_50_CARACTER));
+                add(CIDADE, regex("dhjfksdfsdfhsdhfjbhsdjkbfjklsdbjfsdblkhfsh"));
             }
         });
-        of(Endereco.class).addTemplate("cidadeWithSpecialCaracter").inherits("valid", new Rule() {
+        of(Endereco.class).addTemplate(CIDADE_WITH_SPECIAL_CARACTER).inherits(VALID, new Rule() {
             {
-                add("cidade", regex(NOME_WITH_SPECIAL_CARACTER));
+                add(CIDADE, regex("%$%"));
             }
         });
-        of(Endereco.class).addTemplate("estadoNull").inherits("valid", new Rule() {
+        of(Endereco.class).addTemplate(ESTADO_NULL).inherits(VALID, new Rule() {
             {
-                add("estado", null);
+                add(ESTADO, null);
             }
         });
-        of(Endereco.class).addTemplate("numeroResidenciaLessThanZero").inherits("valid", new Rule() {
+        of(Endereco.class).addTemplate(NUMERO_RESIDENCIA_LESS_THAN_ZERO).inherits(VALID, new Rule() {
             {
-                add("numeroResidencia", random(Integer.class, range(-10000, -1)));
+                add(NUMERO_RESIDENCIA, random(Integer.class, range(-10000, -1)));
             }
         });
-        of(Endereco.class).addTemplate("ruaNull").inherits("valid", new Rule() {
+        of(Endereco.class).addTemplate(RUA_NULL).inherits(VALID, new Rule() {
             {
-                add("rua", null);
+                add(RUA, null);
             }
         });
-        of(Endereco.class).addTemplate("ruaEmpty").inherits("valid", new Rule() {
+        of(Endereco.class).addTemplate(RUA_EMPTY).inherits(VALID, new Rule() {
             {
-                add("rua", "");
+                add(RUA, "");
             }
         });
-        of(Endereco.class).addTemplate("ruaBlankSpace").inherits("valid", new Rule() {
+        of(Endereco.class).addTemplate(RUA_BLANK_SPACE).inherits(VALID, new Rule() {
             {
-                add("rua", " ");
+                add(RUA, " ");
             }
         });
-        of(Endereco.class).addTemplate("ruaLess3Caracter").inherits("valid", new Rule() {
+        of(Endereco.class).addTemplate(RUA_LESS_3_CARACTER).inherits(VALID, new Rule() {
             {
-                add("rua", regex(NOME_LESS_3_CARACTER));
+                add(RUA, regex("AA"));
             }
         });
-        of(Endereco.class).addTemplate("ruaGreater50Caracter").inherits("valid", new Rule() {
+        of(Endereco.class).addTemplate(RUA_GREATER_50_CARACTER).inherits(VALID, new Rule() {
             {
-                add("rua", regex(NOME_GREATER_50_CARACTER));
+                add(RUA, regex("FHSDÇFHSDLFKLSDJLFJSDÇFHSDHFSDNFSDLJKFKSDHFJSDFDHLKFJSNFJSFSDFSDFSDFSD"));
             }
         });
-        of(Endereco.class).addTemplate("ruaWithSpecialCaracter").inherits("valid", new Rule() {
+        of(Endereco.class).addTemplate(RUA_WITH_SPECIAL_CARACTER).inherits(VALID, new Rule() {
             {
-                add("rua", regex(NOME_WITH_SPECIAL_CARACTER));
+                add(RUA, regex(NOME_WITH_SPECIAL_CARACTER));
             }
         });
-        of(Endereco.class).addTemplate("cepNull").inherits("valid", new Rule() {
+        of(Endereco.class).addTemplate(CEP_NULL).inherits(VALID, new Rule() {
             {
-                add("cep", null);
+                add(CEP, null);
             }
         });
-        of(Endereco.class).addTemplate("cepEmpty").inherits("valid", new Rule() {
+        of(Endereco.class).addTemplate(CEP_EMPTY).inherits(VALID, new Rule() {
             {
-                add("cep", "");
+                add(CEP, "");
             }
         });
-        of(Endereco.class).addTemplate("cepBlankSpace").inherits("valid", new Rule() {
+        of(Endereco.class).addTemplate(CEP_BLANK_SPACE).inherits(VALID, new Rule() {
             {
-                add("cep", " ");
+                add(CEP, " ");
             }
         });
-        of(Endereco.class).addTemplate("cepLengthDifference8").inherits("valid", new Rule() {
+        of(Endereco.class).addTemplate(CEP_LENGTH_DIFFERENCE_8).inherits(VALID, new Rule() {
             {
-                add("cep", cepRandom.append(new Random().nextInt(1) + 1000).toString());
+                add(CEP, cepRandom.append(new Random().nextInt(1) + 1000).toString());
             }
         });
-        of(Endereco.class).addTemplate("cepContainsWord", new Rule() {
+        of(Endereco.class).addTemplate(CEP_CONTAINS_WORD, new Rule() {
             {
-                add("cep", cepRandom.append(new Random().nextInt(1) + 1000).append(firstName()).toString());
+                add(CEP, cepRandom.append(new Random().nextInt(1) + 1000).append(firstName()).toString());
             }
         });
-        of(Endereco.class).addTemplate("bairroNull").inherits("valid", new Rule() {
+        of(Endereco.class).addTemplate(BAIRRO_NULL).inherits(VALID, new Rule() {
             {
-                add("bairro", null);
+                add(BAIRRO, null);
             }
         });
-        of(Endereco.class).addTemplate("bairroEmpty").inherits("valid", new Rule() {
+        of(Endereco.class).addTemplate(BAIRRO_EMPTY).inherits(VALID, new Rule() {
             {
-                add("bairro", "");
+                add(BAIRRO, "");
             }
         });
-        of(Endereco.class).addTemplate("bairroBlankSpace").inherits("valid", new Rule() {
+        of(Endereco.class).addTemplate(BAIRRO_BLANK_SPACE).inherits(VALID, new Rule() {
             {
-                add("bairro", " ");
+                add(BAIRRO, " ");
             }
         });
-        of(Endereco.class).addTemplate("bairroLess3Caracter").inherits("valid", new Rule() {
+        of(Endereco.class).addTemplate(BAIRRO_LESS_3_CARACTER).inherits(VALID, new Rule() {
             {
-                add("bairro", regex(NOME_LESS_3_CARACTER));
+                add(BAIRRO, regex("AA"));
             }
         });
-        of(Endereco.class).addTemplate("bairroGreater50Caracter").inherits("valid", new Rule() {
+        of(Endereco.class).addTemplate(BAIRRO_GREATER_50_CARACTER).inherits(VALID, new Rule() {
             {
-                add("bairro", regex(NOME_GREATER_50_CARACTER));
+                add(BAIRRO, regex("DASDASDLKASHJAHFHSDKLJFHKSDUFHSDK GHFSDGHIFSDUIFHISDHOFIUSDHOIFU"));
             }
         });
-        of(Endereco.class).addTemplate("bairroWithSpecialCaracter").inherits("valid", new Rule() {
+        of(Endereco.class).addTemplate(BAIRRO_WITH_SPECIAL_CARACTER).inherits(VALID, new Rule() {
             {
-                add("bairro", regex(NOME_WITH_SPECIAL_CARACTER));
+                add(BAIRRO, regex("DDS$#"));
             }
         });
     }  

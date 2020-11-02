@@ -7,7 +7,7 @@ import java.util.Random;
 /**
  * The Class GeradorCpf.
  */
-public abstract class GeradorCpf {
+public final class GeradorCpf {
 
     /** The cpf random. */
     private static StringBuilder cpfRandom;
@@ -20,6 +20,10 @@ public abstract class GeradorCpf {
 
     /** The resultado modulo. */
     private static int resultadoModulo;
+
+    private GeradorCpf() {
+
+    }
 
     /**
      * Gerardor random cpf.

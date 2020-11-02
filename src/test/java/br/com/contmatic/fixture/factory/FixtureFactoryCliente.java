@@ -1,21 +1,21 @@
 package br.com.contmatic.fixture.factory;
 
+import br.com.contmatic.constantes.Constante;
+import br.com.contmatic.empresa.Cliente;
+import br.com.six2six.fixturefactory.Rule;
+import br.com.six2six.fixturefactory.loader.TemplateLoader;
+import com.github.javafaker.Faker;
+import org.joda.time.DateTime;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Random;
 
-import org.joda.time.DateTime;
-
-import br.com.contmatic.empresa.Cliente;
-import br.com.six2six.fixturefactory.Fixture;
-import br.com.six2six.fixturefactory.Rule;
-import br.com.six2six.fixturefactory.loader.TemplateLoader;
-
+import static br.com.contmatic.constantes.Constante.*;
 import static br.com.contmatic.fixture.factory.FixtureFactoryEndereco.enderecoValido;
 import static br.com.contmatic.fixture.factory.GeradorCpf.gerardorRandomCpf;
+import static br.com.contmatic.fixture.factory.GeradorEmail.EMAIL_WITH_SPECIAL_CARACTER;
 import static br.com.contmatic.fixture.factory.GeradorEmail.*;
-import static br.com.contmatic.fixture.factory.GeradorNome.*;
 import static br.com.six2six.fixturefactory.Fixture.of;
 
 /**
@@ -28,123 +28,132 @@ public class FixtureFactoryCliente implements TemplateLoader {
      */
     @Override
     public void load() {
-        
-        of(Cliente.class).addTemplate("valid", new Rule() {
+
+        final String NOME = "nome";
+        final String EMAIL = "email";
+        final String DATA_NASCIMENTO = "dataNascimento";
+        final String ENDERECO = "endereco";
+        final String TELEFONES = "telefones";
+        of(Cliente.class).addTemplate(VALID, new Rule() {
             {
-                add("nome", name());
-                add("email", regex(VALID_EMAIL));
-                add("dataNascimento", new DateTime());
-                add("dinheiroCarteira", new BigDecimal(4000.00 + (new Random().nextDouble() * (5000 - 8500))));
-                add("carrinhoProdutos", new ArrayList<>());
-                add("produtosComprados", new ArrayList<>());
-                add("endereco", enderecoValido());
-                add("cpf", gerardorRandomCpf());
-                add("telefones", new HashSet<>());
+                add(NOME, name());
+                add(EMAIL, regex(VALID_EMAIL));
+                add(DATA_NASCIMENTO, new DateTime());
+                final String DINHEIRO_CARTEIRA = "dinheiroCarteira";
+                add(DINHEIRO_CARTEIRA, BigDecimal.valueOf(new Faker().number().randomDouble(2, 1000, 2000)));
+                final String CARRINHO_PRODUTOS = "carrinhoProdutos";
+                add(CARRINHO_PRODUTOS, new ArrayList<>());
+                final String PRODUTOS_COMPRADOS = "produtosComprados";
+                add(PRODUTOS_COMPRADOS, new ArrayList<>());
+                add(ENDERECO, enderecoValido());
+                final String CPF = "cpf";
+                add(CPF, gerardorRandomCpf());
+                add(TELEFONES, new HashSet<>());
             }
         });
-        of(Cliente.class).addTemplate("nomeNull").inherits("valid", new Rule() {
+        of(Cliente.class).addTemplate(NOME_NULL).inherits(VALID, new Rule() {
             {
-                add("nome", null);
+                add(NOME, null);
             }
         });
-        of(Cliente.class).addTemplate("nomeEmpty").inherits("valid", new Rule() {
+        of(Cliente.class).addTemplate(NOME_EMPTY).inherits(VALID, new Rule() {
             {
-                add("nome", "");
+                add(NOME, "");
             }
         });
-        of(Cliente.class).addTemplate("nomeBlankSpace").inherits("valid", new Rule() {
+        of(Cliente.class).addTemplate(NOME_BLANK_SPACE).inherits(VALID, new Rule() {
             {
-                add("nome", " ");
+                add(NOME, " ");
             }
         });
-        of(Cliente.class).addTemplate("nomeLess3Caracter").inherits("valid", new Rule() {
+        of(Cliente.class).addTemplate(NOME_LESS_3_CARACTER).inherits(VALID, new Rule() {
             {
-                add("nome", regex(NOME_LESS_3_CARACTER));
+                add(NOME, regex("AA"));
             }
         });
-        of(Cliente.class).addTemplate("nomeGreaterCaracter").inherits("valid", new Rule() {
+        of(Cliente.class).addTemplate(NOME_GREATER_CARACTER).inherits(VALID, new Rule() {
             {
-                add("nome", regex(NOME_GREATER_50_CARACTER));
+                add(NOME, "ASDEGJDFHJKGHJDFHGJDHGHDFHGDHFGHDGHDFHGIODHFOGHDFOGDFHGDHFOGDFJ");
             }
         });
-        of(Cliente.class).addTemplate("nomeWithSpecialCaracter").inherits("valid", new Rule() {
+        of(Cliente.class).addTemplate(NOME_WITH_SPECIAL_CARACTER).inherits(VALID, new Rule() {
             {
-                add("nome", regex(NOME_WITH_SPECIAL_CARACTER));
+                add(NOME, regex(NOME_WITH_SPECIAL_CARACTER));
             }
         });
-        of(Cliente.class).addTemplate("emailNull").inherits("valid", new Rule() {
+        of(Cliente.class).addTemplate(EMAIL_NULL).inherits(VALID, new Rule() {
             {
-                add("email", null);
+                add(EMAIL, null);
             }
         });
-        of(Cliente.class).addTemplate("emailEmpty").inherits("valid", new Rule() {
+        of(Cliente.class).addTemplate(EMAIL_EMPTY).inherits(VALID, new Rule() {
             {
-                add("email", "");
+                add(EMAIL, "");
             }
         });
-        of(Cliente.class).addTemplate("emailBlankSpace").inherits("valid", new Rule() {
+        of(Cliente.class).addTemplate(EMAIL_BLANK_SPACE).inherits(VALID, new Rule() {
             {
-                add("email", " ");
+                add(EMAIL, " ");
             }
         });
-        of(Cliente.class).addTemplate("emailInvalid").inherits("valid", new Rule() {
+        of(Cliente.class).addTemplate(EMAIL_INVALID).inherits(VALID, new Rule() {
             {
-                add("email", firstName());
+                add(EMAIL, firstName());
             }
         });
-        of(Cliente.class).addTemplate("emailLess10Caracteres").inherits("valid", new Rule() {
+        of(Cliente.class).addTemplate(EMAIL_LESS_10_CARACTERES).inherits(VALID, new Rule() {
             {
-                add("email", regex(EMAIL_LESS_10_CARACTER));
+                add(EMAIL, regex(EMAIL_LESS_10_CARACTER));
             }
         });
-        of(Cliente.class).addTemplate("emailGreater100Caracteres").inherits("valid", new Rule() {
+        of(Cliente.class).addTemplate(EMAIL_GREATER_100_CARACTER).inherits(VALID, new Rule() {
             {
-                add("email", regex(EMAIL_GREATER_100_CARACTER));
+                add(EMAIL, regex(EMAIL_GREATER_100_CARACTER));
             }
         });
-        of(Cliente.class).addTemplate("emailWithBlankSpaceInWord").inherits("valid", new Rule() {
+        of(Cliente.class).addTemplate(EMAIL_WITH_BLANK_SPACE_IN_WORD).inherits(VALID, new Rule() {
             {
-                add("email", regex(EMAIL_WITH_BLANK_SPACE));
+                add(EMAIL, regex(EMAIL_WITH_BLANK_SPACE));
             }
         });
-        of(Cliente.class).addTemplate("emailWithNumberAfterArroba").inherits("valid", new Rule() {
+        of(Cliente.class).addTemplate(GeradorEmail.EMAIL_WITH_NUMBER_AFTER_ARROBA).inherits(VALID, new Rule() {
             {
-                add("email", regex(EMAIL_WITH_NUMBER_AFTER_ARROBA));
+                add(EMAIL, "AAAaaaa@123S.COM");
             }
         });
-        of(Cliente.class).addTemplate("emailWithoutArroba").inherits("valid", new Rule() {
+        of(Cliente.class).addTemplate(EMAIL_WITHOUT_ARROBA).inherits(VALID, new Rule() {
             {
-                add("email", regex(EMAIL_WITHOUT_ARROBA_CARACTER));
+                add(EMAIL, regex(EMAIL_WITHOUT_ARROBA_CARACTER));
             }
         });
-        of(Cliente.class).addTemplate("emailWithoutPontoCom").inherits("valid", new Rule() {
+        of(Cliente.class).addTemplate(Constante.EMAIL_WITHOUT_PONTO_COM).inherits(VALID, new Rule() {
             {
-                add("email", regex(EMAIL_WITHOUT_PONTO_COM));
+                add(EMAIL, regex(GeradorEmail.EMAIL_WITHOUT_PONTO_COM));
             }
         });
-        of(Cliente.class).addTemplate("emailWithoutCom").inherits("valid", new Rule() {
+        of(Cliente.class).addTemplate(Constante.EMAIL_WITHOUT_COM).inherits(VALID, new Rule() {
             {
-                add("email", regex(EMAIL_WITHOUT_COM));
+                add(EMAIL, regex(GeradorEmail.EMAIL_WITHOUT_COM));
             }
         });
-        of(Cliente.class).addTemplate("emailWithSpecialCaracter").inherits("valid", new Rule() {
+        of(Cliente.class).addTemplate(Constante.EMAIL_WITH_SPECIAL_CARACTER).inherits(VALID, new Rule() {
             {
-                add("email", regex(EMAIL_WITH_SPECIAL_CARACTER));
+                add(EMAIL, regex(EMAIL_WITH_SPECIAL_CARACTER));
             }
         });
-        of(Cliente.class).addTemplate("enderecoNull").inherits("valid", new Rule() {
+        of(Cliente.class).addTemplate(ENDERECO_NULL).inherits(VALID, new Rule() {
             {
-                add("endereco", null);
+                add(ENDERECO, null);
             }
         });
-        of(Cliente.class).addTemplate("dataNascimentoNull").inherits("valid", new Rule() {
+        of(Cliente.class).addTemplate(DATA_NASCIMENTO_NULL).inherits(VALID, new Rule() {
             {
-                add("dataNascimento", null);
+                add(DATA_NASCIMENTO, null);
             }
         });
-        of(Cliente.class).addTemplate("telefoneNull").inherits("valid", new Rule() {
+        of(Cliente.class).addTemplate(TELEFONE_NULL).inherits(VALID, new Rule() {
             {
-                add("telefones", null);
+                add(TELEFONES, null);
             }
         });
     }

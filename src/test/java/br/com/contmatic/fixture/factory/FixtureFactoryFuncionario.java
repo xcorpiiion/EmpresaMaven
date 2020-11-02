@@ -4,182 +4,201 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Random;
 
+import br.com.contmatic.constantes.Constante;
+import br.com.contmatic.empresa.*;
+import br.com.contmatic.empresa.Funcionario;
 import org.joda.time.DateTime;
 
-import br.com.contmatic.empresa.Cargo;
 import br.com.contmatic.empresa.Funcionario;
 import br.com.contmatic.telefone.TipoContrato;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
 
+import static br.com.contmatic.constantes.Constante.*;
+import static br.com.contmatic.constantes.Constante.EMAIL_WITH_NUMBER_AFTER_ARROBA;
+import static br.com.contmatic.fixture.factory.GeradorEmail.*;
+import static br.com.contmatic.fixture.factory.GeradorEmail.EMAIL_WITHOUT_ARROBA_CARACTER;
+import static br.com.contmatic.fixture.factory.GeradorEmail.EMAIL_WITH_SPECIAL_CARACTER;
+import static br.com.six2six.fixturefactory.Fixture.of;
+
 /**
  * The Class FixtureFactoryFuncionario.
  */
 public class FixtureFactoryFuncionario implements TemplateLoader {
 
+    private final String NOME = "nome";
+    private final String EMAIL = "email";
+    private final String DATA_NASCIMENTO = "dataNascimento";
+    private final String CARGO = "cargo";
+    private final String SALARIO = "salario";
+    private final String ENDERECO = "endereco";
+    private final String TIPO_CONTRATO = "tipoContrato";
+    private final String CPF = "cpf";
+    private final String TELEFONES = "telefones";
+    
     /**
      * Load.
      */
     @Override
     public void load() {
-        Fixture.of(Funcionario.class).addTemplate("valid", new Rule() {
+        of(Funcionario.class).addTemplate(VALID, new Rule() {
             {
-                add("nome", name());
-                add("email", regex("[a-z]{10}@gmail.com|@hotmail.com"));
-                add("dataNascimento", new DateTime());
-                add("cargo", Cargo.values()[new Random().nextInt(Cargo.values().length)]);
-                add("salario", new BigDecimal(1000.00 + (new Random().nextDouble() * (5000 - 8500))));
-                add("endereco", FixtureFactoryEndereco.enderecoValido());
-                add("tipoContrato", TipoContrato.values()[new Random().nextInt(TipoContrato.values().length)]);
-                add("cpf", GeradorCpf.gerardorRandomCpf());
-                add("telefones", new HashSet<>());
+                add(NOME, name());
+                add(EMAIL, regex("[a-z]{10}@gmail.com|@hotmail.com"));
+                add(DATA_NASCIMENTO, new DateTime());
+                add(CARGO, Cargo.values()[new Random().nextInt(Cargo.values().length)]);
+                add(SALARIO, new BigDecimal(1000.00 + (new Random().nextDouble() * (5000 - 8500))));
+                add(ENDERECO, FixtureFactoryEndereco.enderecoValido());
+                add(TIPO_CONTRATO, TipoContrato.values()[new Random().nextInt(TipoContrato.values().length)]);
+                add(CPF, GeradorCpf.gerardorRandomCpf());
+                add(TELEFONES, new HashSet<>());
             }
         });
-        Fixture.of(Funcionario.class).addTemplate("nomeNull").inherits("valid", new Rule() {
+        of(Funcionario.class).addTemplate(NOME_NULL).inherits(VALID, new Rule() {
             {
-                add("nome", null);
+                add(NOME, null);
             }
         });
-        Fixture.of(Funcionario.class).addTemplate("nomeEmpty").inherits("valid", new Rule() {
+        of(Funcionario.class).addTemplate(NOME_EMPTY).inherits(VALID, new Rule() {
             {
-                add("nome", "");
+                add(NOME, "");
             }
         });
-        Fixture.of(Funcionario.class).addTemplate("nomeBlankSpace").inherits("valid", new Rule() {
+        of(Funcionario.class).addTemplate(NOME_BLANK_SPACE).inherits(VALID, new Rule() {
             {
-                add("nome", " ");
+                add(NOME, " ");
             }
         });
-        Fixture.of(Funcionario.class).addTemplate("nomeLess3Caracter").inherits("valid", new Rule() {
+        of(Funcionario.class).addTemplate(NOME_LESS_3_CARACTER).inherits(VALID, new Rule() {
             {
-                add("nome", regex(GeradorNome.NOME_LESS_3_CARACTER));
+                add(NOME, regex("AA"));
             }
         });
-        Fixture.of(Funcionario.class).addTemplate("nomeGreaterCaracter").inherits("valid", new Rule() {
+        of(Funcionario.class).addTemplate(NOME_GREATER_CARACTER).inherits(VALID, new Rule() {
             {
-                add("nome", regex(GeradorNome.NOME_GREATER_50_CARACTER));
+                add(NOME, "ASDEGJDFHJKGHJDFHGJDHGHDFHGDHFGHDGHDFHGIODHFOGHDFOGDFHGDHFOGDFJ");
             }
         });
-        Fixture.of(Funcionario.class).addTemplate("nomeWithSpecialCaracter").inherits("valid", new Rule() {
+        of(Funcionario.class).addTemplate(NOME_WITH_SPECIAL_CARACTER).inherits(VALID, new Rule() {
             {
-                add("nome", regex(GeradorNome.NOME_WITH_SPECIAL_CARACTER));
+                add(NOME, regex(NOME_WITH_SPECIAL_CARACTER));
             }
         });
-        Fixture.of(Funcionario.class).addTemplate("emailNull").inherits("valid", new Rule() {
+        of(Funcionario.class).addTemplate(EMAIL_NULL).inherits(VALID, new Rule() {
             {
-                add("email", null);
+                add(EMAIL, null);
             }
         });
-        Fixture.of(Funcionario.class).addTemplate("emailEmpty").inherits("valid", new Rule() {
+        of(Funcionario.class).addTemplate(EMAIL_EMPTY).inherits(VALID, new Rule() {
             {
-                add("email", "");
+                add(EMAIL, "");
             }
         });
-        Fixture.of(Funcionario.class).addTemplate("emailBlankSpace").inherits("valid", new Rule() {
+        of(Funcionario.class).addTemplate(EMAIL_BLANK_SPACE).inherits(VALID, new Rule() {
             {
-                add("email", " ");
+                add(EMAIL, " ");
             }
         });
-        Fixture.of(Funcionario.class).addTemplate("emailInvalid").inherits("valid", new Rule() {
+        of(Funcionario.class).addTemplate(EMAIL_INVALID).inherits(VALID, new Rule() {
             {
-                add("email", firstName());
+                add(EMAIL, firstName());
             }
         });
-        Fixture.of(Funcionario.class).addTemplate("emailLess10Caracteres").inherits("valid", new Rule() {
+        of(Funcionario.class).addTemplate(EMAIL_LESS_10_CARACTERES).inherits(VALID, new Rule() {
             {
-                add("email", regex(GeradorEmail.EMAIL_LESS_10_CARACTER));
+                add(EMAIL, regex(EMAIL_LESS_10_CARACTER));
             }
         });
-        Fixture.of(Funcionario.class).addTemplate("emailGreater100Caracteres").inherits("valid", new Rule() {
+        of(Funcionario.class).addTemplate(EMAIL_GREATER_100_CARACTERES).inherits(VALID, new Rule() {
             {
-                add("email", regex(GeradorEmail.EMAIL_GREATER_100_CARACTER));
+                add(EMAIL, regex(EMAIL_GREATER_100_CARACTER));
             }
         });
-        Fixture.of(Funcionario.class).addTemplate("emailWithBlankSpaceInWord").inherits("valid", new Rule() {
+        of(Funcionario.class).addTemplate(EMAIL_WITH_BLANK_SPACE_IN_WORD).inherits(VALID, new Rule() {
             {
-                add("email", regex(GeradorEmail.EMAIL_WITH_BLANK_SPACE));
+                add(EMAIL, regex(EMAIL_WITH_BLANK_SPACE));
             }
         });
-        Fixture.of(Funcionario.class).addTemplate("emailWithNumberAfterArroba").inherits("valid", new Rule() {
+        of(Funcionario.class).addTemplate(EMAIL_WITH_NUMBER_AFTER_ARROBA).inherits(VALID, new Rule() {
             {
-                add("email", regex(GeradorEmail.EMAIL_WITH_NUMBER_AFTER_ARROBA));
+                add(EMAIL, "AAAaaaa@123S.COM");
             }
         });
-        Fixture.of(Funcionario.class).addTemplate("emailWithoutArroba").inherits("valid", new Rule() {
+        of(Funcionario.class).addTemplate(EMAIL_WITHOUT_ARROBA).inherits(VALID, new Rule() {
             {
-                add("email", regex(GeradorEmail.EMAIL_WITHOUT_ARROBA_CARACTER));
+                add(EMAIL, regex(EMAIL_WITHOUT_ARROBA_CARACTER));
             }
         });
-        Fixture.of(Funcionario.class).addTemplate("emailWithoutPontoCom").inherits("valid", new Rule() {
+        of(Funcionario.class).addTemplate(Constante.EMAIL_WITHOUT_PONTO_COM).inherits(VALID, new Rule() {
             {
-                add("email", regex(GeradorEmail.EMAIL_WITHOUT_PONTO_COM));
+                add(EMAIL, regex(GeradorEmail.EMAIL_WITHOUT_PONTO_COM));
             }
         });
-        Fixture.of(Funcionario.class).addTemplate("emailWithoutCom").inherits("valid", new Rule() {
+        of(Funcionario.class).addTemplate(Constante.EMAIL_WITHOUT_COM).inherits(VALID, new Rule() {
             {
-                add("email", regex(GeradorEmail.EMAIL_WITHOUT_COM));
+                add(EMAIL, regex(GeradorEmail.EMAIL_WITHOUT_COM));
             }
         });
-        Fixture.of(Funcionario.class).addTemplate("emailWithSpecialCaracter").inherits("valid", new Rule() {
+        of(Funcionario.class).addTemplate(Constante.EMAIL_WITH_SPECIAL_CARACTER).inherits(VALID, new Rule() {
             {
-                add("email", regex(GeradorEmail.EMAIL_WITH_SPECIAL_CARACTER));
+                add(EMAIL, regex(EMAIL_WITH_SPECIAL_CARACTER));
             }
         });
-        Fixture.of(Funcionario.class).addTemplate("enderecoNull").inherits("valid", new Rule() {
+        of(Funcionario.class).addTemplate(ENDERECO_NULL).inherits(VALID, new Rule() {
             {
-                add("endereco", null);
+                add(ENDERECO, null);
             }
         });
-        Fixture.of(Funcionario.class).addTemplate("salarioNull").inherits("valid", new Rule() {
+        of(Funcionario.class).addTemplate(SALARIO_NULL).inherits(VALID, new Rule() {
             {
-                add("salario", null);
+                add(SALARIO, null);
             }
         });
-        Fixture.of(Funcionario.class).addTemplate("salarioLess1").inherits("valid", new Rule() {
+        of(Funcionario.class).addTemplate(SALARIO_LESS_1).inherits(VALID, new Rule() {
             {
-                add("salario", new BigDecimal(-1.00));
+                add(SALARIO, new BigDecimal(-1.00));
             }
         });
-        Fixture.of(Funcionario.class).addTemplate("cargoNull").inherits("valid", new Rule() {
+        of(Funcionario.class).addTemplate(CARGO_NULL).inherits(VALID, new Rule() {
             {
-                add("cargo", null);
+                add(CARGO, null);
             }
         });
-        Fixture.of(Funcionario.class).addTemplate("tipoContratoNull").inherits("valid", new Rule() {
+        of(Funcionario.class).addTemplate(TIPO_CONTRATO_NULL).inherits(VALID, new Rule() {
             {
-                add("tipoContrato", null);
+                add(TIPO_CONTRATO, null);
             }
         });
-        Fixture.of(Funcionario.class).addTemplate("cpfNull").inherits("valid", new Rule() {
+        of(Funcionario.class).addTemplate(CPF_NULL).inherits(VALID, new Rule() {
             {
-                add("cpf", null);
+                add(CPF, null);
             }
         });
-        Fixture.of(Funcionario.class).addTemplate("cpfEmpty").inherits("valid", new Rule() {
+        of(Funcionario.class).addTemplate(CPF_EMPTY).inherits(VALID, new Rule() {
             {
-                add("cpf", null);
+                add(CPF, null);
             }
         });
-        
-        Fixture.of(Funcionario.class).addTemplate("cpfBlankSpace").inherits("valid", new Rule() {
+
+        of(Funcionario.class).addTemplate(CPF_BLANK_SPACE).inherits(VALID, new Rule() {
             {
-                add("cpf", null);
+                add(CPF, null);
             }
         });
-        Fixture.of(Funcionario.class).addTemplate("invalidCpf").inherits("valid", new Rule() {
+        of(Funcionario.class).addTemplate(CPF_INVALID).inherits(VALID, new Rule() {
             {
-                add("cpf", null);
+                add(CPF, null);
             }
         });
-        Fixture.of(Funcionario.class).addTemplate("telefoneNull").inherits("valid", new Rule() {
+        of(Funcionario.class).addTemplate(TELEFONE_NULL).inherits(VALID, new Rule() {
             {
-                add("telefones", null);
+                add(TELEFONES, null);
             }
         });
-        Fixture.of(Funcionario.class).addTemplate("dataNascimentoNull").inherits("valid", new Rule() {
+        of(Funcionario.class).addTemplate(DATA_NASCIMENTO_NULL).inherits(VALID, new Rule() {
             {
-                add("dataNascimento", null);
+                add(DATA_NASCIMENTO, null);
             }
         });
     }

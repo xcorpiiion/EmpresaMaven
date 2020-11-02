@@ -25,6 +25,9 @@
     <orderEntry type="library" name="Maven: com.rubiconproject.oss:jchronic:0.2.6" level="project" />
     <orderEntry type="library" name="Maven: com.thoughtworks.paranamer:paranamer:2.5" level="project" />
     <orderEntry type="library" name="Maven: net.vidageek:mirror:1.6.1" level="project" />
+    <orderEntry type="library" name="Maven: com.github.javafaker:javafaker:0.12" level="project" />
+    <orderEntry type="library" name="Maven: com.github.mifmif:generex:1.0.2" level="project" />
+    <orderEntry type="library" name="Maven: dk.brics.automaton:automaton:1.11-8" level="project" />
     <orderEntry type="library" name="Maven: javax.validation:validation-api:2.0.1.Final" level="project" />
     <orderEntry type="library" name="Maven: org.hibernate.validator:hibernate-validator:6.1.0.Final" level="project" />
     <orderEntry type="library" name="Maven: jakarta.validation:jakarta.validation-api:2.0.2" level="project" />

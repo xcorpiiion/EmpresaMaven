@@ -1,5 +1,6 @@
 package br.com.contmatic.empresa;
 
+import static br.com.contmatic.constantes.Constante.*;
 import static br.com.contmatic.constantes.Mensagem.*;
 import static br.com.contmatic.empresa.Cargo.REPOSITOR;
 import static br.com.contmatic.empresa.Cargo.RH;
@@ -18,6 +19,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import br.com.contmatic.constantes.Constante;
+import com.github.javafaker.Faker;
 import org.joda.time.DateTime;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -39,6 +42,8 @@ import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 @FixMethodOrder(NAME_ASCENDING)
 public class FuncionarioTest {
 
+    private static Faker faker;
+
     /** The produtos. */
     private static List<Produto> produtos;
 
@@ -57,10 +62,11 @@ public class FuncionarioTest {
      */
     @BeforeClass
     public static void addDadosIniciais() {
+        faker = new Faker();
         loadTemplates("br.com.contmatic.fixture.factory");
         produtos = new ArrayList<>();
-        produtos.add(from(Produto.class).gimme("valid"));
-        loja = from(Empresa.class).gimme("valid");
+        produtos.add(from(Produto.class).gimme(VALID));
+        loja = from(Empresa.class).gimme(VALID);
     }
 
     /**
@@ -68,135 +74,137 @@ public class FuncionarioTest {
      */
     @Before
     public void add_dados_funcionario() {
-        funcionario = (from(Funcionario.class).gimme("valid"));
-        funcionario2 = (from(Funcionario.class).gimme("valid"));
+        funcionario = (from(Funcionario.class).gimme(VALID));
+        funcionario2 = (from(Funcionario.class).gimme(VALID));
     }
     
     @Before
     public void addDadosTelefone() {
         telefones = new HashSet<>();
-        telefones.add(from(Telefone.class).gimme("valid"));
+        telefones.add(from(Telefone.class).gimme(VALID));
         loadTemplates("br.com.contmatic.fixture.factory");
-        telefones.add(from(Telefone.class).gimme("valid"));
+        telefones.add(from(Telefone.class).gimme(VALID));
     }
 
     @Test
     public void deve_mudar_nome_funcionario() {
-        funcionario.setNome("kratos");
-        assertEquals("kratos", funcionario.getNome());
+        final String nome = faker.name().firstName();
+        funcionario.setNome(nome);
+        assertEquals(nome, funcionario.getNome());
     }
     
     @Test
     public void deve_retornar_true_caso_nome_seja_null() {
-        funcionario= from(Funcionario.class).gimme("nomeNull");
+        funcionario= from(Funcionario.class).gimme(NOME_NULL);
         assertTrue(returnAnnotationMsgError(funcionario, VALOR_ESTA_NULLO));
     }
     
     @Test
     public void deve_retornar_true_caso_nome_seja_vazio() {
-        funcionario = from(Funcionario.class).gimme("nomeEmpty");
+        funcionario = from(Funcionario.class).gimme(NOME_EMPTY);
         assertTrue(returnAnnotationMsgError(funcionario, VALOR_ESTA_VAZIO));
     }
     
     @Test
     public void deve_retornar_true_caso_nome_esteja_com_espaco_em_branco() {
-        funcionario = from(Funcionario.class).gimme("nomeBlankSpace");
+        funcionario = from(Funcionario.class).gimme(NOME_BLANK_SPACE);
         assertTrue(returnAnnotationMsgError(funcionario, VALOR_ESTA_VAZIO));
     }
     
     @Test
     public void deve_retornar_true_caso_nome_seja_possua_menos_3_caracter() {
-        funcionario = from(Funcionario.class).gimme("nomeLess3Caracter");
+        funcionario = from(Funcionario.class).gimme(NOME_LESS_3_CARACTER);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_nome_seja_possua_mais_50_caracter() {
-        funcionario = from(Funcionario.class).gimme("nomeGreaterCaracter");
+        funcionario = from(Funcionario.class).gimme(NOME_GREATER_CARACTER);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_nome_seja_possua_caracteres_especiais() {
-        funcionario = from(Funcionario.class).gimme("nomeWithSpecialCaracter");
+        funcionario = from(Funcionario.class).gimme(NOME_WITH_SPECIAL_CARACTER);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_email_seja_null() {
-        funcionario = from(Funcionario.class).gimme("emailNull");
+        funcionario = from(Funcionario.class).gimme(EMAIL_NULL);
         assertTrue(returnAnnotationMsgError(funcionario, VALOR_ESTA_NULLO));
     }
     
     @Test
     public void deve_retornar_true_caso_email_seja_vazio() {
-        funcionario = from(Funcionario.class).gimme("emailEmpty");
+        funcionario = from(Funcionario.class).gimme(EMAIL_EMPTY);
         assertTrue(returnAnnotationMsgError(funcionario, VALOR_ESTA_VAZIO));
     }
     
     @Test
     public void deve_retornar_true_caso_email_esteja_com_espaco_em_branco() {
-        funcionario = from(Funcionario.class).gimme("emailBlankSpace");
+        funcionario = from(Funcionario.class).gimme(EMAIL_BLANK_SPACE);
         assertTrue(returnAnnotationMsgError(funcionario, VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_alterar_email() {
-        funcionario.setEmail("kratos@gmail.com");
-        assertEquals("kratos@gmail.com", funcionario.getEmail());
+        final String email = faker.internet().emailAddress();
+        funcionario.setEmail(email);
+        assertEquals(email, funcionario.getEmail());
     }
     
     @Test
     public void deve_retornar_true_caso_email_esteja_com_menos_10_caracteres() {
-        funcionario = from(Funcionario.class).gimme("emailLess10Caracteres");
+        funcionario = from(Funcionario.class).gimme(EMAIL_LESS_10_CARACTERES);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_email_esteja_com_mais_100_caracteres() {
-        funcionario = from(Funcionario.class).gimme("emailGreater100Caracteres");
+        funcionario = from(Funcionario.class).gimme(EMAIL_GREATER_100_CARACTERES);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_email_esteja_com_espaco_em_branco_entre_o_email() {
-        funcionario = from(Funcionario.class).gimme("emailWithBlankSpaceInWord");
+        funcionario = from(Funcionario.class).gimme(EMAIL_WITH_BLANK_SPACE_IN_WORD);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_email_esteja_com_numero_depois_do_arroba() {
-        funcionario = from(Funcionario.class).gimme("emailWithNumberAfterArroba");
+        funcionario = from(Funcionario.class).gimme(EMAIL_WITH_NUMBER_AFTER_ARROBA);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_email_esteja_sem_arroba() {
-        funcionario = from(Funcionario.class).gimme("emailWithoutArroba");
+        funcionario = from(Funcionario.class).gimme(EMAIL_WITHOUT_ARROBA);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_email_esteja_sem_ponto_com() {
-        funcionario = from(Funcionario.class).gimme("emailWithoutPontoCom");
+        funcionario = from(Funcionario.class).gimme(EMAIL_WITHOUT_PONTO_COM);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_email_esteja_sem_com() {
-        funcionario = from(Funcionario.class).gimme("emailWithoutCom");
+        funcionario = from(Funcionario.class).gimme(EMAIL_WITHOUT_COM);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_email_esteja_com_caracteres_especiais() {
-        funcionario = from(Funcionario.class).gimme("emailWithSpecialCaracter");
+        funcionario = from(Funcionario.class).gimme(EMAIL_WITH_SPECIAL_CARACTER);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_retornar_true_se_cargo_for_null() {
-        funcionario = from(Funcionario.class).gimme("cargoNull");
+        funcionario = from(Funcionario.class).gimme(CARGO_NULL);
         assertTrue(returnAnnotationMsgError(funcionario, VALOR_ESTA_NULLO));
     }
     
@@ -214,7 +222,7 @@ public class FuncionarioTest {
     
     @Test
     public void deve_retornar_true_se_tipoContrato_for_null() {
-        funcionario = from(Funcionario.class).gimme("tipoContratoNull");
+        funcionario = from(Funcionario.class).gimme(TIPO_CONTRATO_NULL);
         assertTrue(returnAnnotationMsgError(funcionario, VALOR_ESTA_NULLO));
     }
     
@@ -232,7 +240,7 @@ public class FuncionarioTest {
     
     @Test
     public void deve_retornar_true_se_dataNascimento_for_null() {
-        funcionario = from(Funcionario.class).gimme("dataNascimentoNull");
+        funcionario = from(Funcionario.class).gimme(DATA_NASCIMENTO_NULL);
         assertTrue(returnAnnotationMsgError(funcionario, VALOR_ESTA_NULLO));
     }
     
@@ -259,14 +267,14 @@ public class FuncionarioTest {
      */
     @Test
     public void deve_ter_salario_maior_do_que_zero() {
-        funcionario = (from(Funcionario.class).gimme("salarioLess1"));
+        funcionario = (from(Funcionario.class).gimme(SALARIO_LESS_1));
         funcionario2.setSalario(funcionario.getSalario());
         assertTrue(returnAnnotationMsgError(funcionario2, PRECISA_SER_UM_VALOR_MAIOR));
     }
 
     @Test()
     public void deve_retornar_true_no_equals_para_serem_iguais() {
-        funcionario = (from(Funcionario.class).gimme("valid"));
+        funcionario = (from(Funcionario.class).gimme(VALID));
         funcionario2.setCpf(funcionario.getCpf());
         assertTrue("Os Funcionario são iguais", funcionario.equals(funcionario2));
     }
@@ -285,7 +293,7 @@ public class FuncionarioTest {
      */
     @Test()
     public void deve_ter_hashCode_iguais_para_serem_funcionarios_iguais() {
-        funcionario = (from(Funcionario.class).gimme("valid"));
+        funcionario = (from(Funcionario.class).gimme(VALID));
         funcionario2.setCpf(funcionario.getCpf());
         assertTrue(funcionario.hashCode() == funcionario2.hashCode());
     }

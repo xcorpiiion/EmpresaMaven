@@ -10,7 +10,7 @@ public final class Mensagem {
     private Mensagem() {
         
     }
-    
+
     /** The Constant NOME_E_MUITO_PEQUENO. */
     public static final String NOME_E_MUITO_PEQUENO = "O nome é muito pequeno";
 

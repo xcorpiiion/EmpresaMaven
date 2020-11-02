@@ -5,12 +5,16 @@ import java.util.Random;
 /**
  * The Class GeradorTelefone.
  */
-public class GeradorTelefone {
+public final class GeradorTelefone {
 
     /** The ddd random. */
     private static int dddRandom;
 
     private static int dddRandomInvalidos;
+
+    private GeradorTelefone() {
+
+    }
 
     /**
      * Gerador cell phone.

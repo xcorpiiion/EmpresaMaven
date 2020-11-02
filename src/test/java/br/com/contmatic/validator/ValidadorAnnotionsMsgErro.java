@@ -10,8 +10,12 @@ import javax.validation.Validator;
 /**
  * The Class ValidadorAnnotionsMsgErro.
  */
-public class ValidadorAnnotionsMsgErro {
- 
+public final class ValidadorAnnotionsMsgErro {
+
+    private ValidadorAnnotionsMsgErro() {
+
+    }
+
     /**
      * Return annotation msg error.
      *

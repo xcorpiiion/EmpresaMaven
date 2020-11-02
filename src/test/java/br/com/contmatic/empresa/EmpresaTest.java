@@ -1,40 +1,29 @@
 package br.com.contmatic.empresa;
 
-import static br.com.contmatic.constantes.Mensagem.*;
-import static br.com.contmatic.validator.ValidadorAnnotionsMsgErro.returnAnnotationMsgError;
-import static br.com.six2six.fixturefactory.Fixture.from;
-import static br.com.six2six.fixturefactory.loader.FixtureFactoryLoader.loadTemplates;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.runners.MethodSorters.NAME_ASCENDING;
+import br.com.contmatic.endereco.Endereco;
+import br.com.contmatic.telefone.Telefone;
+import com.github.javafaker.Faker;
+import org.junit.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
-
-import br.com.contmatic.constantes.Mensagem;
-import br.com.contmatic.endereco.Endereco;
-import br.com.contmatic.telefone.Telefone;
-import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
-import br.com.six2six.fixturefactory.Fixture;
-import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
+import static br.com.contmatic.constantes.Constante.*;
+import static br.com.contmatic.constantes.Mensagem.*;
+import static br.com.contmatic.validator.ValidadorAnnotionsMsgErro.returnAnnotationMsgError;
+import static br.com.six2six.fixturefactory.Fixture.from;
+import static br.com.six2six.fixturefactory.loader.FixtureFactoryLoader.loadTemplates;
+import static org.junit.Assert.*;
+import static org.junit.runners.MethodSorters.NAME_ASCENDING;
 
 /**
  * The Class EmpresaTest.
  */
 @FixMethodOrder(NAME_ASCENDING)
 public class EmpresaTest {
-
+    
     /** The produtos. */
     private static List<Produto> produtos;
 
@@ -48,15 +37,18 @@ public class EmpresaTest {
 
     private Set<Telefone> telefones;
 
+    private static Faker faker;
+
     /**
      * Cadastrar empresa.
      */
     @BeforeClass
     public static void cadastrar_empresa() {
+        faker = new Faker();
         loadTemplates("br.com.contmatic.fixture.factory");
-        loja = from(Empresa.class).gimme("valid");
-        loja.getEndereco().add(from(Endereco.class).gimme("valid"));
-        loja2 = from(Empresa.class).gimme("valid");
+        loja = from(Empresa.class).gimme(VALID);
+        loja.getEndereco().add(from(Endereco.class).gimme(VALID));
+        loja2 = from(Empresa.class).gimme(VALID);
     }
 
     /**
@@ -65,15 +57,15 @@ public class EmpresaTest {
     @Before
     public void add_dados_funcionario() {
         funcionarios = new ArrayList<>();
-        funcionarios.add(from(Funcionario.class).gimme("valid"));
+        funcionarios.add(from(Funcionario.class).gimme(VALID));
     }
 
     @Before
     public void addDadosTelefone() {
         telefones = new HashSet<>();
-        telefones.add(from(Telefone.class).gimme("valid"));
+        telefones.add(from(Telefone.class).gimme(VALID));
         loadTemplates("br.com.contmatic.fixture.factory");
-        telefones.add(from(Telefone.class).gimme("valid"));
+        telefones.add(from(Telefone.class).gimme(VALID));
     }
 
     /**
@@ -82,120 +74,122 @@ public class EmpresaTest {
     @Before
     public void add_dados_produto() {
         produtos = new ArrayList<>();
-        produtos.add(from(Produto.class).gimme("valid"));
+        produtos.add(from(Produto.class).gimme(VALID));
     }
 
     @Test
     public void deve_mudar_nome_empresa() {
-        loja.setNome("kratos games");
-        assertEquals("kratos games", loja.getNome());
+        final String nome = faker.name().firstName();
+        loja.setNome(nome);
+        assertEquals(nome, loja.getNome());
     }
     
     @Test
     public void deve_retornar_true_caso_nome_seja_null() {
-        loja = from(Empresa.class).gimme("nomeNull");
+        loja = from(Empresa.class).gimme(NOME_NULL);
         assertTrue(returnAnnotationMsgError(loja, VALOR_ESTA_NULLO));
     }
     
     @Test
     public void deve_retornar_true_caso_nome_seja_vazio() {
-        loja = from(Empresa.class).gimme("nomeEmpty");
+        loja = from(Empresa.class).gimme(NOME_EMPTY);
         assertTrue(returnAnnotationMsgError(loja, VALOR_ESTA_VAZIO));
     }
     
     @Test
     public void deve_retornar_true_caso_nome_esteja_com_espaco_em_branco() {
-        loja = from(Empresa.class).gimme("nomeBlankSpace");
+        loja = from(Empresa.class).gimme(NOME_BLANK_SPACE);
         assertTrue(returnAnnotationMsgError(loja, VALOR_ESTA_VAZIO));
     }
     
     @Test
     public void deve_retornar_true_caso_nome_seja_possua_menos_3_caracter() {
-        loja = from(Empresa.class).gimme("nomeLess3Caracter");
+        loja = from(Empresa.class).gimme(NOME_LESS_3_CARACTER);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_nome_seja_possua_mais_50_caracter() {
-        loja = from(Empresa.class).gimme("nomeGreaterCaracter");
+        loja = from(Empresa.class).gimme(NOME_GREATER_CARACTER);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_nome_seja_possua_caracteres_especiais() {
-        loja = from(Empresa.class).gimme("nomeWithSpecialCaracter");
+        loja = from(Empresa.class).gimme(NOME_WITH_SPECIAL_CARACTER);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_mudar_email_empresa() {
-        loja.setEmail("kratos@gmail.com");
-        assertEquals("kratos@gmail.com", loja.getEmail());
+        final String email = faker.internet().emailAddress();
+        loja.setEmail(email);
+        assertEquals(email, loja.getEmail());
     }
     
     @Test
     public void deve_retornar_true_caso_email_seja_null() {
-        loja = from(Empresa.class).gimme("emailNull");
+        loja = from(Empresa.class).gimme(EMAIL_NULL);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_email_seja_vazio() {
-        loja = from(Empresa.class).gimme("emailEmpty");
+        loja = from(Empresa.class).gimme(EMAIL_EMPTY);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_email_esteja_com_espaco_em_branco() {
-        loja = from(Empresa.class).gimme("emailBlankSpace");
+        loja = from(Empresa.class).gimme(EMAIL_BLANK_SPACE);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_email_esteja_com_menos_10_caracteres() {
-        loja = from(Empresa.class).gimme("emailLess10Caracteres");
+        loja = from(Empresa.class).gimme(EMAIL_LESS_10_CARACTERES);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_email_esteja_com_mais_100_caracteres() {
-        loja = from(Empresa.class).gimme("emailGreater100Caracteres");
+        loja = from(Empresa.class).gimme(EMAIL_GREATER_100_CARACTERES);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_email_esteja_com_espaco_em_branco_entre_o_email() {
-        loja = from(Empresa.class).gimme("emailWithBlankSpaceInWord");
+        loja = from(Empresa.class).gimme(EMAIL_WITH_BLANK_SPACE_IN_WORD);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_email_esteja_com_numero_depois_do_arroba() {
-        loja = from(Empresa.class).gimme("emailWithNumberAfterArroba");
+        loja = from(Empresa.class).gimme(EMAIL_WITH_NUMBER_AFTER_ARROBA);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_email_esteja_sem_arroba() {
-        loja = from(Empresa.class).gimme("emailWithoutArroba");
+        loja = from(Empresa.class).gimme(EMAIL_WITHOUT_ARROBA);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_email_esteja_sem_ponto_com() {
-        loja = from(Empresa.class).gimme("emailWithoutPontoCom");
+        loja = from(Empresa.class).gimme(EMAIL_WITHOUT_PONTO_COM);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_email_esteja_sem_com() {
-        loja = from(Empresa.class).gimme("emailWithoutCom");
+        loja = from(Empresa.class).gimme(EMAIL_WITHOUT_COM);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_email_esteja_com_caracteres_especiais() {
-        loja = from(Empresa.class).gimme("emailWithSpecialCaracter");
+        loja = from(Empresa.class).gimme(EMAIL_WITH_SPECIAL_CARACTER);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
     
@@ -224,8 +218,8 @@ public class EmpresaTest {
      */
     @Test
     public void nao_deve_aceitar_cnpj_null() {
-        loja = from(Empresa.class).gimme("cnpjNull");
-        assertNotNull(loja.getCnpj());
+        loja = from(Empresa.class).gimme(CNPJ_NULL);
+        assertNull(loja.getCnpj());
     }
 
     /**
@@ -233,7 +227,7 @@ public class EmpresaTest {
      */
     @Test
     public void nao_deve_aceitar_cnpj_com_letras() {
-        loja = from(Empresa.class).gimme("cnpjContainsWord");
+        loja = from(Empresa.class).gimme(CNPJ_CONTAINS_WORD);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
 
@@ -242,7 +236,7 @@ public class EmpresaTest {
      */
     @Test
     public void nao_deve_aceitar_cnpj_null_com_menos_14_numeros() {
-        loja = from(Empresa.class).gimme("cnpjWrongSize");
+        loja = from(Empresa.class).gimme(CNPJ_WRONG_SIZE);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
 
@@ -251,7 +245,7 @@ public class EmpresaTest {
      */
     @Test
     public void deve_retornar_true_caso_funcionario_seja_null() {
-        loja = from(Empresa.class).gimme("funcionarioNull");
+        loja = from(Empresa.class).gimme(FUNCIONARIO_NULL);
         assertTrue(returnAnnotationMsgError(loja, VALOR_ESTA_NULLO));
     }
     
@@ -263,14 +257,14 @@ public class EmpresaTest {
     
     @Test
     public void deve_retornar_true_caso_cliente_seja_null() {
-        loja = from(Empresa.class).gimme("clienteNull");
+        loja = from(Empresa.class).gimme(CLIENTE_NULL);
         assertTrue(returnAnnotationMsgError(loja, VALOR_ESTA_NULLO));
     }
     
     @Test
     public void deve_add_cliente_na_empresa() {
         List<Cliente> clientes = new ArrayList<>();
-        clientes.add(from(Cliente.class).gimme("valid"));
+        clientes.add(from(Cliente.class).gimme(VALID));
         loja.setCliente(clientes);
         assertTrue(loja.getCliente().size() > 0);
     }
@@ -283,7 +277,7 @@ public class EmpresaTest {
     @Test
     public void deve_add_endereco_empresa() {
         Set<Endereco> endereco = new HashSet<>();
-        endereco.add(from(Endereco.class).gimme("valid"));
+        endereco.add(from(Endereco.class).gimme(VALID));
         loja.setEndereco(endereco);
         assertTrue(loja.getEndereco().size() > 0);
     }
@@ -320,7 +314,7 @@ public class EmpresaTest {
      */
     @Test()
     public void deve_ter_o_mesmo_hashCode_para_serem_iguais() {
-        loja2 = from(Empresa.class).gimme("valid");
+        loja2 = from(Empresa.class).gimme(VALID);
         loja2.setCnpj(loja.getCnpj());
         assertEquals(loja.hashCode(), loja2.hashCode());
     }

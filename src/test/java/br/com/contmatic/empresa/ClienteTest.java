@@ -1,42 +1,29 @@
 package br.com.contmatic.empresa;
 
-import static br.com.contmatic.constantes.Mensagem.*;
-import static br.com.contmatic.validator.ValidadorAnnotionsMsgErro.returnAnnotationMsgError;
-import static br.com.six2six.fixturefactory.Fixture.from;
-import static br.com.six2six.fixturefactory.loader.FixtureFactoryLoader.loadTemplates;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.runners.MethodSorters.NAME_ASCENDING;
-
-import java.math.BigDecimal;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import br.com.contmatic.telefone.Telefone;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
-import org.junit.runners.MethodSorters;
 
-import br.com.contmatic.constantes.Mensagem;
-import br.com.contmatic.telefone.Telefone;
-import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
-import br.com.six2six.fixturefactory.Fixture;
-import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
+import java.math.BigDecimal;
+import java.util.*;
+
+import static br.com.contmatic.constantes.Constante.*;
+import static br.com.contmatic.constantes.Mensagem.*;
+import static br.com.contmatic.validator.ValidadorAnnotionsMsgErro.returnAnnotationMsgError;
+import static br.com.six2six.fixturefactory.Fixture.from;
+import static br.com.six2six.fixturefactory.loader.FixtureFactoryLoader.loadTemplates;
+import static org.junit.Assert.*;
+import static org.junit.runners.MethodSorters.NAME_ASCENDING;
 
 /**
  * The Class ClienteTest.
  */
 @FixMethodOrder(NAME_ASCENDING)
 public class ClienteTest {
-
+    
     /** The produtos. */
     private static List<Produto> produtos;
 
@@ -57,8 +44,8 @@ public class ClienteTest {
     public static void addDadosIniciais() {
         loadTemplates("br.com.contmatic.fixture.factory");
         produtos = new ArrayList<>();
-        produtos.add(from(Produto.class).gimme("valid"));
-        loja = from(Empresa.class).gimme("valid");
+        produtos.add(from(Produto.class).gimme(VALID));
+        loja = from(Empresa.class).gimme(VALID);
         loja.setProduto(produtos);
         loja.setCliente(new ArrayList<>());
         loja.setFuncionario(new ArrayList<>());
@@ -69,9 +56,9 @@ public class ClienteTest {
      */
     @Before
     public void addDadosCliente() {
-        cliente = (from(Cliente.class).gimme("valid"));
+        cliente = (from(Cliente.class).gimme(VALID));
         telefone = new HashSet<>();
-        telefone.add(from(Telefone.class).gimme("valid"));
+        telefone.add(from(Telefone.class).gimme(VALID));
         cliente.setTelefones(telefone);
     }
 
@@ -86,7 +73,7 @@ public class ClienteTest {
      */
     @Test
     public void deve_retornar_true_caso_nome_esteja_vazio() {
-        Cliente clienteInvalid = from(Cliente.class).gimme("nomeEmpty");
+        Cliente clienteInvalid = from(Cliente.class).gimme(NOME_EMPTY);
         cliente.setNome(clienteInvalid.getNome());
         assertTrue(returnAnnotationMsgError(cliente, VALOR_ESTA_VAZIO));
     }
@@ -96,35 +83,35 @@ public class ClienteTest {
      */
     @Test
     public void deve_retornar_true_caso_nome_tenha_apenas_espacos_em_branco() {
-        Cliente clienteInvalid = from(Cliente.class).gimme("nomeBlankSpace");
+        Cliente clienteInvalid = from(Cliente.class).gimme(NOME_BLANK_SPACE);
         cliente.setNome(clienteInvalid.getNome());
         assertTrue(returnAnnotationMsgError(cliente, VALOR_ESTA_VAZIO));
     }
 
     @Test
     public void deve_retornar_true_caso_nome_seja_null() {
-        Cliente clienteInvalid = from(Cliente.class).gimme("nomeNull");
+        Cliente clienteInvalid = from(Cliente.class).gimme(NOME_NULL);
         cliente.setNome(clienteInvalid.getNome());
         assertTrue(returnAnnotationMsgError(cliente, VALOR_ESTA_NULLO));
     }
 
     @Test
     public void deve_retornar_true_caso_nome_seja_possua_menos_3_caracter() {
-        Cliente clienteInvalid = from(Cliente.class).gimme("nomeLess3Caracter");
+        Cliente clienteInvalid = from(Cliente.class).gimme(NOME_LESS_3_CARACTER);
         cliente.setNome(clienteInvalid.getNome());
         assertTrue(returnAnnotationMsgError(cliente, VALOR_NAO_E_VALIDO));
     }
 
     @Test
     public void deve_retornar_true_caso_nome_seja_possua_mais_50_caracter() {
-        Cliente clienteInvalid = from(Cliente.class).gimme("nomeGreaterCaracter");
+        Cliente clienteInvalid = from(Cliente.class).gimme(NOME_GREATER_CARACTER);
         cliente.setNome(clienteInvalid.getNome());
         assertTrue(returnAnnotationMsgError(cliente, VALOR_NAO_E_VALIDO));
     }
 
     @Test
     public void deve_retornar_true_caso_nome_seja_possua_caracteres_especiais() {
-        Cliente clienteInvalid = from(Cliente.class).gimme("nomeWithSpecialCaracter");
+        Cliente clienteInvalid = from(Cliente.class).gimme(NOME_WITH_SPECIAL_CARACTER);
         cliente.setNome(clienteInvalid.getNome());
         assertTrue(returnAnnotationMsgError(cliente, VALOR_NAO_E_VALIDO));
     }
@@ -134,7 +121,7 @@ public class ClienteTest {
      */
     @Test
     public void nao_deve_aceitar_email_null() {
-        Cliente clienteInvalid = from(Cliente.class).gimme("emailNull");
+        Cliente clienteInvalid = from(Cliente.class).gimme(EMAIL_NULL);
         cliente.setNome(clienteInvalid.getEmail());
         assertNotNull(cliente.getEmail());
     }
@@ -144,56 +131,44 @@ public class ClienteTest {
      */
     @Test
     public void deve_retornar_true_caso_email_contenha_espaco_em_branco() {
-        Cliente clienteInvalid = from(Cliente.class).gimme("emailBlankSpace");
+        Cliente clienteInvalid = from(Cliente.class).gimme(EMAIL_BLANK_SPACE);
         cliente.setEmail(clienteInvalid.getEmail());
         assertTrue(returnAnnotationMsgError(cliente, VALOR_NAO_E_VALIDO));
     }
 
     @Test
     public void deve_retornar_true_caso_email_esteja_com_menos_10_caracteres() {
-        cliente = from(Cliente.class).gimme("emailLess10Caracteres");
-        assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
-    }
-
-    @Test
-    public void deve_retornar_true_caso_email_esteja_com_mais_100_caracteres() {
-        cliente = from(Cliente.class).gimme("emailGreater100Caracteres");
+        cliente = from(Cliente.class).gimme(EMAIL_LESS_10_CARACTERES);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
 
     @Test
     public void deve_retornar_true_caso_email_esteja_com_espaco_em_branco_entre_o_email() {
-        cliente = from(Cliente.class).gimme("emailWithBlankSpaceInWord");
-        assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
-    }
-
-    @Test
-    public void deve_retornar_true_caso_email_esteja_com_numero_depois_do_arroba() {
-        cliente = from(Cliente.class).gimme("emailWithNumberAfterArroba");
+        cliente = from(Cliente.class).gimme(EMAIL_WITH_BLANK_SPACE_IN_WORD);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
 
     @Test
     public void deve_retornar_true_caso_email_esteja_sem_arroba() {
-        cliente = from(Cliente.class).gimme("emailWithoutArroba");
+        cliente = from(Cliente.class).gimme(EMAIL_WITHOUT_ARROBA);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
 
     @Test
     public void deve_retornar_true_caso_email_esteja_sem_ponto_com() {
-        cliente = from(Cliente.class).gimme("emailWithoutPontoCom");
+        cliente = from(Cliente.class).gimme(EMAIL_WITHOUT_PONTO_COM);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
 
     @Test
     public void deve_retornar_true_caso_email_esteja_sem_com() {
-        cliente = from(Cliente.class).gimme("emailWithoutCom");
+        cliente = from(Cliente.class).gimme(EMAIL_WITHOUT_COM);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
 
     @Test
     public void deve_retornar_true_caso_email_esteja_com_caracteres_especiais() {
-        cliente = from(Cliente.class).gimme("emailWithSpecialCaracter");
+        cliente = from(Cliente.class).gimme(EMAIL_WITH_SPECIAL_CARACTER);
         assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
     }
 
@@ -202,7 +177,7 @@ public class ClienteTest {
      */
     @Test
     public void nao_deve_aceitar_endereco_null() {
-        Cliente clienteInvalid = from(Cliente.class).gimme("enderecoNull");
+        Cliente clienteInvalid = from(Cliente.class).gimme(ENDERECO_NULL);
         cliente.setEndereco(clienteInvalid.getEndereco());
         assertNull(cliente.getEndereco());
     }
@@ -210,11 +185,10 @@ public class ClienteTest {
     /**
      * Data nascimento nao deve ser null exception.
      *
-     * @throws ParseException the parse exception
      */
     @Test
     public void deve_retornar_true_se_dataNascimento_for_null() {
-        Cliente clienteValid = from(Cliente.class).gimme("dataNascimentoNull");
+        Cliente clienteValid = from(Cliente.class).gimme(DATA_NASCIMENTO_NULL);
         assertTrue(returnAnnotationMsgError(clienteValid, VALOR_ESTA_NULLO));
     }
 
@@ -237,9 +211,7 @@ public class ClienteTest {
 
     @Test
     public void deve_retornar_true_caso_cpf_nao_seja_valido() {
-        StringBuilder cpf = new StringBuilder();
-        cpf.append(new Random().nextInt(888888888) + 111111111);
-        cliente.setCpf(cpf.toString());
+        cliente.setCpf(String.valueOf(new Random().nextInt(888888888) + 111111111));
         assertTrue(returnAnnotationMsgError(cliente, VALOR_NAO_E_VALIDO));
     }
 
@@ -261,19 +233,19 @@ public class ClienteTest {
 
     @Test()
     public void deve_retornar_true_no_equals_para_serem_iguais() {
-        cliente2 = (from(Cliente.class).gimme("valid"));
+        cliente2 = (from(Cliente.class).gimme(VALID));
         cliente2.setCpf(cliente.getCpf());
-        assertTrue("Os cliente são iguais", cliente.equals(cliente2));
+        assertEquals("Os cliente são iguais", cliente, cliente2);
     }
 
     @Test()
     public void deve_retornar_true_quando_compara_com_mesmo_objeto() {
-        assertTrue(cliente.equals(cliente));
+        assertSame(cliente, cliente);
     }
 
     @Test()
     public void deve_retornar_false_quando_compara_com_classe_diferente() {
-        assertFalse(cliente.equals(new Object()));
+        assertNotEquals(cliente, new Object());
     }
 
     /**
@@ -281,9 +253,9 @@ public class ClienteTest {
      */
     @Test()
     public void deve_ter_hashCode_iguais_para_serem_clientes_iguais() {
-        cliente2 = (from(Cliente.class).gimme("valid"));
+        cliente2 = (from(Cliente.class).gimme(VALID));
         cliente2.setCpf(cliente.getCpf());
-        assertTrue(cliente.hashCode() == cliente2.hashCode());
+        assertEquals(cliente.hashCode(), cliente2.hashCode());
     }
 
     /**
@@ -291,7 +263,7 @@ public class ClienteTest {
      */
     @Test()
     public void nao_deve_ter_equals_null_para_comparar_clientes() {
-        assertFalse("Os clientes são igauis", cliente.equals(null));
+        assertNotEquals("Os clientes são igauis", null, cliente);
     }
 
     @Test

@@ -1,5 +1,13 @@
 package br.com.contmatic.telefone;
 
+import static br.com.contmatic.constantes.Constante.*;
+import static br.com.contmatic.constantes.Mensagem.*;
+import static br.com.contmatic.telefone.DddBrasil.ARACAJU;
+import static br.com.contmatic.telefone.DddBrasil.SAO_JOSE_DOS_CAMPOS;
+import static br.com.contmatic.telefone.TipoTelefone.FIXO;
+import static br.com.contmatic.telefone.TipoTelefone.MOVEL;
+import static br.com.contmatic.validator.ValidadorAnnotionsMsgErro.returnAnnotationMsgError;
+import static br.com.six2six.fixturefactory.Fixture.from;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -33,8 +41,8 @@ public class TelefoneTest {
     @BeforeClass
     public static void addDadosTelefone() {
         FixtureFactoryLoader.loadTemplates("br.com.contmatic.fixture.factory");
-        telefone = Fixture.from(Telefone.class).gimme("valid");
-        telefone2 = Fixture.from(Telefone.class).gimme("valid");
+        telefone = from(Telefone.class).gimme(VALID);
+        telefone2 = from(Telefone.class).gimme(VALID);
     }
     
     /**
@@ -43,38 +51,38 @@ public class TelefoneTest {
     
     @Test
     public void deve_retornar_true_caso_telefone_seja_valido() {
-        telefone = Fixture.from(Telefone.class).gimme("valid");
-        assertTrue(telefone.getPhone().matches(Constante.PHONE_VALIDATION));
+        telefone = from(Telefone.class).gimme(VALID);
+        assertTrue(telefone.getPhone().matches(PHONE_VALIDATION));
     }
     
     @Test
     public void deve_retornar_true_caso_telefone_seja_null() {
-        telefone = Fixture.from(Telefone.class).gimme("phoneNull");
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(telefone, Mensagem.VALOR_ESTA_NULLO));
+        telefone = from(Telefone.class).gimme(PHONE_NULL);
+        assertTrue(returnAnnotationMsgError(telefone, VALOR_ESTA_NULLO));
     }
     
     @Test
     public void deve_retornar_true_caso_telefone_esteja_vazio() {
-        telefone = Fixture.from(Telefone.class).gimme("phoneEmpty");
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(telefone, Mensagem.VALOR_ESTA_VAZIO));
+        telefone = from(Telefone.class).gimme(PHONE_EMPTY);
+        assertTrue(returnAnnotationMsgError(telefone, VALOR_ESTA_VAZIO));
     }
     
     @Test
     public void deve_retornar_true_caso_telefone_tenha_apenas_espacos_em_branco() {
-        telefone = Fixture.from(Telefone.class).gimme("phoneBlankSpace");
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(telefone, Mensagem.VALOR_ESTA_VAZIO));
+        telefone = from(Telefone.class).gimme(PHONE_BLANK_SPACE);
+        assertTrue(returnAnnotationMsgError(telefone, VALOR_ESTA_VAZIO));
     }
     
     @Test
     public void deve_retornar_true_caso_telefone_esteja_com_tamanho_invalido() {
-        telefone = Fixture.from(Telefone.class).gimme("phoneInvalidSize");
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(telefone, Mensagem.VALOR_NAO_E_VALIDO));
+        telefone = from(Telefone.class).gimme(PHONE_INVALID_SIZE);
+        assertTrue(returnAnnotationMsgError(telefone, VALOR_NAO_E_VALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_ddd_seja_null() {
-        telefone = Fixture.from(Telefone.class).gimme("dddNull");
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(telefone, Mensagem.VALOR_ESTA_NULLO));
+        telefone = from(Telefone.class).gimme(DDD_NULL);
+        assertTrue(returnAnnotationMsgError(telefone, VALOR_ESTA_NULLO));
     }
     
     @Test
@@ -85,41 +93,41 @@ public class TelefoneTest {
     
     @Test
     public void deve_retornar_false_caso_ddd_seja_diferente() {
-        telefone2.setDddTelefone(DddBrasil.SAO_JOSE_DOS_CAMPOS);
-        telefone.setDddTelefone(DddBrasil.ARACAJU);
+        telefone2.setDddTelefone(SAO_JOSE_DOS_CAMPOS);
+        telefone.setDddTelefone(ARACAJU);
         assertFalse(telefone.getDddTelefone().getDdd() == telefone2.getDddTelefone().getDdd());
     }
     
     @Test
     public void deve_retornar_true_caso_sigla_sejam_iguais() {
-        telefone2.setDddTelefone(DddBrasil.SAO_JOSE_DOS_CAMPOS);
-        telefone.setDddTelefone(DddBrasil.SAO_JOSE_DOS_CAMPOS);
+        telefone2.setDddTelefone(SAO_JOSE_DOS_CAMPOS);
+        telefone.setDddTelefone(SAO_JOSE_DOS_CAMPOS);
         assertTrue(telefone.getDddTelefone().getSigla() == telefone2.getDddTelefone().getSigla());
     }
     
     @Test
     public void deve_retornar_false_caso_sigla_seja_diferente() {
         FixtureFactoryLoader.loadTemplates("br.com.contmatic.fixture.factory");
-        telefone2 = Fixture.from(Telefone.class).gimme("valid");
+        telefone2 = from(Telefone.class).gimme(VALID);
         assertFalse(telefone.getDddTelefone().getSigla() == telefone2.getDddTelefone().getSigla());
     }
     
     @Test
     public void deve_retornar_true_caso_tipoTelefone_esteja_null() {
-        telefone = Fixture.from(Telefone.class).gimme("tipoTelefoneNull");
-        assertTrue(ValidadorAnnotionsMsgErro.returnAnnotationMsgError(telefone, Mensagem.VALOR_ESTA_NULLO));
+        telefone = from(Telefone.class).gimme(TIPO_TELEFONE_NULL);
+        assertTrue(returnAnnotationMsgError(telefone, VALOR_ESTA_NULLO));
     }
     
     @Test
     public void deve_retornar_true_caso_tipoTelefone_seja_fixo() {
-        telefone.setTipoTelefone(TipoTelefone.FIXO);
-        assertTrue(telefone.getTipoTelefone() == TipoTelefone.FIXO);
+        telefone.setTipoTelefone(FIXO);
+        assertTrue(telefone.getTipoTelefone() == FIXO);
     }
     
     @Test
     public void deve_retornar_true_caso_tipoTelefone_seja_movel() {
-        telefone.setTipoTelefone(TipoTelefone.MOVEL);
-        assertTrue(telefone.getTipoTelefone() == TipoTelefone.MOVEL);
+        telefone.setTipoTelefone(MOVEL);
+        assertTrue(telefone.getTipoTelefone() == MOVEL);
     }
     
     @Test
