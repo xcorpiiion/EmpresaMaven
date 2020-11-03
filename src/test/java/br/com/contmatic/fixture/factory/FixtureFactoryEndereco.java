@@ -1,16 +1,42 @@
 package br.com.contmatic.fixture.factory;
 
-import br.com.contmatic.constantes.Constante;
+import static br.com.contmatic.constantes.Constante.BAIRRO_BLANK_SPACE;
+import static br.com.contmatic.constantes.Constante.BAIRRO_EMPTY;
+import static br.com.contmatic.constantes.Constante.BAIRRO_GREATER_50_CARACTER;
+import static br.com.contmatic.constantes.Constante.BAIRRO_LESS_3_CARACTER;
+import static br.com.contmatic.constantes.Constante.BAIRRO_NULL;
+import static br.com.contmatic.constantes.Constante.BAIRRO_WITH_SPECIAL_CARACTER;
+import static br.com.contmatic.constantes.Constante.CEP_BLANK_SPACE;
+import static br.com.contmatic.constantes.Constante.CEP_CONTAINS_WORD;
+import static br.com.contmatic.constantes.Constante.CEP_EMPTY;
+import static br.com.contmatic.constantes.Constante.CEP_LENGTH_DIFFERENCE_8;
+import static br.com.contmatic.constantes.Constante.CEP_NULL;
+import static br.com.contmatic.constantes.Constante.CIDADE_BLANK_SPACE;
+import static br.com.contmatic.constantes.Constante.CIDADE_CONTAINS_NUMBER;
+import static br.com.contmatic.constantes.Constante.CIDADE_EMPTY;
+import static br.com.contmatic.constantes.Constante.CIDADE_GREATER_50_CARACTER;
+import static br.com.contmatic.constantes.Constante.CIDADE_LESS_3_CARACTER;
+import static br.com.contmatic.constantes.Constante.CIDADE_NULL;
+import static br.com.contmatic.constantes.Constante.CIDADE_WITH_SPECIAL_CARACTER;
+import static br.com.contmatic.constantes.Constante.ESTADO_NULL;
+import static br.com.contmatic.constantes.Constante.NOME_WITH_SPECIAL_CARACTER;
+import static br.com.contmatic.constantes.Constante.NUMERO_RESIDENCIA_LESS_THAN_ZERO;
+import static br.com.contmatic.constantes.Constante.RUA_BLANK_SPACE;
+import static br.com.contmatic.constantes.Constante.RUA_EMPTY;
+import static br.com.contmatic.constantes.Constante.RUA_GREATER_50_CARACTER;
+import static br.com.contmatic.constantes.Constante.RUA_LESS_3_CARACTER;
+import static br.com.contmatic.constantes.Constante.RUA_NULL;
+import static br.com.contmatic.constantes.Constante.RUA_WITH_SPECIAL_CARACTER;
+import static br.com.contmatic.constantes.Constante.VALID;
+import static br.com.six2six.fixturefactory.Fixture.of;
+
+import java.util.Random;
+
 import br.com.contmatic.endereco.Endereco;
 import br.com.contmatic.endereco.EstadosBrasil;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
-
-import java.util.Random;
-
-import static br.com.contmatic.constantes.Constante.*;
-import static br.com.six2six.fixturefactory.Fixture.of;
 
 
 /**

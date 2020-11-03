@@ -1,18 +1,15 @@
 package br.com.contmatic.endereco;
 
-import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
-import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import br.com.contmatic.constantes.Constante;
-import br.com.contmatic.constantes.Mensagem;
+import javax.validation.constraints.*;
+
+import static br.com.contmatic.constantes.Constante.ILLEGAL_NUMBER;
+import static br.com.contmatic.constantes.Constante.ILLEGAL_WORD;
+import static br.com.contmatic.constantes.Mensagem.*;
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
+import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
 /**
  * The Class Endereco.
@@ -20,41 +17,41 @@ import br.com.contmatic.constantes.Mensagem;
 public class Endereco {
 
     /** The rua. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
-    @NotEmpty(message = Mensagem.VALOR_ESTA_VAZIO)
-    @NotBlank(message = Mensagem.VALOR_ESTA_VAZIO)
-    @Size(min = 3, max = 50, message = Mensagem.VALOR_NAO_E_VALIDO)
+    @NotNull(message = RUA_ENDERECO_VAZIO)
+    @NotEmpty(message = RUA_ENDERECO_VAZIO)
+    @NotBlank(message = RUA_ENDERECO_VAZIO)
+    @Size(min = 5, max = 50, message = RUA_ENDERECO_TAMANHO)
     private String rua;
 
     /** The bairro. */
-    @NotEmpty(message = Mensagem.VALOR_ESTA_VAZIO)
-    @NotBlank(message = Mensagem.VALOR_ESTA_VAZIO)
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
-    @Size(min = 3, max = 50, message = Mensagem.VALOR_NAO_E_VALIDO)
-    @Pattern(regexp = Constante.ILLEGAL_WORD, message = Mensagem.VALOR_NAO_E_VALIDO)
+    @NotEmpty(message = BAIRRO_ENDERECO_VAZIO)
+    @NotBlank(message = BAIRRO_ENDERECO_VAZIO)
+    @NotNull(message = BAIRRO_ENDERECO_VAZIO)
+    @Size(min = 3, max = 50, message = BAIRRO_ENDERECO_TAMANHO)
+    @Pattern(regexp = ILLEGAL_WORD, message = BAIRRO_ENDERECO_CARACTERE_INVALIDO)
     private String bairro;
 
     /** The cep. */
-    @NotEmpty(message = Mensagem.VALOR_ESTA_VAZIO)
-    @NotBlank(message = Mensagem.VALOR_ESTA_VAZIO)
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
-    @Pattern(regexp = Constante.ILLEGAL_WORD, message = Mensagem.VALOR_NAO_E_VALIDO)
+    @NotEmpty(message = CEP_ENDERECO_VAZIO)
+    @NotBlank(message = CEP_ENDERECO_VAZIO)
+    @NotNull(message = CEP_ENDERECO_VAZIO)
+    @Pattern(regexp = ILLEGAL_WORD, message = CEP_ENDERECO_CARACTERE_INVALIDO)
     private String cep;
 
     /** The numero residencia. */
-    @Min(value = 1)
+    @Min(value = 1, message = NUMERO_RESIDENCIA_ENDERECO_TAMANHO)
     private int numeroResidencia;
 
     /** The cidade. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
-    @NotEmpty(message = Mensagem.VALOR_ESTA_VAZIO)
-    @NotBlank(message = Mensagem.VALOR_ESTA_VAZIO)
-    @Min(value = 5, message = Mensagem.PRECISA_SER_UM_VALOR_MAIOR)
-    @Pattern(regexp = Constante.ILLEGAL_NUMBER, message = Mensagem.VALOR_NAO_E_VALIDO)
+    @NotNull(message = CIDADE_ENDERECO_VAZIO)
+    @NotEmpty(message = CIDADE_ENDERECO_VAZIO)
+    @NotBlank(message = CIDADE_ENDERECO_VAZIO)
+    @Min(value = 5, message = CIDADE_ENDERECO_TAMANHO)
+    @Pattern(regexp = ILLEGAL_NUMBER, message = CIDADE_ENDERECO_CARACTERE_INVALIDO)
     private String cidade;
 
     /** The estado. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    @NotNull(message = ESTADO_ENDERECO_VAZIO)
     private EstadosBrasil estado;
 
     /**

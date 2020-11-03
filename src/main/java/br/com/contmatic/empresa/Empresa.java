@@ -1,29 +1,20 @@
 package br.com.contmatic.empresa;
 
-import static br.com.contmatic.constantes.Constante.ILLEGAL_NUMBER;
-import static br.com.contmatic.constantes.Constante.VALIDATION_EMAIL;
-import static br.com.contmatic.constantes.Mensagem.VALOR_ESTA_NULLO;
-import static br.com.contmatic.constantes.Mensagem.VALOR_ESTA_VAZIO;
-import static br.com.contmatic.constantes.Mensagem.VALOR_NAO_E_VALIDO;
-import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
-import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
-
-import java.util.List;
-import java.util.Set;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
+import br.com.contmatic.endereco.Endereco;
+import br.com.contmatic.telefone.Telefone;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.br.CNPJ;
 
-import br.com.contmatic.constantes.Mensagem;
-import br.com.contmatic.endereco.Endereco;
-import br.com.contmatic.telefone.Telefone;
+import javax.validation.constraints.*;
+import java.util.List;
+import java.util.Set;
+
+import static br.com.contmatic.constantes.Constante.ILLEGAL_NUMBER;
+import static br.com.contmatic.constantes.Constante.VALIDATION_EMAIL;
+import static br.com.contmatic.constantes.Mensagem.*;
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
+import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
 /**
  * The Class Empresa.
@@ -31,43 +22,37 @@ import br.com.contmatic.telefone.Telefone;
 public class Empresa {
 
     /** The nome. */
-    @NotEmpty(message = VALOR_ESTA_VAZIO)
-    @NotBlank(message = VALOR_ESTA_VAZIO)
-    @NotNull(message = VALOR_ESTA_NULLO)
-    @Size(min = 3, max = 100, message = VALOR_NAO_E_VALIDO)
-    @Pattern(regexp = ILLEGAL_NUMBER, message = VALOR_NAO_E_VALIDO)
+    @NotEmpty(message = NOME_EMPRESA_VAZIO)
+    @NotBlank(message = NOME_EMPRESA_VAZIO)
+    @NotNull(message = NOME_EMPRESA_VAZIO)
+    @Size(min = 3, max = 100, message = NOME_EMPRESA_TAMANHO)
+    @Pattern(regexp = ILLEGAL_NUMBER, message = NOME_EMPRESA_CARACTERE_INVALIDO)
     private String nome;
 
     /** The email. */
-    @NotEmpty(message = VALOR_ESTA_VAZIO)
-    @NotBlank(message = VALOR_ESTA_VAZIO)
-    @NotNull(message = VALOR_ESTA_NULLO)
-    @Size(min = 10, max = 100, message = VALOR_NAO_E_VALIDO)
-    @Pattern(regexp = VALIDATION_EMAIL, message = VALOR_NAO_E_VALIDO)
+    @NotEmpty(message = EMAIL_EMPRESA_VAZIO)
+    @NotBlank(message = EMAIL_EMPRESA_VAZIO)
+    @NotNull(message = EMAIL_EMPRESA_VAZIO)
+    @Size(min = 10, max = 100, message = EMAIL_EMPRESA_TAMANHO)
+    @Pattern(regexp = VALIDATION_EMAIL, message = EMAIL_EMPRESA_CARACTERE_INVALIDO)
     private String email;
 
     /** The cnpj. */
-    @CNPJ(message = VALOR_NAO_E_VALIDO)
+    @CNPJ(message = CNPJ_EMPRESA_INVALIDO)
     private String cnpj;
 
     /** The telefones. */
-    @NotNull(message = VALOR_ESTA_NULLO)
+    @NotNull(message = TELEFONE_EMPRESA_VAZIO)
     private Set<Telefone> telefones;
 
     /** The enderecos. */
-    @NotNull(message = VALOR_ESTA_NULLO)
+    @NotNull(message = ENDERECO_EMPRESA_VAZIO)
     private Set<Endereco> enderecos;
 
-    /** The produtos. */
-    @NotNull(message = VALOR_ESTA_NULLO)
     private List<Produto> produtos;
 
-    /** The funcionarios. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
     private List<Funcionario> funcionarios;
 
-    /** The clientes. */
-    @NotNull(message = VALOR_ESTA_NULLO)
     private List<Cliente> clientes;
 
     /**

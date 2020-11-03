@@ -1,22 +1,30 @@
 package br.com.contmatic.empresa;
 
-import static br.com.contmatic.constantes.Constante.*;
-import static br.com.contmatic.constantes.Mensagem.*;
+import static br.com.contmatic.constantes.Constante.NOME_BLANK_SPACE;
+import static br.com.contmatic.constantes.Constante.NOME_EMPTY;
+import static br.com.contmatic.constantes.Constante.NOME_GREATER_CARACTER;
+import static br.com.contmatic.constantes.Constante.NOME_LESS_3_CARACTER;
+import static br.com.contmatic.constantes.Constante.NOME_NULL;
+import static br.com.contmatic.constantes.Constante.PRECO_LESS_1;
+import static br.com.contmatic.constantes.Constante.PRECO_NULL;
+import static br.com.contmatic.constantes.Constante.VALID;
+import static br.com.contmatic.constantes.Mensagem.NOME_PRODUTO_TAMANHO;
+import static br.com.contmatic.constantes.Mensagem.NOME_PRODUTO_VAZIO;
+import static br.com.contmatic.constantes.Mensagem.PRECO_PRODUTO_TAMANHO;
+import static br.com.contmatic.constantes.Mensagem.PRECO_PRODUTO_VAZIO;
 import static br.com.contmatic.validator.ValidadorAnnotionsMsgErro.returnAnnotationMsgError;
 import static br.com.six2six.fixturefactory.Fixture.from;
 import static br.com.six2six.fixturefactory.loader.FixtureFactoryLoader.loadTemplates;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
-import br.com.contmatic.constantes.Constante;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import br.com.contmatic.constantes.Mensagem;
-import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
-import br.com.six2six.fixturefactory.Fixture;
-import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
 /**
  * The Class ProdutoTest.
@@ -44,7 +52,7 @@ public class ProdutoTest {
     public void deve_armazenar_nome_null_e_armazenar_no_validationAnnotation() {
         produto = from(Produto.class).gimme(NOME_NULL);
         assertNull(produto.getNome());
-        assertTrue(returnAnnotationMsgError(produto, VALOR_ESTA_NULLO));
+        assertTrue(returnAnnotationMsgError(produto, NOME_PRODUTO_VAZIO));
     }
 
     /**
@@ -69,13 +77,13 @@ public class ProdutoTest {
     @Test
     public void deve_retornar_true_caso_nome_seja_possua_menos_3_caracter() {
         produto = from(Produto.class).gimme(NOME_LESS_3_CARACTER);
-        assertTrue(returnAnnotationMsgError(produto, VALOR_NAO_E_VALIDO));
+        assertTrue(returnAnnotationMsgError(produto, NOME_PRODUTO_TAMANHO));
     }
     
     @Test
     public void deve_retornar_true_caso_nome_seja_possua_mais_50_caracter() {
         produto = from(Produto.class).gimme(NOME_GREATER_CARACTER);
-        assertTrue(returnAnnotationMsgError(produto, VALOR_NAO_E_VALIDO));
+        assertTrue(returnAnnotationMsgError(produto, NOME_PRODUTO_TAMANHO));
     }
 
     /**
@@ -84,7 +92,7 @@ public class ProdutoTest {
     @Test
     public void deve_retornar_mensagem_caso_preco_seja_null() {
         produto = from(Produto.class).gimme(PRECO_NULL);
-        assertTrue(returnAnnotationMsgError(produto, VALOR_ESTA_NULLO));
+        assertTrue(returnAnnotationMsgError(produto, PRECO_PRODUTO_VAZIO));
     }
 
     /**
@@ -93,7 +101,7 @@ public class ProdutoTest {
     @Test
     public void deve_retornar_mensagem_caso_estoque_seja_menor_que_um() {
         produto = from(Produto.class).gimme(PRECO_LESS_1);
-        assertTrue(returnAnnotationMsgError(produto, PRECISA_SER_UM_VALOR_MAIOR));
+        assertTrue(returnAnnotationMsgError(produto, PRECO_PRODUTO_TAMANHO));
     }
 
     /**

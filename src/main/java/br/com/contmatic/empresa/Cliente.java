@@ -1,5 +1,8 @@
 package br.com.contmatic.empresa;
 
+import static br.com.contmatic.constantes.Constante.ILLEGAL_WORD;
+import static br.com.contmatic.constantes.Constante.VALIDATION_EMAIL;
+import static br.com.contmatic.constantes.Mensagem.*;
 import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 import java.math.BigDecimal;
@@ -17,8 +20,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.br.CPF;
 import org.joda.time.DateTime;
 
-import br.com.contmatic.constantes.Constante;
-import br.com.contmatic.constantes.Mensagem;
 import br.com.contmatic.endereco.Endereco;
 import br.com.contmatic.telefone.Telefone;
 
@@ -28,39 +29,39 @@ import br.com.contmatic.telefone.Telefone;
 public class Cliente {
 
     /** The cpf. */
-    @CPF(message = Mensagem.VALOR_NAO_E_VALIDO)
+    @CPF(message = CPF_CLIENTE_INVALIDO)
     private String cpf;
 
     /** The nome. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
-    @NotEmpty(message = Mensagem.VALOR_ESTA_VAZIO)
-    @NotBlank(message = Mensagem.VALOR_ESTA_VAZIO)
-    @Size(min = 3, max = 50, message = Mensagem.VALOR_NAO_E_VALIDO)
-    @Pattern(regexp = Constante.ILLEGAL_WORD, message = Mensagem.VALOR_NAO_E_VALIDO)
+    @NotNull(message = NOME_CLIENTE_VAZIO)
+    @NotEmpty(message = NOME_CLIENTE_VAZIO)
+    @NotBlank(message = NOME_CLIENTE_VAZIO)
+    @Size(min = 3, max = 50, message = NOME_CLIENTE_TAMANHO)
+    @Pattern(regexp = ILLEGAL_WORD, message = NOME_CLIENTE_CARACTERE_INVALIDO)
     private String nome;
 
     /** The email. */
-    @NotEmpty(message = Mensagem.VALOR_ESTA_VAZIO)
-    @NotBlank(message = Mensagem.VALOR_ESTA_VAZIO)
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
-    @Size(min = 10, max = 100, message = Mensagem.VALOR_NAO_E_VALIDO)
-    @Pattern(regexp = Constante.VALIDATION_EMAIL, message = Mensagem.VALOR_NAO_E_VALIDO)
+    @NotEmpty(message = EMAIL_CLIENTE_VAZIO)
+    @NotBlank(message = EMAIL_CLIENTE_VAZIO)
+    @NotNull(message = EMAIL_CLIENTE_VAZIO)
+    @Size(min = 10, max = 100, message = EMAIL_CLIENTE_TAMANHO)
+    @Pattern(regexp = VALIDATION_EMAIL, message = EMAIL_CLIENTE_CARACTERE_INVALIDO)
     private String email;
 
     /** The data nascimento. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    @NotNull(message = DATA_NASCIMENTO_CLIENTE_VAZIO)
     private DateTime dataNascimento;
 
     /** The dinheiro carteira. */
-    @Min(value = 0, message = Mensagem.VALOR_NAO_E_VALIDO)
+    @Min(value = 0, message = DINHEIRO_CARTEIRA_CLIENTE_TAMANHO)
     private BigDecimal dinheiroCarteira;
 
     /** The endereco. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    @NotNull(message = ENDERECO_CLIENTE_VAZIO)
     private Endereco endereco;
 
     /** The telefones. */
-    @NotNull(message = Mensagem.VALOR_ESTA_VAZIO)
+    @NotNull(message = TELEFONE_CLIENTE_VAZIO)
     private Set<Telefone> telefones;
 
     /** The carrinho produtos. */

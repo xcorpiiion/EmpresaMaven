@@ -1,8 +1,14 @@
 package br.com.contmatic.fixture.factory;
 
+import static br.com.contmatic.constantes.Constante.DDD_NULL;
+import static br.com.contmatic.constantes.Constante.PHONE_BLANK_SPACE;
+import static br.com.contmatic.constantes.Constante.PHONE_EMPTY;
+import static br.com.contmatic.constantes.Constante.PHONE_INVALID_SIZE;
+import static br.com.contmatic.constantes.Constante.PHONE_NULL;
+import static br.com.contmatic.constantes.Constante.TIPO_TELEFONE_NULL;
+
 import java.util.Random;
 
-import br.com.contmatic.constantes.Constante;
 import br.com.contmatic.telefone.DddBrasil;
 import br.com.contmatic.telefone.Telefone;
 import br.com.contmatic.telefone.TipoContrato;
@@ -10,8 +16,6 @@ import br.com.contmatic.telefone.TipoTelefone;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
-
-import static br.com.contmatic.constantes.Constante.*;
 
 /**
  * The Class FixtureFactoryTelefone.

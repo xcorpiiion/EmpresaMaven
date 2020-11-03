@@ -1,7 +1,17 @@
 package br.com.contmatic.telefone;
 
-import static br.com.contmatic.constantes.Constante.*;
-import static br.com.contmatic.constantes.Mensagem.*;
+import static br.com.contmatic.constantes.Constante.DDD_NULL;
+import static br.com.contmatic.constantes.Constante.PHONE_BLANK_SPACE;
+import static br.com.contmatic.constantes.Constante.PHONE_EMPTY;
+import static br.com.contmatic.constantes.Constante.PHONE_INVALID_SIZE;
+import static br.com.contmatic.constantes.Constante.PHONE_NULL;
+import static br.com.contmatic.constantes.Constante.PHONE_VALIDATION;
+import static br.com.contmatic.constantes.Constante.TIPO_TELEFONE_NULL;
+import static br.com.contmatic.constantes.Constante.VALID;
+import static br.com.contmatic.constantes.Mensagem.TELEFONE_CARACTERE_INVALIDO;
+import static br.com.contmatic.constantes.Mensagem.TELEFONE_DDD_VAZIO;
+import static br.com.contmatic.constantes.Mensagem.TELEFONE_TIPO_TELEFONE_VAZIO;
+import static br.com.contmatic.constantes.Mensagem.TELEFONE_VAZIO;
 import static br.com.contmatic.telefone.DddBrasil.ARACAJU;
 import static br.com.contmatic.telefone.DddBrasil.SAO_JOSE_DOS_CAMPOS;
 import static br.com.contmatic.telefone.TipoTelefone.FIXO;
@@ -16,11 +26,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import br.com.contmatic.constantes.Constante;
-import br.com.contmatic.constantes.Mensagem;
 import br.com.contmatic.fixture.factory.GeradorTelefone;
-import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
-import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
 /**
@@ -58,31 +64,31 @@ public class TelefoneTest {
     @Test
     public void deve_retornar_true_caso_telefone_seja_null() {
         telefone = from(Telefone.class).gimme(PHONE_NULL);
-        assertTrue(returnAnnotationMsgError(telefone, VALOR_ESTA_NULLO));
+        assertTrue(returnAnnotationMsgError(telefone, TELEFONE_VAZIO));
     }
     
     @Test
     public void deve_retornar_true_caso_telefone_esteja_vazio() {
         telefone = from(Telefone.class).gimme(PHONE_EMPTY);
-        assertTrue(returnAnnotationMsgError(telefone, VALOR_ESTA_VAZIO));
+        assertTrue(returnAnnotationMsgError(telefone, TELEFONE_VAZIO));
     }
     
     @Test
     public void deve_retornar_true_caso_telefone_tenha_apenas_espacos_em_branco() {
         telefone = from(Telefone.class).gimme(PHONE_BLANK_SPACE);
-        assertTrue(returnAnnotationMsgError(telefone, VALOR_ESTA_VAZIO));
+        assertTrue(returnAnnotationMsgError(telefone, TELEFONE_VAZIO));
     }
     
     @Test
     public void deve_retornar_true_caso_telefone_esteja_com_tamanho_invalido() {
         telefone = from(Telefone.class).gimme(PHONE_INVALID_SIZE);
-        assertTrue(returnAnnotationMsgError(telefone, VALOR_NAO_E_VALIDO));
+        assertTrue(returnAnnotationMsgError(telefone, TELEFONE_CARACTERE_INVALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_ddd_seja_null() {
         telefone = from(Telefone.class).gimme(DDD_NULL);
-        assertTrue(returnAnnotationMsgError(telefone, VALOR_ESTA_NULLO));
+        assertTrue(returnAnnotationMsgError(telefone, TELEFONE_DDD_VAZIO));
     }
     
     @Test
@@ -115,7 +121,7 @@ public class TelefoneTest {
     @Test
     public void deve_retornar_true_caso_tipoTelefone_esteja_null() {
         telefone = from(Telefone.class).gimme(TIPO_TELEFONE_NULL);
-        assertTrue(returnAnnotationMsgError(telefone, VALOR_ESTA_NULLO));
+        assertTrue(returnAnnotationMsgError(telefone, TELEFONE_TIPO_TELEFONE_VAZIO));
     }
     
     @Test

@@ -6,7 +6,7 @@ public final class GeradorEmail {
 
     }
 
-    public static String EMAIL_LESS_10_CARACTER = "[a-z]{9}@gmail.com|@hotmail.com";
+    public static String EMAIL_LESS_10_CARACTER = "a@ema.com";
     
     public static String EMAIL_GREATER_100_CARACTER = "[a-z]{101}@gmail.com|@hotmail.com";
     

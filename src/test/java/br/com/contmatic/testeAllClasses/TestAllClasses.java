@@ -15,7 +15,7 @@ import br.com.contmatic.telefone.TelefoneTest;
  * The Class TestAllClasses.
  */
 @RunWith(Suite.class)
-@SuiteClasses({ EmpresaTest.class, FuncionarioTest.class, ClienteTest.class, EnderecoTest.class, ProdutoTest.class, EnderecoTest.class, TelefoneTest.class })
+@SuiteClasses({ EmpresaTest.class, FuncionarioTest.class, ClienteTest.class, EnderecoTest.class, ProdutoTest.class, TelefoneTest.class })
 public class TestAllClasses {
 
 }
