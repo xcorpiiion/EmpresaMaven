@@ -1,22 +1,56 @@
 package br.com.contmatic.empresa;
 
-import br.com.contmatic.endereco.Endereco;
-import br.com.contmatic.telefone.Telefone;
-import com.github.javafaker.Faker;
-import org.junit.*;
+import static br.com.contmatic.constantes.Constante.CNPJ_CONTAINS_WORD;
+import static br.com.contmatic.constantes.Constante.CNPJ_NULL;
+import static br.com.contmatic.constantes.Constante.CNPJ_WRONG_SIZE;
+import static br.com.contmatic.constantes.Constante.EMAIL_BLANK_SPACE;
+import static br.com.contmatic.constantes.Constante.EMAIL_EMPTY;
+import static br.com.contmatic.constantes.Constante.EMAIL_LESS_10_CARACTERES;
+import static br.com.contmatic.constantes.Constante.EMAIL_NULL;
+import static br.com.contmatic.constantes.Constante.EMAIL_WITHOUT_ARROBA;
+import static br.com.contmatic.constantes.Constante.EMAIL_WITHOUT_PONTO_COM;
+import static br.com.contmatic.constantes.Constante.EMAIL_WITH_BLANK_SPACE_IN_WORD;
+import static br.com.contmatic.constantes.Constante.EMAIL_WITH_SPECIAL_CARACTER;
+import static br.com.contmatic.constantes.Constante.NOME_BLANK_SPACE;
+import static br.com.contmatic.constantes.Constante.NOME_EMPTY;
+import static br.com.contmatic.constantes.Constante.NOME_GREATER_CARACTER;
+import static br.com.contmatic.constantes.Constante.NOME_LESS_3_CARACTER;
+import static br.com.contmatic.constantes.Constante.NOME_NULL;
+import static br.com.contmatic.constantes.Constante.NOME_WITH_SPECIAL_CARACTER;
+import static br.com.contmatic.constantes.Constante.VALID;
+import static br.com.contmatic.constantes.Mensagem.CNPJ_EMPRESA_INVALIDO;
+import static br.com.contmatic.constantes.Mensagem.EMAIL_EMPRESA_CARACTERE_INVALIDO;
+import static br.com.contmatic.constantes.Mensagem.EMAIL_EMPRESA_TAMANHO;
+import static br.com.contmatic.constantes.Mensagem.EMAIL_EMPRESA_VAZIO;
+import static br.com.contmatic.constantes.Mensagem.NOME_EMPRESA_CARACTERE_INVALIDO;
+import static br.com.contmatic.constantes.Mensagem.NOME_EMPRESA_VAZIO;
+import static br.com.contmatic.validator.ValidadorAnnotionsMsgErro.returnAnnotationMsgError;
+import static br.com.six2six.fixturefactory.Fixture.from;
+import static br.com.six2six.fixturefactory.loader.FixtureFactoryLoader.loadTemplates;
+import static nl.jqno.equalsverifier.EqualsVerifier.forClass;
+import static nl.jqno.equalsverifier.Warning.ALL_FIELDS_SHOULD_BE_USED;
+import static nl.jqno.equalsverifier.Warning.NONFINAL_FIELDS;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.runners.MethodSorters.NAME_ASCENDING;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static br.com.contmatic.constantes.Constante.*;
-import static br.com.contmatic.constantes.Mensagem.*;
-import static br.com.contmatic.validator.ValidadorAnnotionsMsgErro.returnAnnotationMsgError;
-import static br.com.six2six.fixturefactory.Fixture.from;
-import static br.com.six2six.fixturefactory.loader.FixtureFactoryLoader.loadTemplates;
-import static org.junit.Assert.*;
-import static org.junit.runners.MethodSorters.NAME_ASCENDING;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
+import org.junit.Test;
+
+import com.github.javafaker.Faker;
+
+import br.com.contmatic.endereco.Endereco;
+import br.com.contmatic.telefone.Telefone;
 
 /**
  * The Class EmpresaTest.
@@ -33,8 +67,6 @@ public class EmpresaTest {
     /** The loja 2. */
     private static Empresa loja;
 
-    private static Empresa loja2;
-
     private Set<Telefone> telefones;
 
     private static Faker faker;
@@ -48,7 +80,6 @@ public class EmpresaTest {
         loadTemplates("br.com.contmatic.fixture.factory");
         loja = from(Empresa.class).gimme(VALID);
         loja.getEndereco().add(from(Endereco.class).gimme(VALID));
-        loja2 = from(Empresa.class).gimme(VALID);
     }
 
     /**
@@ -249,41 +280,10 @@ public class EmpresaTest {
         assertTrue(loja.getEndereco().size() > 0);
     }
 
-    /**
-     * Deve ter o mesmo cnpj para serem iguais.
-     */
     @Test()
-    public void deve_retornar_true_caso_tenham_mesmo_cnpj() {
-        loja2.setCnpj(loja.getCnpj());
-        assertEquals(loja, loja2);
-    }
-    
-    @Test()
-    public void deve_retornar_false_caso_compare_com_mesmo_objeto() {
-        assertTrue(loja.equals(loja));
-    }
-
-    /**
-     * Nao deve aceitar cnpj null para compara lojas.
-     */
-    @Test()
-    public void deve_retornar_false_caso_compare_loja_com_null_usando_equals() {
-        assertFalse(loja.equals(null));
-    }
-
-    @Test()
-    public void deve_retornar_false_caso_compare_getClass_for_diferente() {
-        assertFalse(loja.equals(new Object()));
-    }
-    
-    /**
-     * Deve ter o mesmo hash code para serem iguais.
-     */
-    @Test()
-    public void deve_ter_o_mesmo_hashCode_para_serem_iguais() {
-        loja2 = from(Empresa.class).gimme(VALID);
-        loja2.setCnpj(loja.getCnpj());
-        assertEquals(loja.hashCode(), loja2.hashCode());
+    public void deve_retornar_true_no_equals_para_serem_iguais() {
+        forClass(Empresa.class).usingGetClass()
+                .suppress(NONFINAL_FIELDS, ALL_FIELDS_SHOULD_BE_USED).verify();
     }
 
     @Test

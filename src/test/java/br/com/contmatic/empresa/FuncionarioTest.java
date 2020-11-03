@@ -1,31 +1,15 @@
 package br.com.contmatic.empresa;
 
-import static br.com.contmatic.constantes.Constante.CARGO_NULL;
-import static br.com.contmatic.constantes.Constante.DATA_NASCIMENTO_NULL;
-import static br.com.contmatic.constantes.Constante.EMAIL_BLANK_SPACE;
-import static br.com.contmatic.constantes.Constante.EMAIL_EMPTY;
-import static br.com.contmatic.constantes.Constante.EMAIL_LESS_10_CARACTERES;
-import static br.com.contmatic.constantes.Constante.EMAIL_NULL;
-import static br.com.contmatic.constantes.Constante.EMAIL_WITHOUT_ARROBA;
-import static br.com.contmatic.constantes.Constante.EMAIL_WITHOUT_PONTO_COM;
-import static br.com.contmatic.constantes.Constante.EMAIL_WITH_BLANK_SPACE_IN_WORD;
-import static br.com.contmatic.constantes.Constante.EMAIL_WITH_SPECIAL_CARACTER;
-import static br.com.contmatic.constantes.Constante.NOME_BLANK_SPACE;
-import static br.com.contmatic.constantes.Constante.NOME_EMPTY;
-import static br.com.contmatic.constantes.Constante.NOME_LESS_3_CARACTER;
-import static br.com.contmatic.constantes.Constante.NOME_NULL;
-import static br.com.contmatic.constantes.Constante.SALARIO_LESS_1;
-import static br.com.contmatic.constantes.Constante.TIPO_CONTRATO_NULL;
-import static br.com.contmatic.constantes.Constante.VALID;
-import static br.com.contmatic.constantes.Mensagem.CARGO_FUNCIONARIO_VAZIO;
-import static br.com.contmatic.constantes.Mensagem.DATA_NASCIMENTO_FUNCIONARIO_VAZIO;
-import static br.com.contmatic.constantes.Mensagem.EMAIL_FUNCIONARIO_CARACTERE_INVALIDO;
-import static br.com.contmatic.constantes.Mensagem.EMAIL_FUNCIONARIO_TAMANHO;
-import static br.com.contmatic.constantes.Mensagem.EMAIL_FUNCIONARIO_VAZIO;
-import static br.com.contmatic.constantes.Mensagem.NOME_FUNCIONARIO_TAMANHO;
-import static br.com.contmatic.constantes.Mensagem.NOME_FUNCIONARIO_VAZIO;
-import static br.com.contmatic.constantes.Mensagem.SALARIO_FUNCIONARIO_TAMANHO;
-import static br.com.contmatic.constantes.Mensagem.TIPO_CONTRATO_FUNCIONARIO_VAZIO;
+import br.com.contmatic.telefone.Telefone;
+import com.github.javafaker.Faker;
+import org.joda.time.DateTime;
+import org.junit.*;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import static br.com.contmatic.constantes.Constante.*;
+import static br.com.contmatic.constantes.Mensagem.*;
 import static br.com.contmatic.empresa.Cargo.REPOSITOR;
 import static br.com.contmatic.empresa.Cargo.RH;
 import static br.com.contmatic.telefone.TipoContrato.CLT;
@@ -33,26 +17,11 @@ import static br.com.contmatic.telefone.TipoContrato.PJ;
 import static br.com.contmatic.validator.ValidadorAnnotionsMsgErro.returnAnnotationMsgError;
 import static br.com.six2six.fixturefactory.Fixture.from;
 import static br.com.six2six.fixturefactory.loader.FixtureFactoryLoader.loadTemplates;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static nl.jqno.equalsverifier.EqualsVerifier.forClass;
+import static nl.jqno.equalsverifier.Warning.ALL_FIELDS_SHOULD_BE_USED;
+import static nl.jqno.equalsverifier.Warning.NONFINAL_FIELDS;
+import static org.junit.Assert.*;
 import static org.junit.runners.MethodSorters.NAME_ASCENDING;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import org.joda.time.DateTime;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-
-import com.github.javafaker.Faker;
-
-import br.com.contmatic.telefone.Telefone;
 
 /**
  * The Class FuncionarioTest.
@@ -61,9 +30,6 @@ import br.com.contmatic.telefone.Telefone;
 public class FuncionarioTest {
 
     private static Faker faker;
-
-    /** The produtos. */
-    private static List<Produto> produtos;
 
     /** The funcionarios. */
     private static Funcionario funcionario;
@@ -79,8 +45,6 @@ public class FuncionarioTest {
     public static void addDadosIniciais() {
         faker = new Faker();
         loadTemplates("br.com.contmatic.fixture.factory");
-        produtos = new ArrayList<>();
-        produtos.add(from(Produto.class).gimme(VALID));
     }
 
     /**
@@ -195,13 +159,13 @@ public class FuncionarioTest {
     @Test
     public void deve_alterar_cargo_para_repositor() {
         funcionario.setCargo(REPOSITOR);
-        assertTrue(funcionario.getCargo() == REPOSITOR);
+        assertSame(REPOSITOR, funcionario.getCargo());
     }
     
     @Test
     public void deve_alterar_cargo_para_rh() {
         funcionario.setCargo(RH);
-        assertTrue(funcionario.getCargo() == RH);
+        assertSame(RH, funcionario.getCargo());
     }
     
     @Test
@@ -213,13 +177,13 @@ public class FuncionarioTest {
     @Test
     public void deve_alterar_tipoContrato_para_clt() {
         funcionario.setTipoContrato(CLT);
-        assertTrue(funcionario.getTipoContrato() == CLT);
+        assertSame(CLT, funcionario.getTipoContrato());
     }
     
     @Test
     public void deve_alterar_tipoContrato_para_pj() {
         funcionario.setTipoContrato(PJ);
-        assertTrue(funcionario.getTipoContrato() == PJ);
+        assertSame(PJ, funcionario.getTipoContrato());
     }
     
     @Test
@@ -258,36 +222,8 @@ public class FuncionarioTest {
 
     @Test()
     public void deve_retornar_true_no_equals_para_serem_iguais() {
-        funcionario = (from(Funcionario.class).gimme(VALID));
-        funcionario2.setCpf(funcionario.getCpf());
-        assertTrue("Os Funcionario são iguais", funcionario.equals(funcionario2));
-    }
-    
-    @Test()
-    public void deve_retornar_true_quando_compara_com_mesmo_objeto() {
-        assertTrue(funcionario.equals(funcionario));
-    }
-
-    @Test()
-    public void deve_retornar_false_quando_compara_com_classe_diferente() {
-        assertFalse(funcionario.equals(new Object()));
-    }
-    /**
-     * Deve ter hash code iguais para serem funcionarios iguais.
-     */
-    @Test()
-    public void deve_ter_hashCode_iguais_para_serem_funcionarios_iguais() {
-        funcionario = (from(Funcionario.class).gimme(VALID));
-        funcionario2.setCpf(funcionario.getCpf());
-        assertTrue(funcionario.hashCode() == funcionario2.hashCode());
-    }
-
-    /**
-     * Nao deve ter equals null para comparar funcionarios.
-     */
-    @Test()
-    public void nao_deve_ter_equals_null_para_comparar_funcionarios() {
-        assertFalse("Os funcionarios são igauis", funcionario.equals(null));
+        forClass(Funcionario.class).usingGetClass()
+                .suppress(NONFINAL_FIELDS, ALL_FIELDS_SHOULD_BE_USED).verify();
     }
 
     /**

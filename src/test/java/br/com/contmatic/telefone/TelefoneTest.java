@@ -18,15 +18,15 @@ import static br.com.contmatic.telefone.TipoTelefone.FIXO;
 import static br.com.contmatic.telefone.TipoTelefone.MOVEL;
 import static br.com.contmatic.validator.ValidadorAnnotionsMsgErro.returnAnnotationMsgError;
 import static br.com.six2six.fixturefactory.Fixture.from;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static nl.jqno.equalsverifier.EqualsVerifier.forClass;
+import static nl.jqno.equalsverifier.Warning.ALL_FIELDS_SHOULD_BE_USED;
+import static nl.jqno.equalsverifier.Warning.NONFINAL_FIELDS;
+import static org.junit.Assert.*;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import br.com.contmatic.fixture.factory.GeradorTelefone;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
 /**
@@ -101,21 +101,21 @@ public class TelefoneTest {
     public void deve_retornar_false_caso_ddd_seja_diferente() {
         telefone2.setDddTelefone(SAO_JOSE_DOS_CAMPOS);
         telefone.setDddTelefone(ARACAJU);
-        assertFalse(telefone.getDddTelefone().getDdd() == telefone2.getDddTelefone().getDdd());
+        assertNotSame(telefone.getDddTelefone().getDdd(), telefone2.getDddTelefone().getDdd());
     }
     
     @Test
     public void deve_retornar_true_caso_sigla_sejam_iguais() {
         telefone2.setDddTelefone(SAO_JOSE_DOS_CAMPOS);
         telefone.setDddTelefone(SAO_JOSE_DOS_CAMPOS);
-        assertTrue(telefone.getDddTelefone().getSigla() == telefone2.getDddTelefone().getSigla());
+        assertSame(telefone.getDddTelefone().getSigla(), telefone2.getDddTelefone().getSigla());
     }
     
     @Test
     public void deve_retornar_false_caso_sigla_seja_diferente() {
         FixtureFactoryLoader.loadTemplates("br.com.contmatic.fixture.factory");
         telefone2 = from(Telefone.class).gimme(VALID);
-        assertFalse(telefone.getDddTelefone().getSigla() == telefone2.getDddTelefone().getSigla());
+        assertNotSame(telefone.getDddTelefone().getSigla(), telefone2.getDddTelefone().getSigla());
     }
     
     @Test
@@ -127,53 +127,25 @@ public class TelefoneTest {
     @Test
     public void deve_retornar_true_caso_tipoTelefone_seja_fixo() {
         telefone.setTipoTelefone(FIXO);
-        assertTrue(telefone.getTipoTelefone() == FIXO);
+        assertSame(FIXO, telefone.getTipoTelefone());
     }
     
     @Test
     public void deve_retornar_true_caso_tipoTelefone_seja_movel() {
         telefone.setTipoTelefone(MOVEL);
-        assertTrue(telefone.getTipoTelefone() == MOVEL);
+        assertSame(MOVEL, telefone.getTipoTelefone());
     }
-    
-    @Test
-    public void deve_ter_mesmo_hashcode_para_ser_igual() {
-        telefone2.setPhone(telefone.getPhone());
-        telefone2.setDddTelefone(telefone.getDddTelefone());
-        assertTrue(telefone2.hashCode() == telefone.hashCode());
-    }
-    
-    @Test
-    public void deve_retornar_false_caso_hashCode_sejam_diferentes() {
-        telefone.setPhone(GeradorTelefone.geradorCellPhone());
-        assertFalse(telefone2.hashCode() == telefone.hashCode());
-    }
-    
-    /**
-     * Deve ter mesmo telefone para ser igua.
-     */
-    @Test
-    public void deve_retornar_true_caso_equals_sejam_iguais() {
-        telefone2.setPhone(telefone.getPhone());
-        telefone2.setDddTelefone(telefone.getDddTelefone());
-        assertTrue(telefone2.equals(telefone));
-    }
-    
-    @Test
-    public void deve_retornar_true_caso_sejam_mesmo_objeto() {
-        assertTrue(telefone2.equals(telefone2));
-    }
-    
-    @Test
-    public void deve_retornar_false_caso_compare_com_null() {
-        telefone2.setPhone(telefone.getPhone());
-        assertFalse(telefone2.equals(null));
+
+    @Test()
+    public void deve_retornar_true_no_equals_para_serem_iguais() {
+        forClass(Telefone.class).usingGetClass()
+                .suppress(NONFINAL_FIELDS, ALL_FIELDS_SHOULD_BE_USED).verify();
     }
     
     @Test
     public void deve_retornar_false_caso_compare_com_object() {
         telefone2.setPhone(telefone.getPhone());
-        assertFalse(telefone2.equals(new Object()));
+        assertNotEquals(telefone2, new Object());
     }
 
     @Test
