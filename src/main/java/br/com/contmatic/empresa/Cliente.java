@@ -2,12 +2,27 @@ package br.com.contmatic.empresa;
 
 import static br.com.contmatic.constantes.Constante.ILLEGAL_WORD;
 import static br.com.contmatic.constantes.Constante.VALIDATION_EMAIL;
-import static br.com.contmatic.constantes.Mensagem.*;
+import static br.com.contmatic.constantes.Mensagem.CPF_CLIENTE_INVALIDO;
+import static br.com.contmatic.constantes.Mensagem.DATA_NASCIMENTO_CLIENTE_VAZIO;
+import static br.com.contmatic.constantes.Mensagem.DINHEIRO_CARTEIRA_CLIENTE_TAMANHO;
+import static br.com.contmatic.constantes.Mensagem.EMAIL_CLIENTE_CARACTERE_INVALIDO;
+import static br.com.contmatic.constantes.Mensagem.EMAIL_CLIENTE_TAMANHO;
+import static br.com.contmatic.constantes.Mensagem.EMAIL_CLIENTE_VAZIO;
+import static br.com.contmatic.constantes.Mensagem.ENDERECO_CLIENTE_VAZIO;
+import static br.com.contmatic.constantes.Mensagem.NOME_CLIENTE_CARACTERE_INVALIDO;
+import static br.com.contmatic.constantes.Mensagem.NOME_CLIENTE_TAMANHO;
+import static br.com.contmatic.constantes.Mensagem.NOME_CLIENTE_VAZIO;
+import static br.com.contmatic.constantes.Mensagem.TELEFONE_CLIENTE_VAZIO;
+import static br.com.contmatic.empresa.utils.ValidacaoDataUtils.isDataGreaterThanCurrent;
+import static br.com.contmatic.empresa.utils.ValidacaoDataUtils.isDataLessThan1920;
+import static br.com.contmatic.empresa.utils.ValidacaoDataUtils.isDataLessThan1998;
 import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
+
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
+
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -15,6 +30,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.br.CPF;
@@ -28,11 +44,15 @@ import br.com.contmatic.telefone.Telefone;
  */
 public class Cliente {
 
-    /** The cpf. */
+    /**
+     * The cpf.
+     */
     @CPF(message = CPF_CLIENTE_INVALIDO)
     private String cpf;
 
-    /** The nome. */
+    /**
+     * The nome.
+     */
     @NotNull(message = NOME_CLIENTE_VAZIO)
     @NotEmpty(message = NOME_CLIENTE_VAZIO)
     @NotBlank(message = NOME_CLIENTE_VAZIO)
@@ -40,7 +60,9 @@ public class Cliente {
     @Pattern(regexp = ILLEGAL_WORD, message = NOME_CLIENTE_CARACTERE_INVALIDO)
     private String nome;
 
-    /** The email. */
+    /**
+     * The email.
+     */
     @NotEmpty(message = EMAIL_CLIENTE_VAZIO)
     @NotBlank(message = EMAIL_CLIENTE_VAZIO)
     @NotNull(message = EMAIL_CLIENTE_VAZIO)
@@ -48,27 +70,41 @@ public class Cliente {
     @Pattern(regexp = VALIDATION_EMAIL, message = EMAIL_CLIENTE_CARACTERE_INVALIDO)
     private String email;
 
-    /** The data nascimento. */
+    /**
+     * The data nascimento.
+     */
     @NotNull(message = DATA_NASCIMENTO_CLIENTE_VAZIO)
     private DateTime dataNascimento;
 
-    /** The dinheiro carteira. */
+    private DateTime dataCadastro;
+
+    /**
+     * The dinheiro carteira.
+     */
     @Min(value = 0, message = DINHEIRO_CARTEIRA_CLIENTE_TAMANHO)
     private BigDecimal dinheiroCarteira;
 
-    /** The endereco. */
+    /**
+     * The endereco.
+     */
     @NotNull(message = ENDERECO_CLIENTE_VAZIO)
     private Endereco endereco;
 
-    /** The telefones. */
+    /**
+     * The telefones.
+     */
     @NotNull(message = TELEFONE_CLIENTE_VAZIO)
     private Set<Telefone> telefones;
 
-    /** The carrinho produtos. */
+    /**
+     * The carrinho produtos.
+     */
     @Valid
     private List<Produto> carrinhoProdutos;
 
-    /** The produtos comprados. */
+    /**
+     * The produtos comprados.
+     */
     @Valid
     private List<Produto> produtosComprados;
 
@@ -126,6 +162,16 @@ public class Cliente {
         this.email = email;
     }
 
+    public DateTime getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setDataCadastro(DateTime dataCadastro) {
+        isDataGreaterThanCurrent(dataCadastro, "hora de cadastro não pode ser maior do que hora atual");
+        isDataLessThan1998(dataCadastro, "A data de cadastro do cliente não pode ser menor do que 1998");
+        this.dataCadastro = dataCadastro;
+    }
+
     /**
      * Gets the data nascimento.
      *
@@ -141,7 +187,10 @@ public class Cliente {
      * @param dataNascimento the new data nascimento
      */
     public void setDataNascimento(DateTime dataNascimento) {
-        this.dataNascimento = dataNascimento;
+        isDataGreaterThanCurrent(dataNascimento, "data de nascimento de cliente não pode" +
+                " ser maior do que hora atual");
+        isDataLessThan1920(dataNascimento,
+                "A data de cadastro do cliente não pode ser menor do que 1920");
     }
 
     /**
