@@ -18,30 +18,62 @@
         <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
       </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:dependabot" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:dependabot" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:maven" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
     </expand>
-    <select />
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:origin/finalizacaoEtapa02" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:origin/prova_finalizada" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3f501a32-781f-4820-a2b4-257e19230e06" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.settings/org.eclipse.jdt.core.prefs" beforeDir="false" afterPath="$PROJECT_DIR$/.settings/org.eclipse.jdt.core.prefs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/contmatic/constantes/Constante.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/contmatic/constantes/Constante.java" afterDir="false" />
+    </list>
+    <list id="f5ec2970-96e5-4d09-89c3-77f89fde5fa1" name="melhorando testes da etapa 02" comment="melhorando testes da etapa 02">
+      <changelist_data name="Vinicius da Silva Cruz" email="vinicius.cruz@contmatic.ad" date="1604365097000" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/contmatic/constantes/Mensagem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/contmatic/constantes/Mensagem.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/com/contmatic/empresa/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/contmatic/empresa/Cliente.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/com/contmatic/empresa/Empresa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/contmatic/empresa/Empresa.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/contmatic/empresa/Endereco.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/contmatic/empresa/Endereco.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/com/contmatic/empresa/Funcionario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/contmatic/empresa/Funcionario.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/br/com/contmatic/empresa/Produto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/contmatic/empresa/Produto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/contmatic/empresa/utils/FieldValidation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/contmatic/empresa/utils/FieldValidation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/contmatic/services/utils/GeradorCnpj.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/contmatic/services/utils/GeradorCnpj.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/contmatic/services/utils/GeradorCpf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/contmatic/services/utils/GeradorCpf.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/estudo/projetoweb/services/validation/utils/CpfValidation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/contmatic/endereco/Endereco.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/contmatic/endereco/Endereco.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/contmatic/telefone/Telefone.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/contmatic/telefone/Telefone.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/br/com/contmatic/empresa/ClienteTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/br/com/contmatic/empresa/ClienteTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/br/com/contmatic/empresa/EmpresaTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/br/com/contmatic/empresa/EmpresaTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/br/com/contmatic/empresa/utils/InstanciaClasses.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/br/com/contmatic/empresa/utils/InstanciaClasses.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/MANIFEST.MF" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/maven/br.com.contmatic/empresa-maven/pom.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/maven/br.com.contmatic/empresa-maven/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/br/com/contmatic/empresa/FuncionarioTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/br/com/contmatic/empresa/FuncionarioTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/br/com/contmatic/empresa/ProdutoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/br/com/contmatic/empresa/ProdutoTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/br/com/contmatic/endereco/EnderecoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/br/com/contmatic/endereco/EnderecoTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/br/com/contmatic/fixture/factory/FixtureFactoryCliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/br/com/contmatic/fixture/factory/FixtureFactoryCliente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/br/com/contmatic/fixture/factory/FixtureFactoryEndereco.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/br/com/contmatic/fixture/factory/FixtureFactoryEndereco.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/br/com/contmatic/fixture/factory/FixtureFactoryFuncionario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/br/com/contmatic/fixture/factory/FixtureFactoryFuncionario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/br/com/contmatic/fixture/factory/FixtureFactoryTelefone.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/br/com/contmatic/fixture/factory/FixtureFactoryTelefone.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/br/com/contmatic/fixture/factory/FixturyFactoryProduto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/br/com/contmatic/fixture/factory/FixturyFactoryProduto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/br/com/contmatic/fixture/factory/GeradorEmail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/br/com/contmatic/fixture/factory/GeradorEmail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/br/com/contmatic/telefone/TelefoneTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/br/com/contmatic/telefone/TelefoneTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/br/com/contmatic/testeAllClasses/TestAllClasses.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/br/com/contmatic/testeAllClasses/TestAllClasses.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,6 +84,11 @@
     <option name="myAddOrReplace" value="1" />
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Vinicius da Silva Cruz &lt;vinicius.cruz@contmatic.ad&gt;" />
+      </list>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MavenImportPreferences">
@@ -59,11 +96,6 @@
       <MavenGeneralSettings>
         <option name="mavenHome" value="C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.2\plugins\maven\lib\maven3" />
       </MavenGeneralSettings>
-    </option>
-    <option name="enabledProfiles">
-      <list>
-        <option value="artifactory" />
-      </list>
     </option>
   </component>
   <component name="ProjectId" id="1iWNFgMpkHsJIn1zft0UdVB0cQj" />
@@ -190,6 +222,14 @@
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2232" y="0" key="#Project_Structure/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602371276663" />
+    <state x="2255" y="28" key="CommitChangelistDialog2" timestamp="1604598615039">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2255" y="28" key="CommitChangelistDialog2/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604598615039" />
+    <state x="2012" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1604598627253">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2012" y="92" width="1736" height="856" key="DiffContextDialog/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604598627253" />
     <state width="1865" height="330" key="GridCell.Tab.0.bottom" timestamp="1602374096869">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
@@ -222,6 +262,14 @@
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state width="1865" height="330" key="GridCell.Tab.1.right/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602374096869" />
+    <state x="2104" y="85" key="MergeDialog" timestamp="1604598598783">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2104" y="85" key="MergeDialog/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604598598783" />
+    <state x="2428" y="219" key="MultipleFileMergeDialog" timestamp="1604598598786">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2428" y="219" key="MultipleFileMergeDialog/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604598598786" />
     <state x="2256" y="77" key="SettingsEditor" timestamp="1602019518605">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>

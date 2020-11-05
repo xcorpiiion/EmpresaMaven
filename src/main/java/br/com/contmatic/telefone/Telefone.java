@@ -1,15 +1,17 @@
 package br.com.contmatic.telefone;
 
-import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
-import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import br.com.contmatic.constantes.Constante;
-import br.com.contmatic.constantes.Mensagem;
+
+import static br.com.contmatic.constantes.Constante.PHONE_VALIDATION;
+import static br.com.contmatic.constantes.Mensagem.*;
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
+import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
 /**
  * The Class Telefone.
@@ -17,18 +19,18 @@ import br.com.contmatic.constantes.Mensagem;
 public final class Telefone {
 
     /** The phone. */
-    @NotBlank(message = Mensagem.VALOR_ESTA_VAZIO)
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
-    @NotEmpty(message = Mensagem.VALOR_ESTA_VAZIO)
-    @Pattern(regexp = Constante.PHONE_VALIDATION, message = Mensagem.VALOR_NAO_E_VALIDO)
+    @NotBlank(message = TELEFONE_VAZIO)
+    @NotNull(message = TELEFONE_VAZIO)
+    @NotEmpty(message = TELEFONE_VAZIO)
+    @Pattern(regexp = PHONE_VALIDATION, message = TELEFONE_CARACTERE_INVALIDO)
     private String phone;
 
     /** The tipo telefone. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    @NotNull(message = TELEFONE_TIPO_TELEFONE_VAZIO)
     private TipoTelefone tipoTelefone;
 
     /** The ddd telefone. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    @NotNull(message = TELEFONE_DDD_VAZIO)
     private DddBrasil dddTelefone;
 
     /**

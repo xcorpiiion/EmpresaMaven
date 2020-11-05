@@ -78,7 +78,7 @@ public class FixtureFactoryCliente implements TemplateLoader {
         });
         of(Cliente.class).addTemplate(NOME_WITH_SPECIAL_CARACTER).inherits(VALID, new Rule() {
             {
-                add(NOME, regex(NOME_WITH_SPECIAL_CARACTER));
+                add(NOME, "@#!@");
             }
         });
         of(Cliente.class).addTemplate(EMAIL_NULL).inherits(VALID, new Rule() {

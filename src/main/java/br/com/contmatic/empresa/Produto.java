@@ -1,16 +1,18 @@
 package br.com.contmatic.empresa;
 
-import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
-import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
-import java.math.BigDecimal;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.validator.constraints.Length;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.hibernate.validator.constraints.Length;
-import br.com.contmatic.constantes.Mensagem;
+import java.math.BigDecimal;
+
+import static br.com.contmatic.constantes.Mensagem.*;
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
+import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
 /**
  * The Class Produto.
@@ -18,19 +20,19 @@ import br.com.contmatic.constantes.Mensagem;
 public class Produto {
 
     /** The nome. */
-    @NotBlank(message = Mensagem.VALOR_ESTA_VAZIO)
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
-    @NotEmpty(message = Mensagem.VALOR_ESTA_VAZIO)
-    @Length(min = 3, max = 50, message = Mensagem.VALOR_NAO_E_VALIDO)
+    @NotBlank(message = NOME_PRODUTO_VAZIO)
+    @NotNull(message = NOME_PRODUTO_VAZIO)
+    @NotEmpty(message = NOME_PRODUTO_VAZIO)
+    @Length(min = 3, max = 50, message = NOME_PRODUTO_TAMANHO)
     private String nome;
 
     /** The preco. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
-    @Min(value = 1, message = Mensagem.PRECISA_SER_UM_VALOR_MAIOR)
+    @NotNull(message = PRECO_PRODUTO_VAZIO)
+    @Min(value = 1, message = PRECO_PRODUTO_TAMANHO)
     private BigDecimal preco;
 
     /** The estoque. */
-    @Min(value = 1, message = Mensagem.VALOR_NAO_E_VALIDO)
+    @Min(value = 1, message = ESTOQUE_PRODUTO_VAZIO)
     private Integer estoque;
 
     /**

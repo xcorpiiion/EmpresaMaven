@@ -1,7 +1,31 @@
 package br.com.contmatic.empresa;
 
-import static br.com.contmatic.constantes.Constante.*;
-import static br.com.contmatic.constantes.Mensagem.*;
+import static br.com.contmatic.constantes.Constante.CARGO_NULL;
+import static br.com.contmatic.constantes.Constante.DATA_NASCIMENTO_NULL;
+import static br.com.contmatic.constantes.Constante.EMAIL_BLANK_SPACE;
+import static br.com.contmatic.constantes.Constante.EMAIL_EMPTY;
+import static br.com.contmatic.constantes.Constante.EMAIL_LESS_10_CARACTERES;
+import static br.com.contmatic.constantes.Constante.EMAIL_NULL;
+import static br.com.contmatic.constantes.Constante.EMAIL_WITHOUT_ARROBA;
+import static br.com.contmatic.constantes.Constante.EMAIL_WITHOUT_PONTO_COM;
+import static br.com.contmatic.constantes.Constante.EMAIL_WITH_BLANK_SPACE_IN_WORD;
+import static br.com.contmatic.constantes.Constante.EMAIL_WITH_SPECIAL_CARACTER;
+import static br.com.contmatic.constantes.Constante.NOME_BLANK_SPACE;
+import static br.com.contmatic.constantes.Constante.NOME_EMPTY;
+import static br.com.contmatic.constantes.Constante.NOME_LESS_3_CARACTER;
+import static br.com.contmatic.constantes.Constante.NOME_NULL;
+import static br.com.contmatic.constantes.Constante.SALARIO_LESS_1;
+import static br.com.contmatic.constantes.Constante.TIPO_CONTRATO_NULL;
+import static br.com.contmatic.constantes.Constante.VALID;
+import static br.com.contmatic.constantes.Mensagem.CARGO_FUNCIONARIO_VAZIO;
+import static br.com.contmatic.constantes.Mensagem.DATA_NASCIMENTO_FUNCIONARIO_VAZIO;
+import static br.com.contmatic.constantes.Mensagem.EMAIL_FUNCIONARIO_CARACTERE_INVALIDO;
+import static br.com.contmatic.constantes.Mensagem.EMAIL_FUNCIONARIO_TAMANHO;
+import static br.com.contmatic.constantes.Mensagem.EMAIL_FUNCIONARIO_VAZIO;
+import static br.com.contmatic.constantes.Mensagem.NOME_FUNCIONARIO_TAMANHO;
+import static br.com.contmatic.constantes.Mensagem.NOME_FUNCIONARIO_VAZIO;
+import static br.com.contmatic.constantes.Mensagem.SALARIO_FUNCIONARIO_TAMANHO;
+import static br.com.contmatic.constantes.Mensagem.TIPO_CONTRATO_FUNCIONARIO_VAZIO;
 import static br.com.contmatic.empresa.Cargo.REPOSITOR;
 import static br.com.contmatic.empresa.Cargo.RH;
 import static br.com.contmatic.telefone.TipoContrato.CLT;
@@ -19,22 +43,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import br.com.contmatic.constantes.Constante;
-import com.github.javafaker.Faker;
 import org.joda.time.DateTime;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
-import org.junit.runners.MethodSorters;
 
-import br.com.contmatic.constantes.Mensagem;
+import com.github.javafaker.Faker;
+
 import br.com.contmatic.telefone.Telefone;
-import br.com.contmatic.telefone.TipoContrato;
-import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
-import br.com.six2six.fixturefactory.Fixture;
-import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
 /**
  * The Class FuncionarioTest.
@@ -52,9 +70,6 @@ public class FuncionarioTest {
     
     private Funcionario funcionario2;
 
-    /** The loja. */
-    private static Empresa loja;
-    
     private Set<Telefone> telefones;
 
     /**
@@ -66,7 +81,6 @@ public class FuncionarioTest {
         loadTemplates("br.com.contmatic.fixture.factory");
         produtos = new ArrayList<>();
         produtos.add(from(Produto.class).gimme(VALID));
-        loja = from(Empresa.class).gimme(VALID);
     }
 
     /**
@@ -96,55 +110,43 @@ public class FuncionarioTest {
     @Test
     public void deve_retornar_true_caso_nome_seja_null() {
         funcionario= from(Funcionario.class).gimme(NOME_NULL);
-        assertTrue(returnAnnotationMsgError(funcionario, VALOR_ESTA_NULLO));
+        assertTrue(returnAnnotationMsgError(funcionario, NOME_FUNCIONARIO_VAZIO));
     }
     
     @Test
     public void deve_retornar_true_caso_nome_seja_vazio() {
         funcionario = from(Funcionario.class).gimme(NOME_EMPTY);
-        assertTrue(returnAnnotationMsgError(funcionario, VALOR_ESTA_VAZIO));
+        assertTrue(returnAnnotationMsgError(funcionario, NOME_FUNCIONARIO_VAZIO));
     }
     
     @Test
     public void deve_retornar_true_caso_nome_esteja_com_espaco_em_branco() {
         funcionario = from(Funcionario.class).gimme(NOME_BLANK_SPACE);
-        assertTrue(returnAnnotationMsgError(funcionario, VALOR_ESTA_VAZIO));
+        assertTrue(returnAnnotationMsgError(funcionario, NOME_FUNCIONARIO_VAZIO));
     }
     
     @Test
     public void deve_retornar_true_caso_nome_seja_possua_menos_3_caracter() {
         funcionario = from(Funcionario.class).gimme(NOME_LESS_3_CARACTER);
-        assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
-    }
-    
-    @Test
-    public void deve_retornar_true_caso_nome_seja_possua_mais_50_caracter() {
-        funcionario = from(Funcionario.class).gimme(NOME_GREATER_CARACTER);
-        assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
-    }
-    
-    @Test
-    public void deve_retornar_true_caso_nome_seja_possua_caracteres_especiais() {
-        funcionario = from(Funcionario.class).gimme(NOME_WITH_SPECIAL_CARACTER);
-        assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
+        assertTrue(returnAnnotationMsgError(funcionario, NOME_FUNCIONARIO_TAMANHO));
     }
     
     @Test
     public void deve_retornar_true_caso_email_seja_null() {
         funcionario = from(Funcionario.class).gimme(EMAIL_NULL);
-        assertTrue(returnAnnotationMsgError(funcionario, VALOR_ESTA_NULLO));
+        assertTrue(returnAnnotationMsgError(funcionario, EMAIL_FUNCIONARIO_VAZIO));
     }
     
     @Test
     public void deve_retornar_true_caso_email_seja_vazio() {
         funcionario = from(Funcionario.class).gimme(EMAIL_EMPTY);
-        assertTrue(returnAnnotationMsgError(funcionario, VALOR_ESTA_VAZIO));
+        assertTrue(returnAnnotationMsgError(funcionario, EMAIL_FUNCIONARIO_VAZIO));
     }
     
     @Test
     public void deve_retornar_true_caso_email_esteja_com_espaco_em_branco() {
         funcionario = from(Funcionario.class).gimme(EMAIL_BLANK_SPACE);
-        assertTrue(returnAnnotationMsgError(funcionario, VALOR_NAO_E_VALIDO));
+        assertTrue(returnAnnotationMsgError(funcionario, EMAIL_FUNCIONARIO_VAZIO));
     }
     
     @Test
@@ -157,55 +159,37 @@ public class FuncionarioTest {
     @Test
     public void deve_retornar_true_caso_email_esteja_com_menos_10_caracteres() {
         funcionario = from(Funcionario.class).gimme(EMAIL_LESS_10_CARACTERES);
-        assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
-    }
-    
-    @Test
-    public void deve_retornar_true_caso_email_esteja_com_mais_100_caracteres() {
-        funcionario = from(Funcionario.class).gimme(EMAIL_GREATER_100_CARACTERES);
-        assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
+        assertTrue(returnAnnotationMsgError(funcionario, EMAIL_FUNCIONARIO_TAMANHO));
     }
     
     @Test
     public void deve_retornar_true_caso_email_esteja_com_espaco_em_branco_entre_o_email() {
         funcionario = from(Funcionario.class).gimme(EMAIL_WITH_BLANK_SPACE_IN_WORD);
-        assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
-    }
-    
-    @Test
-    public void deve_retornar_true_caso_email_esteja_com_numero_depois_do_arroba() {
-        funcionario = from(Funcionario.class).gimme(EMAIL_WITH_NUMBER_AFTER_ARROBA);
-        assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
+        assertTrue(returnAnnotationMsgError(funcionario, EMAIL_FUNCIONARIO_CARACTERE_INVALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_email_esteja_sem_arroba() {
         funcionario = from(Funcionario.class).gimme(EMAIL_WITHOUT_ARROBA);
-        assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
+        assertTrue(returnAnnotationMsgError(funcionario, EMAIL_FUNCIONARIO_CARACTERE_INVALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_email_esteja_sem_ponto_com() {
         funcionario = from(Funcionario.class).gimme(EMAIL_WITHOUT_PONTO_COM);
-        assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
-    }
-    
-    @Test
-    public void deve_retornar_true_caso_email_esteja_sem_com() {
-        funcionario = from(Funcionario.class).gimme(EMAIL_WITHOUT_COM);
-        assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
+        assertTrue(returnAnnotationMsgError(funcionario, EMAIL_FUNCIONARIO_CARACTERE_INVALIDO));
     }
     
     @Test
     public void deve_retornar_true_caso_email_esteja_com_caracteres_especiais() {
         funcionario = from(Funcionario.class).gimme(EMAIL_WITH_SPECIAL_CARACTER);
-        assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
+        assertTrue(returnAnnotationMsgError(funcionario, EMAIL_FUNCIONARIO_CARACTERE_INVALIDO));
     }
     
     @Test
     public void deve_retornar_true_se_cargo_for_null() {
         funcionario = from(Funcionario.class).gimme(CARGO_NULL);
-        assertTrue(returnAnnotationMsgError(funcionario, VALOR_ESTA_NULLO));
+        assertTrue(returnAnnotationMsgError(funcionario, CARGO_FUNCIONARIO_VAZIO));
     }
     
     @Test
@@ -223,7 +207,7 @@ public class FuncionarioTest {
     @Test
     public void deve_retornar_true_se_tipoContrato_for_null() {
         funcionario = from(Funcionario.class).gimme(TIPO_CONTRATO_NULL);
-        assertTrue(returnAnnotationMsgError(funcionario, VALOR_ESTA_NULLO));
+        assertTrue(returnAnnotationMsgError(funcionario, TIPO_CONTRATO_FUNCIONARIO_VAZIO));
     }
     
     @Test
@@ -241,7 +225,7 @@ public class FuncionarioTest {
     @Test
     public void deve_retornar_true_se_dataNascimento_for_null() {
         funcionario = from(Funcionario.class).gimme(DATA_NASCIMENTO_NULL);
-        assertTrue(returnAnnotationMsgError(funcionario, VALOR_ESTA_NULLO));
+        assertTrue(returnAnnotationMsgError(funcionario, DATA_NASCIMENTO_FUNCIONARIO_VAZIO));
     }
     
     @Test
@@ -269,7 +253,7 @@ public class FuncionarioTest {
     public void deve_ter_salario_maior_do_que_zero() {
         funcionario = (from(Funcionario.class).gimme(SALARIO_LESS_1));
         funcionario2.setSalario(funcionario.getSalario());
-        assertTrue(returnAnnotationMsgError(funcionario2, PRECISA_SER_UM_VALOR_MAIOR));
+        assertTrue(returnAnnotationMsgError(funcionario2, SALARIO_FUNCIONARIO_TAMANHO));
     }
 
     @Test()
