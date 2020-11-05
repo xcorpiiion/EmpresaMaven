@@ -1,8 +1,8 @@
 package br.com.contmatic.empresa;
 
 import br.com.contmatic.endereco.Endereco;
+import br.com.contmatic.enums.Cargo;
 import br.com.contmatic.telefone.Telefone;
-import br.com.contmatic.telefone.TipoContrato;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.br.CPF;
@@ -15,7 +15,7 @@ import java.util.Set;
 import static br.com.contmatic.constantes.Constante.ILLEGAL_WORD;
 import static br.com.contmatic.constantes.Constante.VALIDATION_EMAIL;
 import static br.com.contmatic.constantes.Mensagem.*;
-import static br.com.contmatic.empresa.utils.ValidacaoDataUtils.*;
+import static br.com.contmatic.empresa.utils.FieldValidation.*;
 import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
@@ -24,12 +24,11 @@ import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
  */
 public class Funcionario {
 
-    /** The nome. */
-    @NotBlank(message = VALOR_ESTA_VAZIO)
-    @NotNull(message = VALOR_ESTA_NULLO)
-    @NotEmpty(message = VALOR_ESTA_VAZIO)
-    @Min(value = 2, message = NOME_E_MUITO_GRANDE)
-    @Max(value = 60, message = NOME_E_MUITO_PEQUENO)
+    @NotBlank(message = NOME_FUNCIONARIO_VAZIO)
+    @NotNull(message = NOME_FUNCIONARIO_VAZIO)
+    @NotEmpty(message = NOME_FUNCIONARIO_VAZIO)
+    @Size(min = 3, max = 50, message = NOME_FUNCIONARIO_TAMANHO)
+    @Pattern(regexp = ILLEGAL_WORD, message = NOME_FUNCIONARIO_CARACTERE_INVALIDO)
     private String nome;
 
     /**
@@ -79,12 +78,6 @@ public class Funcionario {
      */
     @NotNull(message = ENDERECO_FUNCIONARIO_VAZIO)
     private Endereco endereco;
-
-    /**
-     * The tipo contrato.
-     */
-    @NotNull(message = TIPO_CONTRATO_FUNCIONARIO_VAZIO)
-    private TipoContrato tipoContrato;
 
     /**
      * The telefones.
@@ -165,24 +158,6 @@ public class Funcionario {
      */
     public void setSalario(BigDecimal salario) {
         this.salario = salario;
-    }
-
-    /**
-     * Gets the tipo contrato.
-     *
-     * @return the tipo contrato
-     */
-    public TipoContrato getTipoContrato() {
-        return tipoContrato;
-    }
-
-    /**
-     * Sets the tipo contrato.
-     *
-     * @param tipoContrato the new tipo contrato
-     */
-    public void setTipoContrato(TipoContrato tipoContrato) {
-        this.tipoContrato = tipoContrato;
     }
 
     /**
