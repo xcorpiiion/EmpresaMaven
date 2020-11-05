@@ -1,15 +1,5 @@
 package br.com.contmatic.empresa;
 
-import static br.com.contmatic.constantes.Constante.ENDERECO;
-import static br.com.contmatic.constantes.Constante.campoVazioOrNullMensagemPadrao;
-import static br.com.contmatic.constantes.Constante.stringJustContainsWordAndNumberMensagemPadrao;
-import static br.com.contmatic.constantes.Constante.tamanhoCamposMensagemPadrao;
-import static br.com.contmatic.empresa.utils.FieldValidation.isNull;
-import static br.com.contmatic.empresa.utils.FieldValidation.isStringContaisJustNumber;
-import static br.com.contmatic.empresa.utils.FieldValidation.isStringContaisWordAndNumber;
-import static br.com.contmatic.empresa.utils.FieldValidation.isStringEmpty;
-import static br.com.contmatic.empresa.utils.FieldValidation.minAndMaxValue;
-
 public class Endereco {
 
 	private String rua;
@@ -38,9 +28,6 @@ public class Endereco {
 	}
 
 	public void setRua(String rua) {
-		isStringEmpty(rua, campoVazioOrNullMensagemPadrao("rua", ENDERECO));
-		minAndMaxValue(3, 50, rua, tamanhoCamposMensagemPadrao(3, 50, "rua", ENDERECO));
-		isStringContaisWordAndNumber(rua, stringJustContainsWordAndNumberMensagemPadrao("rua", ENDERECO));
 		this.rua = rua;
 	}
 
@@ -49,9 +36,6 @@ public class Endereco {
 	}
 
 	public void setBairro(String bairro) {
-		isStringEmpty(bairro, campoVazioOrNullMensagemPadrao("Bairro", ENDERECO));
-		minAndMaxValue(2, 50, bairro, tamanhoCamposMensagemPadrao(2, 50, "bairro", ENDERECO));
-		isStringContaisWordAndNumber(bairro, stringJustContainsWordAndNumberMensagemPadrao("bairro", ENDERECO));
 		this.bairro = bairro;
 	}
 
@@ -60,9 +44,6 @@ public class Endereco {
 	}
 
 	public void setCep(String cep) {
-		isStringEmpty(cep, campoVazioOrNullMensagemPadrao("cep", ENDERECO));
-		minAndMaxValue(8, 8, cep, tamanhoCamposMensagemPadrao(8, 8, "cep", ENDERECO));
-		isStringContaisJustNumber(cep, stringJustContainsWordAndNumberMensagemPadrao("cep", ENDERECO));
 		this.cep = cep;
 	}
 
@@ -71,9 +52,6 @@ public class Endereco {
 	}
 
 	public void setCidade(String cidade) {
-		isStringEmpty(cidade, campoVazioOrNullMensagemPadrao("cidade ", ENDERECO));
-		minAndMaxValue(2, 50, cidade, tamanhoCamposMensagemPadrao(2, 50, "cidade", ENDERECO));
-		isStringContaisWordAndNumber(cidade, stringJustContainsWordAndNumberMensagemPadrao("cidade", ENDERECO));
 		this.cidade = cidade;
 	}
 
@@ -82,9 +60,6 @@ public class Endereco {
 	}
 
 	public void setEstado(String estado) {
-		isStringEmpty(estado, campoVazioOrNullMensagemPadrao("Estado", ENDERECO));
-		minAndMaxValue(2, 50, estado, tamanhoCamposMensagemPadrao(2, 50, "estado", ENDERECO));
-		isStringContaisWordAndNumber(estado, stringJustContainsWordAndNumberMensagemPadrao("estado", ENDERECO));
 		this.estado = estado;
 	}
 
@@ -93,9 +68,6 @@ public class Endereco {
 	}
 
 	public void setNumeroResidencia(Integer numeroResidencia) {
-		isNull(numeroResidencia, campoVazioOrNullMensagemPadrao("numero da residência", ENDERECO));
-		minAndMaxValue(1, 10000, numeroResidencia,
-				tamanhoCamposMensagemPadrao(1, 10000, "numero da residência", ENDERECO));
 		this.numeroResidencia = numeroResidencia;
 	}
 

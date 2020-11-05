@@ -40,10 +40,6 @@ public final class FieldValidation {
 		}
 	}
 
-	private static void illegalArgument(String message) {
-		throw new IllegalArgumentException(message);
-	}
-
 	private static void illegalState(String message) {
 		throw new IllegalStateException(message);
 	}
