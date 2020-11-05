@@ -1,145 +1,232 @@
 package br.com.contmatic.empresa;
 
-import static br.com.contmatic.constantes.Constante.CLIENTE;
-import static br.com.contmatic.constantes.Constante.campoInvalidoMensagemPadrao;
-import static br.com.contmatic.constantes.Constante.campoVazioOrNullMensagemPadrao;
-import static br.com.contmatic.constantes.Constante.dataInvalidaMensagem;
-import static br.com.contmatic.constantes.Constante.isDataGreaterThanCurrent;
-import static br.com.contmatic.constantes.Constante.stringJustContainsWordMensagemPadrao;
-import static br.com.contmatic.constantes.Constante.tamanhoCamposMensagemPadrao;
-import static br.com.contmatic.empresa.utils.FieldValidation.isCpfValido;
-import static br.com.contmatic.empresa.utils.FieldValidation.isDataGreaterThanCurrent;
-import static br.com.contmatic.empresa.utils.FieldValidation.isDataLessThan1920;
-import static br.com.contmatic.empresa.utils.FieldValidation.isDataLessThan1998;
-import static br.com.contmatic.empresa.utils.FieldValidation.isEmailValido;
-import static br.com.contmatic.empresa.utils.FieldValidation.isNull;
-import static br.com.contmatic.empresa.utils.FieldValidation.isStringContaisJustWord;
-import static br.com.contmatic.empresa.utils.FieldValidation.isStringEmpty;
-import static br.com.contmatic.empresa.utils.FieldValidation.minAndMaxValue;
-
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
+import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Set;
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.validator.constraints.br.CPF;
 import org.joda.time.DateTime;
 
+import br.com.contmatic.constantes.Constante;
+import br.com.contmatic.constantes.Mensagem;
+import br.com.contmatic.endereco.Endereco;
+import br.com.contmatic.telefone.Telefone;
+
+/**
+ * The Class Cliente.
+ */
 public class Cliente {
 
-	private String nome;
+    /** The cpf. */
+    @CPF(message = Mensagem.VALOR_NAO_E_VALIDO)
+    private String cpf;
 
-	private String email;
+    /** The nome. */
+    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    @NotEmpty(message = Mensagem.VALOR_ESTA_VAZIO)
+    @NotBlank(message = Mensagem.VALOR_ESTA_VAZIO)
+    @Size(min = 3, max = 50, message = Mensagem.VALOR_NAO_E_VALIDO)
+    @Pattern(regexp = Constante.ILLEGAL_WORD, message = Mensagem.VALOR_NAO_E_VALIDO)
+    private String nome;
 
-	private String cpf;
+    /** The email. */
+    @NotEmpty(message = Mensagem.VALOR_ESTA_VAZIO)
+    @NotBlank(message = Mensagem.VALOR_ESTA_VAZIO)
+    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    @Size(min = 10, max = 100, message = Mensagem.VALOR_NAO_E_VALIDO)
+    @Pattern(regexp = Constante.VALIDATION_EMAIL, message = Mensagem.VALOR_NAO_E_VALIDO)
+    private String email;
 
-	private DateTime dataNascimento;
+    /** The data nascimento. */
+    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    private DateTime dataNascimento;
 
-	private DateTime cadastro;
+    /** The dinheiro carteira. */
+    @Min(value = 0, message = Mensagem.VALOR_NAO_E_VALIDO)
+    private BigDecimal dinheiroCarteira;
 
-	private Endereco endereco;
+    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    private Endereco endereco;
 
-	public Cliente(String nome, String email, DateTime dataNascimento, Endereco endereco, String cpf) {
-		this.setNome(nome);
-		this.setEmail(email);
-		this.setDataNascimento(dataNascimento);
-		this.setEndereco(endereco);
-		this.cadastro = new DateTime();
-		this.setCpf(cpf);
-	}
+    @NotNull(message = Mensagem.VALOR_ESTA_VAZIO)
+    private Set<Telefone> telefones;
 
-	public Endereco getEndereco() {
-		return endereco;
-	}
+    public String getCpf() {
+        return cpf;
+    }
 
-	public void setEndereco(Endereco endereco) {
-		isNull(endereco, campoVazioOrNullMensagemPadrao("endereco", CLIENTE));
-		this.endereco = endereco;
-	}
+    /**
+     * Sets the cpf.
+     *
+     * @param cpf the new cpf
+     */
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
 
-	public String getNome() {
-		return nome;
-	}
+    /**
+     * Gets the nome.
+     *
+     * @return the nome
+     */
+    public String getNome() {
+        return nome;
+    }
 
-	public void setNome(String nome) {
-		isStringEmpty(nome, campoVazioOrNullMensagemPadrao("nome", CLIENTE));
-		minAndMaxValue(3, 30, nome, tamanhoCamposMensagemPadrao(3, 30, "nome", CLIENTE));
-		isStringContaisJustWord(nome, stringJustContainsWordMensagemPadrao("Nome", CLIENTE));
-		this.nome = nome;
-	}
+    /**
+     * Sets the nome.
+     *
+     * @param nome the new nome
+     */
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    /**
+     * Gets the email.
+     *
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
+    }
 
-	public void setEmail(String email) {
-		isStringEmpty(email, campoVazioOrNullMensagemPadrao("email", CLIENTE));
-		isEmailValido(email, campoInvalidoMensagemPadrao("email", CLIENTE));
-		this.email = email;
-	}
+    /**
+     * Sets the email.
+     *
+     * @param email the new email
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public DateTime getDataNascimento() {
-		return dataNascimento;
-	}
+    /**
+     * Gets the data nascimento.
+     *
+     * @return the data nascimento
+     */
+    public DateTime getDataNascimento() {
+        return dataNascimento;
+    }
 
-	public void setDataNascimento(DateTime dataNascimento) {
-		isNull(dataNascimento, campoVazioOrNullMensagemPadrao("data de nascimento", CLIENTE));
-		isDataGreaterThanCurrent(dataNascimento,
-				isDataGreaterThanCurrent("data de nascimento", CLIENTE));
-		isDataLessThan1920(dataNascimento,
-				dataInvalidaMensagem("A data de cadastro do cliente não pode ser menor do que 1920"));
-		this.dataNascimento = dataNascimento;
-	}
+    /**
+     * Sets the data nascimento.
+     *
+     * @param dataNascimento the new data nascimento
+     */
+    public void setDataNascimento(DateTime dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
 
-	public DateTime getCadastro() {
-		return cadastro;
-	}
+    /**
+     * Gets the dinheiro carteira.
+     *
+     * @return the dinheiro carteira
+     */
+    public BigDecimal getDinheiroCarteira() {
+        return dinheiroCarteira;
+    }
 
-	public void setCadastro(DateTime cadastro) {
-		isNull(cadastro, campoVazioOrNullMensagemPadrao("data de cadastro", "cliente"));
-		isDataGreaterThanCurrent(cadastro,
-				isDataGreaterThanCurrent("data de cadastro", CLIENTE));
-		isDataLessThan1998(cadastro,
-				dataInvalidaMensagem("A data de cadastro do cliente não pode ser menor do que 1998"));
-		this.cadastro = cadastro;
-	}
+    /**
+     * Sets the dinheiro carteira.
+     *
+     * @param dinheiroCarteira the new dinheiro carteira
+     */
+    public void setDinheiroCarteira(BigDecimal dinheiroCarteira) {
+        this.dinheiroCarteira = new BigDecimal(0).add(dinheiroCarteira);
+    }
 
-	public String getCpf() {
-		return cpf;
-	}
+    /**
+     * Gets the endereco.
+     *
+     * @return the endereco
+     */
+    public Endereco getEndereco() {
+        return endereco;
+    }
 
-	public void setCpf(String cpf) {
-		isStringEmpty(cpf, campoVazioOrNullMensagemPadrao("cpf", CLIENTE));
-		isCpfValido(cpf, campoInvalidoMensagemPadrao("cpf", CLIENTE));
-		this.cpf = cpf;
-	}
+    /**
+     * Sets the endereco.
+     *
+     * @param endereco the new endereco
+     */
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
-		return result;
-	}
+    /**
+     * Gets the telefones.
+     *
+     * @return the telefones
+     */
+    public Set<Telefone> getTelefones() {
+        return telefones;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Cliente other = (Cliente) obj;
-		if (cpf == null) {
-			if (other.cpf != null)
-				return false;
-		} else if (!cpf.equals(other.cpf))
-			return false;
-		return true;
-	}
+    /**
+     * Sets the telefones.
+     *
+     * @param telefones the new telefones
+     */
+    public void setTelefones(Set<Telefone> telefones) {
+        this.telefones = telefones;
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Cliente [nome=").append(nome).append(", email=").append(email).append(", cpf=").append(cpf)
-				.append(", dataNascimento=").append(dataNascimento).append(", cadastro=").append(cadastro)
-				.append(", endereco=").append(endereco).append("]");
-		return builder.toString();
-	}
+    /**
+     * Sets the produtos comprados.
+     *
+     * @param produtosComprados the new produtos comprados
+     */
+    public void setProdutosComprados(List<Produto> produtosComprados) {
+        this.produtosComprados = produtosComprados;
+    }
+
+    /**
+     * Hash code.
+     *
+     * @return the int
+     */
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(cpf).toHashCode();
+    }
+
+    /**
+     * Equals.
+     *
+     * @param obj the obj
+     * @return true, if successful
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Cliente other = (Cliente) obj;
+        return new EqualsBuilder().append(cpf, other.cpf).isEquals();
+    }
+
+    /**
+     * To string.
+     *
+     * @return the string
+     */
+    @Override
+    public String toString() {
+        return reflectionToString(this, JSON_STYLE);
+    }
 
 }

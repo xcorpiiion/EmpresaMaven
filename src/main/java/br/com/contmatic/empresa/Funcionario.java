@@ -1,39 +1,55 @@
 package br.com.contmatic.empresa;
 
-import static br.com.contmatic.constantes.Constante.FUNCIONARIO;
-import static br.com.contmatic.constantes.Constante.campoInvalidoMensagemPadrao;
-import static br.com.contmatic.constantes.Constante.campoVazioOrNullMensagemPadrao;
-import static br.com.contmatic.constantes.Constante.dataInvalidaMensagem;
-import static br.com.contmatic.constantes.Constante.isDataGreaterThanCurrent;
-import static br.com.contmatic.constantes.Constante.stringJustContainsWordMensagemPadrao;
-import static br.com.contmatic.constantes.Constante.tamanhoCamposMensagemPadrao;
-import static br.com.contmatic.empresa.utils.FieldValidation.isCpfValido;
-import static br.com.contmatic.empresa.utils.FieldValidation.isDataGreaterThanCurrent;
-import static br.com.contmatic.empresa.utils.FieldValidation.isDataLessThan1920;
-import static br.com.contmatic.empresa.utils.FieldValidation.isEmailValido;
-import static br.com.contmatic.empresa.utils.FieldValidation.isGreaterThanEmpresaCreateDate;
-import static br.com.contmatic.empresa.utils.FieldValidation.isLessThanCreateDate;
-import static br.com.contmatic.empresa.utils.FieldValidation.isNull;
-import static br.com.contmatic.empresa.utils.FieldValidation.isStringContaisJustWord;
-import static br.com.contmatic.empresa.utils.FieldValidation.isStringEmpty;
-import static br.com.contmatic.empresa.utils.FieldValidation.minAndMaxValue;
-import static java.math.BigDecimal.valueOf;
-
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
+import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 import java.math.BigDecimal;
-
+import java.util.Set;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.validator.constraints.br.CPF;
 import org.joda.time.DateTime;
 
-import br.com.contmatic.enums.Cargo;
+import br.com.contmatic.constantes.Constante;
+import br.com.contmatic.constantes.Mensagem;
+import br.com.contmatic.endereco.Endereco;
+import br.com.contmatic.telefone.Telefone;
+import br.com.contmatic.telefone.TipoContrato;
 
+/**
+ * The Class Funcionario.
+ */
 public class Funcionario {
 
-	private String nome;
+    /** The nome. */
+    @NotBlank(message = Mensagem.VALOR_ESTA_VAZIO)
+    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    @NotEmpty(message = Mensagem.VALOR_ESTA_VAZIO)
+    @Min(value = 2, message = Mensagem.NOME_E_MUITO_GRANDE)
+    @Max(value = 60, message = Mensagem.NOME_E_MUITO_PEQUENO)
+    private String nome;
 
-	private String email;
+    /** The email. */
+    @NotEmpty(message = Mensagem.VALOR_ESTA_VAZIO)
+    @NotBlank(message = Mensagem.VALOR_ESTA_VAZIO)
+    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    @Size(min = 10, max = 100, message = Mensagem.VALOR_NAO_E_VALIDO)
+    @Pattern(regexp = Constante.VALIDATION_EMAIL, message = Mensagem.VALOR_NAO_E_VALIDO)
+    private String email;
 
-	private String cpf;
+    /** The cpf. */
+    @CPF(message = Mensagem.VALOR_NAO_E_VALIDO)
+    private String cpf;
 
-	private DateTime dataNascimento;
+    /** The data nascimento. */
+    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    private DateTime dataNascimento;
 
 	private DateTime dataEntrada;
 
@@ -41,76 +57,148 @@ public class Funcionario {
 
 	private Cargo cargo;
 
-	private BigDecimal salario;
+    /** The salario. */
+    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    @Min(value = 1000, message = Mensagem.PRECISA_SER_UM_VALOR_MAIOR)
+    private BigDecimal salario;
 
-	private Endereco endereco;
+    /** The endereco. */
+    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    private Endereco endereco;
 
-	public Funcionario(String nome, String email, BigDecimal salario, Cargo cargo, DateTime dataNascimento,
-			Endereco endereco, String cpf) {
-		this.setNome(nome);
-		this.setEmail(email);
-		this.setDataNascimento(dataNascimento);
-		this.setEndereco(endereco);
-		this.setSalario(salario);
-		this.setCargo(cargo);
-		this.setCpf(cpf);
-		this.dataEntrada = new DateTime();
-	}
+    /** The tipo contrato. */
+    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    private TipoContrato tipoContrato;
 
-	public Endereco getEndereco() {
-		return endereco;
-	}
+    /** The telefones. */
+    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    private Set<Telefone> telefones;
 
-	public void setEndereco(Endereco endereco) {
-		isNull(endereco, campoVazioOrNullMensagemPadrao("endereco", FUNCIONARIO));
-		this.endereco = endereco;
-	}
+    /**
+     * Gets the endereco.
+     *
+     * @return the endereco
+     */
+    public Endereco getEndereco() {
+        return endereco;
+    }
 
-	public Cargo getCargo() {
-		return cargo;
-	}
+    /**
+     * Sets the endereco.
+     *
+     * @param endereco the new endereco
+     */
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
 
-	public void setCargo(Cargo cargo) {
-		isNull(cargo, campoVazioOrNullMensagemPadrao("cargo", FUNCIONARIO));
-		this.cargo = cargo;
-	}
+    /**
+     * Gets the cargo.
+     *
+     * @return the cargo
+     */
+    public Cargo getCargo() {
+        return cargo;
+    }
 
-	public BigDecimal getSalario() {
-		return salario;
-	}
+    /**
+     * Sets the cargo.
+     *
+     * @param cargo the new cargo
+     */
+    public void setCargo(Cargo cargo) {
+        this.cargo = cargo;
+    }
 
-	public String getNome() {
-		return nome;
-	}
+    /**
+     * Gets the salario.
+     *
+     * @return the salario
+     */
+    public BigDecimal getSalario() {
+        return salario;
+    }
 
-	public void setNome(String nome) {
-		isStringEmpty(nome, campoVazioOrNullMensagemPadrao("nome", FUNCIONARIO));
-		minAndMaxValue(3, 30, nome, tamanhoCamposMensagemPadrao(3, 30, "nome", FUNCIONARIO));
-		isStringContaisJustWord(nome, stringJustContainsWordMensagemPadrao("Nome", FUNCIONARIO));
-		this.nome = nome;
-	}
+    /**
+     * Sets the salario.
+     *
+     * @param salario the new salario
+     */
+    public void setSalario(BigDecimal salario) {
+        this.salario = salario;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    /**
+     * Gets the tipo contrato.
+     *
+     * @return the tipo contrato
+     */
+    public TipoContrato getTipoContrato() {
+        return tipoContrato;
+    }
 
-	public void setEmail(String email) {
-		isStringEmpty(email, campoVazioOrNullMensagemPadrao("email", FUNCIONARIO));
-		isEmailValido(email, campoInvalidoMensagemPadrao("email", FUNCIONARIO));
-		this.email = email;
-	}
+    /**
+     * Sets the tipo contrato.
+     *
+     * @param tipoContrato the new tipo contrato
+     */
+    public void setTipoContrato(TipoContrato tipoContrato) {
+        this.tipoContrato = tipoContrato;
+    }
 
-	public DateTime getDataNascimento() {
-		return dataNascimento;
-	}
+    /**
+     * Gets the nome.
+     *
+     * @return the nome
+     */
+    public String getNome() {
+        return nome;
+    }
 
-	public void setDataNascimento(DateTime dataNascimento) {
-		isNull(dataNascimento, campoVazioOrNullMensagemPadrao("data de nascimento", FUNCIONARIO));
-		isDataGreaterThanCurrent(dataNascimento, isDataGreaterThanCurrent("data de nascimento", FUNCIONARIO));
-		isDataLessThan1920(dataNascimento,
-				dataInvalidaMensagem("A data de cadastro do funcionario não pode ser menor do que 1920"));
-		this.dataNascimento = dataNascimento;
-	}
+    /**
+     * Sets the nome.
+     *
+     * @param nome the new nome
+     */
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    /**
+     * Gets the email.
+     *
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * Sets the email.
+     *
+     * @param email the new email
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
+     * Gets the data nascimento.
+     *
+     * @return the data nascimento
+     */
+    public DateTime getDataNascimento() {
+        return dataNascimento;
+    }
+
+    /**
+     * Sets the data nascimento.
+     *
+     * @param dataNascimento the new data nascimento
+     */
+    public void setDataNascimento(DateTime dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
 
 	public DateTime getDataEntrada() {
 		return dataEntrada;
@@ -136,9 +224,6 @@ public class Funcionario {
 	}
 
 	public void setSalario(BigDecimal salario) {
-		isNull(salario, campoVazioOrNullMensagemPadrao("salario", FUNCIONARIO));
-		minAndMaxValue(valueOf(500), valueOf(1000), salario,
-				tamanhoCamposMensagemPadrao(500, 1000, "salario", FUNCIONARIO));
 		this.salario = salario;
 	}
 
@@ -146,45 +231,69 @@ public class Funcionario {
 		return cpf;
 	}
 
-	public void setCpf(String cpf) {
-		isStringEmpty(cpf, campoVazioOrNullMensagemPadrao("cpf", FUNCIONARIO));
-		isCpfValido(cpf, campoInvalidoMensagemPadrao("cpf", FUNCIONARIO));
-		this.cpf = cpf;
-	}
+    /**
+     * Sets the cpf.
+     *
+     * @param cpf the new cpf
+     */
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
-		return result;
-	}
+    /**
+     * Gets the telefones.
+     *
+     * @return the telefones
+     */
+    public Set<Telefone> getTelefones() {
+        return telefones;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Funcionario other = (Funcionario) obj;
-		if (cpf == null) {
-			if (other.cpf != null)
-				return false;
-		} else if (!cpf.equals(other.cpf))
-			return false;
-		return true;
-	}
+    /**
+     * Sets the telefones.
+     *
+     * @param telefones the new telefones
+     */
+    public void setTelefones(Set<Telefone> telefones) {
+        this.telefones = telefones;
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Funcionario [nome=").append(nome).append(", email=").append(email).append(", cpf=").append(cpf)
-				.append(", dataNascimento=").append(dataNascimento).append(", dataEntrada=").append(dataEntrada)
-				.append(", cargo=").append(cargo).append(", salario=").append(salario).append(", endereco=")
-				.append(endereco).append("]");
-		return builder.toString();
-	}
+    /**
+     * Hash code.
+     *
+     * @return the int
+     */
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(cpf).toHashCode();
+    }
+
+    /**
+     * Equals.
+     *
+     * @param obj the obj
+     * @return true, if successful
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Funcionario other = (Funcionario) obj;
+        return new EqualsBuilder().append(cpf, other.cpf).isEquals();
+    }
+
+    /**
+     * To string.
+     *
+     * @return the string
+     */
+    @Override
+    public String toString() {
+        return reflectionToString(this, JSON_STYLE);
+    }
 
 }

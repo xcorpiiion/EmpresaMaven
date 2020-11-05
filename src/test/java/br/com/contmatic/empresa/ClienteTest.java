@@ -1,257 +1,309 @@
 package br.com.contmatic.empresa;
 
-import static br.com.contmatic.empresa.utils.InstanciaClasses.criaCliente;
-import static br.com.contmatic.empresa.utils.InstanciaClasses.criaEndereco;
-import static br.com.contmatic.services.utils.GeradorCpf.gerardorRandomCpf;
-import static java.util.concurrent.TimeUnit.DAYS;
-import static nl.jqno.equalsverifier.EqualsVerifier.forClass;
-import static nl.jqno.equalsverifier.Warning.ALL_FIELDS_SHOULD_BE_USED;
-import static nl.jqno.equalsverifier.Warning.NONFINAL_FIELDS;
-import static org.apache.commons.lang3.StringUtils.EMPTY;
-import static org.apache.commons.lang3.StringUtils.SPACE;
-import static org.junit.Assert.assertEquals;
-import static org.junit.runners.MethodSorters.NAME_ASCENDING;
-
+import br.com.contmatic.telefone.Telefone;
 import org.joda.time.DateTime;
-import org.junit.After;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 
-import com.github.javafaker.Faker;
+import java.math.BigDecimal;
+import java.util.*;
 
+import static br.com.contmatic.constantes.Constante.*;
+import static br.com.contmatic.constantes.Mensagem.*;
+import static br.com.contmatic.validator.ValidadorAnnotionsMsgErro.returnAnnotationMsgError;
+import static br.com.six2six.fixturefactory.Fixture.from;
+import static br.com.six2six.fixturefactory.loader.FixtureFactoryLoader.loadTemplates;
+import static org.junit.Assert.*;
+import static org.junit.runners.MethodSorters.NAME_ASCENDING;
+
+/**
+ * The Class ClienteTest.
+ */
 @FixMethodOrder(NAME_ASCENDING)
 public class ClienteTest {
+    
+    /** The produtos. */
+    private static List<Produto> produtos;
 
-	private static Cliente cliente;
+    /** The clientes. */
+    private Cliente cliente;
 
-	private static Endereco endereco;
+    private Cliente cliente2;
 
-	private static Faker faker;
+    /** The loja. */
+    private static Empresa loja;
 
-	@BeforeClass
-	public static void addDadosIniciais() {
-		endereco = criaEndereco();
-		cliente = criaCliente(endereco);
-		faker = new Faker();
-	}
+    private Set<Telefone> telefone;
 
-	/* testa nome */
+    /**
+     * Add dados iniciais.
+     */
+    @BeforeClass
+    public static void addDadosIniciais() {
+        loadTemplates("br.com.contmatic.fixture.factory");
+        produtos = new ArrayList<>();
+        produtos.add(from(Produto.class).gimme(VALID));
+        loja = from(Empresa.class).gimme(VALID);
+        loja.setProduto(produtos);
+        loja.setCliente(new ArrayList<>());
+        loja.setFuncionario(new ArrayList<>());
+    }
 
-	@Test
-	public void deve_aceitar_nome_valido() {
-		final String firstName = faker.name().firstName();
-		cliente.setNome(firstName);
-		assertEquals(firstName, cliente.getNome());
-	}
+    /**
+     * Add dados cliente.
+     */
+    @Before
+    public void addDadosCliente() {
+        cliente = (from(Cliente.class).gimme(VALID));
+        telefone = new HashSet<>();
+        telefone.add(from(Telefone.class).gimme(VALID));
+        cliente.setTelefones(telefone);
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void deve_apenas_aceitar_nome_com_mais_3_caracteres() {
-		cliente.setNome("aa");
-	}
+    @Test
+    public void deve_add_telefone_na_lista_telefones() {
+        cliente.setTelefones(telefone);
+        assertTrue(cliente.getTelefones().size() > 0);
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void deve_apenas_aceitar_nome_com_menos_30_caracteres() {
-		cliente.setNome("aawwwwwwwertgfdswqafcvfgtdsyhtru"
-				+ "aawwwwwwwertgfdswqafcvfgtdsyhtruaawwwwwwwertgfdswqafcvfgtdsyhtru");
-	}
+    /**
+     * Nao deve aceitar nome vazio.
+     */
+    @Test
+    public void deve_retornar_true_caso_nome_esteja_vazio() {
+        Cliente clienteInvalid = from(Cliente.class).gimme(NOME_EMPTY);
+        cliente.setNome(clienteInvalid.getNome());
+        assertTrue(returnAnnotationMsgError(cliente, VALOR_ESTA_VAZIO));
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_nome_com_numero() {
-		cliente.setNome(faker.name().firstName() + "1");
-	}
+    /**
+     * Nao deve aceitar nome com espaco em branco.
+     */
+    @Test
+    public void deve_retornar_true_caso_nome_tenha_apenas_espacos_em_branco() {
+        Cliente clienteInvalid = from(Cliente.class).gimme(NOME_BLANK_SPACE);
+        cliente.setNome(clienteInvalid.getNome());
+        assertTrue(returnAnnotationMsgError(cliente, VALOR_ESTA_VAZIO));
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_nome_com_caracteres_especiais() {
-		cliente.setNome(faker.name().firstName() + "#$%");
-	}
+    @Test
+    public void deve_retornar_true_caso_nome_seja_null() {
+        Cliente clienteInvalid = from(Cliente.class).gimme(NOME_NULL);
+        cliente.setNome(clienteInvalid.getNome());
+        assertTrue(returnAnnotationMsgError(cliente, VALOR_ESTA_NULLO));
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_nome_empty() {
-		cliente.setNome(EMPTY);
-	}
+    @Test
+    public void deve_retornar_true_caso_nome_seja_possua_menos_3_caracter() {
+        Cliente clienteInvalid = from(Cliente.class).gimme(NOME_LESS_3_CARACTER);
+        cliente.setNome(clienteInvalid.getNome());
+        assertTrue(returnAnnotationMsgError(cliente, VALOR_NAO_E_VALIDO));
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_nome_vazio() {
-		cliente.setNome(SPACE);
-	}
+    @Test
+    public void deve_retornar_true_caso_nome_seja_possua_mais_50_caracter() {
+        Cliente clienteInvalid = from(Cliente.class).gimme(NOME_GREATER_CARACTER);
+        cliente.setNome(clienteInvalid.getNome());
+        assertTrue(returnAnnotationMsgError(cliente, VALOR_NAO_E_VALIDO));
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_nome_null() {
-		cliente.setNome(null);
-	}
+    @Test
+    public void deve_retornar_true_caso_nome_seja_possua_caracteres_especiais() {
+        Cliente clienteInvalid = from(Cliente.class).gimme(NOME_WITH_SPECIAL_CARACTER);
+        cliente.setNome(clienteInvalid.getNome());
+        assertTrue(returnAnnotationMsgError(cliente, VALOR_NAO_E_VALIDO));
+    }
 
-	/* Teste cpf */
+    /**
+     * Nao deve aceitar email null.
+     */
+    @Test
+    public void nao_deve_aceitar_email_null() {
+        Cliente clienteInvalid = from(Cliente.class).gimme(EMAIL_NULL);
+        cliente.setNome(clienteInvalid.getEmail());
+        assertNotNull(cliente.getEmail());
+    }
 
-	@Test
-	public void deve_aceitar_cpf_valido() {
-		final String cpfValido = gerardorRandomCpf();
-		cliente.setCpf(cpfValido);
-		assertEquals(cpfValido, cliente.getCpf());
-	}
+    /**
+     * Nao deve aceitar email com espaco em branco.
+     */
+    @Test
+    public void deve_retornar_true_caso_email_contenha_espaco_em_branco() {
+        Cliente clienteInvalid = from(Cliente.class).gimme(EMAIL_BLANK_SPACE);
+        cliente.setEmail(clienteInvalid.getEmail());
+        assertTrue(returnAnnotationMsgError(cliente, VALOR_NAO_E_VALIDO));
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_cpf_com_menos_11_numeros() {
-		String cpf = "1234567890123";
-		cliente.setCpf(cpf);
-	}
+    @Test
+    public void deve_retornar_true_caso_email_esteja_com_menos_10_caracteres() {
+        cliente = from(Cliente.class).gimme(EMAIL_LESS_10_CARACTERES);
+        assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_cpf_com_mais_11_numeros() {
-		String cpf = "123456789012345";
-		cliente.setCpf(cpf);
-	}
+    @Test
+    public void deve_retornar_true_caso_email_esteja_com_espaco_em_branco_entre_o_email() {
+        cliente = from(Cliente.class).gimme(EMAIL_WITH_BLANK_SPACE_IN_WORD);
+        assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_cpf_com_letras() {
-		String cpf = "a";
-		cliente.setCpf(cpf);
-	}
+    @Test
+    public void deve_retornar_true_caso_email_esteja_sem_arroba() {
+        cliente = from(Cliente.class).gimme(EMAIL_WITHOUT_ARROBA);
+        assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_cpf_com_letras_e_numeros_juntos() {
-		String cpf = "1234567890123a";
-		cliente.setCpf(cpf);
-	}
+    @Test
+    public void deve_retornar_true_caso_email_esteja_sem_ponto_com() {
+        cliente = from(Cliente.class).gimme(EMAIL_WITHOUT_PONTO_COM);
+        assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_cpf_com_espaco_entre_numeros() {
-		StringBuilder cpf = new StringBuilder();
-		cpf.append(faker.number().numberBetween(1, 10)).append(" ");
-		cliente.setCpf(cpf.toString());
-	}
+    @Test
+    public void deve_retornar_true_caso_email_esteja_sem_com() {
+        cliente = from(Cliente.class).gimme(EMAIL_WITHOUT_COM);
+        assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_cpf_vazio() {
-		String cpf = EMPTY;
-		cliente.setCpf(cpf);
-	}
+    @Test
+    public void deve_retornar_true_caso_email_esteja_com_caracteres_especiais() {
+        cliente = from(Cliente.class).gimme(EMAIL_WITH_SPECIAL_CARACTER);
+        assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_cpf_com_espaco_em_branco() {
-		String cpf = SPACE;
-		cliente.setCpf(cpf);
-	}
+    /**
+     * Nao deve aceitar endereco null.
+     */
+    @Test
+    public void nao_deve_aceitar_endereco_null() {
+        Cliente clienteInvalid = from(Cliente.class).gimme(ENDERECO_NULL);
+        cliente.setEndereco(clienteInvalid.getEndereco());
+        assertNull(cliente.getEndereco());
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_cpf_null() {
-		cliente.setCpf(null);
-	}
+    /**
+     * Data nascimento nao deve ser null exception.
+     *
+     */
+    @Test
+    public void deve_retornar_true_se_dataNascimento_for_null() {
+        Cliente clienteValid = from(Cliente.class).gimme(DATA_NASCIMENTO_NULL);
+        assertTrue(returnAnnotationMsgError(clienteValid, VALOR_ESTA_NULLO));
+    }
 
-	/* Testa email */
+    @Test
+    public void deve_alterar_dataNascimento() {
+        cliente.setDataNascimento(new DateTime());
+        assertEquals(new DateTime(), cliente.getDataNascimento());
+    }
 
-	@Test
-	public void deve_aceitar_email_valido() {
-		final String emailAddress = faker.internet().emailAddress();
-		cliente.setEmail(emailAddress);
-		assertEquals(emailAddress, cliente.getEmail());
-	}
+    /**
+     * Deve add dinheiro carteira.
+     */
+    @Test
+    public void deve_add_dinheiro_carteira() {
+        BigDecimal dinheiro = new BigDecimal(2500);
+        BigDecimal dinheiroAnterior = cliente.getDinheiroCarteira();
+        cliente.setDinheiroCarteira(cliente.getDinheiroCarteira().add(dinheiro));
+        assertTrue(cliente.getDinheiroCarteira().compareTo(dinheiroAnterior) > 0);
+    }
 
-	@Test(expected = IllegalStateException.class)
-	public void nao_deve_aceitar_email_sem_arroba() {
-		cliente.setEmail(faker.name().firstName());
-	}
+    @Test
+    public void deve_retornar_true_caso_cpf_nao_seja_valido() {
+        cliente.setCpf(String.valueOf(new Random().nextInt(888888888) + 111111111));
+        assertTrue(returnAnnotationMsgError(cliente, VALOR_NAO_E_VALIDO));
+    }
 
-	@Test(expected = IllegalStateException.class)
-	public void nao_deve_aceitar_email_com_caracteres_especiais() {
-		cliente.setEmail(faker.name().firstName() + "%$");
-	}
+    /**
+     * Deve retornar true no equals para serem iguais.
+     */
 
-	@Test(expected = IllegalStateException.class)
-	public void nao_deve_aceitar_email_com_espaco_entre_palavras() {
-		cliente.setEmail("aa " + faker.internet().emailAddress());
-	}
+    @Test
+    public void deve_add_produto_no_carrinho() {
+        cliente.setCarrinhoProdutos(produtos);
+        assertTrue(cliente.getCarrinhoProdutos().size() > 0);
+    }
 
-	@Test(expected = IllegalStateException.class)
-	public void nao_deve_aceitar_email_sem_ponto() {
-		cliente.setEmail("a@gmail");
-	}
+    @Test
+    public void deve_add_produto_na_lista_de_produtos_comprados() {
+        cliente.setProdutosComprados(produtos);
+        assertTrue(cliente.getProdutosComprados().size() > 0);
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_email_vazio_empty() {
-		cliente.setEmail(SPACE);
-	}
+    @Test()
+    public void deve_retornar_true_no_equals_para_serem_iguais() {
+        cliente2 = (from(Cliente.class).gimme(VALID));
+        cliente2.setCpf(cliente.getCpf());
+        assertEquals("Os cliente são iguais", cliente, cliente2);
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_email_vazio() {
-		cliente.setEmail(EMPTY);
-	}
+    @Test()
+    public void deve_retornar_true_quando_compara_com_mesmo_objeto() {
+        assertSame(cliente, cliente);
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_email_null() {
-		cliente.setEmail(null);
-	}
+    @Test()
+    public void deve_retornar_false_quando_compara_com_classe_diferente() {
+        assertNotEquals(cliente, new Object());
+    }
 
-	/* Teste endereço */
+    /**
+     * Deve ter hash code iguais para serem clientes iguais.
+     */
+    @Test()
+    public void deve_ter_hashCode_iguais_para_serem_clientes_iguais() {
+        cliente2 = (from(Cliente.class).gimme(VALID));
+        cliente2.setCpf(cliente.getCpf());
+        assertEquals(cliente.hashCode(), cliente2.hashCode());
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_endereco_null() {
-		cliente.setEndereco(null);
-	}
+    /**
+     * Nao deve ter equals null para comparar clientes.
+     */
+    @Test()
+    public void nao_deve_ter_equals_null_para_comparar_clientes() {
+        assertNotEquals("Os clientes são igauis", null, cliente);
+    }
 
-	/* testa data de nascimento */
+    @Test
+    public void deve_retornar_true_caso_contenha_a_palavra_nome_no_toString() {
+        assertTrue(cliente.toString().contains("nome"));
+    }
 
-	@Test
-	public void deve_settar_data_nascimento() {
-		DateTime past = new DateTime(faker.date().past(1, DAYS));
-		cliente.setDataNascimento(past);
-		assertEquals(past, cliente.getDataNascimento());
-	}
+    @Test
+    public void deve_retornar_true_caso_contenha_a_palavra_email_no_toString() {
+        assertTrue(cliente.toString().contains("email"));
+    }
 
-	@Test(expected = IllegalStateException.class)
-	public void nao_deve_aceitar_data_de_nascimento_antes_de_1920() {
-		DateTime past = new DateTime(1919, 1, 1, 0, 0);
-		cliente.setDataNascimento(past);
-	}
+    @Test
+    public void deve_retornar_true_caso_contenha_a_palavra_dataNascimento_no_toString() {
+        assertTrue(cliente.toString().contains("dataNascimento"));
+    }
 
-	@Test(expected = IllegalStateException.class)
-	public void nao_deve_aceitar_data_nascimento_depois_da_hora_atual() {
-		DateTime past = new DateTime(2050, 1, 1, 0, 0);
-		cliente.setDataNascimento(past);
-	}
+    @Test
+    public void deve_retornar_true_caso_contenha_a_palavra_dinheiroCarteira_no_toString() {
+        assertTrue(cliente.toString().contains("dinheiroCarteira"));
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_data_nascimento_null() {
-		cliente.setDataNascimento(null);
-	}
+    @Test
+    public void deve_retornar_true_caso_contenha_a_palavra_endereco_no_toString() {
+        assertTrue(cliente.toString().contains("endereco"));
+    }
 
-	/* Testa data cadastro */
+    @Test
+    public void deve_retornar_true_caso_contenha_a_palavra_telefones_no_toString() {
+        assertTrue(cliente.toString().contains("telefones"));
+    }
 
-	@Test
-	public void deve_settar_data_cadastro() {
-		DateTime past = new DateTime(faker.date().past(1, DAYS));
-		cliente.setCadastro(past);
-		assertEquals(past, cliente.getCadastro());
-	}
+    @Test
+    public void deve_retornar_true_caso_contenha_a_palavra_carrinhoProdutos_no_toString() {
+        assertTrue(cliente.toString().contains("carrinhoProdutos"));
+    }
 
-	@Test(expected = IllegalStateException.class)
-	public void nao_deve_aceitar_data_cadastro_antes_de_1998() {
-		DateTime past = new DateTime(1997, 1, 1, 0, 0);
-		cliente.setCadastro(past);
-	}
-
-	@Test(expected = IllegalStateException.class)
-	public void nao_deve_aceitar_data_cadastro_depois_da_hora_atual() {
-		DateTime past = new DateTime(2050, 1, 1, 0, 0);
-		cliente.setCadastro(past);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_data_cadastro_null() {
-		cliente.setCadastro(null);
-	}
-
-	/* Testa equals e hashcode */
-
-	@Test()
-	public void deve_retornar_true_no_equals_para_serem_iguais() {
-		forClass(Cliente.class).usingGetClass()
-				.suppress(NONFINAL_FIELDS, ALL_FIELDS_SHOULD_BE_USED).verify();
-	}
-
-	@After
-	public void deve_conter_toString() {
-		System.out.println(cliente);
-	}
+    @Test
+    public void deve_retornar_true_caso_contenha_a_palavra_produtosComprados_no_toString() {
+        assertTrue(cliente.toString().contains("produtosComprados"));
+    }
 
 }

@@ -1,289 +1,317 @@
 package br.com.contmatic.empresa;
 
-import static br.com.contmatic.empresa.utils.InstanciaClasses.criaEndereco;
-import static br.com.contmatic.empresa.utils.InstanciaClasses.criaFuncionario;
-import static br.com.contmatic.services.utils.GeradorCpf.gerardorRandomCpf;
-import static java.util.concurrent.TimeUnit.DAYS;
-import static nl.jqno.equalsverifier.EqualsVerifier.forClass;
-import static nl.jqno.equalsverifier.Warning.ALL_FIELDS_SHOULD_BE_USED;
-import static nl.jqno.equalsverifier.Warning.NONFINAL_FIELDS;
-import static org.apache.commons.lang3.StringUtils.EMPTY;
-import static org.apache.commons.lang3.StringUtils.SPACE;
+import static br.com.contmatic.constantes.Constante.*;
+import static br.com.contmatic.constantes.Mensagem.*;
+import static br.com.contmatic.empresa.Cargo.REPOSITOR;
+import static br.com.contmatic.empresa.Cargo.RH;
+import static br.com.contmatic.telefone.TipoContrato.CLT;
+import static br.com.contmatic.telefone.TipoContrato.PJ;
+import static br.com.contmatic.validator.ValidadorAnnotionsMsgErro.returnAnnotationMsgError;
+import static br.com.six2six.fixturefactory.Fixture.from;
+import static br.com.six2six.fixturefactory.loader.FixtureFactoryLoader.loadTemplates;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.runners.MethodSorters.NAME_ASCENDING;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import br.com.contmatic.constantes.Constante;
+import com.github.javafaker.Faker;
 import org.joda.time.DateTime;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
-import com.github.javafaker.Faker;
+import br.com.contmatic.constantes.Mensagem;
+import br.com.contmatic.telefone.Telefone;
+import br.com.contmatic.telefone.TipoContrato;
+import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
+import br.com.six2six.fixturefactory.Fixture;
+import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
+/**
+ * The Class FuncionarioTest.
+ */
 @FixMethodOrder(NAME_ASCENDING)
 public class FuncionarioTest {
 
-	private static Funcionario funcionario;
+    private static Faker faker;
 
-	private static Endereco endereco;
+    /** The produtos. */
+    private static List<Produto> produtos;
 
-	private static Faker faker;
+    /** The funcionarios. */
+    private static Funcionario funcionario;
+    
+    private Funcionario funcionario2;
 
-	@BeforeClass
-	public static void addDadosIniciais() {
-		faker = new Faker();
-		endereco = criaEndereco();
-		funcionario = criaFuncionario(endereco);
-	}
-	
-	/* testa nome */
+    /** The loja. */
+    private static Empresa loja;
+    
+    private Set<Telefone> telefones;
 
-	@Test
-	public void deve_aceitar_nome_valido() {
-		final String firstName = faker.name().firstName();
-		funcionario.setNome(firstName);
-		assertEquals(firstName, funcionario.getNome());
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void deve_apenas_aceitar_nome_com_mais_3_caracteres() {
-		funcionario.setNome("aa");
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void deve_apenas_aceitar_nome_com_menos_30_caracteres() {
-		funcionario.setNome("aawwwwwwwertgfdswqafcvfgtdsyhtru"
-				+ "aawwwwwwwertgfdswqafcvfgtdsyhtruaawwwwwwwertgfdswqafcvfgtdsyhtru");
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_nome_com_numero() {
-		funcionario.setNome(faker.name().firstName() + "1");
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_nome_com_caracteres_especiais() {
-		funcionario.setNome(faker.name().firstName() + "#$%");
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_nome_empty() {
-		funcionario.setNome(EMPTY);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_nome_vazio() {
-		funcionario.setNome(SPACE);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_nome_null() {
-		funcionario.setNome(null);
-	}
-
-	/* Teste cpf */
-
-	@Test
-    public void deve_aceitar_cpf_valido() {
-        final String cpfValido = gerardorRandomCpf();
-       funcionario.setCpf(cpfValido);
-        assertEquals(cpfValido, funcionario.getCpf());
+    /**
+     * Add dados iniciais.
+     */
+    @BeforeClass
+    public static void addDadosIniciais() {
+        faker = new Faker();
+        loadTemplates("br.com.contmatic.fixture.factory");
+        produtos = new ArrayList<>();
+        produtos.add(from(Produto.class).gimme(VALID));
+        loja = from(Empresa.class).gimme(VALID);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void nao_deve_aceitar_cpf_com_menos_11_numeros() {
-        String cpf = "1234567890123";
-       funcionario.setCpf(cpf);
+    /**
+     * Add dados funcionario.
+     */
+    @Before
+    public void add_dados_funcionario() {
+        funcionario = (from(Funcionario.class).gimme(VALID));
+        funcionario2 = (from(Funcionario.class).gimme(VALID));
+    }
+    
+    @Before
+    public void addDadosTelefone() {
+        telefones = new HashSet<>();
+        telefones.add(from(Telefone.class).gimme(VALID));
+        loadTemplates("br.com.contmatic.fixture.factory");
+        telefones.add(from(Telefone.class).gimme(VALID));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void nao_deve_aceitar_cpf_com_mais_11_numeros() {
-        String cpf = "123456789012345";
-       funcionario.setCpf(cpf);
+    @Test
+    public void deve_mudar_nome_funcionario() {
+        final String nome = faker.name().firstName();
+        funcionario.setNome(nome);
+        assertEquals(nome, funcionario.getNome());
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_nome_seja_null() {
+        funcionario= from(Funcionario.class).gimme(NOME_NULL);
+        assertTrue(returnAnnotationMsgError(funcionario, VALOR_ESTA_NULLO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_nome_seja_vazio() {
+        funcionario = from(Funcionario.class).gimme(NOME_EMPTY);
+        assertTrue(returnAnnotationMsgError(funcionario, VALOR_ESTA_VAZIO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_nome_esteja_com_espaco_em_branco() {
+        funcionario = from(Funcionario.class).gimme(NOME_BLANK_SPACE);
+        assertTrue(returnAnnotationMsgError(funcionario, VALOR_ESTA_VAZIO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_nome_seja_possua_menos_3_caracter() {
+        funcionario = from(Funcionario.class).gimme(NOME_LESS_3_CARACTER);
+        assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_nome_seja_possua_mais_50_caracter() {
+        funcionario = from(Funcionario.class).gimme(NOME_GREATER_CARACTER);
+        assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_nome_seja_possua_caracteres_especiais() {
+        funcionario = from(Funcionario.class).gimme(NOME_WITH_SPECIAL_CARACTER);
+        assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_email_seja_null() {
+        funcionario = from(Funcionario.class).gimme(EMAIL_NULL);
+        assertTrue(returnAnnotationMsgError(funcionario, VALOR_ESTA_NULLO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_email_seja_vazio() {
+        funcionario = from(Funcionario.class).gimme(EMAIL_EMPTY);
+        assertTrue(returnAnnotationMsgError(funcionario, VALOR_ESTA_VAZIO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_email_esteja_com_espaco_em_branco() {
+        funcionario = from(Funcionario.class).gimme(EMAIL_BLANK_SPACE);
+        assertTrue(returnAnnotationMsgError(funcionario, VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_alterar_email() {
+        final String email = faker.internet().emailAddress();
+        funcionario.setEmail(email);
+        assertEquals(email, funcionario.getEmail());
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_email_esteja_com_menos_10_caracteres() {
+        funcionario = from(Funcionario.class).gimme(EMAIL_LESS_10_CARACTERES);
+        assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_email_esteja_com_mais_100_caracteres() {
+        funcionario = from(Funcionario.class).gimme(EMAIL_GREATER_100_CARACTERES);
+        assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_email_esteja_com_espaco_em_branco_entre_o_email() {
+        funcionario = from(Funcionario.class).gimme(EMAIL_WITH_BLANK_SPACE_IN_WORD);
+        assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_email_esteja_com_numero_depois_do_arroba() {
+        funcionario = from(Funcionario.class).gimme(EMAIL_WITH_NUMBER_AFTER_ARROBA);
+        assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_email_esteja_sem_arroba() {
+        funcionario = from(Funcionario.class).gimme(EMAIL_WITHOUT_ARROBA);
+        assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_email_esteja_sem_ponto_com() {
+        funcionario = from(Funcionario.class).gimme(EMAIL_WITHOUT_PONTO_COM);
+        assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_email_esteja_sem_com() {
+        funcionario = from(Funcionario.class).gimme(EMAIL_WITHOUT_COM);
+        assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_caso_email_esteja_com_caracteres_especiais() {
+        funcionario = from(Funcionario.class).gimme(EMAIL_WITH_SPECIAL_CARACTER);
+        assertTrue(returnAnnotationMsgError(loja, VALOR_NAO_E_VALIDO));
+    }
+    
+    @Test
+    public void deve_retornar_true_se_cargo_for_null() {
+        funcionario = from(Funcionario.class).gimme(CARGO_NULL);
+        assertTrue(returnAnnotationMsgError(funcionario, VALOR_ESTA_NULLO));
+    }
+    
+    @Test
+    public void deve_alterar_cargo_para_repositor() {
+        funcionario.setCargo(REPOSITOR);
+        assertTrue(funcionario.getCargo() == REPOSITOR);
+    }
+    
+    @Test
+    public void deve_alterar_cargo_para_rh() {
+        funcionario.setCargo(RH);
+        assertTrue(funcionario.getCargo() == RH);
+    }
+    
+    @Test
+    public void deve_retornar_true_se_tipoContrato_for_null() {
+        funcionario = from(Funcionario.class).gimme(TIPO_CONTRATO_NULL);
+        assertTrue(returnAnnotationMsgError(funcionario, VALOR_ESTA_NULLO));
+    }
+    
+    @Test
+    public void deve_alterar_tipoContrato_para_clt() {
+        funcionario.setTipoContrato(CLT);
+        assertTrue(funcionario.getTipoContrato() == CLT);
+    }
+    
+    @Test
+    public void deve_alterar_tipoContrato_para_pj() {
+        funcionario.setTipoContrato(PJ);
+        assertTrue(funcionario.getTipoContrato() == PJ);
+    }
+    
+    @Test
+    public void deve_retornar_true_se_dataNascimento_for_null() {
+        funcionario = from(Funcionario.class).gimme(DATA_NASCIMENTO_NULL);
+        assertTrue(returnAnnotationMsgError(funcionario, VALOR_ESTA_NULLO));
+    }
+    
+    @Test
+    public void deve_alterar_dataNascimento() {
+        funcionario.setDataNascimento(new DateTime());
+        assertEquals(new DateTime(), funcionario.getDataNascimento());
+    }
+    
+    @Test
+    public void deve_add_telefone_na_lista_telefones() {
+        funcionario.setTelefones(telefones);
+        assertTrue(funcionario.getTelefones().size() > 0);
+    }
+    
+    @Test
+    public void deve_mudar_endereco() {
+        funcionario.setEndereco(funcionario2.getEndereco());
+        assertEquals(funcionario2.getEndereco(), funcionario.getEndereco());   
+    }
+    
+    /**
+     * Deve ter salario maior do que zero.
+     */
+    @Test
+    public void deve_ter_salario_maior_do_que_zero() {
+        funcionario = (from(Funcionario.class).gimme(SALARIO_LESS_1));
+        funcionario2.setSalario(funcionario.getSalario());
+        assertTrue(returnAnnotationMsgError(funcionario2, PRECISA_SER_UM_VALOR_MAIOR));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void nao_deve_aceitar_cpf_com_letras() {
-        String cpf = "a";
-        funcionario.setCpf(cpf);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void nao_deve_aceitar_cpf_com_letras_e_numeros_juntos() {
-        String cpf = "1234567890123a";
-       funcionario.setCpf(cpf);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void nao_deve_aceitar_cpf_com_espaco_entre_numeros() {
-        StringBuilder cpf = new StringBuilder();
-        cpf.append(faker.number().numberBetween(1, 10)).append(" ");
-       funcionario.setCpf(cpf.toString());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void nao_deve_aceitar_cpf_vazio() {
-        String cpf = EMPTY;
-       funcionario.setCpf(cpf);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void nao_deve_aceitar_cpf_com_espaco_em_branco() {
-        String cpf = SPACE;
-       funcionario.setCpf(cpf);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void nao_deve_aceitar_cpf_null() {
-       funcionario.setCpf(null);
-    }
-
-	/* Testa email */
-
-	@Test
-	public void deve_aceitar_email_valido() {
-		final String emailAddress = faker.internet().emailAddress();
-		funcionario.setEmail(emailAddress);
-		assertEquals(emailAddress, funcionario.getEmail());
-	}
-
-	@Test(expected = IllegalStateException.class)
-	public void nao_deve_aceitar_email_sem_arroba() {
-		funcionario.setEmail(faker.name().firstName());
-	}
-
-	@Test(expected = IllegalStateException.class)
-	public void nao_deve_aceitar_email_com_caracteres_especiais() {
-		funcionario.setEmail(faker.name().firstName() + "%$");
-	}
-
-	@Test(expected = IllegalStateException.class)
-	public void nao_deve_aceitar_email_com_espaco_entre_palavras() {
-		funcionario.setEmail("aa " + faker.internet().emailAddress());
-	}
-
-	@Test(expected = IllegalStateException.class)
-	public void nao_deve_aceitar_email_sem_ponto() {
-		funcionario.setEmail("a@gmail");
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_email_vazio_empty() {
-		funcionario.setEmail(SPACE);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_email_vazio() {
-		funcionario.setEmail(EMPTY);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_email_null() {
-		funcionario.setEmail(null);
-	}
-
-	/* Teste endereço */
-
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_endereco_null() {
-		funcionario.setEndereco(null);
-	}
-
-	/* testa data de nascimento */
-
-	@Test
-	public void deve_settar_data_nascimento() {
-		DateTime past = new DateTime(faker.date().past(1, DAYS));
-		funcionario.setDataNascimento(past);
-		assertEquals(past, funcionario.getDataNascimento());
-	}
-
-	@Test(expected = IllegalStateException.class)
-	public void nao_deve_aceitar_data_de_nascimento_antes_de_1920() {
-		DateTime past = new DateTime(1919, 1, 1, 0, 0);
-		funcionario.setDataNascimento(past);
-	}
-
-	@Test(expected = IllegalStateException.class)
-	public void nao_deve_aceitar_data_nascimento_depois_da_hora_atual() {
-		DateTime past = new DateTime(2050, 1, 1, 0, 0);
-		funcionario.setDataNascimento(past);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_data_nascimento_null() {
-		funcionario.setDataNascimento(null);
-	}
-
-	/* Testa data entrada */
-
-	@Test
-	public void deve_settar_data_entrada() {
-		DateTime past = new DateTime();
-		funcionario.setDataEntrada(past);
-		assertEquals(past, funcionario.getDataEntrada());
-	}
-
-	@Test(expected = IllegalStateException.class)
-	public void nao_deve_aceitar_data_entrada_menor_do_que_data_criacao_empresa() {
-		DateTime past = new DateTime(1997, 1, 1, 0, 0);
-		funcionario.setDataEntrada(past);
-	}
-
-	@Test(expected = IllegalStateException.class)
-	public void nao_deve_aceitar_data_entrada_depois_da_hora_atual() {
-		DateTime past = new DateTime(2050, 1, 1, 0, 0);
-		funcionario.setDataEntrada(past);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_data_entrada_null() {
-		funcionario.setDataEntrada(null);
-	}
-	
-	/* Testa data saida */
-	
-	@Test
-	public void deve_settar_data_saida() {
-		DateTime past = new DateTime();
-		funcionario.setDataEntrada(past);
-		funcionario.setDataSaida(past);
-		assertEquals(past, funcionario.getDataEntrada());
-	}
-	
-	@Test(expected = IllegalStateException.class)
-	public void nao_deve_aceitar_data_saida_menor_do_que_data_criacao_empresa() {
-		DateTime past = new DateTime(1997, 1, 1, 0, 0);
-		funcionario.setDataSaida(past);
-	}
-	
-	@Test(expected = IllegalStateException.class)
-	public void nao_deve_aceitar_data_saida_depois_da_hora_atual() {
-		DateTime past = new DateTime(2050, 1, 1, 0, 0);
-		funcionario.setDataSaida(past);
-	}
-	
-	@Test(expected = IllegalStateException.class)
-	public void nao_deve_aceitar_data_saida_menor_do_que_data_entrada() {
-		DateTime past = new DateTime(1900, 1, 1, 0, 0);
-		funcionario.setDataSaida(past);
-	}
-	
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_data_cadastro_null() {
-		funcionario.setDataSaida(null);
-	}
-	
-	/* Testa equals e hashcode */
-	
-	@Test()
+    @Test()
     public void deve_retornar_true_no_equals_para_serem_iguais() {
-        forClass(Funcionario.class).usingGetClass().suppress(NONFINAL_FIELDS, ALL_FIELDS_SHOULD_BE_USED).verify();
+        funcionario = (from(Funcionario.class).gimme(VALID));
+        funcionario2.setCpf(funcionario.getCpf());
+        assertTrue("Os Funcionario são iguais", funcionario.equals(funcionario2));
     }
-	
-	@AfterClass
-	public static void imprimirFuncionario() {
-		System.out.println(funcionario);
-	}
-	
+    
+    @Test()
+    public void deve_retornar_true_quando_compara_com_mesmo_objeto() {
+        assertTrue(funcionario.equals(funcionario));
+    }
+
+    @Test()
+    public void deve_retornar_false_quando_compara_com_classe_diferente() {
+        assertFalse(funcionario.equals(new Object()));
+    }
+    /**
+     * Deve ter hash code iguais para serem funcionarios iguais.
+     */
+    @Test()
+    public void deve_ter_hashCode_iguais_para_serem_funcionarios_iguais() {
+        funcionario = (from(Funcionario.class).gimme(VALID));
+        funcionario2.setCpf(funcionario.getCpf());
+        assertTrue(funcionario.hashCode() == funcionario2.hashCode());
+    }
+
+    /**
+     * Nao deve ter equals null para comparar funcionarios.
+     */
+    @Test()
+    public void nao_deve_ter_equals_null_para_comparar_funcionarios() {
+        assertFalse("Os funcionarios são igauis", funcionario.equals(null));
+    }
+
+    /**
+     * Mostrar dados.
+     */
+    @AfterClass
+    public static void mostrarDados() {
+        System.out.println(funcionario);
+    }
+
 }
