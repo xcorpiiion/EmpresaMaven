@@ -24,11 +24,11 @@ import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 public class Funcionario {
 
     /** The nome. */
-    @NotBlank(message = Mensagem.VALOR_ESTA_VAZIO)
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
-    @NotEmpty(message = Mensagem.VALOR_ESTA_VAZIO)
-    @Min(value = 2, message = Mensagem.NOME_E_MUITO_GRANDE)
-    @Max(value = 60, message = Mensagem.NOME_E_MUITO_PEQUENO)
+    @NotBlank(message = VALOR_ESTA_VAZIO)
+    @NotNull(message = VALOR_ESTA_NULLO)
+    @NotEmpty(message = VALOR_ESTA_VAZIO)
+    @Min(value = 2, message = NOME_E_MUITO_GRANDE)
+    @Max(value = 60, message = NOME_E_MUITO_PEQUENO)
     private String nome;
 
     /**

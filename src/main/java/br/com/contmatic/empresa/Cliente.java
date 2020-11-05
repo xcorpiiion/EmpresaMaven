@@ -10,7 +10,6 @@ import org.joda.time.DateTime;
 
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Set;
 
 import static br.com.contmatic.constantes.Constante.ILLEGAL_WORD;
@@ -29,7 +28,7 @@ public class Cliente {
     private String cpf;
 
     /** The nome. */
-    @NotNull(message = NOME_CLIENTE_VAZIO)
+    @NotNull
     @NotEmpty(message = NOME_CLIENTE_VAZIO)
     @NotBlank(message = NOME_CLIENTE_VAZIO)
     @Size(min = 3, max = 50, message = NOME_CLIENTE_TAMANHO)
@@ -39,13 +38,13 @@ public class Cliente {
     /** The email. */
     @NotEmpty(message = EMAIL_CLIENTE_VAZIO)
     @NotBlank(message = EMAIL_CLIENTE_VAZIO)
-    @NotNull(message = EMAIL_CLIENTE_VAZIO)
+    @NotNull
     @Size(min = 10, max = 100, message = EMAIL_CLIENTE_TAMANHO)
     @Pattern(regexp = VALIDATION_EMAIL, message = EMAIL_CLIENTE_CARACTERE_INVALIDO)
     private String email;
 
     /** The data nascimento. */
-    @NotNull(message = DATA_NASCIMENTO_CLIENTE_VAZIO)
+    @NotNull
     private DateTime dataNascimento;
 
     /** The dinheiro carteira. */
@@ -53,11 +52,11 @@ public class Cliente {
     private BigDecimal dinheiroCarteira;
 
     /** The endereco. */
-    @NotNull(message = ENDERECO_CLIENTE_VAZIO)
+    @NotNull
     private Endereco endereco;
 
     /** The telefones. */
-    @NotNull(message = TELEFONE_CLIENTE_VAZIO)
+    @NotNull
     private Set<Telefone> telefones;
 
     public String getCpf() {
@@ -179,42 +178,6 @@ public class Cliente {
      */
     public void setTelefones(Set<Telefone> telefones) {
         this.telefones = telefones;
-    }
-
-    /**
-     * Gets the carrinho produtos.
-     *
-     * @return the carrinho produtos
-     */
-    public List<Produto> getCarrinhoProdutos() {
-        return carrinhoProdutos;
-    }
-
-    /**
-     * Sets the carrinho produtos.
-     *
-     * @param carrinhoProdutos the new carrinho produtos
-     */
-    public void setCarrinhoProdutos(List<Produto> carrinhoProdutos) {
-        this.carrinhoProdutos = carrinhoProdutos;
-    }
-
-    /**
-     * Gets the produtos comprados.
-     *
-     * @return the produtos comprados
-     */
-    public List<Produto> getProdutosComprados() {
-        return produtosComprados;
-    }
-
-    /**
-     * Sets the produtos comprados.
-     *
-     * @param produtosComprados the new produtos comprados
-     */
-    public void setProdutosComprados(List<Produto> produtosComprados) {
-        this.produtosComprados = produtosComprados;
     }
 
     /**
