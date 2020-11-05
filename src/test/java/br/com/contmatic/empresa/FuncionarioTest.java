@@ -5,9 +5,7 @@ import com.github.javafaker.Faker;
 import org.joda.time.DateTime;
 import org.junit.*;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import static br.com.contmatic.constantes.Constante.*;
@@ -28,9 +26,6 @@ public class FuncionarioTest {
 
     private static Faker faker;
 
-    /** The produtos. */
-    private static List<Produto> produtos;
-
     /** The funcionarios. */
     private static Funcionario funcionario;
     
@@ -45,8 +40,6 @@ public class FuncionarioTest {
     public static void addDadosIniciais() {
         faker = new Faker();
         loadTemplates("br.com.contmatic.fixture.factory");
-        produtos = new ArrayList<>();
-        produtos.add(from(Produto.class).gimme(VALID));
     }
 
     /**
@@ -160,14 +153,14 @@ public class FuncionarioTest {
     
     @Test
     public void deve_alterar_cargo_para_repositor() {
-        funcionario.setCargo(REPOSITOR);
-        assertTrue(funcionario.getCargo() == REPOSITOR);
+        funcionario.setEnumCargo(REPOSITOR);
+        assertSame(REPOSITOR, funcionario.getEnumCargo());
     }
     
     @Test
     public void deve_alterar_cargo_para_rh() {
-        funcionario.setCargo(RH);
-        assertTrue(funcionario.getCargo() == RH);
+        funcionario.setEnumCargo(RH);
+        assertSame(RH, funcionario.getEnumCargo());
     }
     
     @Test
@@ -214,12 +207,12 @@ public class FuncionarioTest {
     public void deve_retornar_true_no_equals_para_serem_iguais() {
         funcionario = (from(Funcionario.class).gimme(VALID));
         funcionario2.setCpf(funcionario.getCpf());
-        assertTrue("Os Funcionario são iguais", funcionario.equals(funcionario2));
+        assertEquals("Os Funcionario são iguais", funcionario, funcionario2);
     }
     
     @Test()
     public void deve_retornar_true_quando_compara_com_mesmo_objeto() {
-        assertTrue(funcionario.equals(funcionario));
+        assertEquals(funcionario, funcionario);
     }
 
     @Test()

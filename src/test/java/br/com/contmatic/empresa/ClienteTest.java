@@ -209,22 +209,6 @@ public class ClienteTest {
         assertTrue(returnAnnotationMsgError(cliente, CPF_CLIENTE_INVALIDO));
     }
 
-    /**
-     * Deve retornar true no equals para serem iguais.
-     */
-
-    @Test
-    public void deve_add_produto_no_carrinho() {
-        cliente.setCarrinhoProdutos(produtos);
-        assertTrue(cliente.getCarrinhoProdutos().size() > 0);
-    }
-
-    @Test
-    public void deve_add_produto_na_lista_de_produtos_comprados() {
-        cliente.setProdutosComprados(produtos);
-        assertTrue(cliente.getProdutosComprados().size() > 0);
-    }
-
     @Test()
     public void deve_retornar_true_no_equals_para_serem_iguais() {
         cliente2 = (from(Cliente.class).gimme(VALID));

@@ -2,7 +2,6 @@ package br.com.contmatic.empresa;
 
 import br.com.contmatic.endereco.Endereco;
 import br.com.contmatic.telefone.Telefone;
-import com.sun.istack.internal.NotNull;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.br.CPF;
@@ -15,6 +14,7 @@ import java.util.Set;
 import static br.com.contmatic.constantes.Constante.ILLEGAL_WORD;
 import static br.com.contmatic.constantes.Constante.VALIDATION_EMAIL;
 import static br.com.contmatic.constantes.Mensagem.*;
+import static br.com.contmatic.empresa.utils.FieldValidation.*;
 import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
@@ -28,7 +28,7 @@ public class Cliente {
     private String cpf;
 
     /** The nome. */
-    @NotNull
+    @NotNull(message = NOME_CLIENTE_VAZIO)
     @NotEmpty(message = NOME_CLIENTE_VAZIO)
     @NotBlank(message = NOME_CLIENTE_VAZIO)
     @Size(min = 3, max = 50, message = NOME_CLIENTE_TAMANHO)
@@ -38,27 +38,36 @@ public class Cliente {
     /** The email. */
     @NotEmpty(message = EMAIL_CLIENTE_VAZIO)
     @NotBlank(message = EMAIL_CLIENTE_VAZIO)
-    @NotNull
+    @NotNull(message = EMAIL_CLIENTE_VAZIO)
     @Size(min = 10, max = 100, message = EMAIL_CLIENTE_TAMANHO)
     @Pattern(regexp = VALIDATION_EMAIL, message = EMAIL_CLIENTE_CARACTERE_INVALIDO)
     private String email;
 
     /** The data nascimento. */
-    @NotNull
+    @NotNull(message = DATA_NASCIMENTO_CLIENTE_VAZIO)
     private DateTime dataNascimento;
 
-    /** The dinheiro carteira. */
+    private DateTime dataCadastro;
+
+    /**
+     * The dinheiro carteira.
+     */
     @Min(value = 0, message = DINHEIRO_CARTEIRA_CLIENTE_TAMANHO)
     private BigDecimal dinheiroCarteira;
 
     /** The endereco. */
-    @NotNull
+    @NotNull(message = ENDERECO_CLIENTE_VAZIO)
     private Endereco endereco;
 
     /** The telefones. */
-    @NotNull
+    @NotNull(message = TELEFONE_CLIENTE_VAZIO)
     private Set<Telefone> telefones;
 
+    /**
+     * Gets the cpf.
+     *
+     * @return the cpf
+     */
     public String getCpf() {
         return cpf;
     }
@@ -108,6 +117,16 @@ public class Cliente {
         this.email = email;
     }
 
+    public DateTime getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setDataCadastro(DateTime dataCadastro) {
+        isDataGreaterThanCurrent(dataCadastro, "hora de cadastro não pode ser maior do que hora atual");
+        isDataLessThan1998(dataCadastro, "A data de cadastro do cliente não pode ser menor do que 1998");
+        this.dataCadastro = dataCadastro;
+    }
+
     /**
      * Gets the data nascimento.
      *
@@ -123,6 +142,10 @@ public class Cliente {
      * @param dataNascimento the new data nascimento
      */
     public void setDataNascimento(DateTime dataNascimento) {
+        isDataGreaterThanCurrent(dataNascimento, "data de nascimento de cliente não pode" +
+                " ser maior do que hora atual");
+        isDataLessThan1920(dataNascimento,
+                "A data de cadastro do cliente não pode ser menor do que 1920");
         this.dataNascimento = dataNascimento;
     }
 

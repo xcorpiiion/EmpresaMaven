@@ -5,6 +5,7 @@ import br.com.contmatic.telefone.Telefone;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.br.CNPJ;
+import org.joda.time.DateTime;
 
 import javax.validation.constraints.*;
 import java.util.List;
@@ -13,6 +14,8 @@ import java.util.Set;
 import static br.com.contmatic.constantes.Constante.ILLEGAL_NUMBER;
 import static br.com.contmatic.constantes.Constante.VALIDATION_EMAIL;
 import static br.com.contmatic.constantes.Mensagem.*;
+import static br.com.contmatic.empresa.utils.FieldValidation.isDataGreaterThanCurrent;
+import static br.com.contmatic.empresa.utils.FieldValidation.isDataLessThan1998;
 import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
@@ -44,6 +47,12 @@ public class Empresa {
     /** The telefones. */
     @NotNull(message = TELEFONE_EMPRESA_VAZIO)
     private Set<Telefone> telefones;
+
+    @NotNull
+    private DateTime dataCriacao;
+
+    @NotNull
+    private DateTime dataAlteracao;
 
     /** The enderecos. */
     @NotNull(message = ENDERECO_EMPRESA_VAZIO)
@@ -80,6 +89,26 @@ public class Empresa {
      */
     public String getNome() {
         return nome;
+    }
+
+    public DateTime getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(DateTime dataCriacao) {
+        isDataGreaterThanCurrent(dataCriacao, "Data de criação da empresa não pode ser maior do que" +
+                "hora atual");
+        isDataLessThan1998(dataCriacao, "A data de criação da empresa não pode ser menor do que 1998");
+        this.dataCriacao = dataCriacao;
+    }
+
+    public DateTime getDataAlteracao() {
+        isDataLessThan1998(dataAlteracao, "A data de alteração da empresa não pode ser menor do que 1998");
+        return dataAlteracao;
+    }
+
+    public void setDataAlteracao(DateTime dataAlteracao) {
+        this.dataAlteracao = dataAlteracao;
     }
 
     /**

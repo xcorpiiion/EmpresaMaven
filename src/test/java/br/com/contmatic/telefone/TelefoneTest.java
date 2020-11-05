@@ -26,7 +26,6 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import br.com.contmatic.fixture.factory.GeradorTelefone;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
 /**

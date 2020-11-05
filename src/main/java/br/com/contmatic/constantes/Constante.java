@@ -175,6 +175,22 @@ public final class Constante {
 
     public static final String ESTOQUE_LESS_0 = "estoqueLess0";
 
+    public static final String PAIS_NULL = "paisNull";
+
+    public static final String CODIGO_MUNICIPAL_NULL = "paisNull";
+
+    public static final String CODIGO_FEDERAL_NULL = "paisNull";
+
+    public static final String CODIGO_IBGE_NULL = "paisNull";
+
+    public static final String UF_NULL = "paisNull";
+
+    public static final String DESCRICAO_NULL = "paisNull";
+
+    public static final String DESCRICAO_EMPTY = "paisNull";
+
+    public static final String DESCRICAO_BLANK_SPACE = "paisNull";
+
 
     /**
      * Instantiates a new constante.

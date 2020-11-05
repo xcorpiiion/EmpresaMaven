@@ -1,13 +1,13 @@
 package br.com.contmatic.fixture.factory;
 
 import br.com.contmatic.endereco.Endereco;
-import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
 
 import java.util.Random;
 
 import static br.com.contmatic.constantes.Constante.*;
+import static br.com.six2six.fixturefactory.Fixture.from;
 import static br.com.six2six.fixturefactory.Fixture.of;
 
 
@@ -29,12 +29,11 @@ public class FixtureFactoryEndereco implements TemplateLoader{
                 add("rua", name());
                 add("bairro", name());
                 add("cep", cepRandom.toString());
-                add("numeroResidencia", new Random().nextInt(100000) + 1);
-                add("cidade", firstName());
+                add("numero", new Random().nextInt(100000) + 1);
 
             }
         });
-        return Fixture.from(Endereco.class).gimme(VALID);
+        return from(Endereco.class).gimme(VALID);
     }
     
     /**
@@ -48,63 +47,20 @@ public class FixtureFactoryEndereco implements TemplateLoader{
         final String RUA = "rua";
         final String BAIRRO = "bairro";
         final String CEP = "cep";
-        final String NUMERO_RESIDENCIA = "numeroResidencia";
-        final String CIDADE = "cidade";
-        final String ESTADO = "estado";
+        final String NUMERO = "numero";
         of(Endereco.class).addTemplate(VALID, new Rule() {
             {
                 add(RUA, name());
                 add(BAIRRO, name());
                 add(CEP, cepRandom.toString());
-                add(NUMERO_RESIDENCIA, random(Integer.class, range(1, 10000)));
-                add(CIDADE, firstName());
+                add(NUMERO, random(Integer.class, range(1, 10000)));
 
             }
         });
         final String VALID = "valid";
-        of(Endereco.class).addTemplate(CIDADE_NULL).inherits(VALID, new Rule() {
-            {
-                add(CIDADE, null);
-            }
-        });
-        of(Endereco.class).addTemplate(CIDADE_EMPTY).inherits(VALID, new Rule() {
-            {
-                add(CIDADE, "");
-            }
-        });
-        of(Endereco.class).addTemplate(CIDADE_BLANK_SPACE).inherits(VALID, new Rule() {
-            {
-                add(CIDADE, " ");
-            }
-        });
-        of(Endereco.class).addTemplate(CIDADE_CONTAINS_NUMBER).inherits(VALID, new Rule() {
-            {
-                add(CIDADE, random(Integer.class, range(1, 100)).toString());
-            }
-        });
-        of(Endereco.class).addTemplate(CIDADE_LESS_3_CARACTER).inherits(VALID, new Rule() {
-            {
-                add(CIDADE, regex("SD"));
-            }
-        });
-        of(Endereco.class).addTemplate(CIDADE_GREATER_50_CARACTER).inherits(VALID, new Rule() {
-            {
-                add(CIDADE, regex("dhjfksdfsdfhsdhfjbhsdjkbfjklsdbjfsdblkhfsh"));
-            }
-        });
-        of(Endereco.class).addTemplate(CIDADE_WITH_SPECIAL_CARACTER).inherits(VALID, new Rule() {
-            {
-                add(CIDADE, regex("%$%"));
-            }
-        });
-        of(Endereco.class).addTemplate(ESTADO_NULL).inherits(VALID, new Rule() {
-            {
-                add(ESTADO, null);
-            }
-        });
         of(Endereco.class).addTemplate(NUMERO_RESIDENCIA_LESS_THAN_ZERO).inherits(VALID, new Rule() {
             {
-                add(NUMERO_RESIDENCIA, random(Integer.class, range(-10000, -1)));
+                add(NUMERO, random(Integer.class, range(-10000, -1)));
             }
         });
         of(Endereco.class).addTemplate(RUA_NULL).inherits(VALID, new Rule() {

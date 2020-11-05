@@ -24,6 +24,9 @@ import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
  */
 public class Funcionario {
 
+    /**
+     * The nome.
+     */
     @NotBlank(message = NOME_FUNCIONARIO_VAZIO)
     @NotNull(message = NOME_FUNCIONARIO_VAZIO)
     @NotEmpty(message = NOME_FUNCIONARIO_VAZIO)
@@ -124,21 +127,11 @@ public class Funcionario {
         this.endereco = endereco;
     }
 
-    /**
-     * Gets the cargo.
-     *
-     * @return the cargo
-     */
-    public EnumCargo getCargo() {
+    public EnumCargo getEnumCargo() {
         return enumCargo;
     }
 
-    /**
-     * Sets the cargo.
-     *
-     * @param enumCargo the new cargo
-     */
-    public void setCargo(EnumCargo enumCargo) {
+    public void setEnumCargo(EnumCargo enumCargo) {
         this.enumCargo = enumCargo;
     }
 
