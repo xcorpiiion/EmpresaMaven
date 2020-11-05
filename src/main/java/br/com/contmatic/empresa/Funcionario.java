@@ -15,6 +15,7 @@ import java.util.Set;
 import static br.com.contmatic.constantes.Constante.ILLEGAL_WORD;
 import static br.com.contmatic.constantes.Constante.VALIDATION_EMAIL;
 import static br.com.contmatic.constantes.Mensagem.*;
+import static br.com.contmatic.empresa.utils.ValidacaoDataUtils.*;
 import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
@@ -66,6 +67,13 @@ public class Funcionario {
     @Min(value = 1000, message = SALARIO_FUNCIONARIO_TAMANHO)
     private BigDecimal salario;
 
+    @NotNull
+    private DateTime dataSaida;
+
+    @NotNull
+    private DateTime dataEntrada;
+
+
     /**
      * The endereco.
      */
@@ -83,6 +91,27 @@ public class Funcionario {
      */
     @NotNull(message = TELEFONE_FUNCIONARIO_VAZIO)
     private Set<Telefone> telefones;
+
+    public DateTime getDataSaida() {
+        return dataSaida;
+    }
+
+    public void setDataSaida(DateTime dataSaida) {
+        isGreaterThanEmpresaCreateDate(dataSaida, dataEntrada);
+        this.dataSaida = dataSaida;
+    }
+
+    public DateTime getDataEntrada() {
+        return dataEntrada;
+    }
+
+    public void setDataEntrada(DateTime dataEntrada) {
+        isLessThanCreateDate(new DateTime(), dataEntrada,
+                "A data de entrada do funcionario não pode ser menor do que a data de criação da empresa");
+        isDataGreaterThanCurrent(dataEntrada, "data de entrada do funcionario não pode ser maior" +
+                " do que hora atual");
+        this.dataEntrada = dataEntrada;
+    }
 
     /**
      * Gets the endereco.
@@ -207,6 +236,10 @@ public class Funcionario {
      * @param dataNascimento the new data nascimento
      */
     public void setDataNascimento(DateTime dataNascimento) {
+        isDataGreaterThanCurrent(dataNascimento, "data de nascimento de funcionario não pode" +
+                " ser maior do que hora atual");
+        isDataLessThan1920(dataNascimento,
+                "A data de cadastro do funcionario não pode ser menor do que 1920");
         this.dataNascimento = dataNascimento;
     }
 
