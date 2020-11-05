@@ -1,5 +1,6 @@
 package br.com.contmatic.empresa;
 
+import br.com.contmatic.endereco.Endereco;
 import com.github.javafaker.Faker;
 import org.junit.After;
 import org.junit.BeforeClass;
@@ -11,8 +12,7 @@ import static nl.jqno.equalsverifier.Warning.NONFINAL_FIELDS;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.commons.lang3.StringUtils.SPACE;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 public class EnderecoTest {
 
@@ -68,103 +68,18 @@ public class EnderecoTest {
 
 	public void deve_aceitar_numero_residencia_valido() {
 		final Integer number = faker.number().numberBetween(1, 1000);
-		endereco.setNumeroResidencia(number);
-		assertEquals(number, endereco.getNumeroResidencia());
+		endereco.setNumero(number);
+		assertTrue(number == endereco.getNumero());
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void deve_apenas_aceitar_numero_residencia_maior_que_0_caracteres() {
-		endereco.setNumeroResidencia(0);
+		endereco.setNumero(0);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void deve_apenas_aceitar_numero_residencia_com_menos_10000_caracteres() {
-		endereco.setNumeroResidencia(10001);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_numero_residencia_null_expection() {
-		endereco.setNumeroResidencia(null);
-	}
-
-	/* Testa cidade */
-
-	@Test
-	public void deve_aceitar_cidade_valida() {
-		final String firstName = faker.name().firstName();
-		endereco.setCidade(firstName);
-		assertEquals(firstName, endereco.getCidade());
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void deve_apenas_aceitar_estado_com_mais_1_caracteres() {
-		endereco.setCidade("a");
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void deve_apenas_aceitar_cidade_com_menos_50_caracteres() {
-		endereco.setCidade("aawwwwwwwertgfdswqafcvfgtdsyhtru"
-				+ "aawwwwwwwertgfdswqafcvfgtdsyhtruaawwwwwwwertgfdswqafcvfgtdsyhtru");
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_cidade_com_caracteres_especiais() {
-		endereco.setCidade(faker.name().firstName() + "#$%");
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_cidade_empty() {
-		endereco.setCidade(EMPTY);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_cidade_vazio() {
-		endereco.setCidade(SPACE);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_cidade_null() {
-		endereco.setCidade(null);
-	}
-
-	/* Testa estado */
-
-	@Test
-	public void deve_aceitar_estado_valido() {
-		final String firstName = faker.name().firstName();
-		endereco.setEstado(firstName);
-		assertEquals(firstName, endereco.getEstado());
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void deve_apenas_aceitar_estado_com_mais_2_caracteres() {
-		endereco.setEstado("a");
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void deve_apenas_aceitar_estado_com_menos_50_caracteres() {
-		endereco.setEstado("aawwwwwwwertgfdswqafcvfgtdsyhtru"
-				+ "aawwwwwwwertgfdswqafcvfgtdsyhtruaawwwwwwwertgfdswqafcvfgtdsyhtru");
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_estado_com_caracteres_especiais() {
-		endereco.setEstado(faker.name().firstName() + "#$%");
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_estado_empty() {
-		endereco.setEstado(EMPTY);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_estado_vazio() {
-		endereco.setEstado(SPACE);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void nao_deve_aceitar_estado_null() {
-		endereco.setEstado(null);
+		endereco.setNumero(10001);
 	}
 
 	/* Testa cep */
