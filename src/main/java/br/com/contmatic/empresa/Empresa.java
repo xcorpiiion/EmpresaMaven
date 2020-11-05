@@ -108,6 +108,8 @@ public class Empresa {
     }
 
     public void setDataAlteracao(DateTime dataAlteracao) {
+    	isDataGreaterThanCurrent(dataAlteracao, "Data de criação da empresa não pode ser maior do que" +
+                "hora atual");
         this.dataAlteracao = dataAlteracao;
     }
 

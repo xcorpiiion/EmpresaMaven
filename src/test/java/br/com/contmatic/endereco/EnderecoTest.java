@@ -30,13 +30,19 @@ import static nl.jqno.equalsverifier.EqualsVerifier.forClass;
 import static nl.jqno.equalsverifier.Warning.ALL_FIELDS_SHOULD_BE_USED;
 import static nl.jqno.equalsverifier.Warning.NONFINAL_FIELDS;
 import static org.apache.commons.lang3.StringUtils.isNumeric;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.lang3.StringUtils;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import com.github.javafaker.Faker;
 
 /**
  * The Class EnderecoTest.
@@ -255,7 +261,14 @@ public class EnderecoTest {
 		endereco.setEstado(ACRE);
 		assertTrue(endereco.getEstado().getSigla().equalsIgnoreCase("ac"));
 	}
-
+	
+	@Test
+	public void deve_alterar_numero_residencia() {
+		final int numeroResidencia = new Faker().number().numberBetween(1, 1000);
+		endereco.setNumeroResidencia(numeroResidencia);
+		assertEquals(numeroResidencia, endereco.getNumeroResidencia());
+	}
+	
 	@Test()
 	public void deve_retornar_true_no_equals_para_serem_iguais() {
 		forClass(Endereco.class).usingGetClass().suppress(NONFINAL_FIELDS, ALL_FIELDS_SHOULD_BE_USED).verify();

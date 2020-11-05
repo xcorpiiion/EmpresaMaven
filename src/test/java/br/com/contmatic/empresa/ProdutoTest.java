@@ -49,6 +49,9 @@ public class ProdutoTest {
      */
     @Test
     public void deve_armazenar_nome_null_e_armazenar_no_validationAnnotation() {
+        int teste = 2;
+        int resultado = teste == 1 ? 2 : 1;
+        System.out.println(resultado);
         produto = from(Produto.class).gimme(NOME_NULL);
         assertNull(produto.getNome());
         assertTrue(returnAnnotationMsgError(produto, NOME_PRODUTO_VAZIO));

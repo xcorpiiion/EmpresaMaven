@@ -41,6 +41,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.joda.time.DateTime;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -224,6 +225,25 @@ public class EmpresaTest {
     @Test()
     public void nao_deve_aceitar_produto_null() {
         assertNotNull("O produto esta null", produtos);
+    }
+    
+    @Test
+    public void nao_deve_aceitar_data_criacao_maior_do_que_data_atual() {
+		loja.setDataCriacao(new DateTime(2020, 01, 01, 0, 0));
+		assertTrue(new DateTime().isAfter(loja.getDataCriacao().getMillis()));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_data_alteracao_maior_do_que_data_atual() {
+    	loja.setDataAlteracao(new DateTime(2025, 01, 01, 0, 0));
+		assertTrue(loja.getDataAlteracao().isAfter(new DateTime().getMillis()));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_data_nascimento_menor_do_que_1998() {
+    	final DateTime dataNascimento = new DateTime(1919, 01, 01, 0, 0);
+    	loja.setDataCriacao(new DateTime());
+    	assertTrue(dataNascimento.isBefore(loja.getDataCriacao().getMillis()));
     }
 
     /**

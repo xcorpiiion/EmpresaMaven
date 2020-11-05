@@ -186,11 +186,30 @@ public class ClienteTest {
         Cliente clienteValid = from(Cliente.class).gimme(DATA_NASCIMENTO_NULL);
         assertTrue(returnAnnotationMsgError(clienteValid, DATA_NASCIMENTO_CLIENTE_VAZIO));
     }
-
+    
     @Test
-    public void deve_alterar_dataNascimento() {
-        cliente.setDataNascimento(new DateTime());
-        assertEquals(new DateTime(), cliente.getDataNascimento());
+    public void nao_deve_aceita_data_cadastro_null() {
+    	cliente.setDataCadastro(new DateTime());
+    	assertNotNull(cliente.getDataCadastro());
+    }
+    
+    @Test
+    public void nao_deve_aceitar_data_cadastro_maior_do_que_data_atual() {
+		cliente.setDataCadastro(new DateTime(2020, 01, 01, 0, 0));
+		assertTrue(new DateTime().isAfter(cliente.getDataCadastro().getMillis()));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_data_nascimento_maior_do_que_data_atual() {
+    	cliente.setDataNascimento(new DateTime(2020, 01, 01, 0, 0));
+    	assertTrue(new DateTime().isAfter(cliente.getDataNascimento().getMillis()));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_data_nascimento_menor_do_que_1920() {
+    	final DateTime dataNascimento = new DateTime(1919, 01, 01, 0, 0);
+    	cliente.setDataNascimento(new DateTime());
+    	assertTrue(dataNascimento.isBefore(cliente.getDataNascimento().getMillis()));
     }
 
     /**

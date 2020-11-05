@@ -99,7 +99,7 @@ public class Funcionario {
     }
 
     public void setDataSaida(DateTime dataSaida) {
-        isGreaterThanEmpresaCreateDate(dataSaida, dataEntrada);
+        isGreaterThanEmpresaCreateDate(dataSaida, new DateTime());
         this.dataSaida = dataSaida;
     }
 
@@ -108,8 +108,6 @@ public class Funcionario {
     }
 
     public void setDataEntrada(DateTime dataEntrada) {
-        isLessThanCreateDate(new DateTime(), dataEntrada,
-                "A data de entrada do funcionario não pode ser menor do que a data de criação da empresa");
         isDataGreaterThanCurrent(dataEntrada, "data de entrada do funcionario não pode ser maior" +
                 " do que hora atual");
         this.dataEntrada = dataEntrada;

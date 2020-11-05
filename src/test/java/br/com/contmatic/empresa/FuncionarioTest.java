@@ -1,15 +1,31 @@
 package br.com.contmatic.empresa;
 
-import br.com.contmatic.telefone.Telefone;
-import com.github.javafaker.Faker;
-import org.joda.time.DateTime;
-import org.junit.*;
-
-import java.util.HashSet;
-import java.util.Set;
-
-import static br.com.contmatic.constantes.Constante.*;
-import static br.com.contmatic.constantes.Mensagem.*;
+import static br.com.contmatic.constantes.Constante.CARGO_NULL;
+import static br.com.contmatic.constantes.Constante.DATA_NASCIMENTO_NULL;
+import static br.com.contmatic.constantes.Constante.EMAIL_BLANK_SPACE;
+import static br.com.contmatic.constantes.Constante.EMAIL_EMPTY;
+import static br.com.contmatic.constantes.Constante.EMAIL_LESS_10_CARACTERES;
+import static br.com.contmatic.constantes.Constante.EMAIL_NULL;
+import static br.com.contmatic.constantes.Constante.EMAIL_WITHOUT_ARROBA;
+import static br.com.contmatic.constantes.Constante.EMAIL_WITHOUT_PONTO_COM;
+import static br.com.contmatic.constantes.Constante.EMAIL_WITH_BLANK_SPACE_IN_WORD;
+import static br.com.contmatic.constantes.Constante.EMAIL_WITH_SPECIAL_CARACTER;
+import static br.com.contmatic.constantes.Constante.NOME_BLANK_SPACE;
+import static br.com.contmatic.constantes.Constante.NOME_EMPTY;
+import static br.com.contmatic.constantes.Constante.NOME_LESS_3_CARACTER;
+import static br.com.contmatic.constantes.Constante.NOME_NULL;
+import static br.com.contmatic.constantes.Constante.SALARIO_LESS_1;
+import static br.com.contmatic.constantes.Constante.TIPO_CONTRATO_NULL;
+import static br.com.contmatic.constantes.Constante.VALID;
+import static br.com.contmatic.constantes.Mensagem.CARGO_FUNCIONARIO_VAZIO;
+import static br.com.contmatic.constantes.Mensagem.DATA_NASCIMENTO_FUNCIONARIO_VAZIO;
+import static br.com.contmatic.constantes.Mensagem.EMAIL_FUNCIONARIO_CARACTERE_INVALIDO;
+import static br.com.contmatic.constantes.Mensagem.EMAIL_FUNCIONARIO_TAMANHO;
+import static br.com.contmatic.constantes.Mensagem.EMAIL_FUNCIONARIO_VAZIO;
+import static br.com.contmatic.constantes.Mensagem.NOME_FUNCIONARIO_TAMANHO;
+import static br.com.contmatic.constantes.Mensagem.NOME_FUNCIONARIO_VAZIO;
+import static br.com.contmatic.constantes.Mensagem.SALARIO_FUNCIONARIO_TAMANHO;
+import static br.com.contmatic.constantes.Mensagem.TIPO_CONTRATO_FUNCIONARIO_VAZIO;
 import static br.com.contmatic.empresa.Cargo.REPOSITOR;
 import static br.com.contmatic.empresa.Cargo.RH;
 import static br.com.contmatic.telefone.TipoContrato.CLT;
@@ -20,8 +36,25 @@ import static br.com.six2six.fixturefactory.loader.FixtureFactoryLoader.loadTemp
 import static nl.jqno.equalsverifier.EqualsVerifier.forClass;
 import static nl.jqno.equalsverifier.Warning.ALL_FIELDS_SHOULD_BE_USED;
 import static nl.jqno.equalsverifier.Warning.NONFINAL_FIELDS;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 import static org.junit.runners.MethodSorters.NAME_ASCENDING;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.joda.time.DateTime;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
+import org.junit.Test;
+
+import com.github.javafaker.Faker;
+
+import br.com.contmatic.telefone.Telefone;
 
 /**
  * The Class FuncionarioTest.
@@ -193,9 +226,41 @@ public class FuncionarioTest {
     }
     
     @Test
+    public void nao_deve_aceita_data_entrada_null() {
+    	funcionario.setDataEntrada(new DateTime());
+    	assertNotNull(funcionario.getDataEntrada());
+    }
+    
+    @Test
+    public void nao_deve_aceitar_data_entrada_maior_do_que_data_atual() {
+		funcionario.setDataEntrada(new DateTime(2020, 01, 01, 0, 0));
+		assertTrue(new DateTime().isAfter(funcionario.getDataEntrada().getMillis()));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_data_saida_maior_do_que_data_atual() {
+		funcionario.setDataSaida(new DateTime(2025, 01, 01, 0, 0));
+		assertTrue(funcionario.getDataSaida().isAfter(new DateTime().getMillis()));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_data_nascimento_maior_do_que_data_atual() {
+    	funcionario.setDataNascimento(new DateTime(2020, 01, 01, 0, 0));
+    	assertTrue(new DateTime().isAfter(funcionario.getDataNascimento().getMillis()));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_data_nascimento_menor_do_que_1920() {
+    	final DateTime dataNascimento = new DateTime(1919, 01, 01, 0, 0);
+    	funcionario.setDataNascimento(new DateTime());
+    	assertTrue(dataNascimento.isBefore(funcionario.getDataNascimento().getMillis()));
+    }
+    
+    @Test
     public void deve_alterar_dataNascimento() {
-        funcionario.setDataNascimento(new DateTime());
-        assertEquals(new DateTime(), funcionario.getDataNascimento());
+        final DateTime dataNascimento = new DateTime();
+		funcionario.setDataNascimento(dataNascimento);
+        assertEquals(dataNascimento, funcionario.getDataNascimento());
     }
     
     @Test
