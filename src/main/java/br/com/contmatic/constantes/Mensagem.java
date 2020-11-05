@@ -115,7 +115,7 @@ public final class Mensagem {
 
     public static final String ESTADO_ENDERECO_VAZIO = "Estado de endereço não pode ser vazio";
 
-    public static final String NUMERO_RESIDENCIA_ENDERECO_TAMANHO = "Número de residência de endereço deve ter o valor minimo de 1";
+    public static final String NUMERO_ENDERECO_TAMANHO = "Número de residência de endereço deve ter o valor minimo de 1";
 
     /* Telefone */
 

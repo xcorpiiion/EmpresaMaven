@@ -1,6 +1,10 @@
 package br.com.contmatic.empresa;
 
-import static br.com.contmatic.empresa.utils.InstanciaClasses.criaEndereco;
+import com.github.javafaker.Faker;
+import org.junit.After;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 import static nl.jqno.equalsverifier.EqualsVerifier.forClass;
 import static nl.jqno.equalsverifier.Warning.ALL_FIELDS_SHOULD_BE_USED;
 import static nl.jqno.equalsverifier.Warning.NONFINAL_FIELDS;
@@ -9,12 +13,6 @@ import static org.apache.commons.lang3.StringUtils.SPACE;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
-
-import org.junit.After;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import com.github.javafaker.Faker;
 
 public class EnderecoTest {
 
@@ -25,7 +23,6 @@ public class EnderecoTest {
 	@BeforeClass
 	public static void addEndereco() {
 		faker = new Faker();
-		endereco = criaEndereco();
 	}
 
 	@Test

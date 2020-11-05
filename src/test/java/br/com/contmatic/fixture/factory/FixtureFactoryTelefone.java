@@ -34,7 +34,7 @@ public class FixtureFactoryTelefone implements TemplateLoader {
         Fixture.of(Telefone.class).addTemplate(VALID, new Rule() {
             {
                 add(PHONE, GeradorTelefone.geradorPhone());
-                add(TIPO_TELEFONE, TipoTelefone.values()[new Random().nextInt(TipoContrato.values().length)]);
+                add(TIPO_TELEFONE, TipoTelefone.values()[new Random().nextInt(TipoTelefone.values().length)]);
                 add(DDD_TELEFONE, DddBrasil.values()[new Random().nextInt(DddBrasil.values().length)]);
             }
         });

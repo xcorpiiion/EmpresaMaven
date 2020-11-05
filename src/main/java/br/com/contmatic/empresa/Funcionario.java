@@ -1,7 +1,7 @@
 package br.com.contmatic.empresa;
 
 import br.com.contmatic.endereco.Endereco;
-import br.com.contmatic.enums.Cargo;
+import br.com.contmatic.enums.EnumCargo;
 import br.com.contmatic.telefone.Telefone;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -57,7 +57,7 @@ public class Funcionario {
      * The cargo.
      */
     @NotNull(message = CARGO_FUNCIONARIO_VAZIO)
-    private Cargo cargo;
+    private EnumCargo enumCargo;
 
     /**
      * The salario.
@@ -129,17 +129,17 @@ public class Funcionario {
      *
      * @return the cargo
      */
-    public Cargo getCargo() {
-        return cargo;
+    public EnumCargo getCargo() {
+        return enumCargo;
     }
 
     /**
      * Sets the cargo.
      *
-     * @param cargo the new cargo
+     * @param enumCargo the new cargo
      */
-    public void setCargo(Cargo cargo) {
-        this.cargo = cargo;
+    public void setCargo(EnumCargo enumCargo) {
+        this.enumCargo = enumCargo;
     }
 
     /**

@@ -1,53 +1,23 @@
 package br.com.contmatic.fixture.factory;
 
-import static br.com.contmatic.constantes.Constante.CARGO_NULL;
-import static br.com.contmatic.constantes.Constante.CPF_BLANK_SPACE;
-import static br.com.contmatic.constantes.Constante.CPF_EMPTY;
-import static br.com.contmatic.constantes.Constante.CPF_INVALID;
-import static br.com.contmatic.constantes.Constante.CPF_NULL;
-import static br.com.contmatic.constantes.Constante.DATA_NASCIMENTO_NULL;
-import static br.com.contmatic.constantes.Constante.EMAIL_BLANK_SPACE;
-import static br.com.contmatic.constantes.Constante.EMAIL_EMPTY;
-import static br.com.contmatic.constantes.Constante.EMAIL_GREATER_100_CARACTERES;
-import static br.com.contmatic.constantes.Constante.EMAIL_INVALID;
-import static br.com.contmatic.constantes.Constante.EMAIL_LESS_10_CARACTERES;
-import static br.com.contmatic.constantes.Constante.EMAIL_NULL;
-import static br.com.contmatic.constantes.Constante.EMAIL_WITHOUT_ARROBA;
-import static br.com.contmatic.constantes.Constante.EMAIL_WITH_BLANK_SPACE_IN_WORD;
-import static br.com.contmatic.constantes.Constante.EMAIL_WITH_NUMBER_AFTER_ARROBA;
-import static br.com.contmatic.constantes.Constante.ENDERECO_NULL;
-import static br.com.contmatic.constantes.Constante.NOME_BLANK_SPACE;
-import static br.com.contmatic.constantes.Constante.NOME_EMPTY;
-import static br.com.contmatic.constantes.Constante.NOME_GREATER_CARACTER;
-import static br.com.contmatic.constantes.Constante.NOME_LESS_3_CARACTER;
-import static br.com.contmatic.constantes.Constante.NOME_NULL;
-import static br.com.contmatic.constantes.Constante.NOME_WITH_SPECIAL_CARACTER;
-import static br.com.contmatic.constantes.Constante.SALARIO_LESS_1;
-import static br.com.contmatic.constantes.Constante.SALARIO_NULL;
-import static br.com.contmatic.constantes.Constante.TELEFONE_NULL;
-import static br.com.contmatic.constantes.Constante.TIPO_CONTRATO_NULL;
-import static br.com.contmatic.constantes.Constante.VALID;
-import static br.com.contmatic.fixture.factory.GeradorEmail.EMAIL_GREATER_100_CARACTER;
-import static br.com.contmatic.fixture.factory.GeradorEmail.EMAIL_LESS_10_CARACTER;
-import static br.com.contmatic.fixture.factory.GeradorEmail.EMAIL_WITHOUT_ARROBA_CARACTER;
-import static br.com.contmatic.fixture.factory.GeradorEmail.EMAIL_WITH_BLANK_SPACE;
-import static br.com.contmatic.fixture.factory.GeradorEmail.EMAIL_WITH_SPECIAL_CARACTER;
-import static br.com.six2six.fixturefactory.Fixture.of;
+import br.com.contmatic.constantes.Constante;
+import br.com.contmatic.empresa.Funcionario;
+import br.com.contmatic.enums.EnumCargo;
+import br.com.six2six.fixturefactory.Rule;
+import br.com.six2six.fixturefactory.loader.TemplateLoader;
+import com.github.javafaker.Faker;
+import org.joda.time.DateTime;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Random;
 
-import org.joda.time.DateTime;
-
-import com.github.javafaker.Faker;
-
-import br.com.contmatic.constantes.Constante;
-import br.com.contmatic.empresa.Cargo;
-import br.com.contmatic.empresa.Funcionario;
-import br.com.contmatic.telefone.TipoContrato;
-import br.com.six2six.fixturefactory.Rule;
-import br.com.six2six.fixturefactory.loader.TemplateLoader;
+import static br.com.contmatic.constantes.Constante.EMAIL_WITH_NUMBER_AFTER_ARROBA;
+import static br.com.contmatic.constantes.Constante.*;
+import static br.com.contmatic.fixture.factory.GeradorEmail.EMAIL_WITH_SPECIAL_CARACTER;
+import static br.com.contmatic.fixture.factory.GeradorEmail.*;
+import static br.com.contmatic.services.utils.GeradorCpf.gerardorRandomCpf;
+import static br.com.six2six.fixturefactory.Fixture.of;
 
 /**
  * The Class FixtureFactoryFuncionario.
@@ -74,11 +44,10 @@ public class FixtureFactoryFuncionario implements TemplateLoader {
                 add(NOME, name());
                 add(EMAIL, new Faker().internet().emailAddress());
                 add(DATA_NASCIMENTO, new DateTime());
-                add(CARGO, Cargo.values()[new Random().nextInt(Cargo.values().length)]);
+                add(CARGO, EnumCargo.values()[new Random().nextInt(EnumCargo.values().length)]);
                 add(SALARIO, new BigDecimal(new Faker().number().randomDouble(2, 1000, 5000)));
                 add(ENDERECO, FixtureFactoryEndereco.enderecoValido());
-                add(TIPO_CONTRATO, TipoContrato.values()[new Random().nextInt(TipoContrato.values().length)]);
-                add(CPF, GeradorCpf.gerardorRandomCpf());
+                add(CPF, gerardorRandomCpf());
                 add(TELEFONES, new HashSet<>());
             }
         });

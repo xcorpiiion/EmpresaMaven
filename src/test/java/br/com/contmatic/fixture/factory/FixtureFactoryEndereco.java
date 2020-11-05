@@ -1,42 +1,14 @@
 package br.com.contmatic.fixture.factory;
 
-import static br.com.contmatic.constantes.Constante.BAIRRO_BLANK_SPACE;
-import static br.com.contmatic.constantes.Constante.BAIRRO_EMPTY;
-import static br.com.contmatic.constantes.Constante.BAIRRO_GREATER_50_CARACTER;
-import static br.com.contmatic.constantes.Constante.BAIRRO_LESS_3_CARACTER;
-import static br.com.contmatic.constantes.Constante.BAIRRO_NULL;
-import static br.com.contmatic.constantes.Constante.BAIRRO_WITH_SPECIAL_CARACTER;
-import static br.com.contmatic.constantes.Constante.CEP_BLANK_SPACE;
-import static br.com.contmatic.constantes.Constante.CEP_CONTAINS_WORD;
-import static br.com.contmatic.constantes.Constante.CEP_EMPTY;
-import static br.com.contmatic.constantes.Constante.CEP_LENGTH_DIFFERENCE_8;
-import static br.com.contmatic.constantes.Constante.CEP_NULL;
-import static br.com.contmatic.constantes.Constante.CIDADE_BLANK_SPACE;
-import static br.com.contmatic.constantes.Constante.CIDADE_CONTAINS_NUMBER;
-import static br.com.contmatic.constantes.Constante.CIDADE_EMPTY;
-import static br.com.contmatic.constantes.Constante.CIDADE_GREATER_50_CARACTER;
-import static br.com.contmatic.constantes.Constante.CIDADE_LESS_3_CARACTER;
-import static br.com.contmatic.constantes.Constante.CIDADE_NULL;
-import static br.com.contmatic.constantes.Constante.CIDADE_WITH_SPECIAL_CARACTER;
-import static br.com.contmatic.constantes.Constante.ESTADO_NULL;
-import static br.com.contmatic.constantes.Constante.NOME_WITH_SPECIAL_CARACTER;
-import static br.com.contmatic.constantes.Constante.NUMERO_RESIDENCIA_LESS_THAN_ZERO;
-import static br.com.contmatic.constantes.Constante.RUA_BLANK_SPACE;
-import static br.com.contmatic.constantes.Constante.RUA_EMPTY;
-import static br.com.contmatic.constantes.Constante.RUA_GREATER_50_CARACTER;
-import static br.com.contmatic.constantes.Constante.RUA_LESS_3_CARACTER;
-import static br.com.contmatic.constantes.Constante.RUA_NULL;
-import static br.com.contmatic.constantes.Constante.RUA_WITH_SPECIAL_CARACTER;
-import static br.com.contmatic.constantes.Constante.VALID;
-import static br.com.six2six.fixturefactory.Fixture.of;
-
-import java.util.Random;
-
 import br.com.contmatic.endereco.Endereco;
-import br.com.contmatic.endereco.EstadosBrasil;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
+
+import java.util.Random;
+
+import static br.com.contmatic.constantes.Constante.*;
+import static br.com.six2six.fixturefactory.Fixture.of;
 
 
 /**
@@ -59,8 +31,7 @@ public class FixtureFactoryEndereco implements TemplateLoader{
                 add("cep", cepRandom.toString());
                 add("numeroResidencia", new Random().nextInt(100000) + 1);
                 add("cidade", firstName());
-                add("estado", EstadosBrasil.values()[new Random().nextInt(EstadosBrasil.values().length)]);
-                
+
             }
         });
         return Fixture.from(Endereco.class).gimme(VALID);
@@ -74,7 +45,6 @@ public class FixtureFactoryEndereco implements TemplateLoader{
         FixtureFactoryEndereco.enderecoValido();
         StringBuilder cepRandom = new StringBuilder();
         cepRandom.append(new Random().nextInt(90000000) + 10000000);
-        int randomEstadoName = new Random().nextInt(EstadosBrasil.values().length);
         final String RUA = "rua";
         final String BAIRRO = "bairro";
         final String CEP = "cep";
@@ -88,8 +58,7 @@ public class FixtureFactoryEndereco implements TemplateLoader{
                 add(CEP, cepRandom.toString());
                 add(NUMERO_RESIDENCIA, random(Integer.class, range(1, 10000)));
                 add(CIDADE, firstName());
-                add(ESTADO, EstadosBrasil.values()[randomEstadoName]);
-                
+
             }
         });
         final String VALID = "valid";

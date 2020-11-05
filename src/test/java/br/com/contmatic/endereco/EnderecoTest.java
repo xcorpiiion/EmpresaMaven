@@ -1,42 +1,17 @@
 package br.com.contmatic.endereco;
 
-import static br.com.contmatic.constantes.Constante.BAIRRO_BLANK_SPACE;
-import static br.com.contmatic.constantes.Constante.BAIRRO_EMPTY;
-import static br.com.contmatic.constantes.Constante.BAIRRO_LESS_3_CARACTER;
-import static br.com.contmatic.constantes.Constante.BAIRRO_WITH_SPECIAL_CARACTER;
-import static br.com.contmatic.constantes.Constante.CEP_EMPTY;
-import static br.com.contmatic.constantes.Constante.CEP_NULL;
-import static br.com.contmatic.constantes.Constante.CIDADE_GREATER_50_CARACTER;
-import static br.com.contmatic.constantes.Constante.CIDADE_LESS_3_CARACTER;
-import static br.com.contmatic.constantes.Constante.CIDADE_WITH_SPECIAL_CARACTER;
-import static br.com.contmatic.constantes.Constante.RUA_BLANK_SPACE;
-import static br.com.contmatic.constantes.Constante.RUA_EMPTY;
-import static br.com.contmatic.constantes.Constante.RUA_GREATER_50_CARACTER;
-import static br.com.contmatic.constantes.Constante.RUA_LESS_3_CARACTER;
-import static br.com.contmatic.constantes.Constante.VALID;
-import static br.com.contmatic.constantes.Mensagem.BAIRRO_ENDERECO_CARACTERE_INVALIDO;
-import static br.com.contmatic.constantes.Mensagem.BAIRRO_ENDERECO_TAMANHO;
-import static br.com.contmatic.constantes.Mensagem.BAIRRO_ENDERECO_VAZIO;
-import static br.com.contmatic.constantes.Mensagem.CEP_ENDERECO_VAZIO;
-import static br.com.contmatic.constantes.Mensagem.CIDADE_ENDERECO_CARACTERE_INVALIDO;
-import static br.com.contmatic.constantes.Mensagem.CIDADE_ENDERECO_TAMANHO;
-import static br.com.contmatic.constantes.Mensagem.RUA_ENDERECO_TAMANHO;
-import static br.com.contmatic.constantes.Mensagem.RUA_ENDERECO_VAZIO;
-import static br.com.contmatic.endereco.EstadosBrasil.ACRE;
-import static br.com.contmatic.validator.ValidadorAnnotionsMsgErro.returnAnnotationMsgError;
-import static br.com.six2six.fixturefactory.Fixture.from;
-import static br.com.six2six.fixturefactory.loader.FixtureFactoryLoader.loadTemplates;
-import static org.apache.commons.lang3.StringUtils.isNumeric;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import org.apache.commons.lang3.StringUtils;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import static br.com.contmatic.constantes.Constante.*;
+import static br.com.contmatic.constantes.Mensagem.*;
+import static br.com.contmatic.validator.ValidadorAnnotionsMsgErro.returnAnnotationMsgError;
+import static br.com.six2six.fixturefactory.Fixture.from;
+import static br.com.six2six.fixturefactory.loader.FixtureFactoryLoader.loadTemplates;
+import static org.apache.commons.lang3.StringUtils.isNumeric;
+import static org.junit.Assert.*;
 
 /**
  * The Class EnderecoTest.
@@ -71,40 +46,7 @@ public class EnderecoTest {
 	 */
 	@Test
 	public void deve_conter_numeros_positivos() {
-		assertTrue(endereco.getNumeroResidencia() >= 0);
-	}
-	
-	/**
-	 * Nao deve aceitar cidade null.
-	 */
-	@Test
-	public void nao_deve_aceitar_cidade_null() {
-	    endereco = from(Endereco.class).gimme(VALID);
-		assertNotNull(endereco.getCidade());
-	}
-	
-	@Test
-    public void deve_retornar_true_caso_cidade_esteja_com_menos_de_5_caracteres() {
-        endereco.setCidade("nike");
-        assertTrue(returnAnnotationMsgError(endereco, CIDADE_ENDERECO_TAMANHO));
-    }
-	
-	/**
-	 * Nao deve aceitar cidade vazia.
-	 */
-	@Test
-	public void nao_deve_aceitar_cidade_vazia() {
-		assertFalse(StringUtils.isEmpty(endereco.getCidade()));
-	}
-	
-	/**
-	 * Nao deve aceitar numero em nome cidade.
-	 */
-	@Test
-	public void nao_deve_aceitar_numero_em_nome_cidade() {
-	    endereco = from(Endereco.class).gimme(VALID);
-		endereco.setCidade(endereco.getCidade());
-		assertTrue(!isNumeric(endereco.getCidade()));
+		assertTrue(endereco.getNumero() >= 0);
 	}
 	
 	@Test
@@ -123,22 +65,6 @@ public class EnderecoTest {
     public void deve_retornar_true_caso_cidade_seja_possua_caracteres_especiais() {
         endereco = from(Endereco.class).gimme(CIDADE_WITH_SPECIAL_CARACTER);
         assertTrue(returnAnnotationMsgError(endereco, CIDADE_ENDERECO_CARACTERE_INVALIDO));
-    }
-	
-	/**
-	 * Nao deve aceitar estado null.
-	 */
-	@Test
-	public void nao_deve_aceitar_estado_null() {
-	    endereco = from(Endereco.class).gimme(VALID);
-		assertNotNull(endereco.getEstado());
-	}
-	
-	@Test
-    public void deve_mudar_nome_estado() {
-        endereco = from(Endereco.class).gimme(VALID);
-        endereco.setEstado(ACRE);
-        assertTrue(endereco.getEstado() == ACRE);
     }
 	
 	/**
@@ -250,18 +176,6 @@ public class EnderecoTest {
         endereco = from(Endereco.class).gimme(BAIRRO_WITH_SPECIAL_CARACTER);
         assertTrue(returnAnnotationMsgError(endereco, BAIRRO_ENDERECO_CARACTERE_INVALIDO));
     }
-    
-    @Test
-    public void deve_retornar_true_caso_estado_for_igual_getNome_do_enum_estadoBrasil() {
-        endereco.setEstado(ACRE);
-        assertTrue(endereco.getEstado().getNome().equalsIgnoreCase("acre"));
-    }
-    
-    @Test
-    public void deve_retornar_true_caso_estado_for_igual_getSigla_do_enum_estadoBrasil() {
-        endereco.setEstado(ACRE);
-        assertTrue(endereco.getEstado().getSigla().equalsIgnoreCase("ac"));
-    }
 	
 	/**
 	 * Nao deve conter enderecos iguais.
@@ -292,7 +206,7 @@ public class EnderecoTest {
 	 */
 	@Test
 	public void deve_conter_numero_residencia_iguais_para_serem_igausi() {
-		endereco2.setNumeroResidencia(endereco.getNumeroResidencia());
+		endereco2.setNumero(endereco.getNumero());
 		endereco2.setCep(endereco.getCep());
 		assertTrue(endereco.equals(endereco2));
 	}
@@ -303,7 +217,7 @@ public class EnderecoTest {
 	@Test
 	public void devem_ter_os_mesmos_hashCode_para_serem_iguais() {
 	    endereco.setCep(endereco2.getCep());
-	    endereco.setNumeroResidencia(endereco2.getNumeroResidencia());
+	    endereco.setNumero(endereco2.getNumero());
 		assertEquals("Os enderecos são iguais", endereco.hashCode(), endereco2.hashCode());
 	}
 	

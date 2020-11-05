@@ -13,9 +13,9 @@ import java.util.HashSet;
 
 import static br.com.contmatic.constantes.Constante.*;
 import static br.com.contmatic.fixture.factory.FixtureFactoryEndereco.enderecoValido;
-import static br.com.contmatic.fixture.factory.GeradorCpf.gerardorRandomCpf;
 import static br.com.contmatic.fixture.factory.GeradorEmail.EMAIL_WITH_SPECIAL_CARACTER;
 import static br.com.contmatic.fixture.factory.GeradorEmail.*;
+import static br.com.contmatic.services.utils.GeradorCpf.gerardorRandomCpf;
 import static br.com.six2six.fixturefactory.Fixture.of;
 
 /**

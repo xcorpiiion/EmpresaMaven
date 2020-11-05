@@ -1,58 +1,24 @@
 package br.com.contmatic.empresa;
 
-import static br.com.contmatic.constantes.Constante.CARGO_NULL;
-import static br.com.contmatic.constantes.Constante.DATA_NASCIMENTO_NULL;
-import static br.com.contmatic.constantes.Constante.EMAIL_BLANK_SPACE;
-import static br.com.contmatic.constantes.Constante.EMAIL_EMPTY;
-import static br.com.contmatic.constantes.Constante.EMAIL_LESS_10_CARACTERES;
-import static br.com.contmatic.constantes.Constante.EMAIL_NULL;
-import static br.com.contmatic.constantes.Constante.EMAIL_WITHOUT_ARROBA;
-import static br.com.contmatic.constantes.Constante.EMAIL_WITHOUT_PONTO_COM;
-import static br.com.contmatic.constantes.Constante.EMAIL_WITH_BLANK_SPACE_IN_WORD;
-import static br.com.contmatic.constantes.Constante.EMAIL_WITH_SPECIAL_CARACTER;
-import static br.com.contmatic.constantes.Constante.NOME_BLANK_SPACE;
-import static br.com.contmatic.constantes.Constante.NOME_EMPTY;
-import static br.com.contmatic.constantes.Constante.NOME_LESS_3_CARACTER;
-import static br.com.contmatic.constantes.Constante.NOME_NULL;
-import static br.com.contmatic.constantes.Constante.SALARIO_LESS_1;
-import static br.com.contmatic.constantes.Constante.TIPO_CONTRATO_NULL;
-import static br.com.contmatic.constantes.Constante.VALID;
-import static br.com.contmatic.constantes.Mensagem.CARGO_FUNCIONARIO_VAZIO;
-import static br.com.contmatic.constantes.Mensagem.DATA_NASCIMENTO_FUNCIONARIO_VAZIO;
-import static br.com.contmatic.constantes.Mensagem.EMAIL_FUNCIONARIO_CARACTERE_INVALIDO;
-import static br.com.contmatic.constantes.Mensagem.EMAIL_FUNCIONARIO_TAMANHO;
-import static br.com.contmatic.constantes.Mensagem.EMAIL_FUNCIONARIO_VAZIO;
-import static br.com.contmatic.constantes.Mensagem.NOME_FUNCIONARIO_TAMANHO;
-import static br.com.contmatic.constantes.Mensagem.NOME_FUNCIONARIO_VAZIO;
-import static br.com.contmatic.constantes.Mensagem.SALARIO_FUNCIONARIO_TAMANHO;
-import static br.com.contmatic.constantes.Mensagem.TIPO_CONTRATO_FUNCIONARIO_VAZIO;
-import static br.com.contmatic.empresa.Cargo.REPOSITOR;
-import static br.com.contmatic.empresa.Cargo.RH;
-import static br.com.contmatic.telefone.TipoContrato.CLT;
-import static br.com.contmatic.telefone.TipoContrato.PJ;
-import static br.com.contmatic.validator.ValidadorAnnotionsMsgErro.returnAnnotationMsgError;
-import static br.com.six2six.fixturefactory.Fixture.from;
-import static br.com.six2six.fixturefactory.loader.FixtureFactoryLoader.loadTemplates;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.runners.MethodSorters.NAME_ASCENDING;
+import br.com.contmatic.telefone.Telefone;
+import com.github.javafaker.Faker;
+import org.joda.time.DateTime;
+import org.junit.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.joda.time.DateTime;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-
-import com.github.javafaker.Faker;
-
-import br.com.contmatic.telefone.Telefone;
+import static br.com.contmatic.constantes.Constante.*;
+import static br.com.contmatic.constantes.Mensagem.*;
+import static br.com.contmatic.enums.EnumCargo.REPOSITOR;
+import static br.com.contmatic.enums.EnumCargo.RH;
+import static br.com.contmatic.validator.ValidadorAnnotionsMsgErro.returnAnnotationMsgError;
+import static br.com.six2six.fixturefactory.Fixture.from;
+import static br.com.six2six.fixturefactory.loader.FixtureFactoryLoader.loadTemplates;
+import static org.junit.Assert.*;
+import static org.junit.runners.MethodSorters.NAME_ASCENDING;
 
 /**
  * The Class FuncionarioTest.
@@ -208,18 +174,6 @@ public class FuncionarioTest {
     public void deve_retornar_true_se_tipoContrato_for_null() {
         funcionario = from(Funcionario.class).gimme(TIPO_CONTRATO_NULL);
         assertTrue(returnAnnotationMsgError(funcionario, TIPO_CONTRATO_FUNCIONARIO_VAZIO));
-    }
-    
-    @Test
-    public void deve_alterar_tipoContrato_para_clt() {
-        funcionario.setTipoContrato(CLT);
-        assertTrue(funcionario.getTipoContrato() == CLT);
-    }
-    
-    @Test
-    public void deve_alterar_tipoContrato_para_pj() {
-        funcionario.setTipoContrato(PJ);
-        assertTrue(funcionario.getTipoContrato() == PJ);
     }
     
     @Test
