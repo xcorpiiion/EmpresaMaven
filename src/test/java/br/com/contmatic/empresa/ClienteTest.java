@@ -15,6 +15,9 @@ import static br.com.contmatic.constantes.Mensagem.*;
 import static br.com.contmatic.validator.ValidadorAnnotionsMsgErro.returnAnnotationMsgError;
 import static br.com.six2six.fixturefactory.Fixture.from;
 import static br.com.six2six.fixturefactory.loader.FixtureFactoryLoader.loadTemplates;
+import static nl.jqno.equalsverifier.EqualsVerifier.forClass;
+import static nl.jqno.equalsverifier.Warning.ALL_FIELDS_SHOULD_BE_USED;
+import static nl.jqno.equalsverifier.Warning.NONFINAL_FIELDS;
 import static org.junit.Assert.*;
 import static org.junit.runners.MethodSorters.NAME_ASCENDING;
 
@@ -24,16 +27,10 @@ import static org.junit.runners.MethodSorters.NAME_ASCENDING;
 @FixMethodOrder(NAME_ASCENDING)
 public class ClienteTest {
     
-    /** The produtos. */
-    private static List<Produto> produtos;
-
     /** The clientes. */
     private Cliente cliente;
 
     private Cliente cliente2;
-
-    /** The loja. */
-    private static Empresa loja;
 
     private Set<Telefone> telefone;
 
@@ -43,12 +40,6 @@ public class ClienteTest {
     @BeforeClass
     public static void addDadosIniciais() {
         loadTemplates("br.com.contmatic.fixture.factory");
-        produtos = new ArrayList<>();
-        produtos.add(from(Produto.class).gimme(VALID));
-        loja = from(Empresa.class).gimme(VALID);
-        loja.setProduto(produtos);
-        loja.setCliente(new ArrayList<>());
-        loja.setFuncionario(new ArrayList<>());
     }
 
     /**
@@ -188,8 +179,9 @@ public class ClienteTest {
 
     @Test
     public void deve_alterar_dataNascimento() {
-        cliente.setDataNascimento(new DateTime());
-        assertEquals(new DateTime(), cliente.getDataNascimento());
+        final DateTime dataNascimento = new DateTime();
+        cliente.setDataNascimento(dataNascimento);
+        assertEquals(dataNascimento, cliente.getDataNascimento());
     }
 
     /**
@@ -209,40 +201,6 @@ public class ClienteTest {
         assertTrue(returnAnnotationMsgError(cliente, CPF_CLIENTE_INVALIDO));
     }
 
-    @Test()
-    public void deve_retornar_true_no_equals_para_serem_iguais() {
-        cliente2 = (from(Cliente.class).gimme(VALID));
-        cliente2.setCpf(cliente.getCpf());
-        assertEquals("Os cliente são iguais", cliente, cliente2);
-    }
-
-    @Test()
-    public void deve_retornar_true_quando_compara_com_mesmo_objeto() {
-        assertSame(cliente, cliente);
-    }
-
-    @Test()
-    public void deve_retornar_false_quando_compara_com_classe_diferente() {
-        assertNotEquals(cliente, new Object());
-    }
-
-    /**
-     * Deve ter hash code iguais para serem clientes iguais.
-     */
-    @Test()
-    public void deve_ter_hashCode_iguais_para_serem_clientes_iguais() {
-        cliente2 = (from(Cliente.class).gimme(VALID));
-        cliente2.setCpf(cliente.getCpf());
-        assertEquals(cliente.hashCode(), cliente2.hashCode());
-    }
-
-    /**
-     * Nao deve ter equals null para comparar clientes.
-     */
-    @Test()
-    public void nao_deve_ter_equals_null_para_comparar_clientes() {
-        assertNotEquals("Os clientes são igauis", null, cliente);
-    }
 
     @Test
     public void deve_retornar_true_caso_contenha_a_palavra_nome_no_toString() {
@@ -274,14 +232,10 @@ public class ClienteTest {
         assertTrue(cliente.toString().contains("telefones"));
     }
 
-    @Test
-    public void deve_retornar_true_caso_contenha_a_palavra_carrinhoProdutos_no_toString() {
-        assertTrue(cliente.toString().contains("carrinhoProdutos"));
-    }
-
-    @Test
-    public void deve_retornar_true_caso_contenha_a_palavra_produtosComprados_no_toString() {
-        assertTrue(cliente.toString().contains("produtosComprados"));
+    @Test()
+    public void deve_retornar_true_no_equals_para_serem_iguais() {
+        forClass(Cliente.class).usingGetClass()
+                .suppress(NONFINAL_FIELDS, ALL_FIELDS_SHOULD_BE_USED).verify();
     }
 
 }

@@ -41,10 +41,6 @@ public class FixtureFactoryCliente implements TemplateLoader {
                 add(DATA_NASCIMENTO, new DateTime());
                 final String DINHEIRO_CARTEIRA = "dinheiroCarteira";
                 add(DINHEIRO_CARTEIRA, BigDecimal.valueOf(new Faker().number().randomDouble(2, 1000, 2000)));
-                final String CARRINHO_PRODUTOS = "carrinhoProdutos";
-                add(CARRINHO_PRODUTOS, new ArrayList<>());
-                final String PRODUTOS_COMPRADOS = "produtosComprados";
-                add(PRODUTOS_COMPRADOS, new ArrayList<>());
                 add(ENDERECO, enderecoValido());
                 final String CPF = "cpf";
                 add(CPF, gerardorRandomCpf());

@@ -85,6 +85,7 @@ public class Funcionario {
     /**
      * The telefones.
      */
+    @NotEmpty
     @NotNull(message = TELEFONE_FUNCIONARIO_VAZIO)
     private Set<Telefone> telefones;
 
@@ -241,10 +242,10 @@ public class Funcionario {
     /**
      * Sets the telefones.
      *
-     * @param telefones the new telefones
+     * @param telefone1s the new telefones
      */
-    public void setTelefones(Set<Telefone> telefones) {
-        this.telefones = telefones;
+    public void setTelefones(Set<Telefone> telefone1s) {
+        this.telefones = telefone1s;
     }
 
     /**

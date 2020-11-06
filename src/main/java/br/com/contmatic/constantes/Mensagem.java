@@ -1,5 +1,7 @@
 package br.com.contmatic.constantes;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * The Class Mensagem.
  */
@@ -9,13 +11,13 @@ public final class Mensagem {
 
     public static final String NOME_EMPRESA_VAZIO = "Nome de empresa não pode ser vazio";
 
-    public static final String NOME_EMPRESA_TAMANHO = "Nome de empresa deve ter de 5 a 100 caracteres";
+    public static final String NOME_EMPRESA_TAMANHO = "Nome de empresa deve ter de {min} a {max} caracteres";
 
     public static final String NOME_EMPRESA_CARACTERE_INVALIDO = "Nome de empresa não pode possuir números";
 
     public static final String EMAIL_EMPRESA_VAZIO = "Email de empresa não pode ser vazio";
 
-    public static final String EMAIL_EMPRESA_TAMANHO = "Email de empresa deve ter de 10 a 100 caracteres";
+    public static final String EMAIL_EMPRESA_TAMANHO = "Email de empresa deve ter de {min} a {max} caracteres";
 
     public static final String EMAIL_EMPRESA_CARACTERE_INVALIDO = "Email de empresa contém algum caractere invalido";
 
@@ -29,13 +31,13 @@ public final class Mensagem {
 
     public static final String NOME_CLIENTE_VAZIO = "Nome de cliente não pode ser vazio";
 
-    public static final String NOME_CLIENTE_TAMANHO = "Nome de cliente deve ter de 3 a 50 caracteres";
+    public static final String NOME_CLIENTE_TAMANHO = "Nome de cliente deve ter de {min} a {max} caracteres";
 
     public static final String NOME_CLIENTE_CARACTERE_INVALIDO = "Nome de cliente não pode possuir números";
 
     public static final String EMAIL_CLIENTE_VAZIO = "Email de cliente não pode ser vazio";
 
-    public static final String EMAIL_CLIENTE_TAMANHO = "Email de cliente deve ter de 10 a 100 caracteres";
+    public static final String EMAIL_CLIENTE_TAMANHO = "Email de cliente deve ter de {min} a {max} caracteres";
 
     public static final String EMAIL_CLIENTE_CARACTERE_INVALIDO = "Email de cliente contém algum caractere invalido";
 
@@ -53,13 +55,13 @@ public final class Mensagem {
 
     public static final String NOME_FUNCIONARIO_VAZIO = "Nome de funcionario não pode ser vazio";
 
-    public static final String NOME_FUNCIONARIO_TAMANHO = "Nome de funcionario deve ter de 3 a 50 caracteres";
+    public static final String NOME_FUNCIONARIO_TAMANHO = "Nome de funcionario deve ter de {min} a {max} caracteres";
 
     public static final String NOME_FUNCIONARIO_CARACTERE_INVALIDO = "Nome de funcionario não pode possuir números";
 
     public static final String EMAIL_FUNCIONARIO_VAZIO = "Email de funcionario não pode ser vazio";
 
-    public static final String EMAIL_FUNCIONARIO_TAMANHO = "Email de funcionario deve ter de 10 a 100 caracteres";
+    public static final String EMAIL_FUNCIONARIO_TAMANHO = "Email de funcionario deve ter de {min} a {max} caracteres";
 
     public static final String EMAIL_FUNCIONARIO_CARACTERE_INVALIDO = "Email de funcionario contém algum caractere invalido";
 
@@ -75,7 +77,7 @@ public final class Mensagem {
 
     public static final String SALARIO_FUNCIONARIO_VAZIO = "Salario de funcionario não pode ser vazio";
 
-    public static final String SALARIO_FUNCIONARIO_TAMANHO = "Salario de funcionario precisa der no minimo R$ 1.000,00";
+    public static final String SALARIO_FUNCIONARIO_TAMANHO = "Salario de funcionario precisa der no minimo R$ {min}";
 
     public static final String TIPO_CONTRATO_FUNCIONARIO_VAZIO = "Tipo de contrato de funcionario não pode ser vazio";
 
@@ -83,11 +85,11 @@ public final class Mensagem {
 
     public static final String NOME_PRODUTO_VAZIO = "Nome de funcionario não pode ser vazio";
 
-    public static final String NOME_PRODUTO_TAMANHO = "Nome de funcionario deve ter de 3 a 50 caracteres";
+    public static final String NOME_PRODUTO_TAMANHO = "Nome de funcionario deve ter de {min} a {max} caracteres";
 
     public static final String PRECO_PRODUTO_VAZIO = "Preço de produto não pode ser vazio";
 
-    public static final String PRECO_PRODUTO_TAMANHO = "Preço de produto deve ter no minimo o valor R$ 0,00";
+    public static final String PRECO_PRODUTO_TAMANHO = "Preço de produto deve ter no minimo o valor R$ {min}";
 
     public static final String ESTOQUE_PRODUTO_VAZIO = "Estoque de produto não pode ser vazio";
 
@@ -95,17 +97,17 @@ public final class Mensagem {
 
     public static final String RUA_ENDERECO_VAZIO = "Rua de endereço não pode ser vazio";
 
-    public static final String RUA_ENDERECO_TAMANHO = "Rua de endereço deve ter de 5 a 50 caracteres";
+    public static final String RUA_ENDERECO_TAMANHO = "Rua de endereço deve ter de {min} a {max} caracteres";
 
     public static final String BAIRRO_ENDERECO_VAZIO = "Bairro de endereço não pode ser vazio";
 
-    public static final String BAIRRO_ENDERECO_TAMANHO = "Bairro de endereço deve ter de 3 a 50 caracteres";
+    public static final String BAIRRO_ENDERECO_TAMANHO = "Bairro de endereço deve ter de {min} a {max} caracteres";
 
     public static final String BAIRRO_ENDERECO_CARACTERE_INVALIDO = "Bairro de endereço não pode possuir números";
 
     public static final String CIDADE_ENDERECO_VAZIO = "Cidade de endereço não pode ser vazio";
 
-    public static final String CIDADE_ENDERECO_TAMANHO = "Cidade de endereço deve ter de 3 a 50 caracteres";
+    public static final String CIDADE_ENDERECO_TAMANHO = "Cidade de endereço deve ter de {min} a {max} caracteres";
 
     public static final String CIDADE_ENDERECO_CARACTERE_INVALIDO = "Cidade de endereço não pode possuir números";
 
@@ -115,7 +117,7 @@ public final class Mensagem {
 
     public static final String ESTADO_ENDERECO_VAZIO = "Estado de endereço não pode ser vazio";
 
-    public static final String NUMERO_ENDERECO_TAMANHO = "Número de residência de endereço deve ter o valor minimo de 1";
+    public static final String NUMERO_ENDERECO_TAMANHO = "Número de residência de endereço deve ter o valor minimo de {min}";
 
     /* Telefone */
 
@@ -126,6 +128,14 @@ public final class Mensagem {
     public static final String TELEFONE_TIPO_TELEFONE_VAZIO = "Tipo de telefone não pode ser vazio";
 
     public static final String TELEFONE_DDD_VAZIO = "DDD de telefone não pode ser vazio";
+
+    /* Pais */
+
+    public static final String CODIGO_PAIS_VAZIO = "Codigo do pais não pode ser vazio";
+
+    /* Municipio */
+
+    public static final String DESCRICAO_MUNICIPIO_CARACTERE_INVALIDO = "Descrição de municipio não pode possuir números";
 
     /**
      * Instantiates a new mensagem.

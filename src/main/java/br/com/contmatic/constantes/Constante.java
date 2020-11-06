@@ -177,19 +177,33 @@ public final class Constante {
 
     public static final String PAIS_NULL = "paisNull";
 
-    public static final String CODIGO_MUNICIPAL_NULL = "paisNull";
+    public static final String PAIS_MENOR_DO_QUE_ZERO = "paismMenorQueZero";
 
-    public static final String CODIGO_FEDERAL_NULL = "paisNull";
+    public static final String CODIGO_MUNICIPAL_NULL = "codigoMunicipalNull";
 
-    public static final String CODIGO_IBGE_NULL = "paisNull";
+    public static final String CODIGO_MUNICIPAL_MENOR_QUE_1 = "codigoMenorQue1";
 
-    public static final String UF_NULL = "paisNull";
+    public static final String CODIGO_FEDERAL_NULL = "codigoFederalNull";
 
-    public static final String DESCRICAO_NULL = "paisNull";
+    public static final String CODIGO_FEDERAL_MENOR_QUE_1  = "codigoFederalMenorQue1";
 
-    public static final String DESCRICAO_EMPTY = "paisNull";
+    public static final String CODIGO_IBGE_NULL = "codigoEbgeNull";
 
-    public static final String DESCRICAO_BLANK_SPACE = "paisNull";
+    public static final String CODIGO_IBGE_MENOR_QUE_1  = "codigoEbgeMenorQue1";
+
+    public static final String UF_NULL = "ufNull";
+
+    public static final String DESCRICAO_NULL = "descricaoNull";
+
+    public static final String DESCRICAO_EMPTY = "descricaoEmpty";
+
+    public static final String DESCRICAO_BLANK_SPACE = "descricaoBlanckSpace";
+
+    public static final String DESCRICAO_TAMANHO_INVALIDO = "descricaoTamanhoInvalido";
+
+    public static final String DESCRICAO_CARACTER_ESPECIAL= "descricaoSpecialCaracter";
+
+    public static final String MUNICIPIO_NULL= "descricaoSpecialCaracter";
 
 
     /**

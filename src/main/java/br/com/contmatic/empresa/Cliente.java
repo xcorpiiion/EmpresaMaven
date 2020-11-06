@@ -47,6 +47,7 @@ public class Cliente {
     @NotNull(message = DATA_NASCIMENTO_CLIENTE_VAZIO)
     private DateTime dataNascimento;
 
+    @NotNull
     private DateTime dataCadastro;
 
     /**
@@ -60,6 +61,7 @@ public class Cliente {
     private Endereco endereco;
 
     /** The telefones. */
+    @NotEmpty
     @NotNull(message = TELEFONE_CLIENTE_VAZIO)
     private Set<Telefone> telefones;
 
@@ -185,20 +187,10 @@ public class Cliente {
         this.endereco = endereco;
     }
 
-    /**
-     * Gets the telefones.
-     *
-     * @return the telefones
-     */
     public Set<Telefone> getTelefones() {
         return telefones;
     }
 
-    /**
-     * Sets the telefones.
-     *
-     * @param telefones the new telefones
-     */
     public void setTelefones(Set<Telefone> telefones) {
         this.telefones = telefones;
     }

@@ -4,19 +4,35 @@ import br.com.contmatic.enums.EnumUF;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import javax.validation.constraints.*;
+
+import static br.com.contmatic.constantes.Constante.ILLEGAL_WORD;
+import static br.com.contmatic.constantes.Mensagem.DESCRICAO_MUNICIPIO_CARACTERE_INVALIDO;
+import static br.com.contmatic.constantes.Mensagem.NOME_CLIENTE_CARACTERE_INVALIDO;
 import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
 public class Municipio {
 
+    @Min(1)
+    @NotNull
     private Integer codigoMunicipal;
 
+    @Min(1)
+    @NotNull
     private Integer codigoFederal;
 
+    @Min(1)
+    @NotNull
     private Integer codigoIbge;
 
+    @Pattern(regexp = ILLEGAL_WORD, message = DESCRICAO_MUNICIPIO_CARACTERE_INVALIDO)
+    @Min(5)
+    @NotBlank
+    @NotNull
     private String descricao;
 
+    @NotNull
     private EnumUF uf;
 
     public Integer getCodigoMunicipal() {

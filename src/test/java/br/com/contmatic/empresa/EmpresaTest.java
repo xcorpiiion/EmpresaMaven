@@ -176,7 +176,7 @@ public class EmpresaTest {
     }
     
     @Test
-    public void deve_add_telefone_na_lista_telefones() {
+    public void deve_add_telefones_na_lista_telefoness() {
         loja.setTelefones(telefones);
         assertTrue(loja.getTelefones().size() > 0);
     }
@@ -302,8 +302,8 @@ public class EmpresaTest {
     }
     
     @Test
-    public void deve_retornar_true_caso_contenha_a_palavra_telefones_no_toString() {
-        assertTrue(loja.toString().contains("telefones"));
+    public void deve_retornar_true_caso_contenha_a_palavra_telefoness_no_toString() {
+        assertTrue(loja.toString().contains("telefoness"));
     }
     
     @Test

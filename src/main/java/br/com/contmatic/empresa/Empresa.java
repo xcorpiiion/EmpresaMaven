@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.br.CNPJ;
 import org.joda.time.DateTime;
 
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Set;
@@ -46,6 +47,8 @@ public class Empresa {
 
     /** The telefones. */
     @NotNull(message = TELEFONE_EMPRESA_VAZIO)
+    @NotEmpty
+    @Valid
     private Set<Telefone> telefones;
 
     @NotNull
@@ -58,10 +61,13 @@ public class Empresa {
     @NotNull(message = ENDERECO_EMPRESA_VAZIO)
     private Set<Endereco> enderecos;
 
+    @NotNull
     private List<Produto> produtos;
 
+    @NotNull
     private List<Funcionario> funcionarios;
 
+    @NotNull
     private List<Cliente> clientes;
 
     /**
@@ -156,22 +162,44 @@ public class Empresa {
         this.email = email;
     }
 
-    /**
-     * Gets the telefones.
-     *
-     * @return the telefones
-     */
     public Set<Telefone> getTelefones() {
         return telefones;
     }
 
-    /**
-     * Sets the telefones.
-     *
-     * @param telefones the new telefones
-     */
     public void setTelefones(Set<Telefone> telefones) {
         this.telefones = telefones;
+    }
+
+    public Set<Endereco> getEnderecos() {
+        return enderecos;
+    }
+
+    public void setEnderecos(Set<Endereco> enderecos) {
+        this.enderecos = enderecos;
+    }
+
+    public List<Produto> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<Produto> produtos) {
+        this.produtos = produtos;
+    }
+
+    public List<Funcionario> getFuncionarios() {
+        return funcionarios;
+    }
+
+    public void setFuncionarios(List<Funcionario> funcionarios) {
+        this.funcionarios = funcionarios;
+    }
+
+    public List<Cliente> getClientes() {
+        return clientes;
+    }
+
+    public void setClientes(List<Cliente> clientes) {
+        this.clientes = clientes;
     }
 
     /**

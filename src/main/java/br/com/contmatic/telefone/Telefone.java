@@ -10,15 +10,12 @@ import javax.validation.constraints.Pattern;
 
 import static br.com.contmatic.constantes.Constante.PHONE_VALIDATION;
 import static br.com.contmatic.constantes.Mensagem.*;
+import static br.com.contmatic.constantes.Mensagem.TELEFONE_DDD_VAZIO;
 import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
-/**
- * The Class Telefone.
- */
-public final class Telefone {
+public class Telefone {
 
-    /** The phone. */
     @NotBlank(message = TELEFONE_VAZIO)
     @NotNull(message = TELEFONE_VAZIO)
     @NotEmpty(message = TELEFONE_VAZIO)
@@ -87,39 +84,26 @@ public final class Telefone {
         this.dddTelefone = dddTelefone;
     }
 
-    /**
-     * Hash code.
-     *
-     * @return the int
-     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Telefone telefone = (Telefone) o;
+
+        return new EqualsBuilder()
+                .append(phone, telefone.phone)
+                .isEquals();
+    }
+
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(phone).append(dddTelefone).toHashCode();
+        return new HashCodeBuilder(17, 37)
+                .append(phone)
+                .toHashCode();
     }
 
-    /**
-     * Equals.
-     *
-     * @param obj the obj
-     * @return true, if successful
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Telefone other = (Telefone) obj;
-        return new EqualsBuilder().append(phone, other.phone).append(dddTelefone, other.dddTelefone).isEquals();
-    }
-
-    /**
-     * To string.
-     *
-     * @return the string
-     */
     @Override
     public String toString() {
         return reflectionToString(this, JSON_STYLE);

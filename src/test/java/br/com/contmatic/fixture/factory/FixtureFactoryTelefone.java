@@ -1,36 +1,40 @@
 package br.com.contmatic.fixture.factory;
 
-import br.com.contmatic.telefone.DddBrasil;
-import br.com.contmatic.telefone.GeradorTelefone;
 import br.com.contmatic.telefone.Telefone;
+import br.com.contmatic.telefone.DddBrasil;
 import br.com.contmatic.telefone.TipoTelefone;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
+import com.github.javafaker.Faker;
 
 import java.util.Random;
 
 import static br.com.contmatic.constantes.Constante.*;
+import static br.com.six2six.fixturefactory.Fixture.of;
+import static java.lang.String.valueOf;
 
 /**
- * The Class FixtureFactoryTelefone.
+ * The Class FixtureFactoryCliente.
  */
 public class FixtureFactoryTelefone implements TemplateLoader {
-    
-    /**
-     * Load.
-     */
+
+    private final String PHONE = "phone";
+
+    private final String TIPO_TELEFONE = "tipoTelefone";
+
+    private final String DDD_TELEFONE = "dddTelefone";
+
     @Override
     public void load() {
-        final String PHONE = "phone";
-        final String TIPO_TELEFONE = "tipoTelefone";
-        final String DDD_TELEFONE = "dddTelefone";
-        final String VALID = "valid";
-        Fixture.of(Telefone.class).addTemplate(VALID, new Rule() {
+
+        of(Telefone.class).addTemplate(VALID, new Rule() {
             {
-                add(PHONE, GeradorTelefone.geradorPhone());
-                add(TIPO_TELEFONE, TipoTelefone.values()[new Random().nextInt(TipoTelefone.values().length)]);
-                add(DDD_TELEFONE, DddBrasil.values()[new Random().nextInt(DddBrasil.values().length)]);
+                {
+                    add(PHONE, valueOf(new Faker().number().numberBetween(111111111, 988888888)));
+                    add(TIPO_TELEFONE, TipoTelefone.values()[new Random().nextInt(TipoTelefone.values().length)]);
+                    add(DDD_TELEFONE, DddBrasil.values()[new Random().nextInt(DddBrasil.values().length)]);
+                }
             }
         });
         Fixture.of(Telefone.class).addTemplate(PHONE_NULL).inherits(VALID, new Rule() {
@@ -63,5 +67,7 @@ public class FixtureFactoryTelefone implements TemplateLoader {
                 add(DDD_TELEFONE, null);
             }
         });
+
     }
+
 }

@@ -1,6 +1,8 @@
 package br.com.contmatic.fixture.factory;
 
 import br.com.contmatic.endereco.Endereco;
+import br.com.contmatic.endereco.Municipio;
+import br.com.contmatic.endereco.Pais;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
 
@@ -30,6 +32,8 @@ public class FixtureFactoryEndereco implements TemplateLoader{
                 add("bairro", name());
                 add("cep", cepRandom.toString());
                 add("numero", new Random().nextInt(100000) + 1);
+                add("municipio", new Municipio());
+                add("pais", new Pais());
 
             }
         });
@@ -48,6 +52,8 @@ public class FixtureFactoryEndereco implements TemplateLoader{
         final String BAIRRO = "bairro";
         final String CEP = "cep";
         final String NUMERO = "numero";
+        final String PAIS = "pais";
+        final String MUNICIPIO = "municipio";
         of(Endereco.class).addTemplate(VALID, new Rule() {
             {
                 add(RUA, name());
@@ -57,7 +63,6 @@ public class FixtureFactoryEndereco implements TemplateLoader{
 
             }
         });
-        final String VALID = "valid";
         of(Endereco.class).addTemplate(NUMERO_RESIDENCIA_LESS_THAN_ZERO).inherits(VALID, new Rule() {
             {
                 add(NUMERO, random(Integer.class, range(-10000, -1)));
@@ -148,5 +153,15 @@ public class FixtureFactoryEndereco implements TemplateLoader{
                 add(BAIRRO, regex("DDS$#"));
             }
         });
-    }  
+        of(Endereco.class).addTemplate(PAIS_NULL).inherits(VALID, new Rule() {
+            {
+                add(MUNICIPIO, null);
+            }
+        });
+        of(Endereco.class).addTemplate(MUNICIPIO_NULL).inherits(VALID, new Rule() {
+            {
+                add(PAIS, null);
+            }
+        });
+    }
 }

@@ -3,6 +3,10 @@ package br.com.contmatic.endereco;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+import static br.com.contmatic.constantes.Mensagem.CODIGO_PAIS_VAZIO;
 import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
@@ -10,6 +14,8 @@ public class Pais {
 
     public static final Long CODIGO_BRASIL = 1058L;
 
+    @Min(1)
+    @NotNull(message = CODIGO_PAIS_VAZIO)
     private Long codigo;
 
     public boolean isExterior() {
