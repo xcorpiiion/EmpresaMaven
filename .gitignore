@@ -19,6 +19,42 @@
 *.tar.gz
 *.rar
 
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+# https://github.com/takari/maven-wrapper#usage-without-binary-jar
+.mvn/wrapper/maven-wrapper.jar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 /target/
@@ -63,3 +99,5 @@ hs_err_pid*
 .idea/sonarlint/issuestore/a/e/aecfad61656129048459d74ccfc1d816fdc23ed1
 .idea/sonarlint/issuestore/e/b/eb5205b34433e18627d374cb7089a46d0632c7fb
 .idea/sonarlint/issuestore/f/c/fcf2d2483584e9135e9fb9bfcf8cda8ac3bb3f38
+.idea/libraries/Maven__org_apache_commons_commons_collections4_4_0.xml
+.idea/libraries/Maven__joda_time_joda_time_2_10_6.xml

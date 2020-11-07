@@ -4,11 +4,13 @@ import br.com.contmatic.enums.EnumUF;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import static br.com.contmatic.constantes.Constante.ILLEGAL_WORD;
 import static br.com.contmatic.constantes.Mensagem.DESCRICAO_MUNICIPIO_CARACTERE_INVALIDO;
-import static br.com.contmatic.constantes.Mensagem.NOME_CLIENTE_CARACTERE_INVALIDO;
 import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
