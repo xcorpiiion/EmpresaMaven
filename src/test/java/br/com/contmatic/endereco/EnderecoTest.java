@@ -51,12 +51,6 @@ public class EnderecoTest {
 		assertNotNull(endereco.getRua());
 	}
 
-	@Test
-    public void deve_retornar_true_caso_rua_esteja_com_menos_de_5_caracteres() {
-        endereco.setRua("nike");
-        assertTrue(returnAnnotationMsgError(endereco, RUA_ENDERECO_TAMANHO));
-    }
-
 	/**
 	 * Nao deve aceitar rua vazia.
 	 */
@@ -70,20 +64,6 @@ public class EnderecoTest {
     public void deve_retornar_true_caso_rua_esteja_vazia() {
         endereco = from(Endereco.class).gimme(RUA_EMPTY);
         assertTrue(returnAnnotationMsgError(endereco, RUA_ENDERECO_VAZIO));
-    }
-
-	@Test
-    public void deve_retornar_true_caso_rua_seja_possua_menos_3_caracter() {
-        endereco = from(Endereco.class).gimme(RUA_LESS_3_CARACTER);
-        endereco.setMunicipio(from(Municipio.class).gimme(VALID));
-        endereco.setPais(from(Pais.class).gimme(VALID));
-        assertTrue(returnAnnotationMsgError(endereco, RUA_ENDERECO_TAMANHO));
-    }
-
-    @Test
-    public void deve_retornar_true_caso_rua_seja_possua_mais_50_caracter() {
-        endereco = from(Endereco.class).gimme(RUA_GREATER_50_CARACTER);
-        assertTrue(returnAnnotationMsgError(endereco, RUA_ENDERECO_TAMANHO));
     }
 
 	/**
@@ -137,18 +117,6 @@ public class EnderecoTest {
     }
 
     @Test
-    public void deve_retornar_true_caso_bairro_seja_possua_menos_3_caracter() {
-        endereco = from(Endereco.class).gimme(BAIRRO_LESS_3_CARACTER);
-        assertTrue(returnAnnotationMsgError(endereco, BAIRRO_ENDERECO_TAMANHO));
-    }
-
-    @Test
-    public void deve_retornar_true_caso_bairro_seja_possua_mais_50_caracter() {
-        endereco = from(Endereco.class).gimme("bairroGreater50Caracter");
-        assertTrue(returnAnnotationMsgError(endereco, BAIRRO_ENDERECO_TAMANHO));
-    }
-
-    @Test
     public void deve_retornar_true_caso_bairro_seja_possua_caracteres_especiais() {
         endereco = from(Endereco.class).gimme(BAIRRO_WITH_SPECIAL_CARACTER);
         assertTrue(returnAnnotationMsgError(endereco, BAIRRO_ENDERECO_CARACTERE_INVALIDO));
@@ -164,6 +132,18 @@ public class EnderecoTest {
     public void nao_deve_aceitar_pais_null() {
 		endereco = from(Endereco.class).gimme(PAIS_NULL);
 		assertNull(endereco.getPais());
+	}
+
+    @Test
+    public void deve_settar_pais() {
+		endereco.setPais(from(Pais.class).gimme(VALID));
+		assertNotNull(endereco.getPais());
+	}
+
+    @Test
+    public void deve_settar_municipio() {
+		endereco.setMunicipio(from(Municipio.class).gimme(VALID));
+		assertNotNull(endereco.getMunicipio());
 	}
 
 	@Test()

@@ -8,10 +8,13 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
 
 import static br.com.contmatic.constantes.Constante.*;
 import static br.com.contmatic.constantes.Mensagem.*;
+import static br.com.contmatic.services.utils.GeradorCpf.gerardorRandomCpf;
 import static br.com.contmatic.validator.ValidadorAnnotionsMsgErro.returnAnnotationMsgError;
 import static br.com.six2six.fixturefactory.Fixture.from;
 import static br.com.six2six.fixturefactory.loader.FixtureFactoryLoader.loadTemplates;
@@ -29,8 +32,6 @@ public class ClienteTest {
     
     /** The clientes. */
     private Cliente cliente;
-
-    private Cliente cliente2;
 
     private Set<Telefone> telefone;
 
@@ -87,20 +88,6 @@ public class ClienteTest {
     }
 
     @Test
-    public void deve_retornar_true_caso_nome_seja_possua_menos_3_caracter() {
-        Cliente clienteInvalid = from(Cliente.class).gimme(NOME_LESS_3_CARACTER);
-        cliente.setNome(clienteInvalid.getNome());
-        assertTrue(returnAnnotationMsgError(cliente, NOME_CLIENTE_TAMANHO));
-    }
-
-    @Test
-    public void deve_retornar_true_caso_nome_seja_possua_mais_50_caracter() {
-        Cliente clienteInvalid = from(Cliente.class).gimme(NOME_GREATER_CARACTER);
-        cliente.setNome(clienteInvalid.getNome());
-        assertTrue(returnAnnotationMsgError(cliente, NOME_CLIENTE_TAMANHO));
-    }
-
-    @Test
     public void deve_retornar_true_caso_nome_seja_possua_caracteres_especiais() {
         Cliente clienteInvalid = from(Cliente.class).gimme(NOME_WITH_SPECIAL_CARACTER);
         cliente.setNome(clienteInvalid.getNome());
@@ -125,12 +112,6 @@ public class ClienteTest {
         Cliente clienteInvalid = from(Cliente.class).gimme(EMAIL_BLANK_SPACE);
         cliente.setEmail(clienteInvalid.getEmail());
         assertTrue(returnAnnotationMsgError(cliente, EMAIL_CLIENTE_VAZIO));
-    }
-
-    @Test
-    public void deve_retornar_true_caso_email_esteja_com_menos_10_caracteres() {
-        cliente = from(Cliente.class).gimme(EMAIL_LESS_10_CARACTERES);
-        assertTrue(returnAnnotationMsgError(cliente, EMAIL_CLIENTE_TAMANHO));
     }
 
     @Test
@@ -184,6 +165,13 @@ public class ClienteTest {
         assertEquals(dataNascimento, cliente.getDataNascimento());
     }
 
+    @Test
+    public void deve_alterar_data_cadastro() {
+        final DateTime dataCadastro = new DateTime();
+        cliente.setDataCadastro(dataCadastro);
+        assertSame(dataCadastro, cliente.getDataCadastro());
+    }
+
     /**
      * Deve add dinheiro carteira.
      */
@@ -199,6 +187,13 @@ public class ClienteTest {
     public void deve_retornar_true_caso_cpf_nao_seja_valido() {
         cliente.setCpf(String.valueOf(new Random().nextInt(888888888) + 111111111));
         assertTrue(returnAnnotationMsgError(cliente, CPF_CLIENTE_INVALIDO));
+    }
+
+    @Test
+    public void deve_retornar_cpf_valido() {
+        final String cpf = gerardorRandomCpf();
+        cliente.setCpf(cpf);
+        assertSame(cpf, cliente.getCpf());
     }
 
 

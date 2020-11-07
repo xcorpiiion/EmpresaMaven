@@ -1,15 +1,27 @@
 package br.com.contmatic.endereco;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-
-import javax.validation.Valid;
-import javax.validation.constraints.*;
-
 import static br.com.contmatic.constantes.Constante.ILLEGAL_WORD;
-import static br.com.contmatic.constantes.Mensagem.*;
+import static br.com.contmatic.constantes.Mensagem.BAIRRO_ENDERECO_CARACTERE_INVALIDO;
+import static br.com.contmatic.constantes.Mensagem.BAIRRO_ENDERECO_TAMANHO;
+import static br.com.contmatic.constantes.Mensagem.BAIRRO_ENDERECO_VAZIO;
+import static br.com.contmatic.constantes.Mensagem.CEP_ENDERECO_CARACTERE_INVALIDO;
+import static br.com.contmatic.constantes.Mensagem.CEP_ENDERECO_VAZIO;
+import static br.com.contmatic.constantes.Mensagem.NUMERO_ENDERECO_TAMANHO;
+import static br.com.contmatic.constantes.Mensagem.RUA_ENDERECO_TAMANHO;
+import static br.com.contmatic.constantes.Mensagem.RUA_ENDERECO_VAZIO;
 import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
+
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * The Class Endereco.
@@ -50,6 +62,18 @@ public class Endereco {
     @NotNull
     @Valid
     private Pais pais;
+    
+    public Endereco() {
+    }
+    
+    public Endereco(String rua, String bairro, String cep, int numero, Pais pais, Municipio municipio) {
+        this.rua = rua;
+        this.bairro = bairro;
+        this.cep = cep;
+        this.numero = numero;
+        this.municipio = municipio;
+        this.pais = pais;
+    }
 
     /**
      * Gets the rua.

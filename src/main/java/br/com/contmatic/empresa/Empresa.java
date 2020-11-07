@@ -70,6 +70,18 @@ public class Empresa {
     @NotNull
     private List<Cliente> clientes;
 
+    public Empresa() {
+        super();
+    }
+
+    public Empresa(String nome, String cnpj, DateTime dataCriacao, Set<Endereco> enderecos) {
+        this.nome = nome;
+        this.cnpj = cnpj;
+        this.dataCriacao = dataCriacao;
+        this.enderecos = enderecos;
+        this.setDataAlteracao(dataCriacao);
+    }
+
     /**
      * Gets the endereco.
      *
@@ -168,38 +180,6 @@ public class Empresa {
 
     public void setTelefones(Set<Telefone> telefones) {
         this.telefones = telefones;
-    }
-
-    public Set<Endereco> getEnderecos() {
-        return enderecos;
-    }
-
-    public void setEnderecos(Set<Endereco> enderecos) {
-        this.enderecos = enderecos;
-    }
-
-    public List<Produto> getProdutos() {
-        return produtos;
-    }
-
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
-    }
-
-    public List<Funcionario> getFuncionarios() {
-        return funcionarios;
-    }
-
-    public void setFuncionarios(List<Funcionario> funcionarios) {
-        this.funcionarios = funcionarios;
-    }
-
-    public List<Cliente> getClientes() {
-        return clientes;
-    }
-
-    public void setClientes(List<Cliente> clientes) {
-        this.clientes = clientes;
     }
 
     /**

@@ -70,13 +70,13 @@ public class MunicipioTest {
     @Test
     public void nao_deve_aceitar_descricao_vazio() {
         municipio = from(Municipio.class).gimme(DESCRICAO_EMPTY);
-        assertFalse(!municipio.getDescricao().equals(EMPTY));
+        assertEquals(EMPTY, municipio.getDescricao());
     }
 
     @Test
     public void nao_deve_aceitar_descricao_blank_space() {
         municipio = from(Municipio.class).gimme(DESCRICAO_BLANK_SPACE);
-        assertFalse(!municipio.getDescricao().equals(SPACE));
+        assertEquals(SPACE, municipio.getDescricao());
     }
 
     @Test

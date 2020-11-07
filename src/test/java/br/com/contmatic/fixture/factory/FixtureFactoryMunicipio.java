@@ -1,20 +1,31 @@
 package br.com.contmatic.fixture.factory;
 
-import br.com.contmatic.empresa.Cliente;
-import br.com.contmatic.endereco.Municipio;
-import br.com.contmatic.enums.EnumUF;
-import br.com.six2six.fixturefactory.Rule;
-import br.com.six2six.fixturefactory.loader.TemplateLoader;
-import com.github.javafaker.Faker;
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.Random;
-
-import static br.com.contmatic.constantes.Constante.*;
+import static br.com.contmatic.constantes.Constante.CODIGO_FEDERAL_MENOR_QUE_1;
+import static br.com.contmatic.constantes.Constante.CODIGO_FEDERAL_NULL;
+import static br.com.contmatic.constantes.Constante.CODIGO_IBGE_MENOR_QUE_1;
+import static br.com.contmatic.constantes.Constante.CODIGO_IBGE_NULL;
+import static br.com.contmatic.constantes.Constante.CODIGO_MUNICIPAL_MENOR_QUE_1;
+import static br.com.contmatic.constantes.Constante.CODIGO_MUNICIPAL_NULL;
+import static br.com.contmatic.constantes.Constante.DESCRICAO_BLANK_SPACE;
+import static br.com.contmatic.constantes.Constante.DESCRICAO_CARACTER_ESPECIAL;
+import static br.com.contmatic.constantes.Constante.DESCRICAO_EMPTY;
+import static br.com.contmatic.constantes.Constante.DESCRICAO_NULL;
+import static br.com.contmatic.constantes.Constante.DESCRICAO_TAMANHO_INVALIDO;
+import static br.com.contmatic.constantes.Constante.UF_NULL;
+import static br.com.contmatic.constantes.Constante.VALID;
 import static br.com.six2six.fixturefactory.Fixture.of;
 import static java.lang.String.valueOf;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.commons.lang3.StringUtils.SPACE;
+
+import java.util.Random;
+
+import com.github.javafaker.Faker;
+
+import br.com.contmatic.endereco.Municipio;
+import br.com.contmatic.enums.EnumUF;
+import br.com.six2six.fixturefactory.Rule;
+import br.com.six2six.fixturefactory.loader.TemplateLoader;
 
 /**
  * The Class FixtureFactoryCliente.

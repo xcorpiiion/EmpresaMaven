@@ -30,6 +30,15 @@ public class Telefone {
     @NotNull(message = TELEFONE_DDD_VAZIO)
     private DddBrasil dddTelefone;
 
+    public Telefone() {
+    }
+
+    public Telefone(String phone, TipoTelefone tipoTelefone, DddBrasil dddTelefone) {
+        this.phone = phone;
+        this.tipoTelefone = tipoTelefone;
+        this.dddTelefone = dddTelefone;
+    }
+
     /**
      * Gets the phone.
      *

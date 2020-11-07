@@ -1,7 +1,5 @@
 package br.com.contmatic.constantes;
 
-import org.apache.commons.lang3.StringUtils;
-
 /**
  * The Class Mensagem.
  */

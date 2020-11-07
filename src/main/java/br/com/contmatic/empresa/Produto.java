@@ -35,6 +35,15 @@ public class Produto {
     @Min(value = 1, message = ESTOQUE_PRODUTO_VAZIO)
     private Integer estoque;
 
+    public Produto() {
+    }
+
+    public Produto(String nome, BigDecimal preco, Integer estoque) {
+        this.nome = nome;
+        this.preco = preco;
+        this.estoque = estoque;
+    }
+
     /**
      * Gets the nome.
      *

@@ -23,8 +23,6 @@ public class ProdutoTest {
     /** The produto. */
     private static Produto produto;
     
-    private static Produto produto2;
-
     /**
      * Dados produtos.
      */
@@ -61,18 +59,6 @@ public class ProdutoTest {
         produto = from(Produto.class).gimme(NOME_BLANK_SPACE);
         assertTrue(produto.getNome().trim().isEmpty());
 
-    }
-
-    @Test
-    public void deve_retornar_true_caso_nome_seja_possua_menos_3_caracter() {
-        produto = from(Produto.class).gimme(NOME_LESS_3_CARACTER);
-        assertTrue(returnAnnotationMsgError(produto, NOME_PRODUTO_TAMANHO));
-    }
-    
-    @Test
-    public void deve_retornar_true_caso_nome_seja_possua_mais_50_caracter() {
-        produto = from(Produto.class).gimme(NOME_GREATER_CARACTER);
-        assertTrue(returnAnnotationMsgError(produto, NOME_PRODUTO_TAMANHO));
     }
 
     /**

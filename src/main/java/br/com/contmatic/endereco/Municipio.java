@@ -37,6 +37,17 @@ public class Municipio {
     @NotNull
     private EnumUF uf;
 
+    public Municipio() {
+    }
+
+    public Municipio(Integer codigoMunicipal, Integer codigoFederal, Integer codigoIbge, String descricao, EnumUF uf) {
+        this.codigoMunicipal = codigoMunicipal;
+        this.codigoFederal = codigoFederal;
+        this.codigoIbge = codigoIbge;
+        this.descricao = descricao;
+        this.uf = uf;
+    }
+
     public Integer getCodigoMunicipal() {
         return codigoMunicipal;
     }

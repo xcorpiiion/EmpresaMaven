@@ -1,14 +1,16 @@
 package br.com.contmatic.fixture.factory;
 
-import br.com.contmatic.empresa.Cliente;
+import static br.com.contmatic.constantes.Constante.PAIS_MENOR_DO_QUE_ZERO;
+import static br.com.contmatic.constantes.Constante.PAIS_NULL;
+import static br.com.contmatic.constantes.Constante.VALID;
+import static br.com.six2six.fixturefactory.Fixture.of;
+import static java.lang.Long.valueOf;
+
+import com.github.javafaker.Faker;
+
 import br.com.contmatic.endereco.Pais;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
-import com.github.javafaker.Faker;
-
-import static br.com.contmatic.constantes.Constante.*;
-import static br.com.six2six.fixturefactory.Fixture.of;
-import static java.lang.Long.valueOf;
 
 /**
  * The Class FixtureFactoryCliente.

@@ -1,22 +1,43 @@
 package br.com.contmatic.fixture.factory;
 
+import static br.com.contmatic.constantes.Constante.DATA_NASCIMENTO_NULL;
+import static br.com.contmatic.constantes.Constante.EMAIL_BLANK_SPACE;
+import static br.com.contmatic.constantes.Constante.EMAIL_EMPTY;
+import static br.com.contmatic.constantes.Constante.EMAIL_INVALID;
+import static br.com.contmatic.constantes.Constante.EMAIL_LESS_10_CARACTERES;
+import static br.com.contmatic.constantes.Constante.EMAIL_NULL;
+import static br.com.contmatic.constantes.Constante.EMAIL_WITHOUT_ARROBA;
+import static br.com.contmatic.constantes.Constante.EMAIL_WITH_BLANK_SPACE_IN_WORD;
+import static br.com.contmatic.constantes.Constante.ENDERECO_NULL;
+import static br.com.contmatic.constantes.Constante.NOME_BLANK_SPACE;
+import static br.com.contmatic.constantes.Constante.NOME_EMPTY;
+import static br.com.contmatic.constantes.Constante.NOME_GREATER_CARACTER;
+import static br.com.contmatic.constantes.Constante.NOME_LESS_3_CARACTER;
+import static br.com.contmatic.constantes.Constante.NOME_NULL;
+import static br.com.contmatic.constantes.Constante.NOME_WITH_SPECIAL_CARACTER;
+import static br.com.contmatic.constantes.Constante.TELEFONE_NULL;
+import static br.com.contmatic.constantes.Constante.VALID;
+import static br.com.contmatic.fixture.factory.FixtureFactoryEndereco.enderecoValido;
+import static br.com.contmatic.fixture.factory.GeradorEmail.EMAIL_GREATER_100_CARACTER;
+import static br.com.contmatic.fixture.factory.GeradorEmail.EMAIL_LESS_10_CARACTER;
+import static br.com.contmatic.fixture.factory.GeradorEmail.EMAIL_WITHOUT_ARROBA_CARACTER;
+import static br.com.contmatic.fixture.factory.GeradorEmail.EMAIL_WITH_BLANK_SPACE;
+import static br.com.contmatic.fixture.factory.GeradorEmail.EMAIL_WITH_SPECIAL_CARACTER;
+import static br.com.contmatic.fixture.factory.GeradorEmail.VALID_EMAIL;
+import static br.com.contmatic.services.utils.GeradorCpf.gerardorRandomCpf;
+import static br.com.six2six.fixturefactory.Fixture.of;
+
+import java.math.BigDecimal;
+import java.util.HashSet;
+
+import org.joda.time.DateTime;
+
+import com.github.javafaker.Faker;
+
 import br.com.contmatic.constantes.Constante;
 import br.com.contmatic.empresa.Cliente;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
-import com.github.javafaker.Faker;
-import org.joda.time.DateTime;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashSet;
-
-import static br.com.contmatic.constantes.Constante.*;
-import static br.com.contmatic.fixture.factory.FixtureFactoryEndereco.enderecoValido;
-import static br.com.contmatic.fixture.factory.GeradorEmail.EMAIL_WITH_SPECIAL_CARACTER;
-import static br.com.contmatic.fixture.factory.GeradorEmail.*;
-import static br.com.contmatic.services.utils.GeradorCpf.gerardorRandomCpf;
-import static br.com.six2six.fixturefactory.Fixture.of;
 
 /**
  * The Class FixtureFactoryCliente.

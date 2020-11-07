@@ -1,23 +1,52 @@
 package br.com.contmatic.fixture.factory;
 
-import br.com.contmatic.constantes.Constante;
-import br.com.contmatic.empresa.Funcionario;
-import br.com.contmatic.enums.EnumCargo;
-import br.com.six2six.fixturefactory.Rule;
-import br.com.six2six.fixturefactory.loader.TemplateLoader;
-import com.github.javafaker.Faker;
-import org.joda.time.DateTime;
+import static br.com.contmatic.constantes.Constante.CARGO_NULL;
+import static br.com.contmatic.constantes.Constante.CPF_BLANK_SPACE;
+import static br.com.contmatic.constantes.Constante.CPF_EMPTY;
+import static br.com.contmatic.constantes.Constante.CPF_INVALID;
+import static br.com.contmatic.constantes.Constante.CPF_NULL;
+import static br.com.contmatic.constantes.Constante.DATA_NASCIMENTO_NULL;
+import static br.com.contmatic.constantes.Constante.EMAIL_BLANK_SPACE;
+import static br.com.contmatic.constantes.Constante.EMAIL_EMPTY;
+import static br.com.contmatic.constantes.Constante.EMAIL_GREATER_100_CARACTERES;
+import static br.com.contmatic.constantes.Constante.EMAIL_INVALID;
+import static br.com.contmatic.constantes.Constante.EMAIL_LESS_10_CARACTERES;
+import static br.com.contmatic.constantes.Constante.EMAIL_NULL;
+import static br.com.contmatic.constantes.Constante.EMAIL_WITHOUT_ARROBA;
+import static br.com.contmatic.constantes.Constante.EMAIL_WITH_BLANK_SPACE_IN_WORD;
+import static br.com.contmatic.constantes.Constante.EMAIL_WITH_NUMBER_AFTER_ARROBA;
+import static br.com.contmatic.constantes.Constante.ENDERECO_NULL;
+import static br.com.contmatic.constantes.Constante.NOME_BLANK_SPACE;
+import static br.com.contmatic.constantes.Constante.NOME_EMPTY;
+import static br.com.contmatic.constantes.Constante.NOME_GREATER_CARACTER;
+import static br.com.contmatic.constantes.Constante.NOME_LESS_3_CARACTER;
+import static br.com.contmatic.constantes.Constante.NOME_NULL;
+import static br.com.contmatic.constantes.Constante.NOME_WITH_SPECIAL_CARACTER;
+import static br.com.contmatic.constantes.Constante.SALARIO_LESS_1;
+import static br.com.contmatic.constantes.Constante.SALARIO_NULL;
+import static br.com.contmatic.constantes.Constante.TELEFONE_NULL;
+import static br.com.contmatic.constantes.Constante.VALID;
+import static br.com.contmatic.fixture.factory.GeradorEmail.EMAIL_GREATER_100_CARACTER;
+import static br.com.contmatic.fixture.factory.GeradorEmail.EMAIL_LESS_10_CARACTER;
+import static br.com.contmatic.fixture.factory.GeradorEmail.EMAIL_WITHOUT_ARROBA_CARACTER;
+import static br.com.contmatic.fixture.factory.GeradorEmail.EMAIL_WITH_BLANK_SPACE;
+import static br.com.contmatic.fixture.factory.GeradorEmail.EMAIL_WITH_SPECIAL_CARACTER;
+import static br.com.contmatic.services.utils.GeradorCpf.gerardorRandomCpf;
+import static br.com.six2six.fixturefactory.Fixture.of;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Random;
 
-import static br.com.contmatic.constantes.Constante.EMAIL_WITH_NUMBER_AFTER_ARROBA;
-import static br.com.contmatic.constantes.Constante.*;
-import static br.com.contmatic.fixture.factory.GeradorEmail.EMAIL_WITH_SPECIAL_CARACTER;
-import static br.com.contmatic.fixture.factory.GeradorEmail.*;
-import static br.com.contmatic.services.utils.GeradorCpf.gerardorRandomCpf;
-import static br.com.six2six.fixturefactory.Fixture.of;
+import org.joda.time.DateTime;
+
+import com.github.javafaker.Faker;
+
+import br.com.contmatic.constantes.Constante;
+import br.com.contmatic.empresa.Funcionario;
+import br.com.contmatic.enums.EnumCargo;
+import br.com.six2six.fixturefactory.Rule;
+import br.com.six2six.fixturefactory.loader.TemplateLoader;
 
 /**
  * The Class FixtureFactoryFuncionario.
@@ -27,10 +56,9 @@ public class FixtureFactoryFuncionario implements TemplateLoader {
     private final String NOME = "nome";
     private final String EMAIL = "email";
     private final String DATA_NASCIMENTO = "dataNascimento";
-    private final String CARGO = "cargo";
+    private final String CARGO = "enumCargo";
     private final String SALARIO = "salario";
     private final String ENDERECO = "endereco";
-    private final String TIPO_CONTRATO = "tipoContrato";
     private final String CPF = "cpf";
     private final String TELEFONES = "telefones";
     
@@ -159,11 +187,6 @@ public class FixtureFactoryFuncionario implements TemplateLoader {
         of(Funcionario.class).addTemplate(CARGO_NULL).inherits(VALID, new Rule() {
             {
                 add(CARGO, null);
-            }
-        });
-        of(Funcionario.class).addTemplate(TIPO_CONTRATO_NULL).inherits(VALID, new Rule() {
-            {
-                add(TIPO_CONTRATO, null);
             }
         });
         of(Funcionario.class).addTemplate(CPF_NULL).inherits(VALID, new Rule() {

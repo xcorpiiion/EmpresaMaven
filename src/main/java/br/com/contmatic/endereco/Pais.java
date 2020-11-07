@@ -25,6 +25,10 @@ public class Pais {
     public Pais() {
     }
 
+    public Pais(Long codigo) {
+        this.codigo = codigo;
+    }
+
     public static Long getCodigoBrasil() {
         return CODIGO_BRASIL;
     }

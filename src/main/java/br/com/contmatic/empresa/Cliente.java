@@ -65,6 +65,19 @@ public class Cliente {
     @NotNull(message = TELEFONE_CLIENTE_VAZIO)
     private Set<Telefone> telefones;
 
+    public Cliente() {
+    }
+
+    public Cliente(String cpf, String nome, String email, DateTime dataNascimento, Endereco endereco, Set<Telefone> telefones) {
+        this.cpf = cpf;
+        this.nome = nome;
+        this.email = email;
+        this.dataNascimento = dataNascimento;
+        this.endereco = endereco;
+        this.setDataCadastro(new DateTime());
+        this.telefones = telefones;
+    }
+
     /**
      * Gets the cpf.
      *

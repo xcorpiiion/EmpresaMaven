@@ -15,6 +15,9 @@ import static br.com.contmatic.enums.EnumCargo.RH;
 import static br.com.contmatic.validator.ValidadorAnnotionsMsgErro.returnAnnotationMsgError;
 import static br.com.six2six.fixturefactory.Fixture.from;
 import static br.com.six2six.fixturefactory.loader.FixtureFactoryLoader.loadTemplates;
+import static nl.jqno.equalsverifier.EqualsVerifier.forClass;
+import static nl.jqno.equalsverifier.Warning.ALL_FIELDS_SHOULD_BE_USED;
+import static nl.jqno.equalsverifier.Warning.NONFINAL_FIELDS;
 import static org.junit.Assert.*;
 import static org.junit.runners.MethodSorters.NAME_ASCENDING;
 
@@ -85,12 +88,6 @@ public class FuncionarioTest {
     }
     
     @Test
-    public void deve_retornar_true_caso_nome_seja_possua_menos_3_caracter() {
-        funcionario = from(Funcionario.class).gimme(NOME_LESS_3_CARACTER);
-        assertTrue(returnAnnotationMsgError(funcionario, NOME_FUNCIONARIO_TAMANHO));
-    }
-    
-    @Test
     public void deve_retornar_true_caso_email_seja_null() {
         funcionario = from(Funcionario.class).gimme(EMAIL_NULL);
         assertTrue(returnAnnotationMsgError(funcionario, EMAIL_FUNCIONARIO_VAZIO));
@@ -113,12 +110,6 @@ public class FuncionarioTest {
         final String email = faker.internet().emailAddress();
         funcionario.setEmail(email);
         assertEquals(email, funcionario.getEmail());
-    }
-    
-    @Test
-    public void deve_retornar_true_caso_email_esteja_com_menos_10_caracteres() {
-        funcionario = from(Funcionario.class).gimme(EMAIL_LESS_10_CARACTERES);
-        assertTrue(returnAnnotationMsgError(funcionario, EMAIL_FUNCIONARIO_TAMANHO));
     }
     
     @Test
@@ -164,12 +155,6 @@ public class FuncionarioTest {
     }
     
     @Test
-    public void deve_retornar_true_se_tipoContrato_for_null() {
-        funcionario = from(Funcionario.class).gimme(TIPO_CONTRATO_NULL);
-        assertTrue(returnAnnotationMsgError(funcionario, TIPO_CONTRATO_FUNCIONARIO_VAZIO));
-    }
-    
-    @Test
     public void deve_retornar_true_se_dataNascimento_for_null() {
         funcionario = from(Funcionario.class).gimme(DATA_NASCIMENTO_NULL);
         assertTrue(returnAnnotationMsgError(funcionario, DATA_NASCIMENTO_FUNCIONARIO_VAZIO));
@@ -177,8 +162,9 @@ public class FuncionarioTest {
     
     @Test
     public void deve_alterar_dataNascimento() {
-        funcionario.setDataNascimento(new DateTime());
-        assertEquals(new DateTime(), funcionario.getDataNascimento());
+        final DateTime dataNascimento = new DateTime();
+        funcionario.setDataNascimento(dataNascimento);
+        assertEquals(dataNascimento, funcionario.getDataNascimento());
     }
     
     @Test
@@ -205,36 +191,8 @@ public class FuncionarioTest {
 
     @Test()
     public void deve_retornar_true_no_equals_para_serem_iguais() {
-        funcionario = (from(Funcionario.class).gimme(VALID));
-        funcionario2.setCpf(funcionario.getCpf());
-        assertEquals("Os Funcionario são iguais", funcionario, funcionario2);
-    }
-    
-    @Test()
-    public void deve_retornar_true_quando_compara_com_mesmo_objeto() {
-        assertEquals(funcionario, funcionario);
-    }
-
-    @Test()
-    public void deve_retornar_false_quando_compara_com_classe_diferente() {
-        assertFalse(funcionario.equals(new Object()));
-    }
-    /**
-     * Deve ter hash code iguais para serem funcionarios iguais.
-     */
-    @Test()
-    public void deve_ter_hashCode_iguais_para_serem_funcionarios_iguais() {
-        funcionario = (from(Funcionario.class).gimme(VALID));
-        funcionario2.setCpf(funcionario.getCpf());
-        assertTrue(funcionario.hashCode() == funcionario2.hashCode());
-    }
-
-    /**
-     * Nao deve ter equals null para comparar funcionarios.
-     */
-    @Test()
-    public void nao_deve_ter_equals_null_para_comparar_funcionarios() {
-        assertFalse("Os funcionarios são igauis", funcionario.equals(null));
+        forClass(Funcionario.class).usingGetClass()
+                .suppress(NONFINAL_FIELDS, ALL_FIELDS_SHOULD_BE_USED).verify();
     }
 
     /**

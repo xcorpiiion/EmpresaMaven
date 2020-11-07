@@ -89,6 +89,20 @@ public class Funcionario {
     @NotNull(message = TELEFONE_FUNCIONARIO_VAZIO)
     private Set<Telefone> telefones;
 
+    public Funcionario() {
+    }
+
+    public Funcionario(String nome, String cpf, DateTime dataNascimento, EnumCargo enumCargo, BigDecimal salario, DateTime dataEntrada, Endereco endereco, Set<Telefone> telefones) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.dataNascimento = dataNascimento;
+        this.enumCargo = enumCargo;
+        this.salario = salario;
+        this.dataEntrada = dataEntrada;
+        this.endereco = endereco;
+        this.telefones = telefones;
+    }
+
     public DateTime getDataSaida() {
         return dataSaida;
     }

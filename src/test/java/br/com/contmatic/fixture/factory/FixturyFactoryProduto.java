@@ -1,16 +1,24 @@
 package br.com.contmatic.fixture.factory;
 
+import static br.com.contmatic.constantes.Constante.ESTOQUE_LESS_0;
+import static br.com.contmatic.constantes.Constante.NOME_BLANK_SPACE;
+import static br.com.contmatic.constantes.Constante.NOME_EMPTY;
+import static br.com.contmatic.constantes.Constante.NOME_GREATER_CARACTER;
+import static br.com.contmatic.constantes.Constante.NOME_LESS_3_CARACTER;
+import static br.com.contmatic.constantes.Constante.NOME_NULL;
+import static br.com.contmatic.constantes.Constante.NOME_WITH_SPECIAL_CARACTER;
+import static br.com.contmatic.constantes.Constante.PRECO_LESS_1;
+import static br.com.contmatic.constantes.Constante.PRECO_NULL;
+import static br.com.contmatic.constantes.Constante.VALID;
+import static br.com.six2six.fixturefactory.Fixture.from;
+import static br.com.six2six.fixturefactory.Fixture.of;
+
 import java.math.BigDecimal;
 import java.util.Random;
 
 import br.com.contmatic.empresa.Produto;
-import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
-
-import static br.com.contmatic.constantes.Constante.*;
-import static br.com.six2six.fixturefactory.Fixture.from;
-import static br.com.six2six.fixturefactory.Fixture.of;
 
 /**
  * The Class FixturyFactoryProduto.
