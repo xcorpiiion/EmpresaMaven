@@ -3,8 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/empresa-model/empresa-model.iml" filepath="$PROJECT_DIR$/empresa-model/empresa-model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/empresa-repository/empresa-repository.iml" filepath="$PROJECT_DIR$/empresa-repository/empresa-repository.iml" />
+      <module fileurl="file://$PROJECT_DIR$/empresa-service/empresa-service.iml" filepath="$PROJECT_DIR$/empresa-service/empresa-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/empresaa.iml" filepath="$PROJECT_DIR$/empresaa.iml" />
-      <module fileurl="file://$PROJECT_DIR$/repository/repository.iml" filepath="$PROJECT_DIR$/repository/repository.iml" />
     </modules>
   </component>
 </project>

@@ -13,11 +13,11 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import br.com.contmatic.constantes.Mensagem;
-import br.com.contmatic.constantes.easyrandom.EasyRandomFuncionario;
-import br.com.contmatic.constantes.easyrandom.EasyRandomTelefone;
-import br.com.contmatic.constantes.easyrandom.TipoDadoParaTesteFuncionario;
-import br.com.contmatic.constantes.easyrandom.TipoDadoParaTesteTelefone;
+import br.com.contmatic.utils.Mensagem;
+import br.com.contmatic.easyrandom.EasyRandomFuncionario;
+import br.com.contmatic.easyrandom.EasyRandomTelefone;
+import br.com.contmatic.easyrandom.enums.TipoDadoParaTesteFuncionario;
+import br.com.contmatic.easyrandom.enums.TipoDadoParaTesteTelefone;
 import br.com.contmatic.telefone.Telefone;
 import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
 import nl.jqno.equalsverifier.EqualsVerifier;

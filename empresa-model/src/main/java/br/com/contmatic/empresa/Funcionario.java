@@ -1,71 +1,120 @@
 package br.com.contmatic.empresa;
 
-import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
-import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
-
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.Set;
-
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
+import br.com.contmatic.endereco.Endereco;
+import br.com.contmatic.telefone.Telefone;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.br.CPF;
+import org.joda.time.DateTime;
 
-import br.com.contmatic.constantes.Constante;
-import br.com.contmatic.constantes.Mensagem;
-import br.com.contmatic.endereco.Endereco;
-import br.com.contmatic.telefone.Telefone;
+import javax.validation.constraints.*;
+import java.math.BigDecimal;
+import java.util.Set;
+
+import static br.com.contmatic.utils.Constante.ILLEGAL_WORD;
+import static br.com.contmatic.utils.Constante.VALIDATION_EMAIL;
+import static br.com.contmatic.utils.Mensagem.*;
+import static br.com.contmatic.empresa.utils.FieldValidation.*;
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
+import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
 /**
  * The Class Funcionario.
  */
 public class Funcionario {
 
-    /** The nome. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
-    @Size(min = 3, max = 50, message = Mensagem.VALOR_NAO_E_VALIDO)
+    /**
+     * The nome.
+     */
+    @NotBlank(message = NOME_FUNCIONARIO_VAZIO)
+    @NotNull(message = NOME_FUNCIONARIO_VAZIO)
+    @NotEmpty(message = NOME_FUNCIONARIO_VAZIO)
+    @Size(min = 3, max = 50, message = NOME_FUNCIONARIO_TAMANHO)
+    @Pattern(regexp = ILLEGAL_WORD, message = NOME_FUNCIONARIO_CARACTERE_INVALIDO)
     private String nome;
 
-    /** The email. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
-    @Size(min = 10, max = 100, message = Mensagem.VALOR_NAO_E_VALIDO)
-    @Pattern(regexp = Constante.VALIDATION_EMAIL, message = Mensagem.VALOR_NAO_E_VALIDO)
+    /**
+     * The email.
+     */
+    @NotEmpty(message = EMAIL_FUNCIONARIO_VAZIO)
+    @NotBlank(message = EMAIL_FUNCIONARIO_VAZIO)
+    @NotNull(message = EMAIL_FUNCIONARIO_VAZIO)
+    @Size(min = 10, max = 100, message = EMAIL_FUNCIONARIO_TAMANHO)
+    @Pattern(regexp = VALIDATION_EMAIL, message = EMAIL_FUNCIONARIO_CARACTERE_INVALIDO)
     private String email;
 
-    /** The cpf. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
-    @CPF(message = Mensagem.VALOR_NAO_E_VALIDO)
+    /**
+     * The cpf.
+     */
+    @CPF(message = CPF_FUNCIONARIO_VAZIO)
     private String cpf;
 
-    /** The data nascimento. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
-    private Date dataNascimento;
+    /**
+     * The data nascimento.
+     */
+    @NotNull(message = DATA_NASCIMENTO_FUNCIONARIO_VAZIO)
+    private DateTime dataNascimento;
 
-    /** The cargo. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
-    private Cargo cargo;
-
-    /** The salario. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
-    @Min(value = 1000, message = Mensagem.PRECISA_SER_UM_VALOR_MAIOR)
+    /**
+     * The salario.
+     */
+    @NotNull(message = SALARIO_FUNCIONARIO_VAZIO)
+    @Min(value = 1000, message = SALARIO_FUNCIONARIO_TAMANHO)
     private BigDecimal salario;
 
-    /** The endereco. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    @NotNull
+    private DateTime dataSaida;
+
+    @NotNull
+    private DateTime dataEntrada;
+
+
+    /**
+     * The endereco.
+     */
+    @NotNull(message = ENDERECO_FUNCIONARIO_VAZIO)
     private Endereco endereco;
 
-    /** The tipo contrato. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
-    private TipoContrato tipoContrato;
-
-    /** The telefones. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    /**
+     * The telefones.
+     */
+    @NotEmpty
+    @NotNull(message = TELEFONE_FUNCIONARIO_VAZIO)
     private Set<Telefone> telefones;
+
+    public Funcionario() {
+    }
+
+    public Funcionario(String nome, String cpf, DateTime dataNascimento, BigDecimal salario, DateTime dataEntrada, Endereco endereco, Set<Telefone> telefones) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.dataNascimento = dataNascimento;
+        this.salario = salario;
+        this.dataEntrada = dataEntrada;
+        this.endereco = endereco;
+        this.telefones = telefones;
+    }
+
+    public DateTime getDataSaida() {
+        return dataSaida;
+    }
+
+    public void setDataSaida(DateTime dataSaida) {
+        isGreaterThanEmpresaCreateDate(dataSaida, dataEntrada);
+        this.dataSaida = dataSaida;
+    }
+
+    public DateTime getDataEntrada() {
+        return dataEntrada;
+    }
+
+    public void setDataEntrada(DateTime dataEntrada) {
+        isLessThanCreateDate(new DateTime(), dataEntrada,
+                "A data de entrada do funcionario não pode ser menor do que a data de criação da empresa");
+        isDataGreaterThanCurrent(dataEntrada, "data de entrada do funcionario não pode ser maior" +
+                " do que hora atual");
+        this.dataEntrada = dataEntrada;
+    }
 
     /**
      * Gets the endereco.
@@ -86,24 +135,6 @@ public class Funcionario {
     }
 
     /**
-     * Gets the cargo.
-     *
-     * @return the cargo
-     */
-    public Cargo getCargo() {
-        return cargo;
-    }
-
-    /**
-     * Sets the cargo.
-     *
-     * @param cargo the new cargo
-     */
-    public void setCargo(Cargo cargo) {
-        this.cargo = cargo;
-    }
-
-    /**
      * Gets the salario.
      *
      * @return the salario
@@ -119,24 +150,6 @@ public class Funcionario {
      */
     public void setSalario(BigDecimal salario) {
         this.salario = salario;
-    }
-
-    /**
-     * Gets the tipo contrato.
-     *
-     * @return the tipo contrato
-     */
-    public TipoContrato getTipoContrato() {
-        return tipoContrato;
-    }
-
-    /**
-     * Sets the tipo contrato.
-     *
-     * @param tipoContrato the new tipo contrato
-     */
-    public void setTipoContrato(TipoContrato tipoContrato) {
-        this.tipoContrato = tipoContrato;
     }
 
     /**
@@ -180,7 +193,7 @@ public class Funcionario {
      *
      * @return the data nascimento
      */
-    public Date getDataNascimento() {
+    public DateTime getDataNascimento() {
         return dataNascimento;
     }
 
@@ -189,7 +202,11 @@ public class Funcionario {
      *
      * @param dataNascimento the new data nascimento
      */
-    public void setDataNascimento(Date dataNascimento) {
+    public void setDataNascimento(DateTime dataNascimento) {
+        isDataGreaterThanCurrent(dataNascimento, "data de nascimento de funcionario não pode" +
+                " ser maior do que hora atual");
+        isDataLessThan1920(dataNascimento,
+                "A data de cadastro do funcionario não pode ser menor do que 1920");
         this.dataNascimento = dataNascimento;
     }
 
@@ -223,10 +240,10 @@ public class Funcionario {
     /**
      * Sets the telefones.
      *
-     * @param telefones the new telefones
+     * @param telefone1s the new telefones
      */
-    public void setTelefones(Set<Telefone> telefones) {
-        this.telefones = telefones;
+    public void setTelefones(Set<Telefone> telefone1s) {
+        this.telefones = telefone1s;
     }
 
     /**

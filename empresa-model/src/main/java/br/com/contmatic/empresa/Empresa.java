@@ -1,64 +1,96 @@
 package br.com.contmatic.empresa;
 
-import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
-import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
-import java.util.List;
-import java.util.Set;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import br.com.contmatic.endereco.Endereco;
+import br.com.contmatic.telefone.Telefone;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.br.CNPJ;
-import br.com.contmatic.constantes.Constante;
-import br.com.contmatic.constantes.Mensagem;
-import br.com.contmatic.endereco.Endereco;
-import br.com.contmatic.telefone.Telefone;
+import org.joda.time.DateTime;
+
+import javax.validation.Valid;
+import javax.validation.constraints.*;
+import java.util.List;
+import java.util.Set;
+
+import static br.com.contmatic.utils.Constante.ILLEGAL_NUMBER;
+import static br.com.contmatic.utils.Constante.VALIDATION_EMAIL;
+import static br.com.contmatic.utils.Mensagem.*;
+import static br.com.contmatic.empresa.utils.FieldValidation.isDataGreaterThanCurrent;
+import static br.com.contmatic.empresa.utils.FieldValidation.isDataLessThan1998;
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
+import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
 /**
  * The Class Empresa.
  */
 public class Empresa {
 
-    /** The nome. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO, groups = Post.class)
-    @Size(min = 3, max = 100, message = Mensagem.VALOR_NAO_E_VALIDO)
-    @Pattern(regexp = Constante.ILLEGAL_NUMBER, message = Mensagem.VALOR_NAO_E_VALIDO)
+    /**
+     * The nome.
+     */
+    @NotEmpty(message = NOME_EMPRESA_VAZIO)
+    @NotBlank(message = NOME_EMPRESA_VAZIO)
+    @NotNull(message = NOME_EMPRESA_VAZIO)
+    @Size(min = 3, max = 100, message = NOME_EMPRESA_TAMANHO)
+    @Pattern(regexp = ILLEGAL_NUMBER, message = NOME_EMPRESA_CARACTERE_INVALIDO)
     private String nome;
 
-    /** The email. */
-    @NotEmpty(message = Mensagem.VALOR_ESTA_VAZIO)
-    @NotBlank(message = Mensagem.VALOR_ESTA_VAZIO)
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
-    @Size(min = 10, max = 100, message = Mensagem.VALOR_NAO_E_VALIDO)
-    @Pattern(regexp = Constante.VALIDATION_EMAIL, message = Mensagem.VALOR_NAO_E_VALIDO)
+    /**
+     * The email.
+     */
+    @NotEmpty(message = EMAIL_EMPRESA_VAZIO)
+    @NotBlank(message = EMAIL_EMPRESA_VAZIO)
+    @NotNull(message = EMAIL_EMPRESA_VAZIO)
+    @Size(min = 10, max = 100, message = EMAIL_EMPRESA_TAMANHO)
+    @Pattern(regexp = VALIDATION_EMAIL, message = EMAIL_EMPRESA_CARACTERE_INVALIDO)
     private String email;
 
-    /** The cnpj. */
-    @CNPJ(message = Mensagem.VALOR_NAO_E_VALIDO)
+    /**
+     * The cnpj.
+     */
+    @CNPJ(message = CNPJ_EMPRESA_INVALIDO)
     private String cnpj;
 
-    /** The telefones. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    /**
+     * The telefones.
+     */
+    @NotNull(message = TELEFONE_EMPRESA_VAZIO)
+    @NotEmpty
+    @Valid
     private Set<Telefone> telefones;
 
-    /** The enderecos. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    @NotNull
+    private DateTime dataCriacao;
+
+    @NotNull
+    private DateTime dataAlteracao;
+
+    /**
+     * The enderecos.
+     */
+    @NotNull(message = ENDERECO_EMPRESA_VAZIO)
     private Set<Endereco> enderecos;
 
-    /** The produtos. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    @NotNull
     private List<Produto> produtos;
 
-    /** The funcionarios. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    @NotNull
     private List<Funcionario> funcionarios;
 
-    /** The clientes. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    @NotNull
     private List<Cliente> clientes;
+
+    public Empresa() {
+        super();
+    }
+
+    public Empresa(String nome, String cnpj, DateTime dataCriacao, Set<Endereco> enderecos) {
+        this.nome = nome;
+        this.cnpj = cnpj;
+        this.dataCriacao = dataCriacao;
+        this.enderecos = enderecos;
+        this.setDataAlteracao(dataCriacao);
+    }
 
     /**
      * Gets the endereco.
@@ -85,6 +117,26 @@ public class Empresa {
      */
     public String getNome() {
         return nome;
+    }
+
+    public DateTime getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(DateTime dataCriacao) {
+        isDataGreaterThanCurrent(dataCriacao, "Data de criação da empresa não pode ser maior do que" +
+                "hora atual");
+        isDataLessThan1998(dataCriacao, "A data de criação da empresa não pode ser menor do que 1998");
+        this.dataCriacao = dataCriacao;
+    }
+
+    public DateTime getDataAlteracao() {
+        isDataLessThan1998(dataAlteracao, "A data de alteração da empresa não pode ser menor do que 1998");
+        return dataAlteracao;
+    }
+
+    public void setDataAlteracao(DateTime dataAlteracao) {
+        this.dataAlteracao = dataAlteracao;
     }
 
     /**
@@ -132,20 +184,10 @@ public class Empresa {
         this.email = email;
     }
 
-    /**
-     * Gets the telefones.
-     *
-     * @return the telefones
-     */
     public Set<Telefone> getTelefones() {
         return telefones;
     }
 
-    /**
-     * Sets the telefones.
-     *
-     * @param telefones the new telefones
-     */
     public void setTelefones(Set<Telefone> telefones) {
         this.telefones = telefones;
     }

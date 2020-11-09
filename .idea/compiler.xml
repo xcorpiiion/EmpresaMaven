@@ -2,20 +2,22 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="empresa-model" />
-        <module name="repository" />
+        <module name="empresa-service" />
+        <module name="empresa-repository" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="empresa-model" target="1.8" />
       <module name="empresa-repository" target="1.8" />
+      <module name="empresa-service" target="1.8" />
       <module name="empresaa" target="1.8" />
       <module name="model" target="1.8" />
-      <module name="repository" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -1,61 +1,89 @@
 package br.com.contmatic.endereco;
 
+import static br.com.contmatic.utils.Constante.ILLEGAL_WORD;
+import static br.com.contmatic.utils.Mensagem.BAIRRO_ENDERECO_CARACTERE_INVALIDO;
+import static br.com.contmatic.utils.Mensagem.BAIRRO_ENDERECO_TAMANHO;
+import static br.com.contmatic.utils.Mensagem.BAIRRO_ENDERECO_VAZIO;
+import static br.com.contmatic.utils.Mensagem.CEP_ENDERECO_CARACTERE_INVALIDO;
+import static br.com.contmatic.utils.Mensagem.CEP_ENDERECO_VAZIO;
+import static br.com.contmatic.utils.Mensagem.NUMERO_ENDERECO_TAMANHO;
+import static br.com.contmatic.utils.Mensagem.RUA_ENDERECO_TAMANHO;
+import static br.com.contmatic.utils.Mensagem.RUA_ENDERECO_VAZIO;
 import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
+
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-
-import br.com.contmatic.constantes.Constante;
-import br.com.contmatic.constantes.Mensagem;
 
 /**
  * The Class Endereco.
  */
 public class Endereco {
 
-    /** The rua. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
-    @NotEmpty(message = Mensagem.VALOR_ESTA_VAZIO)
-    @NotBlank(message = Mensagem.VALOR_ESTA_VAZIO)
-    @Size(min = 3, max = 50, message = Mensagem.VALOR_NAO_E_VALIDO)
+    /**
+     * The rua.
+     */
+    @NotNull(message = RUA_ENDERECO_VAZIO)
+    @NotEmpty(message = RUA_ENDERECO_VAZIO)
+    @NotBlank(message = RUA_ENDERECO_VAZIO)
+    @Size(min = 5, max = 50, message = RUA_ENDERECO_TAMANHO)
     private String rua;
 
-    /** The bairro. */
-    @NotEmpty(message = Mensagem.VALOR_ESTA_VAZIO)
-    @NotBlank(message = Mensagem.VALOR_ESTA_VAZIO)
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
-    @Size(min = 3, max = 50, message = Mensagem.VALOR_NAO_E_VALIDO)
-    @Pattern(regexp = Constante.ILLEGAL_WORD, message = Mensagem.VALOR_NAO_E_VALIDO)
+    /**
+     * The bairro.
+     */
+    @NotEmpty(message = BAIRRO_ENDERECO_VAZIO)
+    @NotBlank(message = BAIRRO_ENDERECO_VAZIO)
+    @NotNull(message = BAIRRO_ENDERECO_VAZIO)
+    @Size(min = 3, max = 50, message = BAIRRO_ENDERECO_TAMANHO)
+    @Pattern(regexp = ILLEGAL_WORD, message = BAIRRO_ENDERECO_CARACTERE_INVALIDO)
     private String bairro;
 
-    /** The cep. */
-    @NotEmpty(message = Mensagem.VALOR_ESTA_VAZIO)
-    @NotBlank(message = Mensagem.VALOR_ESTA_VAZIO)
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
-    @Pattern(regexp = Constante.ILLEGAL_WORD, message = Mensagem.VALOR_NAO_E_VALIDO)
+    /**
+     * The cep.
+     */
+    @NotEmpty(message = CEP_ENDERECO_VAZIO)
+    @NotBlank(message = CEP_ENDERECO_VAZIO)
+    @NotNull(message = CEP_ENDERECO_VAZIO)
+    @Pattern(regexp = ILLEGAL_WORD, message = CEP_ENDERECO_CARACTERE_INVALIDO)
     private String cep;
 
-    /** The numero residencia. */
-    @Min(value = 1, message = Mensagem.PRECISA_SER_UM_VALOR_MAIOR)
-    private int numeroResidencia;
+    /**
+     * The numero residencia.
+     */
+    @Min(value = 1, message = NUMERO_ENDERECO_TAMANHO)
+    private int numero;
 
-    /** The cidade. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
-    @NotEmpty(message = Mensagem.VALOR_ESTA_VAZIO)
-    @NotBlank(message = Mensagem.VALOR_ESTA_VAZIO)
-    @Min(value = 3, message = Mensagem.PRECISA_SER_UM_VALOR_MAIOR)
-    @Pattern(regexp = Constante.ILLEGAL_NUMBER, message = Mensagem.VALOR_NAO_E_VALIDO)
-    private String cidade;
+    /**
+     * The cidade.
+     */
+    @NotNull
+    @Valid
+    private Municipio municipio;
 
-    /** The estado. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
-    private EstadosBrasil estado;
+    @NotNull
+    @Valid
+    private Pais pais;
+
+    public Endereco() {
+    }
+
+    public Endereco(String rua, String bairro, String cep, int numero, Pais pais, Municipio municipio) {
+        this.rua = rua;
+        this.bairro = bairro;
+        this.cep = cep;
+        this.numero = numero;
+        this.municipio = municipio;
+        this.pais = pais;
+    }
 
     /**
      * Gets the rua.
@@ -112,57 +140,37 @@ public class Endereco {
     }
 
     /**
-     * Gets the cidade.
-     *
-     * @return the cidade
-     */
-    public String getCidade() {
-        return cidade;
-    }
-
-    /**
-     * Sets the cidade.
-     *
-     * @param cidade the new cidade
-     */
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
-    /**
-     * Gets the estado.
-     *
-     * @return the estado
-     */
-    public EstadosBrasil getEstado() {
-        return estado;
-    }
-
-    /**
-     * Sets the estado.
-     *
-     * @param estado the new estado
-     */
-    public void setEstado(EstadosBrasil estado) {
-        this.estado = estado;
-    }
-
-    /**
      * Gets the numero residencia.
      *
      * @return the numero residencia
      */
-    public int getNumeroResidencia() {
-        return numeroResidencia;
+    public int getNumero() {
+        return numero;
     }
 
     /**
      * Sets the numero residencia.
      *
-     * @param numeroResidencia the new numero residencia
+     * @param numero the new numero residencia
      */
-    public void setNumeroResidencia(int numeroResidencia) {
-        this.numeroResidencia = numeroResidencia;
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    public Municipio getMunicipio() {
+        return municipio;
+    }
+
+    public void setMunicipio(Municipio municipio) {
+        this.municipio = municipio;
+    }
+
+    public Pais getPais() {
+        return pais;
+    }
+
+    public void setPais(Pais pais) {
+        this.pais = pais;
     }
 
     /**
@@ -172,7 +180,7 @@ public class Endereco {
      */
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(cep).append(numeroResidencia).toHashCode();
+        return new HashCodeBuilder().append(cep).append(numero).toHashCode();
     }
 
     /**
@@ -190,7 +198,7 @@ public class Endereco {
         if (getClass() != obj.getClass())
             return false;
         Endereco other = (Endereco) obj;
-        return new EqualsBuilder().append(cep, other.cep).append(numeroResidencia, other.numeroResidencia).isEquals();
+        return new EqualsBuilder().append(cep, other.cep).append(numero, other.numero).isEquals();
     }
 
     /**

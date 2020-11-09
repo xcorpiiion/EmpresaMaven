@@ -1,35 +1,47 @@
 package br.com.contmatic.telefone;
 
-import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
-import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import br.com.contmatic.constantes.Constante;
-import br.com.contmatic.constantes.Mensagem;
 
-/**
- * The Class Telefone.
- */
-public final class Telefone {
+import static br.com.contmatic.utils.Constante.PHONE_VALIDATION;
+import static br.com.contmatic.utils.Mensagem.*;
+import static br.com.contmatic.utils.Mensagem.TELEFONE_DDD_VAZIO;
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
+import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
-    /** The phone. */
-    @NotBlank(message = Mensagem.VALOR_ESTA_VAZIO)
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
-    @NotEmpty(message = Mensagem.VALOR_ESTA_VAZIO)
-    @Pattern(regexp = Constante.PHONE_VALIDATION, message = Mensagem.VALOR_NAO_E_VALIDO)
+public class Telefone {
+
+    @NotBlank(message = TELEFONE_VAZIO)
+    @NotNull(message = TELEFONE_VAZIO)
+    @NotEmpty(message = TELEFONE_VAZIO)
+    @Pattern(regexp = PHONE_VALIDATION, message = TELEFONE_CARACTERE_INVALIDO)
     private String phone;
 
-    /** The tipo telefone. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    /**
+     * The tipo telefone.
+     */
+    @NotNull(message = TELEFONE_TIPO_TELEFONE_VAZIO)
     private TipoTelefone tipoTelefone;
 
-    /** The ddd telefone. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    /**
+     * The ddd telefone.
+     */
+    @NotNull(message = TELEFONE_DDD_VAZIO)
     private DddBrasil dddTelefone;
+
+    public Telefone() {
+    }
+
+    public Telefone(String phone, TipoTelefone tipoTelefone, DddBrasil dddTelefone) {
+        this.phone = phone;
+        this.tipoTelefone = tipoTelefone;
+        this.dddTelefone = dddTelefone;
+    }
 
     /**
      * Gets the phone.
@@ -85,39 +97,26 @@ public final class Telefone {
         this.dddTelefone = dddTelefone;
     }
 
-    /**
-     * Hash code.
-     *
-     * @return the int
-     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Telefone telefone = (Telefone) o;
+
+        return new EqualsBuilder()
+                .append(phone, telefone.phone)
+                .isEquals();
+    }
+
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(phone).append(dddTelefone).toHashCode();
+        return new HashCodeBuilder(17, 37)
+                .append(phone)
+                .toHashCode();
     }
 
-    /**
-     * Equals.
-     *
-     * @param obj the obj
-     * @return true, if successful
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Telefone other = (Telefone) obj;
-        return new EqualsBuilder().append(phone, other.phone).append(dddTelefone, other.dddTelefone).isEquals();
-    }
-
-    /**
-     * To string.
-     *
-     * @return the string
-     */
     @Override
     public String toString() {
         return reflectionToString(this, JSON_STYLE);

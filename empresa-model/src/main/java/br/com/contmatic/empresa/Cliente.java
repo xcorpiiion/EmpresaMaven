@@ -1,27 +1,22 @@
 package br.com.contmatic.empresa;
 
-import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
-import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
-
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
+import br.com.contmatic.endereco.Endereco;
+import br.com.contmatic.telefone.Telefone;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.br.CPF;
+import org.joda.time.DateTime;
 
-import br.com.contmatic.constantes.Constante;
-import br.com.contmatic.constantes.Mensagem;
-import br.com.contmatic.endereco.Endereco;
-import br.com.contmatic.telefone.Telefone;
+import javax.validation.constraints.*;
+import java.math.BigDecimal;
+import java.util.Set;
+
+import static br.com.contmatic.utils.Constante.ILLEGAL_WORD;
+import static br.com.contmatic.utils.Constante.VALIDATION_EMAIL;
+import static br.com.contmatic.utils.Mensagem.*;
+import static br.com.contmatic.empresa.utils.FieldValidation.*;
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
+import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
 /**
  * The Class Cliente.
@@ -29,46 +24,59 @@ import br.com.contmatic.telefone.Telefone;
 public class Cliente {
 
     /** The cpf. */
-	@NotNull(message = Mensagem.VALOR_ESTA_NULLO)
-    @CPF(message = Mensagem.VALOR_NAO_E_VALIDO)
+    @CPF(message = CPF_CLIENTE_INVALIDO)
     private String cpf;
 
     /** The nome. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
-    @Size(min = 3, max = 50, message = Mensagem.VALOR_NAO_E_VALIDO)
-    @Pattern(regexp = Constante.ILLEGAL_WORD, message = Mensagem.VALOR_NAO_E_VALIDO)
+    @NotNull(message = NOME_CLIENTE_VAZIO)
+    @NotEmpty(message = NOME_CLIENTE_VAZIO)
+    @NotBlank(message = NOME_CLIENTE_VAZIO)
+    @Size(min = 3, max = 50, message = NOME_CLIENTE_TAMANHO)
+    @Pattern(regexp = ILLEGAL_WORD, message = NOME_CLIENTE_CARACTERE_INVALIDO)
     private String nome;
 
     /** The email. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
-    @Size(min = 10, max = 100, message = Mensagem.VALOR_NAO_E_VALIDO)
-    @Pattern(regexp = Constante.VALIDATION_EMAIL, message = Mensagem.VALOR_NAO_E_VALIDO)
+    @NotEmpty(message = EMAIL_CLIENTE_VAZIO)
+    @NotBlank(message = EMAIL_CLIENTE_VAZIO)
+    @NotNull(message = EMAIL_CLIENTE_VAZIO)
+    @Size(min = 10, max = 100, message = EMAIL_CLIENTE_TAMANHO)
+    @Pattern(regexp = VALIDATION_EMAIL, message = EMAIL_CLIENTE_CARACTERE_INVALIDO)
     private String email;
 
     /** The data nascimento. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
-    private Date dataNascimento;
+    @NotNull(message = DATA_NASCIMENTO_CLIENTE_VAZIO)
+    private DateTime dataNascimento;
 
-    /** The dinheiro carteira. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
-    @Min(value = 0, message = Mensagem.VALOR_NAO_E_VALIDO)
+    @NotNull
+    private DateTime dataCadastro;
+
+    /**
+     * The dinheiro carteira.
+     */
+    @Min(value = 0, message = DINHEIRO_CARTEIRA_CLIENTE_TAMANHO)
     private BigDecimal dinheiroCarteira;
 
     /** The endereco. */
-    @NotNull(message = Mensagem.VALOR_ESTA_NULLO)
+    @NotNull(message = ENDERECO_CLIENTE_VAZIO)
     private Endereco endereco;
 
     /** The telefones. */
-    @NotNull(message = Mensagem.VALOR_ESTA_VAZIO)
+    @NotEmpty
+    @NotNull(message = TELEFONE_CLIENTE_VAZIO)
     private Set<Telefone> telefones;
 
-    /** The carrinho produtos. */
-    @Valid
-    private List<Produto> carrinhoProdutos;
+    public Cliente() {
+    }
 
-    /** The produtos comprados. */
-    @Valid
-    private List<Produto> produtosComprados;
+    public Cliente(String cpf, String nome, String email, DateTime dataNascimento, Endereco endereco, Set<Telefone> telefones) {
+        this.cpf = cpf;
+        this.nome = nome;
+        this.email = email;
+        this.dataNascimento = dataNascimento;
+        this.endereco = endereco;
+        this.setDataCadastro(new DateTime());
+        this.telefones = telefones;
+    }
 
     /**
      * Gets the cpf.
@@ -124,12 +132,22 @@ public class Cliente {
         this.email = email;
     }
 
+    public DateTime getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setDataCadastro(DateTime dataCadastro) {
+        isDataGreaterThanCurrent(dataCadastro, "hora de cadastro não pode ser maior do que hora atual");
+        isDataLessThan1998(dataCadastro, "A data de cadastro do cliente não pode ser menor do que 1998");
+        this.dataCadastro = dataCadastro;
+    }
+
     /**
      * Gets the data nascimento.
      *
      * @return the data nascimento
      */
-    public Date getDataNascimento() {
+    public DateTime getDataNascimento() {
         return dataNascimento;
     }
 
@@ -138,7 +156,11 @@ public class Cliente {
      *
      * @param dataNascimento the new data nascimento
      */
-    public void setDataNascimento(Date dataNascimento) {
+    public void setDataNascimento(DateTime dataNascimento) {
+        isDataGreaterThanCurrent(dataNascimento, "data de nascimento de cliente não pode" +
+                " ser maior do que hora atual");
+        isDataLessThan1920(dataNascimento,
+                "A data de cadastro do cliente não pode ser menor do que 1920");
         this.dataNascimento = dataNascimento;
     }
 
@@ -178,58 +200,12 @@ public class Cliente {
         this.endereco = endereco;
     }
 
-    /**
-     * Gets the telefones.
-     *
-     * @return the telefones
-     */
     public Set<Telefone> getTelefones() {
         return telefones;
     }
 
-    /**
-     * Sets the telefones.
-     *
-     * @param telefones the new telefones
-     */
     public void setTelefones(Set<Telefone> telefones) {
         this.telefones = telefones;
-    }
-
-    /**
-     * Gets the carrinho produtos.
-     *
-     * @return the carrinho produtos
-     */
-    public List<Produto> getCarrinhoProdutos() {
-        return carrinhoProdutos;
-    }
-
-    /**
-     * Sets the carrinho produtos.
-     *
-     * @param carrinhoProdutos the new carrinho produtos
-     */
-    public void setCarrinhoProdutos(List<Produto> carrinhoProdutos) {
-        this.carrinhoProdutos = carrinhoProdutos;
-    }
-
-    /**
-     * Gets the produtos comprados.
-     *
-     * @return the produtos comprados
-     */
-    public List<Produto> getProdutosComprados() {
-        return produtosComprados;
-    }
-
-    /**
-     * Sets the produtos comprados.
-     *
-     * @param produtosComprados the new produtos comprados
-     */
-    public void setProdutosComprados(List<Produto> produtosComprados) {
-        this.produtosComprados = produtosComprados;
     }
 
     /**

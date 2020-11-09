@@ -9,9 +9,9 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.com.contmatic.constantes.Mensagem;
-import br.com.contmatic.constantes.easyrandom.EasyRandomEndereco;
-import br.com.contmatic.constantes.easyrandom.TipoDadoParaTesteEndereco;
+import br.com.contmatic.utils.Mensagem;
+import br.com.contmatic.easyrandom.EasyRandomEndereco;
+import br.com.contmatic.easyrandom.enums.TipoDadoParaTesteEndereco;
 import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;

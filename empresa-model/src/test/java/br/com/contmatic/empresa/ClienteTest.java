@@ -9,18 +9,19 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import br.com.contmatic.easyrandom.enums.EnumStringInvalida;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import br.com.contmatic.constantes.Mensagem;
-import br.com.contmatic.constantes.easyrandom.EasyRandomCliente;
-import br.com.contmatic.constantes.easyrandom.EasyRandomProduto;
-import br.com.contmatic.constantes.easyrandom.EasyRandomTelefone;
-import br.com.contmatic.constantes.easyrandom.TipoDadoParaTesteCliente;
-import br.com.contmatic.constantes.easyrandom.TipoDadoParaTesteProduto;
-import br.com.contmatic.constantes.easyrandom.TipoDadoParaTesteTelefone;
+import br.com.contmatic.utils.Mensagem;
+import br.com.contmatic.easyrandom.EasyRandomCliente;
+import br.com.contmatic.easyrandom.EasyRandomProduto;
+import br.com.contmatic.easyrandom.EasyRandomTelefone;
+import br.com.contmatic.easyrandom.enums.TipoDadoParaTesteCliente;
+import br.com.contmatic.easyrandom.enums.TipoDadoParaTesteProduto;
+import br.com.contmatic.easyrandom.enums.TipoDadoParaTesteTelefone;
 import br.com.contmatic.telefone.Telefone;
 import br.com.contmatic.validator.ValidadorAnnotionsMsgErro;
 import nl.jqno.equalsverifier.EqualsVerifier;
@@ -46,10 +47,10 @@ public class ClienteTest {
     @BeforeClass
     public static void addDadosIniciais() {
         produtos = new ArrayList<>();
-        produtos.add(EasyRandomProduto.validadorEasyRandomProduto(TipoDadoParaTesteProduto.VALIDO));
-        cliente = EasyRandomCliente.validadorEasyRandomCliente(TipoDadoParaTesteCliente.VALIDO);
+        //produtos.add(EasyRandomProduto.validadorEasyRandomProduto(TipoDadoParaTesteProduto.VALIDO));
+        cliente = EasyRandomCliente.camposValido();
         telefone = new HashSet<>();
-        telefone.add(EasyRandomTelefone.validadorEasyRandomTelefone(TipoDadoParaTesteTelefone.VALIDO));
+        //telefone.add(EasyRandomTelefone.validadorEasyRandomTelefone(TipoDadoParaTesteTelefone.VALIDO));
         cliente.setTelefones(telefone);
     }
 
