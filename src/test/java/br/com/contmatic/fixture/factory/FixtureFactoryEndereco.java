@@ -12,17 +12,8 @@ import static br.com.contmatic.constantes.Constante.*;
 import static br.com.six2six.fixturefactory.Fixture.from;
 import static br.com.six2six.fixturefactory.Fixture.of;
 
-
-/**
- * The Class FixtureFactoryEndereco.
- */
 public class FixtureFactoryEndereco implements TemplateLoader{
 
-    /**
-     * Endereco valido.
-     *
-     * @return the endereco
-     */
     public static Endereco enderecoValido() {
         StringBuilder cepRandom = new StringBuilder();
         cepRandom.append(new Random().nextInt(90000000) + 10000000);
@@ -39,10 +30,7 @@ public class FixtureFactoryEndereco implements TemplateLoader{
         });
         return from(Endereco.class).gimme(VALID);
     }
-    
-    /**
-     * Load.
-     */
+
     @Override
     public void load() {
         FixtureFactoryEndereco.enderecoValido();

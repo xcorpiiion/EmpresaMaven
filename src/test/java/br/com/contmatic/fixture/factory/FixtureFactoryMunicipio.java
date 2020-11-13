@@ -27,14 +27,8 @@ import br.com.contmatic.enums.EnumUF;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
 
-/**
- * The Class FixtureFactoryCliente.
- */
 public class FixtureFactoryMunicipio implements TemplateLoader {
 
-    /**
-     * Load.
-     */
     @Override
     public void load() {
         final String CODIGO_MUNICIPAL = "codigoMunicipal";

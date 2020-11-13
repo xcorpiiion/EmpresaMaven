@@ -1,6 +1,10 @@
 package br.com.contmatic.endereco;
 
 import br.com.contmatic.enums.EnumUF;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -14,6 +18,10 @@ import static br.com.contmatic.constantes.Mensagem.DESCRICAO_MUNICIPIO_CARACTERE
 import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
+@NoArgsConstructor
+@Getter
+@Setter
+@AllArgsConstructor
 public class Municipio {
 
     @Min(1)
@@ -36,57 +44,6 @@ public class Municipio {
 
     @NotNull
     private EnumUF uf;
-
-    public Municipio() {
-    }
-
-    public Municipio(Integer codigoMunicipal, Integer codigoFederal, Integer codigoIbge, String descricao, EnumUF uf) {
-        this.codigoMunicipal = codigoMunicipal;
-        this.codigoFederal = codigoFederal;
-        this.codigoIbge = codigoIbge;
-        this.descricao = descricao;
-        this.uf = uf;
-    }
-
-    public Integer getCodigoMunicipal() {
-        return codigoMunicipal;
-    }
-
-    public void setCodigoMunicipal(Integer codigoMunicipal) {
-        this.codigoMunicipal = codigoMunicipal;
-    }
-
-    public Integer getCodigoFederal() {
-        return codigoFederal;
-    }
-
-    public void setCodigoFederal(Integer codigoFederal) {
-        this.codigoFederal = codigoFederal;
-    }
-
-    public Integer getCodigoIbge() {
-        return codigoIbge;
-    }
-
-    public void setCodigoIbge(Integer codigoIbge) {
-        this.codigoIbge = codigoIbge;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public EnumUF getUf() {
-        return uf;
-    }
-
-    public void setUf(EnumUF uf) {
-        this.uf = uf;
-    }
 
     @Override
     public boolean equals(Object o) {

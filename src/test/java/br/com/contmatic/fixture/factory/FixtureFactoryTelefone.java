@@ -1,9 +1,8 @@
 package br.com.contmatic.fixture.factory;
 
-import br.com.contmatic.telefone.Telefone;
 import br.com.contmatic.telefone.DddBrasil;
+import br.com.contmatic.telefone.Telefone;
 import br.com.contmatic.telefone.TipoTelefone;
-import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
 import com.github.javafaker.Faker;
@@ -14,9 +13,6 @@ import static br.com.contmatic.constantes.Constante.*;
 import static br.com.six2six.fixturefactory.Fixture.of;
 import static java.lang.String.valueOf;
 
-/**
- * The Class FixtureFactoryCliente.
- */
 public class FixtureFactoryTelefone implements TemplateLoader {
 
     private final String PHONE = "phone";
@@ -37,32 +33,32 @@ public class FixtureFactoryTelefone implements TemplateLoader {
                 }
             }
         });
-        Fixture.of(Telefone.class).addTemplate(PHONE_NULL).inherits(VALID, new Rule() {
+        of(Telefone.class).addTemplate(PHONE_NULL).inherits(VALID, new Rule() {
             {
                 add(PHONE, null);
             }
         });
-        Fixture.of(Telefone.class).addTemplate(PHONE_EMPTY).inherits(VALID, new Rule() {
+        of(Telefone.class).addTemplate(PHONE_EMPTY).inherits(VALID, new Rule() {
             {
                 add(PHONE, "");
             }
         });
-        Fixture.of(Telefone.class).addTemplate(PHONE_BLANK_SPACE).inherits(VALID, new Rule() {
+        of(Telefone.class).addTemplate(PHONE_BLANK_SPACE).inherits(VALID, new Rule() {
             {
                 add(PHONE, " ");
             }
         });
-        Fixture.of(Telefone.class).addTemplate(PHONE_INVALID_SIZE).inherits(VALID, new Rule() {
+        of(Telefone.class).addTemplate(PHONE_INVALID_SIZE).inherits(VALID, new Rule() {
             {
                 add(PHONE, "1");
             }
         });
-        Fixture.of(Telefone.class).addTemplate(TIPO_TELEFONE_NULL).inherits(VALID, new Rule() {
+        of(Telefone.class).addTemplate(TIPO_TELEFONE_NULL).inherits(VALID, new Rule() {
             {
                 add(TIPO_TELEFONE, null);
             }
         });
-        Fixture.of(Telefone.class).addTemplate(DDD_NULL).inherits(VALID, new Rule() {
+        of(Telefone.class).addTemplate(DDD_NULL).inherits(VALID, new Rule() {
             {
                 add(DDD_TELEFONE, null);
             }

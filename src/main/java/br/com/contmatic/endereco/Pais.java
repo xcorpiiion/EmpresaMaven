@@ -1,5 +1,9 @@
 package br.com.contmatic.endereco;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -10,6 +14,10 @@ import static br.com.contmatic.constantes.Mensagem.CODIGO_PAIS_VAZIO;
 import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
+@NoArgsConstructor
+@Getter
+@Setter
+@AllArgsConstructor
 public class Pais {
 
     public static final Long CODIGO_BRASIL = 1058L;
@@ -20,13 +28,6 @@ public class Pais {
 
     public boolean isExterior() {
         return this.codigo != null && !this.codigo.equals(CODIGO_BRASIL);
-    }
-
-    public Pais() {
-    }
-
-    public Pais(Long codigo) {
-        this.codigo = codigo;
     }
 
     public static Long getCodigoBrasil() {

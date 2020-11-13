@@ -48,9 +48,6 @@ import br.com.contmatic.enums.EnumCargo;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
 
-/**
- * The Class FixtureFactoryFuncionario.
- */
 public class FixtureFactoryFuncionario implements TemplateLoader {
 
     private final String NOME = "nome";
@@ -61,10 +58,7 @@ public class FixtureFactoryFuncionario implements TemplateLoader {
     private final String ENDERECO = "endereco";
     private final String CPF = "cpf";
     private final String TELEFONES = "telefones";
-    
-    /**
-     * Load.
-     */
+
     @Override
     public void load() {
         of(Funcionario.class).addTemplate(VALID, new Rule() {

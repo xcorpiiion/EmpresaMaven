@@ -30,89 +30,84 @@ public enum EnumUF {
     SP("São Paulo", 35, "SP"),
     TO("Tocantins", 17, "TO");
 
-    private String nome;
-    private Integer codigoIbge;
-    private String sigla;
+	private String nome;
 
-    private EnumUF(String nome, Integer codigoIbge, String sigla) {
-        this.nome = nome;
-        this.codigoIbge = codigoIbge;
-        this.sigla = sigla;
-    }
+	private Integer codigoIbge;
 
-    public String getNome() {
-        return nome;
-    }
+	private String sigla;
 
-    public Integer getCodigoIbge() {
-        return codigoIbge;
-    }
+	private EnumUF(String nome, Integer codigoIbge, String sigla) {
+		this.nome = nome;
+		this.codigoIbge = codigoIbge;
+		this.sigla = sigla;
+	}
 
-    public String getSigla() {
-        return sigla;
-    }
+	public String getNome() {
+		return nome;
+	}
 
-    public static EnumUF fromOrdinal(int ordinal) {
+	public Integer getCodigoIbge() {
+		return codigoIbge;
+	}
 
-        for (EnumUF uf : EnumUF.values()) {
+	public String getSigla() {
+		return sigla;
+	}
 
-            if (ordinal == uf.ordinal()) {
+	public static EnumUF fromOrdinal(int ordinal) {
+		for (EnumUF uf : EnumUF.values()) {
+			if (ordinal == uf.ordinal()) {
+				return uf;
+			}
+		}
+		throw new IllegalArgumentException("Não existe nenhuma UF com o ordinal " + ordinal + ".");
+	}
 
-                return uf;
-            }
-        }
+	public static EnumUF fromCodigoIbge(Integer codigoIbge) {
+		for (EnumUF uf : EnumUF.values()) {
 
-        throw new IllegalArgumentException("Não existe nenhuma UF com o ordinal " + ordinal + ".");
-    }
+			if (!uf.name().equals("NONE") && uf.getCodigoIbge().equals(codigoIbge)) {
 
-    public static EnumUF fromCodigoIbge(Integer codigoIbge) {
-        for (EnumUF uf : EnumUF.values()) {
+				return uf;
+			}
+		}
+		return null;
+	}
 
-            if (!uf.name().equals("NONE") && uf.getCodigoIbge().equals(codigoIbge)) {
+	public static EnumUF fromCodigoIbge(String codigoIbge) {
+		for (EnumUF uf : EnumUF.values()) {
 
-                return uf;
-            }
-        }
-        return null;
-    }
+			if (!uf.name().equals("NONE") && uf.getCodigoIbge().toString().equalsIgnoreCase(codigoIbge)) {
 
-    public static EnumUF fromCodigoIbge(String codigoIbge) {
-        for (EnumUF uf : EnumUF.values()) {
+				return uf;
+			}
+		}
+		return null;
+	}
 
-            if (!uf.name().equals("NONE") && uf.getCodigoIbge().toString().equalsIgnoreCase(codigoIbge)) {
+	public static EnumUF fromSigla(String sigla) {
+		for (EnumUF uf : EnumUF.values()) {
 
-                return uf;
-            }
-        }
-        return null;
-    }
+			if (uf.getSigla().equalsIgnoreCase(sigla)) {
 
-    public static EnumUF fromSigla(String sigla) {
-        for (EnumUF uf : EnumUF.values()) {
+				return uf;
+			}
+		}
+		return null;
+	}
 
-            if (uf.getSigla().equalsIgnoreCase(sigla)) {
+	public static EnumUF fromNome(String nome) {
+		for (EnumUF uf : EnumUF.values()) {
+			if (uf.getNome().equalsIgnoreCase(nome)) {
 
-                return uf;
-            }
-        }
-        return null;
+				return uf;
+			}
+		}
+		return null;
+	}
 
-    }
-
-    public static EnumUF fromNome(String nome) {
-        for (EnumUF uf : EnumUF.values()) {
-
-            if (uf.getNome().equalsIgnoreCase(nome)) {
-
-                return uf;
-            }
-        }
-        return null;
-
-    }
-
-    @Override
-    public String toString() {
-        return sigla;
-    }
+	@Override
+	public String toString() {
+		return sigla;
+	}
 }

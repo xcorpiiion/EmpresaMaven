@@ -24,28 +24,18 @@ import static nl.jqno.equalsverifier.Warning.NONFINAL_FIELDS;
 import static org.junit.Assert.*;
 import static org.junit.runners.MethodSorters.NAME_ASCENDING;
 
-/**
- * The Class ClienteTest.
- */
 @FixMethodOrder(NAME_ASCENDING)
 public class ClienteTest {
-    
-    /** The clientes. */
+
     private Cliente cliente;
 
     private Set<Telefone> telefone;
 
-    /**
-     * Add dados iniciais.
-     */
     @BeforeClass
     public static void addDadosIniciais() {
         loadTemplates("br.com.contmatic.fixture.factory");
     }
 
-    /**
-     * Add dados cliente.
-     */
     @Before
     public void addDadosCliente() {
         cliente = (from(Cliente.class).gimme(VALID));
@@ -60,9 +50,6 @@ public class ClienteTest {
         assertTrue(cliente.getTelefones().size() > 0);
     }
 
-    /**
-     * Nao deve aceitar nome vazio.
-     */
     @Test
     public void deve_retornar_true_caso_nome_esteja_vazio() {
         Cliente clienteInvalid = from(Cliente.class).gimme(NOME_EMPTY);
@@ -70,9 +57,6 @@ public class ClienteTest {
         assertTrue(returnAnnotationMsgError(cliente, NOME_CLIENTE_VAZIO));
     }
 
-    /**
-     * Nao deve aceitar nome com espaco em branco.
-     */
     @Test
     public void deve_retornar_true_caso_nome_tenha_apenas_espacos_em_branco() {
         Cliente clienteInvalid = from(Cliente.class).gimme(NOME_BLANK_SPACE);
@@ -94,9 +78,6 @@ public class ClienteTest {
         assertTrue(returnAnnotationMsgError(cliente, NOME_CLIENTE_CARACTERE_INVALIDO));
     }
 
-    /**
-     * Nao deve aceitar email null.
-     */
     @Test
     public void nao_deve_aceitar_email_null() {
         Cliente clienteInvalid = from(Cliente.class).gimme(EMAIL_NULL);
@@ -104,9 +85,6 @@ public class ClienteTest {
         assertNotNull(cliente.getEmail());
     }
 
-    /**
-     * Nao deve aceitar email com espaco em branco.
-     */
     @Test
     public void deve_retornar_true_caso_email_contenha_espaco_em_branco() {
         Cliente clienteInvalid = from(Cliente.class).gimme(EMAIL_BLANK_SPACE);
@@ -138,9 +116,6 @@ public class ClienteTest {
         assertTrue(returnAnnotationMsgError(cliente, EMAIL_CLIENTE_CARACTERE_INVALIDO));
     }
 
-    /**
-     * Nao deve aceitar endereco null.
-     */
     @Test
     public void nao_deve_aceitar_endereco_null() {
         Cliente clienteInvalid = from(Cliente.class).gimme(ENDERECO_NULL);
@@ -148,10 +123,6 @@ public class ClienteTest {
         assertNull(cliente.getEndereco());
     }
 
-    /**
-     * Data nascimento nao deve ser null exception.
-     *
-     */
     @Test
     public void deve_retornar_true_se_dataNascimento_for_null() {
         Cliente clienteValid = from(Cliente.class).gimme(DATA_NASCIMENTO_NULL);
@@ -172,9 +143,6 @@ public class ClienteTest {
         assertSame(dataCadastro, cliente.getDataCadastro());
     }
 
-    /**
-     * Deve add dinheiro carteira.
-     */
     @Test
     public void deve_add_dinheiro_carteira() {
         BigDecimal dinheiro = new BigDecimal(2500);

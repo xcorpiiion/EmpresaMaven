@@ -12,14 +12,8 @@ import br.com.contmatic.endereco.Pais;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
 
-/**
- * The Class FixtureFactoryCliente.
- */
 public class FixtureFactoryPais implements TemplateLoader {
 
-    /**
-     * Load.
-     */
     @Override
     public void load() {
         final String CODIGO = "codigo";

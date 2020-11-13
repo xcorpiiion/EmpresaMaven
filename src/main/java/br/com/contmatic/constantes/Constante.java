@@ -1,28 +1,19 @@
 package br.com.contmatic.constantes;
 
-/**
- * The Class Constante.
- */
+import org.joda.time.DateTime;
+
 public final class Constante {
 
-    /**
-     * The Constant ILLEGAL_WORD.
-     */
     public static final String ILLEGAL_WORD = "^[a-zA-ZÁÂÃÀÇÉÊÍÓÔÕÚÜáâãàçéêíóôõúü]*$";
+    
+    public static final DateTime DATA_CRIACAO_EMPRESA = new DateTime(1998, 07, 01, 0, 0);
+    
+    public static final DateTime DATA_NASCIMENTO = new DateTime(1918, 07, 01, 0, 0);
 
-    /**
-     * The Constant ILLEGAL_NUMBER.
-     */
     public static final String ILLEGAL_NUMBER = "^[0-9]*$";
 
-    /**
-     * The Constant VALIDATION_EMAIL.
-     */
     public static final String VALIDATION_EMAIL = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
 
-    /**
-     * The Constant PHONE_VALIDATION.
-     */
     public static final String PHONE_VALIDATION = "(([0-9]{8})|([0-9]{9}))";
 
     public static final String VALID = "valid";
@@ -205,10 +196,6 @@ public final class Constante {
 
     public static final String MUNICIPIO_NULL= "descricaoSpecialCaracter";
 
-
-    /**
-     * Instantiates a new constante.
-     */
     private Constante() {
     }
 

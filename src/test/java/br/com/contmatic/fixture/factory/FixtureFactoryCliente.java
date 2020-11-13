@@ -39,14 +39,8 @@ import br.com.contmatic.empresa.Cliente;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
 
-/**
- * The Class FixtureFactoryCliente.
- */
 public class FixtureFactoryCliente implements TemplateLoader {
 
-    /**
-     * Load.
-     */
     @Override
     public void load() {
 

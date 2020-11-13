@@ -14,14 +14,8 @@ import static br.com.contmatic.constantes.Constante.*;
 import static br.com.contmatic.fixture.factory.GeradorEmail.*;
 import static br.com.six2six.fixturefactory.Fixture.of;
 
-/**
- * The Class FixtureFactoryEmpresa.
- */
 public class FixtureFactoryEmpresa implements TemplateLoader {
 
-    /**
-     * Load.
-     */
     @Override
     public void load() {
         final String VALID = "valid";

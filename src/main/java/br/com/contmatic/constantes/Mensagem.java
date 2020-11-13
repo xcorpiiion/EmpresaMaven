@@ -1,8 +1,5 @@
 package br.com.contmatic.constantes;
 
-/**
- * The Class Mensagem.
- */
 public final class Mensagem {
 
     /* Empresa */
@@ -135,9 +132,6 @@ public final class Mensagem {
 
     public static final String DESCRICAO_MUNICIPIO_CARACTERE_INVALIDO = "Descrição de municipio não pode possuir números";
 
-    /**
-     * Instantiates a new mensagem.
-     */
     private Mensagem() {
 
     }
